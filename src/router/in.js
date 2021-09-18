@@ -5,5 +5,10 @@ export default [
     path: '/app',
     name: 'HomeIn',
     component: HomeIn
+  },
+  {
+    path: '/:username',
+    name: 'UserTrades',
+    component: HomeIn
   }
 ]

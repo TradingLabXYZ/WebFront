@@ -5,7 +5,7 @@
       <div class="grid grid-cols-3">
         <div class="flex items-center justify-center grid grid-cols-2 col-span-1">
           <div class="text-2xl font-bold col-span-1">
-            My Open Trades
+            Open Trades
           </div>  
           <div class="col-span-1" v-if="!isNewTrade">
             <button @click="insertTrade()" title="Insert a new trade" class="p-1 ml-4 text-6xl text-gray-400 rounded hover:text-gray-800">

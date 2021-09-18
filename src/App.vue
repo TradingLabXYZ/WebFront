@@ -1,5 +1,5 @@
 <template>
-  <div class="fluid" v-if="token">
+  <div class="fluid" v-if="sessionId">
     <HomeIn/>
   </div>
   <div v-else>
@@ -15,10 +15,10 @@
       HomeIn
     },
     computed: {
-      ...mapState("loginModule", ["token"])
+      ...mapState("loginModule", ["sessionId"])
     },
     mounted: function() {
-      if(localStorage.getItem("user_token") !== null) {
+      if(localStorage.getItem("sessionId") !== null) {
         this.$store.dispatch("tradesModule/getTrades", true);
         this.$store.dispatch("tradesModule/getTrades", false);
         this.$router.push({ name: "HomeIn" })

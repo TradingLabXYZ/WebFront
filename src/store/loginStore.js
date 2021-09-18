@@ -3,24 +3,24 @@ import axios from "axios";
 export default {
   namespaced: true,
   state: {
-    token: ""
+    sessionId: ""
   },
   getters: {
-    show: state => {
-      return state.show;
+    show: sessionId => {
+      return state.sessionId;
     }
   },
   mutations: {
-    SET_Token(state, token) {
-      state.token = token;
+    SET_SessionId(state, sessionId) {
+      state.sessionId = sessionId;
     }
   },
   actions: {
-    setToken({commit}) {
-      commit("SET_Token", this.token)
+    setSessionId({commit}) {
+      commit("SET_SessionId", this.sessionId)
     },
-    delToken({commit}) {
-      commit("SET_Token", "")
+    delSessionId({commit}) {
+      commit("SET_SessionId", "")
       localStorage.clear()
     }
   }

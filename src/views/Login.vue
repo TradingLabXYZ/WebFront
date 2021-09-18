@@ -73,14 +73,16 @@
               password: this.password
             }
           }).then(response => {
-            let token = response.data
-            if (token !== "") {
-              localStorage.setItem("user_token", token);
-              this.$store.dispatch("loginModule/setToken");
+            let sessionId = response.data.SessionId;
+            let username = response.data.UserName;
+            if (sessionId !== "") {
+              localStorage.setItem("sessionId", sessionId);
+              localStorage.setItem("username", username);
+              this.$store.dispatch("loginModule/setSessionId");
               let d = new Date();
               d.setTime(d.getTime() + 1000 * 24 * 60 * 60 * 1000);
               let expires = "expires=" + d.toUTCString();
-              document.cookie = "token=" + token + ";" + expires + "; path=/";
+              document.cookie = "sessionId=" + sessionId + ";" + expires + "; path=/";
               this.$router.push({ name: "HomeIn" });
             }
           })
