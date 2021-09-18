@@ -8,8 +8,8 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex';
-  import HomeIn from './views/HomeIn.vue'
+  import { mapState } from "vuex";
+  import HomeIn from "./views/HomeIn.vue"
   export default {
     components: {
       HomeIn
@@ -18,14 +18,14 @@
       ...mapState("loginModule", ["token"])
     },
     mounted: function() {
-      if(localStorage.getItem('user_token') !== null) {
+      if(localStorage.getItem("user_token") !== null) {
         this.$store.dispatch("tradesModule/getTrades", true);
         this.$store.dispatch("tradesModule/getTrades", false);
-        this.$router.push({ name: 'HomeIn' })
+        this.$router.push({ name: "HomeIn" })
       }
       else {
-        this.$router.push({ name: 'HomeOut' })
+        this.$router.push({ name: "HomeOut" })
       }
-    },
+    }
   }
 </script>
