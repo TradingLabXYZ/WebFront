@@ -1,6 +1,6 @@
 import { createStore } from "vuex";
-import loginStore from './loginStore'
-import tradesStore from './tradesStore'
+import loginStore from "./loginStore"
+import tradesStore from "./tradesStore"
 import axios from "axios";
 
 
