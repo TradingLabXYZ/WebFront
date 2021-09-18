@@ -56,18 +56,18 @@
 </template>
 
 <script>
-  import axios from 'axios';
+  import axios from "axios";
     export default {
       components: {},
       data: () => ({
-        email: '',
-        password: '',
+        email: "",
+        password: "",
       }),
       methods: {
         loginUser () {
           axios({
-            method: 'POST',
-            url: import.meta.env.VITE_ROOT_API + '/login',
+            method: "POST",
+            url: import.meta.env.VITE_ROOT_API + "/login",
             data: {
               email: this.email,
               password: this.password
@@ -76,12 +76,12 @@
             let token = response.data
             if (token !== "") {
               localStorage.setItem("user_token", token);
-              this.$store.dispatch('loginModule/setToken');
+              this.$store.dispatch("loginModule/setToken");
               let d = new Date();
               d.setTime(d.getTime() + 1000 * 24 * 60 * 60 * 1000);
               let expires = "expires=" + d.toUTCString();
               document.cookie = "token=" + token + ";" + expires + "; path=/";
-              this.$router.push({ name: 'HomeIn' });
+              this.$router.push({ name: "HomeIn" });
             }
           })
         },

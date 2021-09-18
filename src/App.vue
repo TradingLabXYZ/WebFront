@@ -19,7 +19,8 @@
     },
     mounted: function() {
       if(localStorage.getItem('user_token') !== null) {
-        this.$store.dispatch("loginModule/setToken")
+        this.$store.dispatch("tradesModule/getTrades", true);
+        this.$store.dispatch("tradesModule/getTrades", false);
         this.$router.push({ name: 'HomeIn' })
       }
       else {
