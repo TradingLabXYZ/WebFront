@@ -19,7 +19,12 @@
         </span>
       </div>
       <div class="text-4xl font-semibold text-center text-white row-span-3">
-        {{ totalReturn.toFixed(5) }}
+        <span v-if="userPreferences.returnCurrency == 'BTC'">
+          {{ totalReturn.toFixed(5) }}
+        </span>
+        <span v-else>
+          {{ totalReturn.toFixed(2) }}
+        </span>
       </div>
     </div>
     <div class="grid grid-rows-5">
