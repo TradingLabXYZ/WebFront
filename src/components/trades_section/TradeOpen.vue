@@ -150,6 +150,7 @@
                       <div class="w-full text-center">
                         <label class="text-xs text-gray-400">Quantity</label>
                         <input 
+                          min="0.00000000001"
                           name="formQuantity" 
                           placeholder="Quantity"
                           type="number"
@@ -161,6 +162,7 @@
                       <div class="w-full text-center">
                         <label class="text-xs text-gray-400">Avg Price</label>
                         <input
+                          min="0.00000000001"
                           name="formAvgPrice" 
                           placeholder="Avg Price"
                           type="number"
@@ -172,6 +174,7 @@
                       <div class="w-full text-center">
                         <label class="text-xs text-gray-400">Total</label>
                         <input
+                          min="0.00000000001"
                           name="formTotal" 
                           placeholder="Total"
                           type="number"
@@ -258,9 +261,28 @@
         trade.Roi = tradeStats.Roi; 
         trade.QtyAvailable = tradeStats.QtyAvailable;
       },
+      validate(trade) {
+        var m = [];
+          for (var i in trade.Subtrades) {
+            var tId = parseInt(i) + 1;
+            var tS = trade.Subtrades[i];
+            if (!tS.Quantity || tS.Quantity <= 0) m.push("-Wrong Quantity in subtrade " + tId);
+            if (!tS.AvgPrice || tS.AvgPrice <= 0) m.push("-Wrong AvgPrice in subtrade " + tId);
+            if (!tS.Total || tS.Total <= 0) m.push("-Wrong Total in subtrade " + tId);
+            if (!tS.Reason) m.push("-Reason missing in subtrade " + tId);
+            if (!tS.Type) m.push("-Type missing in subtrade " + tId);
+            if (!tS.Timestamp) m.push("-Wrong Timestamp in subtrade " + tId);
+          }
+        return m;
+      },
       updateTrade(trade) {
-        this.$store.dispatch("tradesModule/updateTrade", trade);
-        this.calculateTradeReturn(trade);
+        var validateMessages = this.validate(trade);
+        if (validateMessages.length <= 0) {
+          this.$store.dispatch("tradesModule/updateTrade", trade);
+          this.calculateTradeReturn(trade);
+        } else {
+          alert("Please check the following errors:\n" + validateMessages.join("\n"));
+        }
       },
       deleteTrade(trade) {
         this.$store.dispatch("tradesModule/deleteTrade", trade.Usertrade);

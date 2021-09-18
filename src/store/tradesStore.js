@@ -187,10 +187,11 @@ export default {
       tempTrades[params.tradeid].Subtrades.splice(params.subtradeid + 1, 0, {
         SubtradeId: next,
         Timestamp: customNow,
-        Type: null,
-        Quantity: 0,
-        AvgPrice: 0,
-        Total: 0
+        Type: "BUY",
+        Reason: "Insert a reason",
+        Quantity: 0.0001,
+        AvgPrice: 0.0001,
+        Total: 0.0001
       });
       if (params.isopen) {
         commit("SET_OpenedTrades", tempTrades);

@@ -59,6 +59,7 @@
         <div class="p-4 grid grid-cols-3">
           <div class="mx-4 border border-gray-300 col-span-1">
             <input
+              min="0.00000000001"
               placeholder="Quantity"
               type="number"
               class="w-full px-2 py-2 text-gray-800"
@@ -66,6 +67,7 @@
           </div>
           <div class="mx-4 border border-gray-300 col-span-1">
             <input
+              min="0.00000000001"
               placeholder="Avg Price"
               type="number"
               class="w-full px-2 py-2 text-gray-800"
@@ -73,6 +75,7 @@
           </div>
           <div class="mx-4 border border-gray-300 col-span-1">
             <input
+              min="0.00000000001"
               placeholder="Total"
               type="number"
               class="w-full px-2 py-2 text-gray-800"
