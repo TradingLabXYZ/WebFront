@@ -9,18 +9,34 @@
           <div class="col-span-3">
             <div class="w-full max-w-xs p-5 m-auto bg-indigo-100 rounded">
               <div>
-                <img src="/src/assets/logo_complimenti.png" alt="Logo" class="w-20 mx-auto mb-5">
+                <img
+                  src="/src/assets/logo_complimenti.png"
+                  alt="Logo"
+                  class="w-20 mx-auto mb-5">
               </div>
               <div>
-                <label class="block mb-2 text-indigo-500">Email</label>
-                <input class="w-full p-2 mb-6 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-300" type="email" v-model="email" required>
+                <label class="block mb-2 text-indigo-500">
+                  Email
+                </label>
+                <input required
+                  class="w-full p-2 mb-6 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-300"
+                  type="email"
+                  v-model="email">
               </div>              
               <div>
-                <label class="block mb-2 text-indigo-500">Password</label>
-                <input class="w-full p-2 mb-6 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-300" type="password" v-model="password" required>
+                <label class="block mb-2 text-indigo-500">
+                  Password
+                </label>
+                <input required
+                  class="w-full p-2 mb-6 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-300"
+                  type="password"
+                  v-model="password">
               </div>           
               <div>          
-                <button class="w-full px-4 py-2 mb-6 font-bold text-white bg-indigo-700 rounded hover:bg-indigo-300" type="submit" @click="loginUser">
+                <button
+                  class="w-full px-4 py-2 mb-6 font-bold text-white bg-indigo-700 rounded hover:bg-indigo-300"
+                  type="submit"
+                  @click="loginUser">
                   Login
                 </button>
               </div>
