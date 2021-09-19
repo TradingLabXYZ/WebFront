@@ -10,8 +10,8 @@
             <div class="w-full max-w-xs p-5 m-auto bg-indigo-100 rounded">
               <div>
                 <img
-                  src="/src/assets/logo_complimenti.png"
-                  alt="Logo"
+                  src="/src/assets/logo.png"
+                  alt="TradingLab"
                   class="w-20 mx-auto mb-5">
               </div>
               <div>

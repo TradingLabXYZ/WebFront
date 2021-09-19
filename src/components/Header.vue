@@ -5,7 +5,7 @@
       <div class="flex justify-between p-4 ml-10">
         <div class="flex items-center">
           <router-link to="/" class="">
-            <img src="/src/assets/logo_complimenti.png" width="50" alt="Logo" class="mr-2">
+            <img src="/src/assets/logo.png" width="50" alt="Logo" class="mr-2">
           </router-link>
         </div>
         <div class="hidden md:block">
@@ -25,8 +25,8 @@
   </div>
     <div v-else class="sticky top-0 z-50 bg-white border-b-2 grid grid-cols-12 gap-4">
       <div class="m-5 col-span-2">
-        <router-link to="/" class="">
-          <img src="/src/assets/logo_complimenti.png" width="50" alt="Logo" class="mr-2">
+        <router-link to="/">
+          <img src="/src/assets/logo.png" width="50" alt="Logo" class="mr-2">
         </router-link>
       </div>
       <div class="col-span-8"></div>
