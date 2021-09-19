@@ -78,7 +78,8 @@
             if (sessionId !== "") {
               localStorage.setItem("sessionId", sessionId);
               localStorage.setItem("username", username);
-              this.$store.dispatch("loginModule/setSessionId");
+              this.$store.dispatch("loginModule/setSessionId", sessionId);
+              this.$store.dispatch("loginModule/setUsername", username);
               let d = new Date();
               d.setTime(d.getTime() + 1000 * 24 * 60 * 60 * 1000);
               let expires = "expires=" + d.toUTCString();
