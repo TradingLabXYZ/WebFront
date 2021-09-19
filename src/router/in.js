@@ -1,14 +1,9 @@
-import HomeIn from '../views/HomeIn.vue'
+import UserTrades from '../views/UserTrades.vue'
 
 export default [
   {
-    path: '/app',
-    name: 'HomeIn',
-    component: HomeIn
-  },
-  {
     path: '/:username',
     name: 'UserTrades',
-    component: HomeIn
+    component: UserTrades
   }
 ]

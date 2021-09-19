@@ -1,5 +1,7 @@
 <template>
-  <button @click="logout" class="p-2 mr-2 text-gray-700 rounded-full hover:text-gray-900 hover:bg-red-200">
+  <button
+    @click="logout"
+    class="p-2 mr-2 text-gray-700 rounded-full hover:text-gray-900 hover:bg-red-200">
     Logout
   </button>
 </template>
@@ -8,8 +10,8 @@
   export default {
     methods: {
       logout() {
-        this.$store.dispatch('loginModule/delToken')
-        this.$router.push({ name: 'HomeOut' }) 
+        this.$store.dispatch("loginModule/delSessionId")
+        this.$router.push({ name: "Home" }) 
       },
     }
   }
