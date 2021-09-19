@@ -7,7 +7,7 @@
           <div class="text-2xl font-bold col-span-1">
             Open Trades
           </div>  
-          <div class="col-span-1" v-if="!isNewTrade">
+          <div class="col-span-1" v-if="isUserProfile && !isNewTrade">
             <button @click="insertTrade()" title="Insert a new trade" class="p-1 ml-4 text-6xl text-gray-400 rounded hover:text-gray-800">
               +
             </button>
@@ -16,7 +16,7 @@
         <div class="col-span-2"></div>
       </div>
       <div class="flex flex-col mt-1">
-        <div v-if="isNewTrade" class="mb-5">
+        <div v-if="isUserProfile && isNewTrade" class="mb-5">
           <div class="mt-5">
             <TradeNew/>
           </div>
@@ -93,13 +93,13 @@
                       <path d="M121.3 34.6c-1.6-1.6-4.2-1.6-5.8 0l-51 51.1-51.1-51.1c-1.6-1.6-4.2-1.6-5.8 0-1.6 1.6-1.6 4.2 0 5.8l53.9 53.9c.8.8 1.8 1.2 2.9 1.2 1 0 2.1-.4 2.9-1.2l53.9-53.9c1.7-1.6 1.7-4.2.1-5.8z"/>
                     </svg>
                   </button>
-                  <button @click="closeTrade(trade)" class="m-2" title="Close trade" type="button">
+                  <button v-if="isUserProfile" @click="closeTrade(trade)" class="m-2" title="Close trade" type="button">
                     <svg class="w-5 h-5 text-gray-500 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 129 129">
                       <path d="M40.5 61.1c-1.6-1.6-4.2-1.6-5.8 0-1.6 1.6-1.6 4.2 0 5.8l18.9 18.9c.8.8 1.8 1.2 2.9 1.2h.2c1.1-.1 2.2-.6 3-1.5L107 28.8c1.4-1.7 1.2-4.3-.5-5.8-1.7-1.4-4.3-1.2-5.8.5L56.2 76.8 40.5 61.1z"/>
                       <path d="M95.1 15.3c-23-14.4-52.5-11-71.7 8.2C.8 46.1.8 83 23.4 105.6a57.94 57.94 0 0 0 82 0c19.3-19.3 22.6-48.9 8.1-71.9-1.2-1.9-3.7-2.5-5.6-1.3-1.9 1.2-2.5 3.7-1.3 5.6 12.5 19.8 9.6 45.2-7 61.8-19.4 19.4-51.1 19.4-70.5 0s-19.4-51.1 0-70.5C45.7 12.8 71 9.9 90.8 22.2c1.9 1.2 4.4.6 5.6-1.3 1.2-1.9.6-4.4-1.3-5.6z"/>
                     </svg>
                   </button>
-                  <button @click="deleteTrade(trade)" class="m-2" title="Delete trade" type="button">
+                  <button v-if="isUserProfile" @click="deleteTrade(trade)" class="m-2" title="Delete trade" type="button">
                     <svg class="w-5 h-5 text-gray-500 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 129 129">
                       <path d="M7.6 121.4c.8.8 1.8 1.2 2.9 1.2s2.1-.4 2.9-1.2l51.1-51.1 51.1 51.1c.8.8 1.8 1.2 2.9 1.2 1 0 2.1-.4 2.9-1.2 1.6-1.6 1.6-4.2 0-5.8L70.3 64.5l51.1-51.1c1.6-1.6 1.6-4.2 0-5.8s-4.2-1.6-5.8 0L64.5 58.7 13.4 7.6C11.8 6 9.2 6 7.6 7.6s-1.6 4.2 0 5.8l51.1 51.1-51.1 51.1c-1.6 1.6-1.6 4.2 0 5.8z"/>
                     </svg>
@@ -119,6 +119,7 @@
                       <div class="w-full text-center">
                         <label class="text-xs text-gray-400">Timestamp</label>
                         <input
+                          :disabled="!isUserProfile"
                           name="formTimestamp" 
                           placeholder="Timestamp"
                           type="datetime-local"
@@ -129,6 +130,7 @@
                       <div class="w-full text-center">
                        <label class="text-xs text-gray-400">Type</label>
                         <select
+                          :disabled="!isUserProfile"
                           name="formType" 
                           class="w-full text-center text-gray-600 bg-white"
                           v-model="subtrade.Type"
@@ -140,6 +142,7 @@
                       <div class="w-full text-center">
                         <label class="text-xs text-gray-400">Reason</label>
                         <input
+                          :disabled="!isUserProfile"
                           name="formReason" 
                           placeholder="Insert a reason" 
                           type="text"
@@ -150,6 +153,7 @@
                       <div class="w-full text-center">
                         <label class="text-xs text-gray-400">Quantity</label>
                         <input 
+                          :disabled="!isUserProfile"
                           min="0.00000000001"
                           name="formQuantity" 
                           placeholder="Quantity"
@@ -162,6 +166,7 @@
                       <div class="w-full text-center">
                         <label class="text-xs text-gray-400">Avg Price</label>
                         <input
+                          :disabled="!isUserProfile"
                           min="0.00000000001"
                           name="formAvgPrice" 
                           placeholder="Avg Price"
@@ -174,6 +179,7 @@
                       <div class="w-full text-center">
                         <label class="text-xs text-gray-400">Total</label>
                         <input
+                          :disabled="!isUserProfile"
                           min="0.00000000001"
                           name="formTotal" 
                           placeholder="Total"
@@ -184,12 +190,12 @@
                           @change="updateTrade(trade)">
                       </div>
                       <div class="flex text-center">
-                        <button @click="removeSubtrade(trade, q, i)" title="Delete subtrade" type="button">
+                        <button v-if="isUserProfile" @click="removeSubtrade(trade, q, i)" title="Delete subtrade" type="button">
                           <svg class="w-8 h-8 text-gray-500 fill-current" xmlns="http://www.w3.org/2000/svg">
                             <path d="M13.414 12l4.95-4.95a1 1 0 00-1.414-1.414L12 10.586l-4.95-4.95A1 1 0 005.636 7.05l4.95 4.95-4.95 4.95a1 1 0 001.414 1.414l4.95-4.95 4.95 4.95a1 1 0 001.414-1.414z"/>
                           </svg>
                         </button>
-                        <button @click="insertSubtrade(q, i)" title="Insert subtrade" type="button">
+                        <button v-if="isUserProfile" @click="insertSubtrade(q, i)" title="Insert subtrade" type="button">
                           <svg class="w-8 h-8 text-gray-500 fill-current" xmlns="http://www.w3.org/2000/svg">
                             <path d="M6 12h6m6 0h-6m0 0V6m0 6v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                           </svg>
@@ -215,6 +221,7 @@
   export default {
     data: function() {
       return {
+        isUserProfile: false,
         isNewTrade: false,
         opened: [],
       }
@@ -223,7 +230,13 @@
       ...mapState("tradesModule", ["openedTrades"])
     },
     created: function() {
-      this.$store.dispatch('tradesModule/getTrades', true); 
+      if (this.$route.params.username == this.$store.getters["loginModule/username"]) {
+        this.isUserProfile = true;
+      };
+      this.$store.dispatch( "tradesModule/getTrades", {
+        isopen: true,
+        username: this.$route.params.username
+      }); 
     },
     mounted: function () {
       window.setInterval(() => {
@@ -299,8 +312,14 @@
             url: import.meta.env.VITE_ROOT_API + "/close_trade/" + trade.Usertrade,
           }).then(response => {
             if (response.status === 200) {
-              this.$store.dispatch('tradesModule/getTrades', true);
-              this.$store.dispatch('tradesModule/getTrades', false);
+              this.$store.dispatch( "tradesModule/getTrades", {
+                isopen: true,
+                username: this.$store.getters["loginModule/username"]
+              }); 
+              this.$store.dispatch( "tradesModule/getTrades", {
+                isopen: false,
+                username: this.$store.getters["loginModule/username"]
+              }); 
             }
           }).catch(function (error) {
             console.log(error);

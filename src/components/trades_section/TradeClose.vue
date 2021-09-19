@@ -60,12 +60,21 @@
                   {{ trade.Roi.toFixed(2) + "%" }}
                 </td>
                 <td class="py-4 text-center text-gray-500 text-md">
-                  <button @click="toggle(trade.Id)" class="m-2" title="Expand/Collapse trade" type="button">
+                  <button
+                    @click="toggle(trade.Id)"
+                    class="m-2"
+                    title="Expand/Collapse trade"
+                    type="button">
                     <svg class="w-5 h-5 text-gray-500 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 129 129">
                       <path d="M121.3 34.6c-1.6-1.6-4.2-1.6-5.8 0l-51 51.1-51.1-51.1c-1.6-1.6-4.2-1.6-5.8 0-1.6 1.6-1.6 4.2 0 5.8l53.9 53.9c.8.8 1.8 1.2 2.9 1.2 1 0 2.1-.4 2.9-1.2l53.9-53.9c1.7-1.6 1.7-4.2.1-5.8z"/>
                     </svg>
                   </button>
-                    <button @click="openTrade(trade)" class="m-2" title="Re-open trade" type="button">
+                    <button
+                      v-if="isUserProfile"
+                      @click="openTrade(trade)"
+                      class="m-2"
+                      title="Re-open trade"
+                      type="button">
                     <svg class="w-5 h-5 text-gray-500 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 129 129">
                       <path d="M40.5 61.1c-1.6-1.6-4.2-1.6-5.8 0-1.6 1.6-1.6 4.2 0 5.8l18.9 18.9c.8.8 1.8 1.2 2.9 1.2h.2c1.1-.1 2.2-.6 3-1.5L107 28.8c1.4-1.7 1.2-4.3-.5-5.8-1.7-1.4-4.3-1.2-5.8.5L56.2 76.8 40.5 61.1z"/>
                       <path d="M95.1 15.3c-23-14.4-52.5-11-71.7 8.2C.8 46.1.8 83 23.4 105.6a57.94 57.94 0 0 0 82 0c19.3-19.3 22.6-48.9 8.1-71.9-1.2-1.9-3.7-2.5-5.6-1.3-1.9 1.2-2.5 3.7-1.3 5.6 12.5 19.8 9.6 45.2-7 61.8-19.4 19.4-51.1 19.4-70.5 0s-19.4-51.1 0-70.5C45.7 12.8 71 9.9 90.8 22.2c1.9 1.2 4.4.6 5.6-1.3 1.2-1.9.6-4.4-1.3-5.6z"/>
@@ -166,14 +175,21 @@
   export default {
     data: function() {
       return {
-        opened: [],
+        isUserProfile: false,
+        opened: []
       }
     },
     computed: {
       ...mapState("tradesModule", ["closedTrades"])
     },
     created: function() {
-      this.$store.dispatch('tradesModule/getTrades', false);
+      if (this.$route.params.username == this.$store.getters["loginModule/username"]) {
+        this.isUserProfile = true;
+      };
+      this.$store.dispatch( "tradesModule/getTrades", {
+        isopen: false,
+        username: this.$route.params.username
+      }); 
     },
     methods: {
       openTrade(trade) {
@@ -188,8 +204,14 @@
             url: import.meta.env.VITE_ROOT_API + "/open_trade/" + trade.Usertrade,
           }).then(response => {
             if (response.status === 200) {
-              this.$store.dispatch('tradesModule/getTrades', true);
-              this.$store.dispatch('tradesModule/getTrades', false);
+              this.$store.dispatch( "tradesModule/getTrades", {
+                isopen: true,
+                username: this.$store.getters["loginModule/username"]
+              }); 
+              this.$store.dispatch( "tradesModule/getTrades", {
+                isopen: false,
+                username: this.$store.getters["loginModule/username"]
+              }); 
             }
           }).catch(function (error) {
             console.log(error);

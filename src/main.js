@@ -19,7 +19,6 @@ import Footer from "./components/Footer.vue"
 import HeaderIn from "./components/HeaderIn.vue"
 import ButtonLogout from "./components/buttons/Logout.vue"
 
-import Trade from "./components/trades_section/Trade.vue"
 import TradeHero from "./components/trades_section/TradeHero.vue"
 import TradeOpen from "./components//trades_section/TradeOpen.vue"
 import TradeClose from "./components/trades_section/TradeClose.vue"
@@ -32,7 +31,6 @@ app.component("Footer", Footer)
 app.component("HeaderIn", HeaderIn)
 app.component("ButtonLogout", ButtonLogout)
 
-app.component("Trade", Trade)
 app.component("TradeHero", TradeHero)
 app.component("TradeOpen", TradeOpen)
 app.component("TradeClose", TradeClose)

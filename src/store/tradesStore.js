@@ -44,14 +44,16 @@ export default {
     }    
   },
   actions: {
-    getTrades ({commit, dispatch}, isopen) {
+    getTrades ({commit, dispatch}, params) {
+      var isopen = params.isopen;
+      var username = params.username;
       axios({
         method: "GET",
         headers: {
           Authorization: "Bearer " + document.cookie,
           "Access-Control-Allow-Origin": "*",
         },
-        url: import.meta.env.VITE_ROOT_API + "/select_trades/" + isopen
+        url: import.meta.env.VITE_ROOT_API + "/select_trades/" + username + "/" + isopen
       }).then(response => {
         if (response.status === 200) {
           if (isopen) {
@@ -146,7 +148,7 @@ export default {
       var totalRoi = ((tempTotalFutureReturn + tempTotalSells) / tempTotalBuys - 1) * 100;
       commit("SET_TotalRoi", totalRoi);
     },
-    deleteTrade({commit, dispatch}, tradeid) {
+    deleteTrade({commit, dispatch, getters}, tradeid) {
       var answer = window.confirm("Are you sure deleting this trade?");
       if (answer) {
         axios({
@@ -158,8 +160,14 @@ export default {
           url: import.meta.env.VITE_ROOT_API + "/delete_trade/" + tradeid,
         }).then(response => {
           if (response.status === 200) {
-            dispatch("getTrades", true);
-            dispatch("getTrades", false);
+            dispatch( "getTrades", {
+              isopen: false,
+              username: getters.username
+            }); 
+            dispatch( "getTrades", {
+              isopen: true,
+              username: getters.username
+            }); 
           }
         }).catch(function (error) {
           console.log(error);
