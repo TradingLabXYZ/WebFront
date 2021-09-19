@@ -83,7 +83,12 @@
               d.setTime(d.getTime() + 1000 * 24 * 60 * 60 * 1000);
               let expires = "expires=" + d.toUTCString();
               document.cookie = "sessionId=" + sessionId + ";" + expires + "; path=/";
-              this.$router.push({ name: "HomeIn" });
+              this.$router.push({
+                name: "UserTrades",
+                params: {
+                  username: username
+                }
+              })
             }
           })
         },
