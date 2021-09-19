@@ -1,6 +1,6 @@
 <template>
   <div>
-    <HeaderIn/>
+    <Header/>
     <TradeHero/>
     <TradeOpen/>
     <TradeClose class="mb-20"/>

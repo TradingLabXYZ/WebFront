@@ -16,7 +16,6 @@ import Header from "./components/Header.vue"
 import Hero from "./components/Hero.vue"
 import Footer from "./components/Footer.vue"
 
-import HeaderIn from "./components/HeaderIn.vue"
 import ButtonLogout from "./components/buttons/Logout.vue"
 
 import TradeHero from "./components/trades_section/TradeHero.vue"
@@ -28,7 +27,6 @@ app.component("Header", Header)
 app.component("Hero", Hero)
 app.component("Footer", Footer)
 
-app.component("HeaderIn", HeaderIn)
 app.component("ButtonLogout", ButtonLogout)
 
 app.component("TradeHero", TradeHero)
