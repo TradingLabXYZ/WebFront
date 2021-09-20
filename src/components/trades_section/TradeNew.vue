@@ -13,16 +13,22 @@
             v-model="newTrade.Exchange">
         </div>
         <div class="mx-4 bg-white border border-gray-200 rounded col-span-1">
-          <input
-            placeholder="First Pair"
-            class="w-full p-2 text-gray-800"
+          <select
+            class="w-full h-10 text-gray-800 bg-white"
             v-model="newTrade.FirstPair">
+              <option v-for="pair in cryptoPairs" :value="pair">
+                {{ pair }}
+              </option>
+          </select>
         </div>
         <div class="mx-4 bg-white border border-gray-200 rounded col-span-1">
-          <input
-            placeholder="Second Pair"
-            class="w-full p-2 text-gray-800"
+          <select
+            class="w-full h-10 text-gray-800 bg-white"
             v-model="newTrade.SecondPair">
+              <option v-for="pair in cryptoPairs" :value="pair">
+                {{ pair }}
+              </option>
+          </select>
         </div>
       </div>
       <div v-for="(subtrade, i) in newTrade.Subtrades" :key="subtrade.Timestamp" class="m-3 bg-gray-200">
@@ -39,14 +45,14 @@
           </div>
           <div class="mx-4 border border-gray-300 col-span-1">
             <select
-              class="w-full h-10 text-gray-800 bg-white"
-              v-model="subtrade.Type">
-                <option value="BUY">
-                  BUY
-                </option>
-                <option value="SELL">
-                  SELL
-                </option>
+            class="w-full h-10 text-gray-800 bg-white"
+            v-model="subtrade.Type">
+              <option value="BUY">
+                BUY
+              </option>
+              <option value="SELL">
+                SELL
+              </option>
             </select>
           </div>
           <div class="mx-4 border border-gray-300 col-span-3">
@@ -119,6 +125,7 @@
   export default {
     data: function() {
       return {
+        cryptoPairs: [],
         newTrade: {
           Exchange: null,
           FirstPair: null,
@@ -135,6 +142,9 @@
           ]
         }
       }
+    },
+    created: function() {
+      this.getPairs();
     },
     methods: {
       addSubtrade() {
@@ -171,6 +181,22 @@
             if (!tS.Timestamp) m.push("-Wrong Timestamp in subtrade " + tId);
           }
         return m;
+      },
+      getPairs() {
+        axios({
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + document.cookie,
+            "Access-Control-Allow-Origin": "*",
+          },
+          url: import.meta.env.VITE_ROOT_API + "/get_pairs",
+        }).then(response => {
+          if (response.status === 200) {
+            this.cryptoPairs = response.data;
+          }
+        }).catch(function (error) {
+          console.log(error);
+        })
       },
       confirmInsertTrade() {
         var validateMessages = this.validate();
