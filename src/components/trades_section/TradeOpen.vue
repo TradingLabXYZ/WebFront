@@ -61,10 +61,10 @@
                   {{ trade.Exchange }}
                 </td>
                 <td class="py-4 text-center text-gray-500 text-md">
-                  {{ trade.FirstPair }}
+                  {{ trade.FirstPairSymbol }}
                 </td>
                 <td class="py-4 text-center text-gray-500 text-md">
-                  {{ trade.SecondPair }}
+                  {{ trade.SecondPairSymbol }}
                 </td>
                 <td class="py-4 text-center text-gray-500 text-md">
                   {{ trade.CurrentPrice.toFixed(5) }}
@@ -246,8 +246,8 @@
       getPrice() {
         let promises = [];
         for (var i in this.openedTrades) {
-          var first_pair = this.openedTrades[i].FirstPair;
-          var second_pair = this.openedTrades[i].SecondPair;
+          var first_pair_id = this.openedTrades[i].FirstPairId;
+          var second_pair_id = this.openedTrades[i].SecondPairId;
           promises.push(
             axios({
               method: "GET",
@@ -255,7 +255,7 @@
                 Authorization: "Bearer " + document.cookie,
                 "Access-Control-Allow-Origin": "*",
               },
-              url: import.meta.env.VITE_ROOT_API + "/get_price/" + first_pair + "/" + second_pair,
+              url: import.meta.env.VITE_ROOT_API + "/get_price/" + first_pair_id + "/" + second_pair_id,
             })
           )
         }

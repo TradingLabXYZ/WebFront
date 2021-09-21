@@ -16,18 +16,22 @@
           <select
             class="w-full h-10 text-gray-800 bg-white"
             v-model="newTrade.FirstPair">
-              <option v-for="pair in cryptoPairs" :value="pair">
-                {{ pair }}
-              </option>
+            <option
+              v-for="(key, value) in cryptoPairs" 
+              :value="value">
+              {{ key.Symbol }} - {{ value }}
+            </option>
           </select>
         </div>
         <div class="mx-4 bg-white border border-gray-200 rounded col-span-1">
           <select
             class="w-full h-10 text-gray-800 bg-white"
             v-model="newTrade.SecondPair">
-              <option v-for="pair in cryptoPairs" :value="pair">
-                {{ pair }}
-              </option>
+            <option
+              v-for="(key, value) in cryptoPairs" 
+              :value="value">
+              {{ key.Symbol }} - {{ value }}
+            </option>
           </select>
         </div>
       </div>
@@ -125,7 +129,7 @@
   export default {
     data: function() {
       return {
-        cryptoPairs: [],
+        cryptoPairs: {},
         newTrade: {
           Exchange: null,
           FirstPair: null,
@@ -201,6 +205,8 @@
       confirmInsertTrade() {
         var validateMessages = this.validate();
         if (validateMessages.length <= 0) {
+          this.newTrade.FirstPair = this.cryptoPairs[this.newTrade.FirstPair].CoinId;
+          this.newTrade.SecondPair = this.cryptoPairs[this.newTrade.SecondPair].CoinId;
           axios({
             method: "POST",
             headers: {
@@ -213,7 +219,14 @@
             if (response.status === 200) {
               this.newTrade = {};
               this.cancelInsertTrade();
-              this.$store.dispatch('tradesModule/getTrades', true);
+              this.$store.dispatch("tradesModule/getTrades", {
+                isopen: false,
+                username: this.$store.getters["loginModule/username"]
+              });
+              this.$store.dispatch("tradesModule/getTrades", {
+                isopen: true,
+                username: this.$store.getters["loginModule/username"]
+              });
             }
           }).catch(function (error) {
             console.log(error);
