@@ -99,16 +99,14 @@
                           placeholder="Timestamp"
                           type="datetime-local"
                           class="w-full text-center text-gray-600 bg-white"
-                          v-model="subtrade.Timestamp"
-                          @change="updateTrade(trade)">
+                          v-model="subtrade.Timestamp">
                       </div>
                       <div class="w-full text-center">
                        <label class="text-xs text-gray-400">Type</label>
                         <select disabled
                           name="formType" 
                           class="w-full text-center text-gray-600 bg-white"
-                          v-model="subtrade.Type"
-                          @change="updateTrade(trade)">
+                          v-model="subtrade.Type">
                           <option value="BUY">BUY</option>
                           <option value="SELL">SELL</option>
                         </select>
@@ -120,8 +118,7 @@
                           placeholder="Insert a reason" 
                           type="text"
                           class="w-full text-center text-gray-600 bg-white"
-                          v-model="subtrade.Reason"
-                          @change="updateTrade(trade)">
+                          v-model="subtrade.Reason">
                       </div>
                       <div class="w-full text-center">
                         <label class="text-xs text-gray-400">Quantity</label>
@@ -131,8 +128,7 @@
                           type="number"
                           step="any"
                           class="w-full text-center text-gray-600 bg-white"
-                          v-model="subtrade.Quantity"
-                          @change="updateTrade(trade)">
+                          v-model="subtrade.Quantity">
                       </div>
                       <div class="w-full text-center">
                         <label class="text-xs text-gray-400">Avg Price</label>
@@ -142,8 +138,7 @@
                           type="number"
                           step="any"
                           class="w-full text-center text-gray-600 bg-white"
-                          v-model="subtrade.AvgPrice"
-                          @change="updateTrade(trade)">
+                          v-model="subtrade.AvgPrice">
                       </div>
                       <div class="w-full text-center">
                         <label class="text-xs text-gray-400">Total</label>
@@ -153,8 +148,7 @@
                           type="number"
                           step="any"
                           class="w-full text-center text-gray-600 bg-white"
-                          v-model="subtrade.Total"
-                          @change="updateTrade(trade)">
+                          v-model="subtrade.Total">
                       </div>
                     </form>
                   </div>
