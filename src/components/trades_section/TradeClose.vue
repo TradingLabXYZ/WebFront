@@ -45,15 +45,15 @@
                   {{ trade.Exchange }}
                 </td>
                 <td class="py-4 text-center text-gray-500 text-md">
-                  {{ trade.FirstPair }}
+                  {{ trade.FirstPairSymbol }}
                 </td>
                 <td class="py-4 text-center text-gray-500 text-md">
-                  {{ trade.SecondPair }}
+                  {{ trade.SecondPairSymbol }}
                 </td>
                 <td class="py-4 text-center text-gray-500 text-md">
                   {{ trade.TotalReturn.toFixed(5) }}
                   <span class="text-xs">
-                    {{ trade.FirstPair }}
+                    {{ trade.FirstPairSymbol }}
                   </span>
                 </td>
                 <td class="py-4 text-center text-gray-500 text-md" :class="trade.Roi > 0 ? 'bg-green-100' : 'bg-red-100'">
