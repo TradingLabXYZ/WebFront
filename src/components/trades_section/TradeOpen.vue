@@ -8,7 +8,10 @@
             Open Trades
           </div>  
           <div class="col-span-1" v-if="isUserProfile && !isNewTrade">
-            <button @click="insertTrade()" title="Insert a new trade" class="p-1 ml-4 text-6xl text-gray-400 rounded hover:text-gray-800">
+            <button
+              @click="insertTrade()"
+              title="Insert a new trade"
+              class="p-1 ml-4 text-6xl text-gray-400 rounded hover:text-gray-800">
               +
             </button>
           </div>
@@ -55,7 +58,7 @@
             <template v-for="(trade, q) in openedTrades" :key="trade.Usertrade"> 
               <tr>
                 <td class="py-4 text-center text-gray-500 text-md">
-                  {{ trade.Usertrade }}
+                  {{ trade.Id }}
                 </td>
                 <td class="py-4 text-center text-gray-500 text-md">
                   {{ trade.Exchange }}
