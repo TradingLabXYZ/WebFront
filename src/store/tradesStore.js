@@ -72,22 +72,6 @@ export default {
     updateTrade({commit, dispatch}, trade) {
       dispatch("calculateTotalReturn");
       dispatch("calculateTotalRoi");
-      // For numerical inputs, if value is empty, set it as 0
-      for (var i in trade.Subtrades) {
-        for (var q in trade.Subtrades[i]) {
-          if (["Quantity", "AvgPrice", "Total"].includes(q)) {
-            if (trade.Subtrades[i][q] == "") {
-              trade.Subtrades[i][q] = 0;
-            }
-          }
-          if (["Timestamp"].includes(q)) {
-            if (trade.Subtrades[i][q] == "") {
-              var now_timestamp = new Date();
-              trade.Subtrades[i][q] = now_timestamp;
-            }
-          }
-        }
-      }
       axios({
         method: "POST",
         headers: {
@@ -98,6 +82,7 @@ export default {
         data: trade
       }).then(response => {
         if (response.status === 200) {
+          console.log("Trade Updated");
         }
       }).catch(function (error) {
         console.log(error);
@@ -175,14 +160,9 @@ export default {
       }
     },
     insertSubtrade({commit, getters}, params) {
-      if (params.isopen) {
-        var tempTrades = getters.openedTrades;
-      } else {
-        var tempTrades = getters.closedTrades;
-      }
       var next = 1;
-      for (var i in tempTrades[params.tradeid].Subtrades) {
-        if (tempTrades[params.tradeid].Subtrades[i].SubtradeId >= next) {
+      for (var i in getters.openedTrades[params.tradeid].Subtrades) {
+        if (getters.openedTrades[params.tradeid].Subtrades[i].SubtradeId >= next) {
           next = next + 1
         }
       }
@@ -192,7 +172,7 @@ export default {
         ('0' + now.getDate()).slice(-2) + "T" + 
         ('0' + (now.getHours())).slice(-2)  + ":" + 
         ('0' + (now.getMinutes())).slice(-2);
-      tempTrades[params.tradeid].Subtrades.splice(params.subtradeid + 1, 0, {
+      getters.openedTrades[params.tradeid].Subtrades.splice(params.subtradeid + 1, 0, {
         SubtradeId: next,
         Timestamp: customNow,
         Type: "BUY",
@@ -201,29 +181,19 @@ export default {
         AvgPrice: 0.0001,
         Total: 0.0001
       });
-      if (params.isopen) {
-        commit("SET_OpenedTrades", tempTrades);
-      } else {
-        commit("SET_ClosedTrades", tempTrades);
-      }
     },
     removeSubtrade({commit, getters, dispatch}, params) {
-      if (params.isopen) {
-        var tempTrades = getters.openedTrades;
-      } else {
-        var tempTrades = getters.closedTrades;
-      }
       var answer = window.confirm("Are you sure deleting this subtrade?");
       if (answer) {
-        tempTrades[params.tradeid].Subtrades.splice(params.subtradeid, 1);
+        getters.openedTrades[params.tradeid].Subtrades.splice(params.subtradeid, 1);
       }
-      if (tempTrades[params.tradeid].Subtrades.length == 0) {
+      if (getters.openedTrades[params.tradeid].Subtrades.length == 0) {
         dispatch("insertSubtrade", {
-          "isopen": true, 
-          "tradeid": params.tradeid
+          "tradeid": params.tradeid,
+          "subtradeid": 0
         });
       }
-      dispatch("updateTrade", tempTrades[params.tradeid]);
+      dispatch("updateTrade", getters.openedTrades[params.tradeid]);
     }
   }
 }

@@ -58,7 +58,7 @@
             <template v-for="(trade, q) in openedTrades" :key="trade.Id"> 
               <tr>
                 <td class="py-4 text-center text-gray-500 text-md">
-                  {{ trade.Id }}
+                  {{ q + 1 }}
                 </td>
                 <td class="py-4 text-center text-gray-500 text-md">
                   {{ trade.Exchange }}
@@ -193,7 +193,7 @@
                           @change="updateTrade(trade)">
                       </div>
                       <div class="flex text-center">
-                        <button v-if="isUserProfile" @click="removeSubtrade(trade, q, i)" title="Delete subtrade" type="button">
+                        <button v-if="isUserProfile" @click="removeSubtrade(q, i)" title="Delete subtrade" type="button">
                           <svg class="w-8 h-8 text-gray-500 fill-current" xmlns="http://www.w3.org/2000/svg">
                             <path d="M13.414 12l4.95-4.95a1 1 0 00-1.414-1.414L12 10.586l-4.95-4.95A1 1 0 005.636 7.05l4.95 4.95-4.95 4.95a1 1 0 001.414 1.414l4.95-4.95 4.95 4.95a1 1 0 001.414-1.414z"/>
                           </svg>
@@ -331,15 +331,12 @@
       },
       insertSubtrade(q, i) {
         this.$store.dispatch("tradesModule/insertSubtrade", {
-          "isopen": true, 
           "tradeid": q,
           "subtradeid": i
         });
       },
-      removeSubtrade(trade, q, i) {
+      removeSubtrade(q, i) {
         this.$store.dispatch("tradesModule/removeSubtrade", {
-          "isopen": true,
-          "trade": trade, 
           "tradeid": q,
           "subtradeid": i
         });

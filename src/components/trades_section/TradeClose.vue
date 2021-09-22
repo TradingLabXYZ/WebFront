@@ -39,7 +39,7 @@
             <template v-for="(trade, q) in closedTrades" :key="trade.Id"> 
               <tr>
                 <td class="py-4 text-center text-gray-500 text-md">
-                  {{ trade.Id }}
+                  {{ q + 1 }}
                 </td>
                 <td class="py-4 text-center text-gray-500 text-md">
                   {{ trade.Exchange }}
