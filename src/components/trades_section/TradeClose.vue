@@ -39,7 +39,7 @@
             <template v-for="(trade, q) in closedTrades" :key="trade.Id"> 
               <tr>
                 <td class="py-4 text-center text-gray-500 text-md">
-                  {{ trade.Usertrade }}
+                  {{ trade.Id }}
                 </td>
                 <td class="py-4 text-center text-gray-500 text-md">
                   {{ trade.Exchange }}
@@ -195,7 +195,7 @@
               Authorization: "Bearer " + document.cookie,
               "Access-Control-Allow-Origin": "*",
             },
-            url: import.meta.env.VITE_ROOT_API + "/open_trade/" + trade.Usertrade,
+            url: import.meta.env.VITE_ROOT_API + "/open_trade/" + trade.Id,
           }).then(response => {
             if (response.status === 200) {
               this.$store.dispatch( "tradesModule/getTrades", {

@@ -148,7 +148,7 @@ export default {
       var totalRoi = ((tempTotalFutureReturn + tempTotalSells) / tempTotalBuys - 1) * 100;
       commit("SET_TotalRoi", totalRoi);
     },
-    deleteTrade({commit, dispatch, getters}, tradeid) {
+    deleteTrade({commit, dispatch, rootGetters}, tradeid) {
       var answer = window.confirm("Are you sure deleting this trade?");
       if (answer) {
         axios({
@@ -162,11 +162,11 @@ export default {
           if (response.status === 200) {
             dispatch( "getTrades", {
               isopen: false,
-              username: getters.username
+              username: rootGetters['loginModule/username']
             }); 
             dispatch( "getTrades", {
               isopen: true,
-              username: getters.username
+              username: rootGetters['loginModule/username']
             }); 
           }
         }).catch(function (error) {

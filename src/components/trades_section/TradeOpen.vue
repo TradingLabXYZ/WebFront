@@ -55,7 +55,7 @@
             </tr>
           </thead>
           <tbody class="">
-            <template v-for="(trade, q) in openedTrades" :key="trade.Usertrade"> 
+            <template v-for="(trade, q) in openedTrades" :key="trade.Id"> 
               <tr>
                 <td class="py-4 text-center text-gray-500 text-md">
                   {{ trade.Id }}
@@ -301,7 +301,7 @@
         }
       },
       deleteTrade(trade) {
-        this.$store.dispatch("tradesModule/deleteTrade", trade.Usertrade);
+        this.$store.dispatch("tradesModule/deleteTrade", trade.Id);
       },
       closeTrade(trade) {
         var answer = window.confirm("Are you sure closing this trade?");
@@ -312,7 +312,7 @@
               Authorization: "Bearer " + document.cookie,
               "Access-Control-Allow-Origin": "*",
             },
-            url: import.meta.env.VITE_ROOT_API + "/close_trade/" + trade.Usertrade,
+            url: import.meta.env.VITE_ROOT_API + "/close_trade/" + trade.Id,
           }).then(response => {
             if (response.status === 200) {
               this.$store.dispatch( "tradesModule/getTrades", {
