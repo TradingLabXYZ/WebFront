@@ -69,25 +69,6 @@ export default {
         console.log(error);
       })
     },
-    updateTrade({commit, dispatch}, trade) {
-      dispatch("calculateTotalReturn");
-      dispatch("calculateTotalRoi");
-      axios({
-        method: "POST",
-        headers: {
-          Authorization: "Bearer " + document.cookie,
-          "Access-Control-Allow-Origin": "*",
-        },
-        url: import.meta.env.VITE_ROOT_API + "/update_trade",
-        data: trade
-      }).then(response => {
-        if (response.status === 200) {
-          console.log("Trade Updated");
-        }
-      }).catch(function (error) {
-        console.log(error);
-      })
-    },
     calculateTotalReturn({commit, getters}) {
       var tempTotalReturn = 0;
       var tempTotalTrades = [getters.openedTrades, getters.closedTrades];
@@ -132,68 +113,6 @@ export default {
       }
       var totalRoi = ((tempTotalFutureReturn + tempTotalSells) / tempTotalBuys - 1) * 100;
       commit("SET_TotalRoi", totalRoi);
-    },
-    deleteTrade({commit, dispatch, rootGetters}, tradeid) {
-      var answer = window.confirm("Are you sure deleting this trade?");
-      if (answer) {
-        axios({
-          method: "GET",
-          headers: {
-            Authorization: "Bearer " + document.cookie,
-            "Access-Control-Allow-Origin": "*",
-          },
-          url: import.meta.env.VITE_ROOT_API + "/delete_trade/" + tradeid,
-        }).then(response => {
-          if (response.status === 200) {
-            dispatch( "getTrades", {
-              isopen: false,
-              username: rootGetters['loginModule/username']
-            }); 
-            dispatch( "getTrades", {
-              isopen: true,
-              username: rootGetters['loginModule/username']
-            }); 
-          }
-        }).catch(function (error) {
-          console.log(error);
-        })
-      }
-    },
-    insertSubtrade({commit, getters}, params) {
-      var next = 1;
-      for (var i in getters.openedTrades[params.tradeid].Subtrades) {
-        if (getters.openedTrades[params.tradeid].Subtrades[i].SubtradeId >= next) {
-          next = next + 1
-        }
-      }
-      var now = new Date();
-      var customNow = now.getFullYear() + "-" + 
-        ('0' + (now.getMonth()+1)).slice(-2)  + "-" + 
-        ('0' + now.getDate()).slice(-2) + "T" + 
-        ('0' + (now.getHours())).slice(-2)  + ":" + 
-        ('0' + (now.getMinutes())).slice(-2);
-      getters.openedTrades[params.tradeid].Subtrades.splice(params.subtradeid + 1, 0, {
-        SubtradeId: next,
-        Timestamp: customNow,
-        Type: "BUY",
-        Reason: "Insert a reason",
-        Quantity: 0.0001,
-        AvgPrice: 0.0001,
-        Total: 0.0001
-      });
-    },
-    removeSubtrade({commit, getters, dispatch}, params) {
-      var answer = window.confirm("Are you sure deleting this subtrade?");
-      if (answer) {
-        getters.openedTrades[params.tradeid].Subtrades.splice(params.subtradeid, 1);
-      }
-      if (getters.openedTrades[params.tradeid].Subtrades.length == 0) {
-        dispatch("insertSubtrade", {
-          "tradeid": params.tradeid,
-          "subtradeid": 0
-        });
-      }
-      dispatch("updateTrade", getters.openedTrades[params.tradeid]);
     }
   }
 }

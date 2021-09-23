@@ -91,18 +91,32 @@
                   {{ trade.Roi.toFixed(2) + "%" }}
                 </td>
                 <td class="py-4 text-center text-gray-500 text-md">
-                  <button @click="toggle(trade.Id)" class="m-2" title="Expand/Collapse trade" type="button">
+                  <button
+                    @click="toggle(trade.Id)"
+                    class="m-2"
+                    title="Expand/Collapse trade"
+                    type="button">
                     <svg class="w-5 h-5 text-gray-500 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 129 129">
                       <path d="M121.3 34.6c-1.6-1.6-4.2-1.6-5.8 0l-51 51.1-51.1-51.1c-1.6-1.6-4.2-1.6-5.8 0-1.6 1.6-1.6 4.2 0 5.8l53.9 53.9c.8.8 1.8 1.2 2.9 1.2 1 0 2.1-.4 2.9-1.2l53.9-53.9c1.7-1.6 1.7-4.2.1-5.8z"/>
                     </svg>
                   </button>
-                  <button v-if="isUserProfile" @click="closeTrade(trade)" class="m-2" title="Close trade" type="button">
+                  <button
+                    v-if="isUserProfile"
+                    @click="closeTrade(trade)"
+                    class="m-2"
+                    title="Close trade"
+                    type="button">
                     <svg class="w-5 h-5 text-gray-500 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 129 129">
                       <path d="M40.5 61.1c-1.6-1.6-4.2-1.6-5.8 0-1.6 1.6-1.6 4.2 0 5.8l18.9 18.9c.8.8 1.8 1.2 2.9 1.2h.2c1.1-.1 2.2-.6 3-1.5L107 28.8c1.4-1.7 1.2-4.3-.5-5.8-1.7-1.4-4.3-1.2-5.8.5L56.2 76.8 40.5 61.1z"/>
                       <path d="M95.1 15.3c-23-14.4-52.5-11-71.7 8.2C.8 46.1.8 83 23.4 105.6a57.94 57.94 0 0 0 82 0c19.3-19.3 22.6-48.9 8.1-71.9-1.2-1.9-3.7-2.5-5.6-1.3-1.9 1.2-2.5 3.7-1.3 5.6 12.5 19.8 9.6 45.2-7 61.8-19.4 19.4-51.1 19.4-70.5 0s-19.4-51.1 0-70.5C45.7 12.8 71 9.9 90.8 22.2c1.9 1.2 4.4.6 5.6-1.3 1.2-1.9.6-4.4-1.3-5.6z"/>
                     </svg>
                   </button>
-                  <button v-if="isUserProfile" @click="deleteTrade(trade)" class="m-2" title="Delete trade" type="button">
+                  <button
+                    v-if="isUserProfile"
+                    @click="deleteTrade(trade)"
+                    class="m-2"
+                    title="Delete trade"
+                    type="button">
                     <svg class="w-5 h-5 text-gray-500 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 129 129">
                       <path d="M7.6 121.4c.8.8 1.8 1.2 2.9 1.2s2.1-.4 2.9-1.2l51.1-51.1 51.1 51.1c.8.8 1.8 1.2 2.9 1.2 1 0 2.1-.4 2.9-1.2 1.6-1.6 1.6-4.2 0-5.8L70.3 64.5l51.1-51.1c1.6-1.6 1.6-4.2 0-5.8s-4.2-1.6-5.8 0L64.5 58.7 13.4 7.6C11.8 6 9.2 6 7.6 7.6s-1.6 4.2 0 5.8l51.1 51.1-51.1 51.1c-1.6 1.6-1.6 4.2 0 5.8z"/>
                     </svg>
@@ -193,12 +207,20 @@
                           @change="updateTrade(trade)">
                       </div>
                       <div class="flex text-center">
-                        <button v-if="isUserProfile" @click="removeSubtrade(q, i)" title="Delete subtrade" type="button">
+                        <button
+                          v-if="isUserProfile"
+                          @click="removeSubtrade(trade, i)"
+                          title="Delete subtrade"
+                          type="button">
                           <svg class="w-8 h-8 text-gray-500 fill-current" xmlns="http://www.w3.org/2000/svg">
                             <path d="M13.414 12l4.95-4.95a1 1 0 00-1.414-1.414L12 10.586l-4.95-4.95A1 1 0 005.636 7.05l4.95 4.95-4.95 4.95a1 1 0 001.414 1.414l4.95-4.95 4.95 4.95a1 1 0 001.414-1.414z"/>
                           </svg>
                         </button>
-                        <button v-if="isUserProfile" @click="insertSubtrade(q, i)" title="Insert subtrade" type="button">
+                        <button
+                          v-if="isUserProfile"
+                          @click="insertSubtrade(trade, i)"
+                          title="Insert subtrade"
+                          type="button">
                           <svg class="w-8 h-8 text-gray-500 fill-current" xmlns="http://www.w3.org/2000/svg">
                             <path d="M6 12h6m6 0h-6m0 0V6m0 6v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                           </svg>
@@ -294,14 +316,52 @@
       updateTrade(trade) {
         var validateMessages = this.validate(trade);
         if (validateMessages.length <= 0) {
-          this.$store.dispatch("tradesModule/updateTrade", trade);
-          this.calculateTradeReturn(trade);
+          this.$store.dispatch("tradesModule/calculateTotalReturn");
+          this.$store.dispatch("tradesModule/calculateTotalRoi");
+          axios({
+            method: "POST",
+            headers: {
+              Authorization: "Bearer " + document.cookie,
+              "Access-Control-Allow-Origin": "*",
+            },
+            url: import.meta.env.VITE_ROOT_API + "/update_trade",
+            data: trade
+          }).then(response => {
+            if (response.status === 200) {
+              this.calculateTradeReturn(trade);
+            }
+          }).catch(function (error) {
+            console.log(error);
+          })
         } else {
           alert("Please check the following errors:\n" + validateMessages.join("\n"));
         }
       },
       deleteTrade(trade) {
-        this.$store.dispatch("tradesModule/deleteTrade", trade.Id);
+        var answer = window.confirm("Are you sure deleting this trade?");
+        if (answer) {
+          axios({
+            method: "GET",
+            headers: {
+              Authorization: "Bearer " + document.cookie,
+              "Access-Control-Allow-Origin": "*",
+            },
+            url: import.meta.env.VITE_ROOT_API + "/delete_trade/" + trade.Id,
+          }).then(response => {
+            if (response.status === 200) {
+              dispatch( "getTrades", {
+                isopen: false,
+                username: this.$store.getters["loginModule/username"]
+              }); 
+              dispatch( "getTrades", {
+                isopen: true,
+                username: this.$store.getters["loginModule/username"]
+              }); 
+            }
+          }).catch(function (error) {
+            console.log(error);
+          })
+        }
       },
       closeTrade(trade) {
         var answer = window.confirm("Are you sure closing this trade?");
@@ -329,17 +389,38 @@
           })
         }
       },
-      insertSubtrade(q, i) {
-        this.$store.dispatch("tradesModule/insertSubtrade", {
-          "tradeid": q,
-          "subtradeid": i
+      insertSubtrade(trade, subtradeid) {
+        var next = 1;
+        for (var i in trade.Subtrades) {
+          if (trade.Subtrades[i].SubtradeId >= next) {
+            next = next + 1
+          }
+        }
+        var now = new Date();
+        var customNow = now.getFullYear() + "-" + 
+          ('0' + (now.getMonth()+1)).slice(-2)  + "-" + 
+          ('0' + now.getDate()).slice(-2) + "T" + 
+          ('0' + (now.getHours())).slice(-2)  + ":" + 
+          ('0' + (now.getMinutes())).slice(-2);
+        trade.Subtrades.splice(subtradeid + 1, 0, {
+          SubtradeId: next,
+          Timestamp: customNow,
+          Type: "BUY",
+          Reason: "Insert a reason",
+          Quantity: 0.0001,
+          AvgPrice: 0.0001,
+          Total: 0.0001
         });
       },
-      removeSubtrade(q, i) {
-        this.$store.dispatch("tradesModule/removeSubtrade", {
-          "tradeid": q,
-          "subtradeid": i
-        });
+      removeSubtrade(trade, subtradeid) {
+        var answer = window.confirm("Are you sure deleting this subtrade?");
+        if (answer) {
+          trade.Subtrades.splice(subtradeid, 1);
+        }
+        if (trade.Subtrades.length == 0) {
+          this.insertSubtrade(trade, subtradeid);
+        };
+        this.updateTrade(trade);
       },
       insertTrade() {
         this.isNewTrade = true;
