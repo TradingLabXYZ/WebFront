@@ -24,7 +24,7 @@
       <TradeNew/>
     </div>
   </div>
-  <div class="grid grid-cols-8">
+  <div class="mb-10 grid grid-cols-8">
     <div class="col-span-1"></div>
     <div class="col-span-6">
       <table class="">

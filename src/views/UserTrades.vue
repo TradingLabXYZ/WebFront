@@ -3,6 +3,6 @@
     <Header/>
     <TradeHero/>
     <TradeOpen/>
-    <TradeClose class="mb-20"/>
+    <TradeClose/>
   </div>
 </template>
