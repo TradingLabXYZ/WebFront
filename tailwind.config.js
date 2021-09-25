@@ -8,7 +8,10 @@ module.exports = {
       },
       colors: {
         header: '#00BED5',
-        tradehero: "#3400FA"
+        tradehero: "#3400FA",
+        tradetablehead: "#D2F8FD",
+        tradepositive: '#00BED5',
+        tradenegative: '#FA6060'
       }
     },
   },

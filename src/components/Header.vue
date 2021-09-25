@@ -19,25 +19,25 @@
             Register
           </router-link>
         </div>
-    </div>
-    <div class="col-span-2"></div>
-  </div>
-  </div>
-    <div v-else class="sticky top-0 z-50 bg-header grid grid-cols-8">
-      <div class="flex justify-end m-5 col-span-2">
-        <router-link to="/">
-          <img src="/src/assets/logo.png" width="70" alt="Logo" class="mr-2">
-        </router-link>
-        <span class="flex items-end text-2xl font-extrabold tracking-tight">
-          TradingLab
-        </span>
       </div>
-      <div class="col-span-4"></div>
-      <div class="flex justify-start mt-5 text-lg col-span-2">
-        <span class="flex items-center text-lg font-extrabold tracking-tight">
-          <ButtonLogout/>
-        </span>
       <div class="col-span-2"></div>
+    </div>
+  </div>
+  <div v-else class="bg-header grid grid-cols-8">
+    <div class="col-span-1"></div>
+    <div class="flex justify-start mt-5 mb-3 col-span-2">
+      <router-link to="/">
+        <img src="/src/assets/logo.png" width="70" alt="Logo" class="mr-2">
+      </router-link>
+      <span class="flex items-end text-2xl font-extrabold tracking-tight">
+        TradingLab
+      </span>
+    </div>
+    <div class="col-span-3"></div>
+    <div class="flex justify-start mt-5 text-lg col-span-2">
+      <span class="flex items-center text-lg font-extrabold tracking-tight">
+        <ButtonLogout/>
+      </span>
     </div>
   </div>
 </template>
