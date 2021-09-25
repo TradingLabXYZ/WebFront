@@ -4,7 +4,6 @@
     <div class="grid grid-cols-12 gap-4">
       <div class="col-span-2"></div>
       <div class="col-span-8">
-        TEST
         <Hero/>
       </div>
       <div class="col-span-2"></div>
