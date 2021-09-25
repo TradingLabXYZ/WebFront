@@ -5,7 +5,7 @@
       <div class="grid grid-cols-3">
         <div class="flex items-center justify-center grid grid-cols-2 col-span-1">
           <div class="text-2xl font-bold col-span-1">
-            Open Trades - Test
+            Open Trades
           </div>  
           <div class="col-span-1" v-if="isUserProfile && !isNewTrade">
             <button
