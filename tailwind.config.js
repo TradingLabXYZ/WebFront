@@ -2,7 +2,15 @@ module.exports = {
   purge: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'montserrat': ['Montserrat']
+      },
+      colors: {
+        header: '#00BED5',
+        tradehero: "#3400FA"
+      }
+    },
   },
   variants: {
     extend: {

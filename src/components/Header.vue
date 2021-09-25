@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!isSessionId" class="sticky top-0 z-50 bg-white border-b-2 grid grid-cols-12 gap-4">
+  <div v-if="!isSessionId" class="sticky top-0 z-50 border-b-2 bg-header grid grid-cols-12 gap-4">
     <div class="col-span-2"></div>
     <div class="col-span-8">
       <div class="flex justify-between p-4 ml-10">
@@ -23,17 +23,20 @@
     <div class="col-span-2"></div>
   </div>
   </div>
-    <div v-else class="sticky top-0 z-50 bg-white border-b-2 grid grid-cols-12 gap-4">
-      <div class="m-5 col-span-2">
+    <div v-else class="sticky top-0 z-50 bg-header grid grid-cols-8">
+      <div class="flex justify-end m-5 col-span-2">
         <router-link to="/">
-          <img src="/src/assets/logo.png" width="50" alt="Logo" class="mr-2">
+          <img src="/src/assets/logo.png" width="70" alt="Logo" class="mr-2">
         </router-link>
+        <span class="flex items-end text-2xl font-extrabold tracking-tight">
+          TradingLab
+        </span>
       </div>
-      <div class="col-span-8"></div>
-      <div class="flex justify-end mt-5 text-lg col-span-2">
-        <div class="p-4">
+      <div class="col-span-4"></div>
+      <div class="flex justify-start mt-5 text-lg col-span-2">
+        <span class="flex items-center text-lg font-extrabold tracking-tight">
           <ButtonLogout/>
-        </div>
+        </span>
       <div class="col-span-2"></div>
     </div>
   </div>
