@@ -349,11 +349,11 @@
             url: import.meta.env.VITE_ROOT_API + "/delete_trade/" + trade.Id,
           }).then(response => {
             if (response.status === 200) {
-              dispatch( "getTrades", {
+              this.$store.dispatch("tradesModule/getTrades", {
                 isopen: false,
                 username: this.$store.getters["loginModule/username"]
               }); 
-              dispatch( "getTrades", {
+              this.$store.dispatch("tradesModule/getTrades", {
                 isopen: true,
                 username: this.$store.getters["loginModule/username"]
               }); 
