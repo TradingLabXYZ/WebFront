@@ -1,5 +1,5 @@
 <template>
-  <router-view></router-view>
+  <router-view class="font-montserrat"></router-view>
 </template>
 
 <script>
