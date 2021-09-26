@@ -74,8 +74,8 @@
             }
           }).then(response => {
             let sessionId = response.data.SessionId;
-            let username = response.data.UserName;
-            if (sessionId !== "") {
+            if (sessionId) {
+              let username = response.data.UserName;
               localStorage.setItem("sessionId", sessionId);
               localStorage.setItem("username", username);
               this.$store.dispatch("loginModule/setSessionId", sessionId);
@@ -90,6 +90,8 @@
                   username: username
                 }
               })
+            } else {
+              alert("Credentials not valid");
             }
           })
         },
