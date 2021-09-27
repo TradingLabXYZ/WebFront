@@ -23,20 +23,17 @@ export default {
     }
   },
   actions: {
-    clearLocalStorage() {
+    logout({commit}) {
       localStorage.clear();
+      commit("SET_SessionId", "");
+      commit("SET_Username", "");
+      document.cookie = "sessionId=;";
     },
     setSessionId({commit}, sessionId) {
       commit("SET_SessionId", sessionId);
     },
-    delSessionId({commit}) {
-      commit("SET_SessionId", "");
-    },
     setUsername({commit}, username) {
       commit("SET_Username", username);
     },
-    delUsername({commit}) {
-      commit("SET_Username", "");
-    }
   }
 }

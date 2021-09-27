@@ -10,9 +10,7 @@
   export default {
     methods: {
       logout() {
-        this.$store.dispatch("loginModule/clearLocalStorage");
-        this.$store.dispatch("loginModule/delSessionId");
-        this.$store.dispatch("loginModule/delUsername");
+        this.$store.dispatch("loginModule/logout");
         this.$router.push({ name: "Home" });
       },
     }
