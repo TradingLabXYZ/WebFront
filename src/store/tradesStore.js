@@ -7,6 +7,8 @@ export default {
     userPreferences: {
       returnCurrency: 'USD'
     },
+    isTradesDisabled: true,
+    disabledReason: true,
     openedTrades: {},
     closedTrades: {},
     totalReturn: 0,
@@ -15,6 +17,12 @@ export default {
   getters: {
     userPreferences: state => {
       return state.userPreferences;
+    },
+    isTradesDisabled: state => {
+      return state.isTradesDisabled;
+    },
+    disabledReason: state => {
+      return state.disabledReason;
     },
     openedTrades: state => {
       return state.openedTrades;
@@ -32,6 +40,12 @@ export default {
   mutations: {
     SET_OpenedTrades(state, openedTrades) {
       state.openedTrades = openedTrades;
+    },
+    SET_IsTradesDisabled(state, isTradesDisabled) {
+      state.isTradesDisabled = isTradesDisabled;
+    },
+    SET_DisabledReason(state, disabledReason) {
+      state.disabledReason = disabledReason;
     },
     SET_ClosedTrades(state, closedTrades) {
       state.closedTrades = closedTrades;
@@ -57,6 +71,8 @@ export default {
           if (response.data.Status == "denied") {
             console.log("denied!");
             console.log(response.data.Reason);
+            commit("SET_DisabledReason", response.data.Reason);
+            commit("SET_IsTradesDisabled", true);
           } else {
             var openedTrades = [];
             var closedTrades = [];
@@ -68,6 +84,7 @@ export default {
                 closedTrades.push(trade);
               }
             }
+            commit("SET_IsTradesDisabled", false);
             commit("SET_OpenedTrades", openedTrades);
             commit("SET_ClosedTrades", closedTrades);
             dispatch("calculateTotalReturn");
