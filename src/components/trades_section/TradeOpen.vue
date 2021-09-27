@@ -270,15 +270,12 @@
       if (this.$route.params.username == this.$store.getters["loginModule/username"]) {
         this.isUserProfile = true;
       };
-      this.$store.dispatch(
-        "tradesModule/getTrades",
-        this.$route.params.username
-      ); 
     },
     mounted: function () {
       window.setInterval(() => {
         this.getPrice();
-      }, 5000) },
+      }, 5000)
+    },
     methods: {
       getPrice() {
         let promises = [];

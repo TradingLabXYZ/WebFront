@@ -54,20 +54,25 @@ export default {
         url: import.meta.env.VITE_ROOT_API + "/select_trades/" + username
       }).then(response => {
         if (response.status === 200) {
-          var openedTrades = [];
-          var closedTrades = [];
-          for (var i in response.data) {
-            var trade = response.data[i];
-            if (trade.IsOpen == "true") {
-              openedTrades.push(trade);
-            } else {
-              closedTrades.push(trade);
+          if (response.data.Status == "denied") {
+            console.log("denied!");
+            console.log(response.data.Reason);
+          } else {
+            var openedTrades = [];
+            var closedTrades = [];
+            for (var i in response.data) {
+              var trade = response.data[i];
+              if (trade.IsOpen == "true") {
+                openedTrades.push(trade);
+              } else {
+                closedTrades.push(trade);
+              }
             }
+            commit("SET_OpenedTrades", openedTrades);
+            commit("SET_ClosedTrades", closedTrades);
+            dispatch("calculateTotalReturn");
+            dispatch("calculateTotalRoi");
           }
-          commit("SET_OpenedTrades", openedTrades);
-          commit("SET_ClosedTrades", closedTrades);
-          dispatch("calculateTotalReturn");
-          dispatch("calculateTotalRoi");
         }
       }).catch(function (error) {
         console.log(error);
