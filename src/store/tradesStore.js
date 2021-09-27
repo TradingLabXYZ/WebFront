@@ -44,24 +44,28 @@ export default {
     }    
   },
   actions: {
-    getTrades ({commit, dispatch}, params) {
-      var isopen = params.isopen;
-      var username = params.username;
+    getTrades ({commit, dispatch}, username) {
       axios({
         method: "GET",
         headers: {
           Authorization: "Bearer " + document.cookie,
           "Access-Control-Allow-Origin": "*",
         },
-        url: import.meta.env.VITE_ROOT_API + "/select_trades/" + username + "/" + isopen
+        url: import.meta.env.VITE_ROOT_API + "/select_trades/" + username
       }).then(response => {
         if (response.status === 200) {
-          if (isopen) {
-            commit("SET_OpenedTrades", response.data);
+          var openedTrades = [];
+          var closedTrades = [];
+          for (var i in response.data) {
+            var trade = response.data[i];
+            if (trade.IsOpen == "true") {
+              openedTrades.push(trade);
+            } else {
+              closedTrades.push(trade);
+            }
           }
-          else {
-            commit("SET_ClosedTrades", response.data);
-          }
+          commit("SET_OpenedTrades", openedTrades);
+          commit("SET_ClosedTrades", closedTrades);
           dispatch("calculateTotalReturn");
           dispatch("calculateTotalRoi");
         }

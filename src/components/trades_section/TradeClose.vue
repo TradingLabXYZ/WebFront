@@ -189,10 +189,6 @@
       if (this.$route.params.username == this.$store.getters["loginModule/username"]) {
         this.isUserProfile = true;
       };
-      this.$store.dispatch( "tradesModule/getTrades", {
-        isopen: false,
-        username: this.$route.params.username
-      }); 
     },
     methods: {
       openTrade(trade) {
@@ -207,14 +203,10 @@
             url: import.meta.env.VITE_ROOT_API + "/open_trade/" + trade.Id,
           }).then(response => {
             if (response.status === 200) {
-              this.$store.dispatch( "tradesModule/getTrades", {
-                isopen: true,
-                username: this.$store.getters["loginModule/username"]
-              }); 
-              this.$store.dispatch( "tradesModule/getTrades", {
-                isopen: false,
-                username: this.$store.getters["loginModule/username"]
-              }); 
+              this.$store.dispatch(
+                "tradesModule/getTrades",
+                this.$store.getters["loginModule/username"]
+              ); 
             }
           }).catch(function (error) {
             console.log(error);

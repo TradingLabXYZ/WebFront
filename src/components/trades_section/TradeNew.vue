@@ -234,14 +234,10 @@
             if (response.status === 200) {
               this.newTrade = {};
               this.cancelInsertTrade();
-              this.$store.dispatch("tradesModule/getTrades", {
-                isopen: false,
-                username: this.$store.getters["loginModule/username"]
-              });
-              this.$store.dispatch("tradesModule/getTrades", {
-                isopen: true,
-                username: this.$store.getters["loginModule/username"]
-              });
+              this.$store.dispatch(
+                "tradesModule/getTrades",
+                this.$store.getters["loginModule/username"]
+              );
             }
           }).catch(function (error) {
             console.log(error);
