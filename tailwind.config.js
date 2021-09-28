@@ -11,7 +11,11 @@ module.exports = {
         tradebigtext: "#104248",
         tradesmalltext: "#1A1A1A",
         // backgrounds
-        header: "#00BED5",
+        header: {
+          light: "#00e7ff",
+          DEFAULT: "#00BED5",
+          dark: "#018291",
+        },
         tradehero: "#3400FA",
         tradetablehead: "#D2F8FD",
         tradepositive: "#00BED5",
