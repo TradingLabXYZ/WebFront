@@ -34,7 +34,7 @@
       </span>
     </div>
     <div class="col-span-3"></div>
-    <div class="flex justify-start mt-5 text-lg col-span-2">
+    <div class="flex justify-end mt-5 text-lg col-span-1">
       <span class="flex items-center text-lg font-extrabold tracking-tight">
         <ButtonSettings/>
         <ButtonLogout/>
