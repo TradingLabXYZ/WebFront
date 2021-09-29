@@ -57,44 +57,47 @@
 
 <script>
   import axios from "axios";
-    export default {
-      components: {},
-      data: () => ({
-        email: "",
-        password: "",
-      }),
-      methods: {
-        loginUser () {
-          axios({
-            method: "POST",
-            url: import.meta.env.VITE_ROOT_API + "/login",
-            data: {
-              email: this.email,
-              password: this.password
-            }
-          }).then(response => {
-            let sessionId = response.data.SessionId;
-            if (sessionId) {
-              let username = response.data.UserName;
-              localStorage.setItem("sessionId", sessionId);
-              localStorage.setItem("username", username);
-              this.$store.dispatch("loginModule/setSessionId", sessionId);
-              this.$store.dispatch("loginModule/setUsername", username);
-              let d = new Date();
-              d.setTime(d.getTime() + 1000 * 24 * 60 * 60 * 1000);
-              let expires = "expires=" + d.toUTCString();
-              document.cookie = "sessionId=" + sessionId + ";" + expires + "; path=/";
-              this.$router.push({
-                name: "UserTrades",
-                params: {
-                  username: username
-                }
-              })
-            } else {
-              alert("Credentials not valid");
-            }
-          })
-        },
-      }, 
-    }  
+  export default {
+    components: {},
+    data: () => ({
+      email: "",
+      password: "",
+    }),
+    methods: {
+      loginUser () {
+        axios({
+          method: "POST",
+          url: import.meta.env.VITE_ROOT_API + "/login",
+          data: {
+            email: this.email,
+            password: this.password
+          }
+        }).then(response => {
+          let sessionId = response.data.SessionId;
+          if (sessionId) {
+            let username = response.data.UserName;
+            let profilePicture = response.data.ProfilePicture;
+            localStorage.setItem("sessionId", sessionId);
+            localStorage.setItem("username", username);
+            localStorage.setItem("profilePicture", profilePicture);
+            this.$store.dispatch("loginModule/setSessionId", sessionId);
+            this.$store.dispatch("loginModule/setUsername", username);
+            this.$store.dispatch("loginModule/setProfilePicture", profilePicture);
+            let d = new Date();
+            d.setTime(d.getTime() + 1000 * 24 * 60 * 60 * 1000);
+            let expires = "expires=" + d.toUTCString();
+            document.cookie = "sessionId=" + sessionId + ";" + expires + "; path=/";
+            this.$router.push({
+              name: "UserTrades",
+              params: {
+                username: username
+              }
+            })
+          } else {
+            alert("Credentials not valid");
+          }
+        })
+      },
+    }, 
+  }  
 </script>

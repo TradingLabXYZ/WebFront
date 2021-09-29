@@ -4,7 +4,8 @@ export default {
   namespaced: true,
   state: {
     sessionId: "",
-    username: ""
+    username: "",
+    profilePicture: ""
   },
   getters: {
     sessionId: state => {
@@ -12,6 +13,9 @@ export default {
     },
     username: state => {
       return state.username;
+    },
+    profilePicture: state => {
+      return state.profilePicture;
     }
   },
   mutations: {
@@ -20,6 +24,9 @@ export default {
     },
     SET_Username(state, username) {
       state.username = username;
+    },
+    SET_ProfilePicture(state, profilePicture) {
+      state.profilePicture = profilePicture;
     }
   },
   actions: {
@@ -27,6 +34,7 @@ export default {
       localStorage.clear();
       commit("SET_SessionId", "");
       commit("SET_Username", "");
+      commit("SET_ProfilePicture", "");
       document.cookie = "sessionId=;";
     },
     setSessionId({commit}, sessionId) {
@@ -34,6 +42,9 @@ export default {
     },
     setUsername({commit}, username) {
       commit("SET_Username", username);
+    },
+    setProfilePicture({commit}, profilePicture) {
+      commit("SET_ProfilePicture", profilePicture);
     },
   }
 }

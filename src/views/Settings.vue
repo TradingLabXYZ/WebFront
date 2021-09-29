@@ -31,7 +31,14 @@
         </div>
       </div>
       <div class="col-span-4">
+        <img :src="profilePicture" alt="HTML tutorial" style="width:100px;height:100px;">
         <section v-if="settingsSection=='profile'">
+          <label class="text-xs text-subtradelabel">Profile Picture</label>
+          <input
+            type="file"
+            accept="image/*"
+            @change="uploadImage($event)"
+            id="file-input">
           <label class="text-xs text-subtradelabel">Email</label>
           <input
             placeholder="Email"
@@ -69,6 +76,8 @@
 </template>
 
 <script>
+  import axios from "axios";
+  import { mapState } from 'vuex';
   export default {
     data: function() {
       return {
@@ -80,10 +89,38 @@
         }
       }
     },
+    computed: {
+      ...mapState("loginModule", ["profilePicture"])
+    },
     methods: {
       changeSettingsSection(section) {
         console.log(section);
         this.settingsSection = section;
+      },
+      uploadImage(event) {
+        let data = new FormData();
+        data.append('file', event.target.files[0]); 
+        var file_size = [...data.entries()][0][1].size;
+        if (file_size < 50000) {
+          axios({
+            method: "PUT",
+            headers: {
+              Authorization: "Bearer " + document.cookie,
+              "Access-Control-Allow-Origin": "*",
+              "Content-Type": "image/png"
+            },
+            url: import.meta.env.VITE_ROOT_API + "/insert_profile_picture",
+            data: data
+          }).then(response => {
+            var returnedProfilePicture = response.data;
+            localStorage.setItem("profilePicture", returnedProfilePicture);
+            this.$store.dispatch("loginModule/setProfilePicture", returnedProfilePicture);
+          }).catch(function (error) {
+            console.log(error);
+          })
+        } else {
+          alert("Please upload a picture smaller than 50 Kb");
+        }
       }
     }
   }
