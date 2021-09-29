@@ -272,9 +272,9 @@
       };
     },
     mounted: function () {
-      window.setInterval(() => {
+      /* window.setInterval(() => {
         this.getPrice();
-      }, 5000)
+      }, 5000) */
     },
     methods: {
       getPrice() {

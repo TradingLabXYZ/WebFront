@@ -2,30 +2,30 @@
   <div>
     <Header/>
     <div class="mt-5 mb-5 text-2xl text-center">My Settings</div>
-    <div class="grid grid-cols-12 gap-10">
+    <div class="h-screen grid grid-cols-12 gap-10">
       <div class="col-span-4"></div>
-      <div class="col-span-1">
+      <div class="border-r-2 col-span-1">
         <div
-          class="m-2"
-          :class="settingsSection=='profile' ? 'bg-indigo-300' : 'bg-white'"
+          class="px-2 py-2 pr-12 mr-1 rounded-md text-xol"
+          :class="settingsSection=='profile' ? 'bg-tradehero text-white font-semibold' : 'bg-white'"
           @click="changeSettingsSection('profile')">
           Profile
         </div>
         <div
-          class="m-2"
-          :class="settingsSection=='privacy' ? 'bg-indigo-300' : 'bg-white'"
+          class="px-2 py-2 pr-12 mr-1 rounded-md text-xol"
+          :class="settingsSection=='privacy' ? 'bg-tradehero text-white font-semibold' : 'bg-white'"
           @click="changeSettingsSection('privacy')">
           Privacy
         </div>
         <div
-          class="m-2"
-          :class="settingsSection=='plan' ? 'bg-indigo-300' : 'bg-white'"
+          class="px-2 py-2 pr-12 mr-1 rounded-md text-xol"
+          :class="settingsSection=='plan' ? 'bg-tradehero text-white font-semibold' : 'bg-white'"
           @click="changeSettingsSection('plan')">
           Plan
         </div>
         <div
-          class="m-2"
-          :class="settingsSection=='password' ? 'bg-indigo-300' : 'bg-white'"
+          class="px-2 py-2 pr-12 mr-1 rounded-md text-xol"
+          :class="settingsSection=='password' ? 'bg-tradehero text-white font-semibold' : 'bg-white'"
           @click="changeSettingsSection('password')">
           Password
         </div>
@@ -51,6 +51,7 @@
           <div class="p-2">
           <label class="text-xs text-subtradelabel">Email</label>
             <input
+              type="email"
               placeholder="Email"
               class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
               v-model="userSettings.Email">
@@ -58,23 +59,25 @@
           <div class="p-2">
             <label class="text-xs text-subtradelabel">Twitter</label>
             <input
+              type="url"
               placeholder="Twitter"
               class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
               v-model="userSettings.Twitter">
           </div>
           <div class="p-2">
-          <label class="text-xs text-subtradelabel">Website</label>
-          <input
-            placeholder="Website"
-            class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
-            v-model="userSettings.Website">
+            <label class="text-xs text-subtradelabel">Website</label>
+            <input
+              type="url"
+              placeholder="Website"
+              class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
+              v-model="userSettings.Website">
           </div>
-            <button
-              class="flex items-center px-4 py-2 m-6 font-bold text-white bg-indigo-700 rounded hover:bg-indigo-300"
-              type="submit"
-              @click="">
-              Save
-            </button>
+          <button
+            class="flex items-center px-4 py-2 m-6 font-bold text-white bg-header-light rounded hover:bg-header-dark"
+            type="submit"
+            @click="saveUserSettings()">
+            Save
+          </button>
         </section> 
         <section v-if="settingsSection=='privacy'">
           <div class="m-2">Privacy section</div>
@@ -136,6 +139,24 @@
         } else {
           alert("Please upload a picture smaller than 50 Kb");
         }
+      },
+      saveUserSettings() {
+        axios({
+          method: 'POST',
+          headers: {
+            Authorization: "Bearer " + document.cookie,
+            "Access-Control-Allow-Origin": "*",
+          },
+          url: import.meta.env.VITE_ROOT_API + '/user_settings',
+          data: this.userSettings
+        }).then(response => {
+          if (response.data == "OK") {
+            console.log("OK");
+          }
+          else {
+            console.log(body)
+          }
+        })
       }
     }
   }
