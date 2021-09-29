@@ -31,29 +31,44 @@
         </div>
       </div>
       <div class="col-span-4">
-        <img :src="profilePicture" alt="HTML tutorial" style="width:100px;height:100px;">
         <section v-if="settingsSection=='profile'">
-          <label class="text-xs text-subtradelabel">Profile Picture</label>
-          <input
-            type="file"
-            accept="image/*"
-            @change="uploadImage($event)"
-            id="file-input">
+          <div class="flex justify-around">
+            <label class="text-xs text-subtradelabel image">
+              <input
+                type="file"
+                accept="image/*"
+                @change="uploadImage($event)"
+                style="display:none;"
+                id="file-input">
+              <img  
+                :src="profilePicture"
+                class="w-32 h-32 border border-gray-900 rounded-full">
+              <div class="overlay">
+                EDIT
+              </div>
+            </label>
+          </div>
+          <div class="p-2">
           <label class="text-xs text-subtradelabel">Email</label>
-          <input
-            placeholder="Email"
-            class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
-            v-model="userSettings.Email">
-          <label class="text-xs text-subtradelabel">Twitter</label>
-          <input
-            placeholder="Twitter"
-            class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
-            v-model="userSettings.Twitter">
+            <input
+              placeholder="Email"
+              class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
+              v-model="userSettings.Email">
+          </div>
+          <div class="p-2">
+            <label class="text-xs text-subtradelabel">Twitter</label>
+            <input
+              placeholder="Twitter"
+              class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
+              v-model="userSettings.Twitter">
+          </div>
+          <div class="p-2">
           <label class="text-xs text-subtradelabel">Website</label>
           <input
             placeholder="Website"
             class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
             v-model="userSettings.Website">
+          </div>
             <button
               class="flex items-center px-4 py-2 m-6 font-bold text-white bg-indigo-700 rounded hover:bg-indigo-300"
               type="submit"
@@ -125,3 +140,23 @@
     }
   }
 </script>
+
+<style>
+.image {
+    position:relative;
+    display:inline-block;
+    margin:10px;
+}
+.overlay {
+    display:none;
+}
+.image:hover .overlay {
+    background:rgba(255,255,255,0.9);
+    font-weight: bold;
+    position:absolute;
+    bottom:0;
+    right:0;
+    display:inline-block;
+    text-align:center;
+}
+</style>
