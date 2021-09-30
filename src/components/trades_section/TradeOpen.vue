@@ -55,7 +55,7 @@
             <th scope="col" class="px-12 py-3 text-xs font-medium tracking-wider text-gray-800">
               ROI
             </th>
-            <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-gray-800">
+            <th v-if="isUserProfile" scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-gray-800">
               Actions
             </th>
           </tr>
@@ -111,7 +111,7 @@
               <td class="py-4 text-center text-gray-700 text-md" :class="trade.Roi > 0 ? 'text-tradepositive' : 'text-tradenegative'">
                 {{ trade.Roi.toFixed(2) + "%" }}
               </td>
-              <td class="py-4 text-center text-gray-700 text-md">
+              <td v-if="isUserProfile" class="py-4 text-center text-gray-700 text-md">
                 <button
                   v-if="isUserProfile"
                   @click="closeTrade(trade)"
@@ -270,15 +270,12 @@
       if (this.$route.params.username == this.$store.getters["loginModule/username"]) {
         this.isUserProfile = true;
       };
-      this.$store.dispatch( "tradesModule/getTrades", {
-        isopen: true,
-        username: this.$route.params.username
-      }); 
     },
     mounted: function () {
-      window.setInterval(() => {
+      /* window.setInterval(() => {
         this.getPrice();
-      }, 5000) },
+      }, 5000) */
+    },
     methods: {
       getPrice() {
         let promises = [];
@@ -361,14 +358,10 @@
             url: import.meta.env.VITE_ROOT_API + "/delete_trade/" + trade.Id,
           }).then(response => {
             if (response.status === 200) {
-              this.$store.dispatch("tradesModule/getTrades", {
-                isopen: false,
-                username: this.$store.getters["loginModule/username"]
-              }); 
-              this.$store.dispatch("tradesModule/getTrades", {
-                isopen: true,
-                username: this.$store.getters["loginModule/username"]
-              }); 
+              this.$store.dispatch(
+                "tradesModule/getTrades",
+                this.$store.getters["loginModule/username"]
+              ); 
             }
           }).catch(function (error) {
             console.log(error);
@@ -387,14 +380,10 @@
             url: import.meta.env.VITE_ROOT_API + "/close_trade/" + trade.Id,
           }).then(response => {
             if (response.status === 200) {
-              this.$store.dispatch( "tradesModule/getTrades", {
-                isopen: true,
-                username: this.$store.getters["loginModule/username"]
-              }); 
-              this.$store.dispatch( "tradesModule/getTrades", {
-                isopen: false,
-                username: this.$store.getters["loginModule/username"]
-              }); 
+              this.$store.dispatch(
+                "tradesModule/getTrades",
+                this.$store.getters["loginModule/username"]
+              ); 
             }
           }).catch(function (error) {
             console.log(error);

@@ -17,6 +17,7 @@ import Hero from "./components/Hero.vue"
 import Footer from "./components/Footer.vue"
 
 import ButtonLogout from "./components/buttons/Logout.vue"
+import ButtonSettings from "./components/buttons/Settings.vue"
 
 import TradeHero from "./components/trades_section/TradeHero.vue"
 import TradeOpen from "./components//trades_section/TradeOpen.vue"
@@ -28,6 +29,7 @@ app.component("Hero", Hero)
 app.component("Footer", Footer)
 
 app.component("ButtonLogout", ButtonLogout)
+app.component("ButtonSettings", ButtonSettings)
 
 app.component("TradeHero", TradeHero)
 app.component("TradeOpen", TradeOpen)

@@ -7,6 +7,8 @@ export default {
     userPreferences: {
       returnCurrency: 'USD'
     },
+    isTradesDisabled: true,
+    disabledReason: true,
     openedTrades: {},
     closedTrades: {},
     totalReturn: 0,
@@ -15,6 +17,12 @@ export default {
   getters: {
     userPreferences: state => {
       return state.userPreferences;
+    },
+    isTradesDisabled: state => {
+      return state.isTradesDisabled;
+    },
+    disabledReason: state => {
+      return state.disabledReason;
     },
     openedTrades: state => {
       return state.openedTrades;
@@ -33,6 +41,12 @@ export default {
     SET_OpenedTrades(state, openedTrades) {
       state.openedTrades = openedTrades;
     },
+    SET_IsTradesDisabled(state, isTradesDisabled) {
+      state.isTradesDisabled = isTradesDisabled;
+    },
+    SET_DisabledReason(state, disabledReason) {
+      state.disabledReason = disabledReason;
+    },
     SET_ClosedTrades(state, closedTrades) {
       state.closedTrades = closedTrades;
     },
@@ -44,26 +58,38 @@ export default {
     }    
   },
   actions: {
-    getTrades ({commit, dispatch}, params) {
-      var isopen = params.isopen;
-      var username = params.username;
+    getTrades ({commit, dispatch}, username) {
       axios({
         method: "GET",
         headers: {
           Authorization: "Bearer " + document.cookie,
           "Access-Control-Allow-Origin": "*",
         },
-        url: import.meta.env.VITE_ROOT_API + "/select_trades/" + username + "/" + isopen
+        url: import.meta.env.VITE_ROOT_API + "/select_trades/" + username
       }).then(response => {
         if (response.status === 200) {
-          if (isopen) {
-            commit("SET_OpenedTrades", response.data);
+          if (response.data.Status == "denied") {
+            console.log("denied!");
+            console.log(response.data.Reason);
+            commit("SET_DisabledReason", response.data.Reason);
+            commit("SET_IsTradesDisabled", true);
+          } else {
+            var openedTrades = [];
+            var closedTrades = [];
+            for (var i in response.data) {
+              var trade = response.data[i];
+              if (trade.IsOpen == "true") {
+                openedTrades.push(trade);
+              } else {
+                closedTrades.push(trade);
+              }
+            }
+            commit("SET_IsTradesDisabled", false);
+            commit("SET_OpenedTrades", openedTrades);
+            commit("SET_ClosedTrades", closedTrades);
+            dispatch("calculateTotalReturn");
+            dispatch("calculateTotalRoi");
           }
-          else {
-            commit("SET_ClosedTrades", response.data);
-          }
-          dispatch("calculateTotalReturn");
-          dispatch("calculateTotalRoi");
         }
       }).catch(function (error) {
         console.log(error);
