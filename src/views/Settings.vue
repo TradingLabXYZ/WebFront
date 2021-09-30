@@ -54,7 +54,7 @@
               type="email"
               placeholder="Email"
               class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
-              v-model="userSettings.Email">
+              v-model="userSocial.Email">
           </div>
           <div class="p-2">
             <label class="text-xs text-subtradelabel">Twitter</label>
@@ -62,7 +62,7 @@
               type="url"
               placeholder="Twitter"
               class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
-              v-model="userSettings.Twitter">
+              v-model="userSocial.Twitter">
           </div>
           <div class="p-2">
             <label class="text-xs text-subtradelabel">Website</label>
@@ -70,24 +70,24 @@
               type="url"
               placeholder="Website"
               class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
-              v-model="userSettings.Website">
+              v-model="userSocial.Website">
           </div>
           <div class="flex justify-start">
             <button
               class="px-4 py-2 m-6 font-bold text-white rounded bg-header-light hover:bg-header-dark"
               type="submit"
-              @click="saveUserSettings()">
+              @click="saveUserSocial()">
               Save
             </button>
             <button
               class="px-4 py-2 m-6 font-bold text-white bg-green-500 rounded"
-              id="userSettingsOk"
+              id="userSocialOk"
               style="display:none;">
               DONE
             </button>
             <button
               class="px-4 py-2 m-6 font-bold text-white bg-red-500 rounded"
-              id="userSettingsKo"
+              id="userSocialKo"
               style="display:none;">
               ERROR
             </button>
@@ -140,7 +140,59 @@
           </div>
         </section> 
         <section v-if="settingsSection=='privacy'">
-          <div class="m-2">Privacy section</div>
+          <div class="p-2">
+            <label class="text-xs text-subtradelabel">Select Privacy Settings</label>
+            <select
+              class="w-full p-2 text-gray-800 bg-white border border-gray-200 border-gray-500"
+              v-model="userPrivacy.Privacy">
+              <option value="all">
+                All
+              </option>
+              <option value="private">
+                Private
+              </option>
+              <option value="followers">
+                Followers
+              </option>
+              <option value="subscribers">
+                Subscribers
+              </option>
+            </select>
+          </div>
+          <section class="mt-5">
+            <div v-if="userPrivacy.Privacy == 'all'" class="flex justify-around">
+              Your profile is visible to everybody
+            </div>
+            <div v-if="userPrivacy.Privacy == 'private'" class="flex justify-around">
+              Your profile is visible only to you
+            </div>
+            <div v-if="userPrivacy.Privacy == 'followers'" class="flex justify-around">
+              Your profile is visible only to your followers
+            </div>
+            <div v-if="userPrivacy.Privacy == 'subscribers'" class="flex justify-around">
+              Your profile is visible only to your subscribers
+            </div>
+          </section>
+          <div class="flex justify-start">
+            <button
+              class="px-4 py-2 m-6 font-bold text-white rounded bg-header-light hover:bg-header-dark"
+              type="submit"
+              @click="saveUserPrivacy()">
+              Save
+            </button>
+            <button
+              class="px-4 py-2 m-6 font-bold text-white bg-green-500 rounded"
+              id="userPrivacyOk"
+              style="display:none;">
+              DONE
+            </button>
+            <button
+              class="px-4 py-2 m-6 font-bold text-white bg-red-500 rounded"
+              id="userPrivacyKo"
+              style="display:none;">
+              ERROR
+            </button>
+          </div>
         </section> 
         <section v-if="settingsSection=='plan'">
           <div class="m-2">Plan section</div>
@@ -157,7 +209,7 @@
     data: function() {
       return {
         settingsSection: "profile",
-        userSettings:  {
+        userSocial:  {
           Email: "",
           Twitter: "",
           Website: ""
@@ -166,6 +218,9 @@
           OldPassword: "",
           NewPassword: "",
           RepeatNewPassword: ""
+        },
+        userPrivacy: {
+          Privacy: ""
         }
       }
     },
@@ -189,15 +244,16 @@
           url: import.meta.env.VITE_ROOT_API + "/user_settings",
         }).then(response => {
           if (response.status === 200) {
-            this.userSettings.Email = response.data.Email;
-            this.userSettings.Twitter = response.data.Twitter;
-            this.userSettings.Website = response.data.Website;
+            this.userSocial.Email = response.data.Email;
+            this.userSocial.Twitter = response.data.Twitter;
+            this.userSocial.Website = response.data.Website;
+            this.userPrivacy.Privacy = response.data.Privacy;
           }
         }).catch(function (error) {
           console.log(error);
         })
       },
-      saveUserSettings() {
+      saveUserSocial() {
         axios({
           method: "POST",
           headers: {
@@ -205,12 +261,12 @@
             "Access-Control-Allow-Origin": "*",
           },
           url: import.meta.env.VITE_ROOT_API + "/user_settings",
-          data: this.userSettings
+          data: this.userSocial
         }).then(response => {
           if (response.data == "OK") {
-            var s = document.getElementById("userSettingsOk").style;
+            var s = document.getElementById("userSocialOk").style;
           } else {
-            var s = document.getElementById("userSettingsKo").style;
+            var s = document.getElementById("userSocialKo").style;
           }
           s.display = "block";
           s.opacity = 1;
@@ -231,6 +287,26 @@
             var s = document.getElementById("userPasswordOk").style;
           } else {
             var s = document.getElementById("userPasswordKo").style;
+          }
+          s.display = "block";
+          s.opacity = 1;
+          (function fade(){(s.opacity-=.1)<0?s.display="none":setTimeout(fade,100)})();
+        })
+      },
+      saveUserPrivacy() {
+        axios({
+          method: "POST",
+          headers: {
+            Authorization: "Bearer " + document.cookie,
+            "Access-Control-Allow-Origin": "*",
+          },
+          url: import.meta.env.VITE_ROOT_API + "/update_privacy",
+          data: this.userPrivacy
+        }).then(response => {
+          if (response.data == "OK") {
+            var s = document.getElementById("userPrivacyOk").style;
+          } else {
+            var s = document.getElementById("userPrivacyKo").style;
           }
           s.display = "block";
           s.opacity = 1;

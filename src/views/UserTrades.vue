@@ -16,9 +16,6 @@
           <span v-if="disabledReason=='subscribe'">
             <h1>You need to subscribe to visualise the profile</h1>
           </span>
-          <span v-if="disabledReason=='individual'">
-            <h1>It seems this user does like to keep things private</h1>
-          </span>
         </div>
       </div>
     </div>
