@@ -45,6 +45,6 @@ export default {
     },
     setProfilePicture({commit}, profilePicture) {
       commit("SET_ProfilePicture", profilePicture);
-    },
+    }
   }
 }

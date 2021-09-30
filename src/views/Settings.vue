@@ -3,7 +3,7 @@
     <Header/>
     <div class="mt-5 mb-5 text-2xl text-center">My Settings</div>
     <div class="h-screen grid grid-cols-12 gap-10">
-      <div class="col-span-4"></div>
+      <div class="col-span-3"></div>
       <div class="border-r-2 col-span-1">
         <div
           class="px-2 py-2 pr-12 mr-1 rounded-md text-xol"
@@ -72,12 +72,26 @@
               class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
               v-model="userSettings.Website">
           </div>
-          <button
-            class="flex items-center px-4 py-2 m-6 font-bold text-white bg-header-light rounded hover:bg-header-dark"
-            type="submit"
-            @click="saveUserSettings()">
-            Save
-          </button>
+          <div class="flex justify-start">
+            <button
+              class="px-4 py-2 m-6 font-bold text-white rounded bg-header-light hover:bg-header-dark"
+              type="submit"
+              @click="saveUserSettings()">
+              Save
+            </button>
+            <button
+              class="px-4 py-2 m-6 font-bold text-white bg-green-500 rounded"
+              id="userSettingsOk"
+              style="display:none;">
+              DONE
+            </button>
+            <button
+              class="px-4 py-2 m-6 font-bold text-white bg-red-500 rounded"
+              id="userSettingsKo"
+              style="display:none;">
+              ERROR
+            </button>
+          </div>
         </section> 
         <section v-if="settingsSection=='privacy'">
           <div class="m-2">Privacy section</div>
@@ -101,24 +115,64 @@
       return {
         settingsSection: "profile",
         userSettings:  {
-          Email: "ciao@ciao.ciao",
-          Twitter: "robi",
-          Website: "www.ok.ciao"
+          Email: "",
+          Twitter: "",
+          Website: ""
         }
       }
     },
     computed: {
       ...mapState("loginModule", ["profilePicture"])
     },
+    created: function() {
+      this.getUserSettings();
+    },
     methods: {
       changeSettingsSection(section) {
-        console.log(section);
         this.settingsSection = section;
       },
+      getUserSettings() {
+        axios({
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + document.cookie,
+            "Access-Control-Allow-Origin": "*",
+          },
+          url: import.meta.env.VITE_ROOT_API + "/user_settings",
+        }).then(response => {
+          if (response.status === 200) {
+            this.userSettings.Email = response.data.Email;
+            this.userSettings.Twitter = response.data.Twitter;
+            this.userSettings.Website = response.data.Website;
+          }
+        }).catch(function (error) {
+          console.log(error);
+        })
+      },
+      saveUserSettings() {
+        axios({
+          method: "POST",
+          headers: {
+            Authorization: "Bearer " + document.cookie,
+            "Access-Control-Allow-Origin": "*",
+          },
+          url: import.meta.env.VITE_ROOT_API + "/user_settings",
+          data: this.userSettings
+        }).then(response => {
+          if (response.data == "OK") {
+            var s = document.getElementById("userSettingsOk").style;
+          } else {
+            var s = document.getElementById("userSettingsKo").style;
+          }
+          s.display = "block";
+          s.opacity = 1;
+          (function fade(){(s.opacity-=.1)<0?s.display="none":setTimeout(fade,100)})();
+        })
+      },
       uploadImage(event) {
-        let data = new FormData();
-        data.append('file', event.target.files[0]); 
-        var file_size = [...data.entries()][0][1].size;
+        let uploader = new FormData();
+        uploader.append('file', event.target.files[0]); 
+        var file_size = [...uploader.entries()][0][1].size;
         if (file_size < 50000) {
           axios({
             method: "PUT",
@@ -128,7 +182,7 @@
               "Content-Type": "image/png"
             },
             url: import.meta.env.VITE_ROOT_API + "/insert_profile_picture",
-            data: data
+            data: uploader
           }).then(response => {
             var returnedProfilePicture = response.data;
             localStorage.setItem("profilePicture", returnedProfilePicture);
@@ -139,24 +193,6 @@
         } else {
           alert("Please upload a picture smaller than 50 Kb");
         }
-      },
-      saveUserSettings() {
-        axios({
-          method: 'POST',
-          headers: {
-            Authorization: "Bearer " + document.cookie,
-            "Access-Control-Allow-Origin": "*",
-          },
-          url: import.meta.env.VITE_ROOT_API + '/user_settings',
-          data: this.userSettings
-        }).then(response => {
-          if (response.data == "OK") {
-            console.log("OK");
-          }
-          else {
-            console.log(body)
-          }
-        })
       }
     }
   }
@@ -172,12 +208,12 @@
     display:none;
 }
 .image:hover .overlay {
-    background:rgba(255,255,255,0.9);
+    background: #84bfbd;
     font-weight: bold;
-    position:absolute;
-    bottom:0;
-    right:0;
-    display:inline-block;
-    text-align:center;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: inline-block;
+    text-align: center;
 }
 </style>
