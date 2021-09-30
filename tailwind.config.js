@@ -22,6 +22,9 @@ module.exports = {
         tradenegative: "#FA6060",
         tradenew: "#D2F8FD",
         subtradenew: "#AEEBF3",
+        subtradesection: "#ECFDFF",
+        subtradeeditable: "#D0F9FF",
+        subtradeeditableborder: "#6ADFED",
         tradenewbuttonconfirm: "#3400FA", 
         tradenewbuttoncancel: "#B8E7EF"
       }
