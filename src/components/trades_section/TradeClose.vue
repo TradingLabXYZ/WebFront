@@ -90,78 +90,59 @@
                 </button>
               </td>
             </tr>
-            <tr v-if="opened.includes(trade.Id)">
-              <td colspan="12" class="border-b-2">
-                <div v-for="(subtrade, i) in trade.Subtrades" :key="subtrade.timestamp" class="flex justify-around border-b-2 border-indigo-100 ">
-                  <form name="subtradeForm" class="flex h-14">
-                    <div class="w-full text-center">
-                      <label class="text-xs text-gray-400">Id</label>
-                      <div class="w-full text-center text-gray-600 bg-white">
-                        {{ i + 1}}
-                      </div>
-                    </div>
-                    <div class="w-full text-center">
-                      <label class="text-xs text-gray-400">Timestamp</label>
-                      <input disabled
-                        name="formTimestamp" 
-                        placeholder="Timestamp"
-                        type="datetime-local"
-                        class="w-full text-center text-gray-600 bg-white"
-                        v-model="subtrade.Timestamp">
-                    </div>
-                    <div class="w-full text-center">
-                     <label class="text-xs text-gray-400">Type</label>
-                      <select disabled
-                        name="formType" 
-                        class="w-full text-center text-gray-600 bg-white"
-                        v-model="subtrade.Type">
-                        <option value="BUY">BUY</option>
-                        <option value="SELL">SELL</option>
-                      </select>
-                    </div>
-                    <div class="w-full text-center">
-                      <label class="text-xs text-gray-400">Reason</label>
-                      <input disabled
-                        name="formReason" 
-                        placeholder="Insert a reason" 
-                        type="text"
-                        class="w-full text-center text-gray-600"
-                        v-model="subtrade.Reason">
-                    </div>
-                    <div class="w-full text-center">
-                      <label class="text-xs text-gray-400">Quantity</label>
-                      <input disabled
-                        min="0.00000000001"
-                        name="formQuantity" 
-                        placeholder="Quantity"
-                        type="number"
-                        step="any"
-                        class="w-full text-center text-gray-600"
-                        v-model.number="subtrade.Quantity">
-                    </div>
-                    <div class="w-full text-center">
-                      <label class="text-xs text-gray-400">Avg Price</label>
-                      <input disabled
-                        min="0.00000000001"
-                        name="formAvgPrice" 
-                        placeholder="Avg Price"
-                        type="number"
-                        step="any"
-                        class="w-full text-center text-gray-600"
-                        v-model.number="subtrade.AvgPrice">
-                    </div>
-                    <div class="w-full text-center">
-                      <label class="text-xs text-gray-400">Total</label>
-                      <input disabled
-                        min="0.00000000001"
-                        name="formTotal" 
-                        placeholder="Total"
-                        type="number"
-                        step="any"
-                        class="w-full text-center text-gray-600"
-                        v-model.number="subtrade.Total">
-                    </div>
-                  </form>
+            <tr v-if="opened.includes(trade.Id)" class="bg-subtradesection">
+              <td colspan="10" class="text-xs"> 
+                <div class="flex justify-around">
+                  <table class="">
+                    <thead class="">
+                      <th class="tracking-wide text-gray-500 font-extralight">
+                        Id
+                      </th>
+                      <th class="tracking-wide text-gray-500 font-extralight">
+                        Timestamp
+                      </th>
+                      <th class="tracking-wide text-gray-500 font-extralight">
+                        Type
+                      </th>
+                      <th class="tracking-wide text-gray-500 font-extralight">
+                        Reason
+                      </th>
+                      <th class="tracking-wide text-gray-500 font-extralight">
+                        Quantity
+                      </th>
+                      <th class="tracking-wide text-gray-500 font-extralight">
+                        Avg Price
+                      </th>
+                      <th class="tracking-wide text-gray-500 font-extralight">
+                        Total
+                      </th>
+                    </thead>
+                    <tbody>
+                      <tr v-for="(subtrade, i) in trade.Subtrades" class="border-b-2 border-blue-50">
+                        <td class="mx-8">
+                          {{ i + 1}}
+                        </td>
+                        <td class="w-40 mx-3 text-center bg-subtradesection">
+                          {{ subtrade.Timestamp }}
+                        </td>
+                        <td class="w-40 mx-3 text-center bg-subtradesection">
+                          {{ subtrade.Type }}
+                        </td>
+                        <td class="w-40 mx-3 text-center bg-subtradesection">
+                          {{ subtrade.Reason }}
+                        </td>
+                        <td class="w-40 mx-3 text-center bg-subtradesection">
+                          {{ subtrade.Quantity }}
+                        </td>
+                        <td class="w-40 mx-3 text-center bg-subtradesection">
+                          {{ subtrade.AvgPrice }}
+                        </td>
+                        <td class="w-40 mx-3 text-center bg-subtradesection">
+                          {{ subtrade.Total }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </td>
             </tr>
