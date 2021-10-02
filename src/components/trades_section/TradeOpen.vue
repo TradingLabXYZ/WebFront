@@ -328,7 +328,7 @@
     },
     methods: {
       getPrice() {
-        this.ws = new WebSocket(import.meta.env.VITE_ROOT_WS + "/get_prices/" + this.$route.params.username)
+        this.ws = new WebSocket(import.meta.env.VITE_ROOT_WS + "/get_prices/" + this.$store.getters["loginModule/usercode"])
         this.ws.onmessage = (event) => {
           var ws_data = JSON.parse(event.data);
           for (var i in ws_data) {
