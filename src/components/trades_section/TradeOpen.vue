@@ -90,7 +90,7 @@
               <td class="py-4 text-center text-gray-700 text-md">
                 {{ trade.SecondPairSymbol }}
               </td>
-              <td class="py-4 text-center text-gray-700 text-md">
+              <td class="py-4 text-center text-gray-700 text-md text-fade-effect" v-bind:id="trade.Id">
                 {{ trade.CurrentPrice.toFixed(5) }}
                 <span class="text-xs">
                   {{ trade.FirstPairSymbol }} / {{ trade.SecondPairSymbol }}
@@ -319,35 +319,39 @@
       };
     },
     mounted: function () {
-      /* window.setInterval(() => {
-        this.getPrice();
-      }, 5000) */
+      this.getPrice();
+    },
+    watch:{
+      $route (to, from){
+        this.ws.close();
+      }
     },
     methods: {
       getPrice() {
-        let promises = [];
-        for (var i in this.openedTrades) {
-          var first_pair_id = this.openedTrades[i].FirstPairId;
-          var second_pair_id = this.openedTrades[i].SecondPairId;
-          promises.push(
-            axios({
-              method: "GET",
-              headers: {
-                Authorization: "Bearer " + document.cookie,
-                "Access-Control-Allow-Origin": "*",
-              },
-              url: import.meta.env.VITE_ROOT_API + "/get_price/" + first_pair_id + "/" + second_pair_id,
-            })
-          )
-        }
-        Promise.all(promises).then(responses => {
-          for (var i in responses) {
-            this.openedTrades[i].CurrentPrice = responses[i].data;
+        this.ws = new WebSocket(import.meta.env.VITE_ROOT_WS + "/get_prices/" + this.$route.params.username)
+        this.ws.onmessage = (event) => {
+          var ws_data = JSON.parse(event.data);
+          for (var i in ws_data) {
+            var old_price = this.openedTrades[i].CurrentPrice;
+            var new_price = ws_data[i].Price;
+            this.openedTrades[i].CurrentPrice = new_price;
             this.calculateTradeReturn(this.openedTrades[i]);
+            if (old_price < new_price) {
+              this.highlight(this.openedTrades[i].Id, "#3ef73b");
+            } else {
+              this.highlight(this.openedTrades[i].Id, "#fc0324");
+            }
           }
           this.$store.dispatch("tradesModule/calculateTotalReturn");
           this.$store.dispatch("tradesModule/calculateTotalRoi");
-        });
+        }
+      },
+      highlight(obj, color) {
+        var orig = document.getElementById(obj).style.color;
+        document.getElementById(obj).style.color = color;
+        setTimeout(function(){
+          document.getElementById(obj).style.color = orig;
+        }, 3000);
       },
       calculateTradeReturn(trade) {
         var tradeStats = getTradeStats(trade);
@@ -489,7 +493,7 @@
 </script>
 
 <style>
-  ::-webkit-calendar-picker-indicator {
-    filter: invert(0.4);
-  }
+  .text-fade-effect{
+  transition: color 3s;
+}
 </style>
