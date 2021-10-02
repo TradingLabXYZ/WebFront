@@ -319,35 +319,25 @@
       };
     },
     mounted: function () {
-      /* window.setInterval(() => {
-        this.getPrice();
-      }, 5000) */
+      this.getPrice();
+    },
+    watch:{
+      $route (to, from){
+        this.ws.close();
+      }
     },
     methods: {
       getPrice() {
-        let promises = [];
-        for (var i in this.openedTrades) {
-          var first_pair_id = this.openedTrades[i].FirstPairId;
-          var second_pair_id = this.openedTrades[i].SecondPairId;
-          promises.push(
-            axios({
-              method: "GET",
-              headers: {
-                Authorization: "Bearer " + document.cookie,
-                "Access-Control-Allow-Origin": "*",
-              },
-              url: import.meta.env.VITE_ROOT_API + "/get_price/" + first_pair_id + "/" + second_pair_id,
-            })
-          )
-        }
-        Promise.all(promises).then(responses => {
-          for (var i in responses) {
-            this.openedTrades[i].CurrentPrice = responses[i].data;
+        this.ws = new WebSocket("ws://localhost:8080/get_prices/" + this.$route.params.username)
+        this.ws.onmessage = (event) => {
+          var ws_data = JSON.parse(event.data);
+          for (var i in ws_data) {
+            this.openedTrades[i].CurrentPrice = ws_data[i].Price;
             this.calculateTradeReturn(this.openedTrades[i]);
           }
           this.$store.dispatch("tradesModule/calculateTotalReturn");
           this.$store.dispatch("tradesModule/calculateTotalRoi");
-        });
+        }
       },
       calculateTradeReturn(trade) {
         var tradeStats = getTradeStats(trade);
