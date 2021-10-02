@@ -90,7 +90,7 @@
               <td class="py-4 text-center text-gray-700 text-md">
                 {{ trade.SecondPairSymbol }}
               </td>
-              <td class="py-4 text-center text-gray-700 text-md">
+              <td class="py-4 text-center text-gray-700 text-md text-fade-effect" v-bind:id="trade.Id">
                 {{ trade.CurrentPrice.toFixed(5) }}
                 <span class="text-xs">
                   {{ trade.FirstPairSymbol }} / {{ trade.SecondPairSymbol }}
@@ -332,12 +332,26 @@
         this.ws.onmessage = (event) => {
           var ws_data = JSON.parse(event.data);
           for (var i in ws_data) {
-            this.openedTrades[i].CurrentPrice = ws_data[i].Price;
+            var old_price = this.openedTrades[i].CurrentPrice;
+            var new_price = ws_data[i].Price;
+            this.openedTrades[i].CurrentPrice = new_price;
             this.calculateTradeReturn(this.openedTrades[i]);
+            if (old_price < new_price) {
+              this.highlight(this.openedTrades[i].Id, "green");
+            } else {
+              this.highlight(this.openedTrades[i].Id, "red");
+            }
           }
           this.$store.dispatch("tradesModule/calculateTotalReturn");
           this.$store.dispatch("tradesModule/calculateTotalRoi");
         }
+      },
+      highlight(obj, color) {
+        var orig = document.getElementById(obj).style.color;
+        document.getElementById(obj).style.color = color;
+        setTimeout(function(){
+          document.getElementById(obj).style.color = orig;
+        }, 3000);
       },
       calculateTradeReturn(trade) {
         var tradeStats = getTradeStats(trade);
@@ -479,7 +493,7 @@
 </script>
 
 <style>
-  ::-webkit-calendar-picker-indicator {
-    filter: invert(0.4);
-  }
+  .text-fade-effect{
+  transition: color 1s;
+}
 </style>
