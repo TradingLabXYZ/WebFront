@@ -328,7 +328,7 @@
     },
     methods: {
       getPrice() {
-        this.ws = new WebSocket("ws://localhost:8080/get_prices/" + this.$route.params.username)
+        this.ws = new WebSocket(import.meta.env.VITE_ROOT_WS + "/get_prices/" + this.$route.params.username)
         this.ws.onmessage = (event) => {
           var ws_data = JSON.parse(event.data);
           for (var i in ws_data) {
@@ -337,9 +337,9 @@
             this.openedTrades[i].CurrentPrice = new_price;
             this.calculateTradeReturn(this.openedTrades[i]);
             if (old_price < new_price) {
-              this.highlight(this.openedTrades[i].Id, "green");
+              this.highlight(this.openedTrades[i].Id, "#3ef73b");
             } else {
-              this.highlight(this.openedTrades[i].Id, "red");
+              this.highlight(this.openedTrades[i].Id, "#fc0324");
             }
           }
           this.$store.dispatch("tradesModule/calculateTotalReturn");
@@ -494,6 +494,6 @@
 
 <style>
   .text-fade-effect{
-  transition: color 1s;
+  transition: color 3s;
 }
 </style>
