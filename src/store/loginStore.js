@@ -5,6 +5,7 @@ export default {
   state: {
     sessionId: "",
     username: "",
+    usercode: "",
     profilePicture: ""
   },
   getters: {
@@ -13,6 +14,9 @@ export default {
     },
     username: state => {
       return state.username;
+    },
+    usercode: state => {
+      return state.usercode;
     },
     profilePicture: state => {
       return state.profilePicture;
@@ -24,6 +28,9 @@ export default {
     },
     SET_Username(state, username) {
       state.username = username;
+    },
+    SET_Usercode(state, usercode) {
+      state.usercode = usercode;
     },
     SET_ProfilePicture(state, profilePicture) {
       state.profilePicture = profilePicture;
@@ -42,6 +49,9 @@ export default {
     },
     setUsername({commit}, username) {
       commit("SET_Username", username);
+    },
+    setUsercode({commit}, usercode) {
+      commit("SET_Usercode", usercode);
     },
     setProfilePicture({commit}, profilePicture) {
       commit("SET_ProfilePicture", profilePicture);
