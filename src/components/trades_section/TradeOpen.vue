@@ -91,7 +91,7 @@
                 {{ trade.SecondPairSymbol }}
               </td>
               <td class="py-4 text-center text-gray-700 text-md text-fade-effect" v-bind:id="trade.Id">
-                {{ trade.CurrentPrice.toFixed(5) }}
+                {{ trade.CurrentPrice > 1 ? trade.CurrentPrice.toFixed(2) : trade.CurrentPrice.toFixed(5) }}
                 <span class="text-xs">
                   {{ trade.FirstPairSymbol }} / {{ trade.SecondPairSymbol }}
                 </span>
@@ -103,7 +103,7 @@
                 </span>
               </td>
               <td class="py-4 text-center text-gray-700 text-md">
-                {{ trade.TotalReturn.toFixed(5) }} 
+                {{ trade.TotalReturn > 1 ? trade.TotalReturn.toFixed(2) : trade.TotalReturn.toFixed(5) }}
                 <span class="text-xs">
                   {{ trade.FirstPairSymbol }}
                 </span>

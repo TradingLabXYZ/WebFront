@@ -69,8 +69,6 @@ export default {
       }).then(response => {
         if (response.status === 200) {
           if (response.data.Status == "denied") {
-            console.log("denied!");
-            console.log(response.data.Reason);
             commit("SET_DisabledReason", response.data.Reason);
             commit("SET_IsTradesDisabled", true);
           } else {
