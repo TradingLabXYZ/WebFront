@@ -250,11 +250,10 @@
                               @change="updateTrade(trade)">
                           </div>
                         </td>
-                        <td>
+                        <td v-if="isUserProfile">
                           <div class="flex justify-around">
                             <div class="flex justify-around m-auto mx-3">
                               <button
-                                v-if="isUserProfile"
                                 @click="insertSubtrade(trade, i)"
                                 title="Insert subtrade"
                                 type="button">
@@ -270,7 +269,6 @@
                             </div>
                             <div class="flex justify-around m-auto">
                               <button
-                                v-if="isUserProfile"
                                 @click="removeSubtrade(trade, i)"
                                 title="Remove subtrade"
                                 type="button">
