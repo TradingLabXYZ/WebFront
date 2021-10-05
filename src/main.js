@@ -24,6 +24,8 @@ import TradeOpen from "./components//trades_section/TradeOpen.vue"
 import TradeClose from "./components/trades_section/TradeClose.vue"
 import TradeNew from "./components/trades_section/TradeNew.vue"
 
+import UpgradeToPremium from "./components/plans_section/UpgradeToPremium.vue"
+
 app.component("Header", Header)
 app.component("Hero", Hero)
 app.component("Footer", Footer)
@@ -35,5 +37,7 @@ app.component("TradeHero", TradeHero)
 app.component("TradeOpen", TradeOpen)
 app.component("TradeClose", TradeClose)
 app.component("TradeNew", TradeNew)
+
+app.component("UpgradeToPremium", UpgradeToPremium)
 
 app.mount("#app")

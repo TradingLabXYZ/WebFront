@@ -195,8 +195,21 @@
           </div>
         </section> 
         <section v-if="settingsSection=='plan'">
-          <div class="m-2">Plan section</div>
+          <div class="mt-2">Your actual plan is: <b>{{ userPlan.Plan }}</b></div>
         </section> 
+        <div v-if="userPlan.Plan == 'basic'">
+          <div v-if="!isUpgradeToPremium">
+            <button class="p-3 m-3 bg-green-400 hover:bg-green-600" @click="upgradeToPremium()">
+              Upgrade to premium
+            </button>
+          </div>
+          <div v-else>
+            Upgrading to premium..
+          </div>
+          <div v-if="isUpgradeToPremium">
+            <UpgradeToPremium/>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -208,6 +221,7 @@
   export default {
     data: function() {
       return {
+        isUpgradeToPremium: false,
         settingsSection: "profile",
         userSocial:  {
           Email: "",
@@ -221,6 +235,9 @@
         },
         userPrivacy: {
           Privacy: ""
+        },
+        userPlan: {
+          Plan: ""
         }
       }
     },
@@ -248,6 +265,7 @@
             this.userSocial.Twitter = response.data.Twitter;
             this.userSocial.Website = response.data.Website;
             this.userPrivacy.Privacy = response.data.Privacy;
+            this.userPlan.Plan = response.data.Plan;
           }
         }).catch(function (error) {
           console.log(error);
@@ -336,6 +354,13 @@
           })
         } else {
           alert("Please upload a picture smaller than 50 Kb");
+        }
+      },
+      upgradeToPremium() {
+        if (!this.isUpgradeToPremium) {
+          this.isUpgradeToPremium = true;
+        } else {
+          this.isUpgradeToPremium = false;
         }
       }
     }
