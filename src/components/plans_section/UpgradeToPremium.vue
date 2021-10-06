@@ -1,71 +1,83 @@
 <template>
-  <div class="mt-8 text-xl font-bold">
-    STEP 1
-  </div>
-  <div class="">
-    <label class="">
-      Select number of months (every additional month, 2% discount)
-    </label>
-    <input
-      placeholder="Months"
-      max=12
-      min=1
-      type="number"
-      class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
-      v-model="numberMonths">
-  </div>
-  <div class="mt-8 text-xl">
-    <div class="m-1 mt-3">
-      MONTHLY PRICE: {{ discountedMonthlyPrice.toFixed(2) }}
+  <div class="mb-20">
+    <div id="step1" class="p-10 mt-8 bg-gray-100">
+      <div class="py-3 mt-1 mb-8 text-xl font-bold text-center bg-indigo-200">
+        STEP 1
+      </div>
+      <div class="flex flex-row items-center justify-around">
+        <label class="">
+          Select number of months<br>(every month 2% discount)
+        </label>
+        <input
+          placeholder="Months"
+          max="12"
+          min="1"
+          type="number"
+          class="w-20 h-8 p-2 text-gray-800 border border-gray-200 border-gray-500"
+          v-model="numberMonths">
+      </div>
+      <div class="mt-8 text-xl text-center">
+        <div class="m-1 mt-3">
+          <b class="text-base">MONTHLY PRICE</b>: {{ discountedMonthlyPrice.toFixed(2) }} $
+        </div>
+        <div class="m-1 mt-3">
+          <b class="text-base">TO PAY $</b>: {{ (numberMonths * discountedMonthlyPrice).toFixed(2) }} $
+        </div>
+        <div class="m-1 mt-5 text-xs">
+          Current XLM price around: {{ stellarPrice.toFixed(5) }} USD/XLM
+        </div>
+        <div class="m-1">
+          <b class="text-base">TO PAY XLM</b>: {{ (numberMonths * discountedMonthlyPrice / stellarPrice).toFixed(2) }} XLM
+        </div>
+      </div>
+      <div v-if="numberMonths > 0" class="flex justify-center mt-5 mb-1">
+        <button class="p-3 m-3 bg-green-400 hover:bg-green-600" @click="completeStep1()">
+          Next Step
+        </button>
+      </div>
     </div>
-    <div class="m-1 mt-3">
-      TO PAY USD: {{ (numberMonths * discountedMonthlyPrice).toFixed(2) }} $
-    </div>
-    <div class="m-1 mt-5 text-xs">
-      Current XLM price: {{ stellarPrice }} XLM/USD
-    </div>
-    <div class="m-1">
-      TO PAY XLM: {{ (numberMonths * discountedMonthlyPrice / stellarPrice).toFixed(2) }} XLM
-    </div>
-  </div>
-  <div v-if="numberMonths > 0" class="mt-5 mb-28">
-    <button class="p-3 m-3 bg-green-400 hover:bg-green-600" @click="completeStep1()">
-      Next Step
-    </button>
-    <div v-if="isStep1Completed">
-      <div class="mt-5 text-xl font-bold">
+
+    <div v-if="isStep1Completed" id="step2" class="p-10 mt-8 bg-gray-100">
+      <div class="py-3 mt-1 mb-8 text-xl font-bold text-center bg-indigo-200">
         STEP 2
       </div>
-      <div>
-        Send XLM to the following Address:
-      </div>
-      <div class="flex flex-row items-center">
-        <div class="m-3 text-xl" id="depositWallet">
-          <b>{{ depositWallet }}</b>
+      <div class="flex flex-col items-center">
+        <div>
+          Send XLM to the following address:
         </div>
-        <button @click="copyTextToClipboard('depositWallet')" class="h-5 text-xs bg-gray-300 hover:bg-gray-500">
-          Copy
+        <div class="flex flex-row items-center m-3 text-xl"> 
+          <b id="depositWallet">
+            {{ depositWallet }}
+          </b>
+          <button @click="copyTextToClipboard('depositWallet')" class="h-5 ml-2 text-xs bg-gray-300 hover:bg-gray-500">
+            Copy
+          </button>
+        </div>
+        <div>
+          Insert this MEMO:
+        </div>
+        <div class="flex flex-row items-center m-3 text-xl"> 
+          <b id="depositMemo">
+            {{  depositMemo }}
+          </b>
+          <button @click="copyTextToClipboard('depositMemo')" class="h-5 ml-2 text-xs bg-gray-300 hover:bg-gray-500">
+            Copy
+          </button>
+        </div>
+      </div>
+      <div class="flex justify-center mt-5 mb-1">
+        <button class="p-3 m-3 bg-green-400 hover:bg-green-600" @click="completeStep2()">
+          Next Step
         </button>
       </div>
-      <div class="m-3 text-xl">
-        Insert this MEMO:
+    </div>
+
+    <div v-if="isStep2Completed" id="step3" class="p-10 mt-8 bg-gray-100">
+      <div class="py-3 mt-1 mb-8 text-xl font-bold text-center bg-indigo-200">
+        STEP 3
       </div>
-      <div class="flex flex-row items-center">
-        <div class="m-3 text-xl" id="depositMemo">
-          <b>{{  depositMemo }}</b>
-        </div>
-        <button @click="copyTextToClipboard('depositMemo')" class="h-5 text-xs bg-gray-300 hover:bg-gray-500">
-          Copy
-        </button>
-      </div>
-      <button class="p-3 m-3 bg-green-400 hover:bg-green-600" @click="completeStep2()">
-        Next Step
-      </button>
-      <div v-if="isStep2Completed">
-        <div class="mt-8 text-xl font-bold">
-          STEP 3
-        </div>
-        <label class="text-xs text-subtradelabel">
+      <div class="flex flex-row items-center justify-around">
+        <label class="">
           Insert the transaction ID
         </label>
         <input
@@ -73,26 +85,38 @@
           type="text"
           class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
           v-model="stellarTransaction">
-        <div v-if="stellarTransaction.length">
-          <button class="p-3 m-3 bg-green-400 hover:bg-green-600" @click="completeStep3()">
-            Next Step
-          </button>
-          <div v-if="isStep3Completed">
-            <div class="mt-8 text-xl font-bold">STEP 4</div>
-            <div>
-              Check the status of your payment
-            </div>
-            <button class="p-3 bg-green-400 hover:bg-green-600" @click="checkTransaction()">
-              CHECK
-            </button>
-            <div v-if="isTransactionStatusLoading" class="mt-10 loader"></div>
-            <div v-if="transactionStatus == 'OK'" class="px-10 mt-10 bg-green-400">
-              SUCCESS
-            </div>
-            <div v-if="transactionStatus == 'KO'" class="px-10 mt-10 bg-red-400">
-              UNSUCCESS
-            </div>
-          </div>
+      </div>
+      <div class="flex justify-center mt-5 mb-1" v-if="stellarTransaction.length">
+        <button class="p-3 m-3 bg-green-400 hover:bg-green-600" @click="completeStep3()">
+          Next Step
+        </button>
+      </div>
+    </div>
+
+    <div v-if="isStep3Completed" id="step4" class="p-10 mt-8 bg-gray-100">
+      <div class="py-3 mt-1 mb-8 text-xl font-bold text-center bg-indigo-200">
+        STEP 4
+      </div>
+      <div class="flex flex-col items-center">
+        <div>
+          Check the status of your payment
+        </div>
+        <button class="p-3 mt-3 bg-green-400 hover:bg-green-600" @click="checkTransaction()">
+          CHECK
+        </button>
+      </div>
+      <div class="flex justify-around">
+        <div v-if="isTransactionStatusLoading" class="mt-10 loader"></div>
+      </div>
+      <div class="py-6 font-bold text-center">
+        <div v-if="transactionStatus == 'OK'" class="px-10 py-3 mt-10 bg-green-400">
+          SUCCESS
+        </div>
+        <div v-if="transactionStatus == 'KO'" class="px-10 py-3 mt-10 bg-red-400">
+          UNSUCCESS<br>
+          <span class="text-xs">
+            Problems? Contact us on Discord
+          </span>
         </div>
       </div>
     </div>
@@ -171,6 +195,7 @@
         this.isStep3Completed = true;
       },
       checkTransaction() {
+        this.transactionStatus = "";
         this.isTransactionStatusLoading = true;
         axios({
           method: "GET",
@@ -202,12 +227,12 @@
 
 <style>
   .loader {
-    border: 16px solid #f3f3f3; /* Light grey */
-    border-top: 16px solid #3498db; /* Blue */
+    border: 8px solid #3428db;
+    border-top: 8px solid #3498db;
     border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    animation: spin 2s linear infinite;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
   }
 
   @keyframes spin {
