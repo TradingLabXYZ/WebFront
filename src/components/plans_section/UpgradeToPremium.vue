@@ -4,23 +4,28 @@
   </div>
   <div class="">
     <label class="">
-      Select number of months
+      Select number of months (every additional month, 2% discount)
     </label>
     <input
       placeholder="Months"
+      max=12
+      min=1
       type="number"
       class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
       v-model="numberMonths">
   </div>
   <div class="mt-8 text-xl">
-    <div class="m-1 text-xs">
-      Current XLM price: {{ stellarPrice }} XLM/USD
+    <div class="m-1 mt-3">
+      MONTHLY PRICE: {{ discountedMonthlyPrice.toFixed(2) }}
     </div>
     <div class="m-1 mt-3">
-      TO PAY USD: {{ (numberMonths * totalToPay).toFixed(2) }} $
+      TO PAY USD: {{ (numberMonths * discountedMonthlyPrice).toFixed(2) }} $
+    </div>
+    <div class="m-1 mt-5 text-xs">
+      Current XLM price: {{ stellarPrice }} XLM/USD
     </div>
     <div class="m-1">
-      TO PAY XLM: {{ (numberMonths * totalToPay / 0.30).toFixed(2) }} XLM
+      TO PAY XLM: {{ (numberMonths * discountedMonthlyPrice / stellarPrice).toFixed(2) }} XLM
     </div>
   </div>
   <div v-if="numberMonths > 0" class="mt-5 mb-28">
@@ -32,10 +37,26 @@
         STEP 2
       </div>
       <div>
-        Send XLM to the following Address: <b>{{ depositWallet }}</b>
+        Send XLM to the following Address:
       </div>
-      <div>
-        Insert this MEMO: <b>{{  depositMemo }}</b>
+      <div class="flex flex-row items-center">
+        <div class="m-3 text-xl" id="depositWallet">
+          <b>{{ depositWallet }}</b>
+        </div>
+        <button @click="copyTextToClipboard('depositWallet')" class="h-5 text-xs bg-gray-300 hover:bg-gray-500">
+          Copy
+        </button>
+      </div>
+      <div class="m-3 text-xl">
+        Insert this MEMO:
+      </div>
+      <div class="flex flex-row items-center">
+        <div class="m-3 text-xl" id="depositMemo">
+          <b>{{  depositMemo }}</b>
+        </div>
+        <button @click="copyTextToClipboard('depositMemo')" class="h-5 text-xs bg-gray-300 hover:bg-gray-500">
+          Copy
+        </button>
       </div>
       <button class="p-3 m-3 bg-green-400 hover:bg-green-600" @click="completeStep2()">
         Next Step
@@ -65,10 +86,10 @@
               CHECK
             </button>
             <div v-if="isTransactionStatusLoading" class="mt-10 loader"></div>
-            <div v-if="transactionStatus == 'OK'" class="mt-10 px-10 bg-green-400">
+            <div v-if="transactionStatus == 'OK'" class="px-10 mt-10 bg-green-400">
               SUCCESS
             </div>
-            <div v-if="transactionStatus == 'KO'" class="mt-10 px-10 bg-red-400">
+            <div v-if="transactionStatus == 'KO'" class="px-10 mt-10 bg-red-400">
               UNSUCCESS
             </div>
           </div>
@@ -87,8 +108,10 @@
         isStep1Completed: false,
         isStep2Completed: false,
         isStep3Completed: false,
-        numberMonths: 0,
+        numberMonths: 1,
+        monthlyDiscount: 2,
         totalToPay: 4.99,
+        baseMonthlyPrice: 4.99,
         stellarTransaction: "",
         isTransactionStatusLoading: false,
         transactionStatus: null
@@ -96,6 +119,15 @@
     },
     created: function() {
       this.getStellarPrice();
+    },
+    computed: {
+      discountedMonthlyPrice: function () {
+        if (this.numberMonths == 1) {
+          return this.baseMonthlyPrice;
+        } else {
+          return this.baseMonthlyPrice * (100 - this.numberMonths * this.monthlyDiscount) / 100;
+        }
+      }
     },
     methods: {
       getStellarPrice() {
@@ -159,6 +191,10 @@
         }).catch(function (error) {
           console.log(error);
         })
+      },
+      copyTextToClipboard(element_id) {
+        var copyText = document.getElementById(element_id);
+        navigator.clipboard.writeText(copyText.innerText);
       }
     }
   }
