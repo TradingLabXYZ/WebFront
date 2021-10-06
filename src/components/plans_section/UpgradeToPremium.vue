@@ -13,6 +13,7 @@
           max="12"
           min="1"
           type="number"
+          @change="checkMonthsMax"
           class="w-20 h-8 p-2 text-gray-800 border border-gray-200 border-gray-500"
           v-model="numberMonths">
       </div>
@@ -27,7 +28,7 @@
           Current XLM price around: {{ stellarPrice.toFixed(5) }} USD/XLM
         </div>
         <div class="m-1">
-          <b class="text-base">TO PAY XLM</b>: {{ (numberMonths * discountedMonthlyPrice / stellarPrice).toFixed(2) }} XLM
+          <b class="text-base">TO PAY XLM</b>: {{ totalXlmToPay.toFixed(2) }} XLM
         </div>
       </div>
       <div v-if="numberMonths > 0" class="flex justify-center mt-5 mb-1">
@@ -43,13 +44,24 @@
       </div>
       <div class="flex flex-col items-center">
         <div>
+          Amount XLM to be sent:
+        </div>
+        <div class="flex flex-row items-center m-3 text-xl"> 
+          <b id="totalXlmToPay">
+            {{ totalXlmToPay }}
+          </b>
+          <button @click="copyTextToClipboard('totalXlmToPay')" class="h-5 px-2 ml-2 text-xs bg-gray-300 hover:bg-gray-500">
+            Copy
+          </button>
+        </div>
+        <div>
           Send XLM to the following address:
         </div>
         <div class="flex flex-row items-center m-3 text-xl"> 
           <b id="depositWallet">
             {{ depositWallet }}
           </b>
-          <button @click="copyTextToClipboard('depositWallet')" class="h-5 ml-2 text-xs bg-gray-300 hover:bg-gray-500">
+          <button @click="copyTextToClipboard('depositWallet')" class="h-5 px-2 ml-2 text-xs bg-gray-300 hover:bg-gray-500">
             Copy
           </button>
         </div>
@@ -60,7 +72,7 @@
           <b id="depositMemo">
             {{  depositMemo }}
           </b>
-          <button @click="copyTextToClipboard('depositMemo')" class="h-5 ml-2 text-xs bg-gray-300 hover:bg-gray-500">
+          <button @click="copyTextToClipboard('depositMemo')" class="h-5 px-2 ml-2 text-xs bg-gray-300 hover:bg-gray-500">
             Copy
           </button>
         </div>
@@ -86,37 +98,25 @@
           class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
           v-model="stellarTransaction">
       </div>
-      <div class="flex justify-center mt-5 mb-1" v-if="stellarTransaction.length">
-        <button class="p-3 m-3 bg-green-400 hover:bg-green-600" @click="completeStep3()">
-          Next Step
-        </button>
-      </div>
-    </div>
-
-    <div v-if="isStep3Completed" id="step4" class="p-10 mt-8 bg-gray-100">
-      <div class="py-3 mt-1 mb-8 text-xl font-bold text-center bg-indigo-200">
-        STEP 4
-      </div>
-      <div class="flex flex-col items-center">
-        <div>
-          Check the status of your payment
+      <div class="mt-5 mb-1" v-if="stellarTransaction.length">
+        <div class="flex justify-around">
+          <button class="p-3 mt-3 bg-green-400 hover:bg-green-600" @click="checkTransaction()">
+            CHECK
+          </button>
         </div>
-        <button class="p-3 mt-3 bg-green-400 hover:bg-green-600" @click="checkTransaction()">
-          CHECK
-        </button>
-      </div>
-      <div class="flex justify-around">
-        <div v-if="isTransactionStatusLoading" class="mt-10 loader"></div>
-      </div>
-      <div class="py-6 font-bold text-center">
-        <div v-if="transactionStatus == 'OK'" class="px-10 py-3 mt-10 bg-green-400">
-          SUCCESS
+        <div class="flex justify-around">
+          <div v-if="isTransactionStatusLoading" class="mt-10 loader"></div>
         </div>
-        <div v-if="transactionStatus == 'KO'" class="px-10 py-3 mt-10 bg-red-400">
-          UNSUCCESS<br>
-          <span class="text-xs">
-            Problems? Contact us on Discord
-          </span>
+        <div class="py-6 font-bold text-center">
+          <div v-if="transactionStatus == 'OK'" class="px-10 py-3 mt-10 bg-green-400">
+            🙌 Success 🙌
+          </div>
+          <div v-if="transactionStatus == 'KO'" class="px-10 py-3 mt-10 bg-red-400">
+            Ouch something went wrong<br>
+            <span class="text-xs">
+              Please contact us on Discord
+            </span>
+          </div>
         </div>
       </div>
     </div>
@@ -132,9 +132,10 @@
         isStep1Completed: false,
         isStep2Completed: false,
         isStep3Completed: false,
+        depositMemo: "",
+        depositWallet: "",
         numberMonths: 1,
         monthlyDiscount: 2,
-        totalToPay: 4.99,
         baseMonthlyPrice: 4.99,
         stellarTransaction: "",
         isTransactionStatusLoading: false,
@@ -151,9 +152,20 @@
         } else {
           return this.baseMonthlyPrice * (100 - this.numberMonths * this.monthlyDiscount) / 100;
         }
+      },
+      totalXlmToPay: function() {
+        return Math.round((this.discountedMonthlyPrice * this.numberMonths / this.stellarPrice) * 100) / 100;
       }
     },
     methods: {
+      checkMonthsMax() {
+        if(this.numberMonths > 12){
+          this.numberMonths = 12;
+        }
+        if(this.numberMonths < 1){
+          this.numberMonths = 1;
+        }
+      },
       getStellarPrice() {
         axios({
           method: "GET",
@@ -191,19 +203,21 @@
       completeStep2() {
         this.isStep2Completed = true;
       },
-      completeStep3() {
-        this.isStep3Completed = true;
-      },
       checkTransaction() {
         this.transactionStatus = "";
         this.isTransactionStatusLoading = true;
         axios({
-          method: "GET",
+          method: "POST",
           headers: {
             Authorization: "Bearer " + document.cookie,
             "Access-Control-Allow-Origin": "*",
           },
-          url: import.meta.env.VITE_ROOT_API + "/validate_tx/" + this.stellarTransaction,
+          url: import.meta.env.VITE_ROOT_API + "/validate_tx",
+          data: { 
+            Id: this.stellarTransaction,
+            Memo: this.depositMemo,
+            Amount: this.totalXlmToPay
+          }
         }).then(response => {
           if (response.status === 200) {
             this.isTransactionStatusLoading = false;
