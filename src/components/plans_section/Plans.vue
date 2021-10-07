@@ -3,7 +3,7 @@
   <div v-if="userPlan.Plan == 'basic'">
     <div v-if="!isUpgradeToPremium">
       <button class="p-3 m-3 bg-green-400 hover:bg-green-600" @click="upgradeToPremium()">
-        Start upgrade process
+        Upgrade to Premium
       </button>
     </div>
     <div v-else>
@@ -12,6 +12,9 @@
     <div v-if="isUpgradeToPremium">
       <UpgradeToPremium/>
     </div>
+  </div>
+  <div v-if="userPlan.Plan == 'premium'">
+    MANAGE PREMIUM
   </div>
 </template>
 

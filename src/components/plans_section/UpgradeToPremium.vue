@@ -15,7 +15,7 @@
           type="number"
           @change="checkMonthsMax"
           class="w-20 h-8 p-2 text-gray-800 border border-gray-200 border-gray-500"
-          v-model="numberMonths">
+          v-model.number="numberMonths">
       </div>
       <div class="mt-8 text-xl text-center">
         <div class="m-1 mt-3">
@@ -216,7 +216,10 @@
           data: { 
             Id: this.stellarTransaction,
             Memo: this.depositMemo,
-            Amount: this.totalXlmToPay
+            Months: this.numberMonths,
+            Amount: this.totalXlmToPay,
+            Blockchain: "Stellar",
+            Currency: "XLM"
           }
         }).then(response => {
           if (response.status === 200) {
