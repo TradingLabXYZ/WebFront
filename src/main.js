@@ -24,6 +24,10 @@ import TradeOpen from "./components//trades_section/TradeOpen.vue"
 import TradeClose from "./components/trades_section/TradeClose.vue"
 import TradeNew from "./components/trades_section/TradeNew.vue"
 
+import Profile from "./components/settings_section/Profile.vue"
+import Password from "./components/settings_section/Password.vue"
+import Privacy from "./components/settings_section/Privacy.vue"
+import Plans from "./components/plans_section/Plans.vue"
 import UpgradeToPremium from "./components/plans_section/UpgradeToPremium.vue"
 
 app.component("Header", Header)
@@ -38,6 +42,10 @@ app.component("TradeOpen", TradeOpen)
 app.component("TradeClose", TradeClose)
 app.component("TradeNew", TradeNew)
 
+app.component("Profile", Profile)
+app.component("Password", Password)
+app.component("Privacy", Privacy)
+app.component("Plans", Plans)
 app.component("UpgradeToPremium", UpgradeToPremium)
 
 app.mount("#app")
