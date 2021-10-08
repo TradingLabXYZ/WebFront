@@ -212,7 +212,7 @@
             Authorization: "Bearer " + document.cookie,
             "Access-Control-Allow-Origin": "*",
           },
-          url: import.meta.env.VITE_ROOT_API + "/validate_tx",
+          url: import.meta.env.VITE_ROOT_API + "/buy_months",
           data: { 
             Id: this.stellarTransaction,
             Memo: this.depositMemo,
