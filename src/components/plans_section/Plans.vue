@@ -1,6 +1,6 @@
 <template>
-  <div class="mt-2">Your actual plan is: <b>{{ userPlan.Plan }}</b></div>
-  <div v-if="userPlan.Plan == 'basic'">
+  <div class="mt-2">Your actual plan is: <b>{{ userPlan }}</b></div>
+  <div v-if="userPlan == 'basic'">
     <div v-if="!isUpgradeToPremium">
       <button class="p-3 m-3 bg-green-400 hover:bg-green-600" @click="upgradeToPremium()">
         Upgrade to Premium
@@ -13,8 +13,8 @@
       <UpgradeToPremium/>
     </div>
   </div>
-  <div v-if="userPlan.Plan == 'premium'">
-    MANAGE PREMIUM
+  <div v-if="userPlan == 'premium'">
+    <UserPremiumData/>
   </div>
 </template>
 
