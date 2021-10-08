@@ -219,7 +219,7 @@
             Months: this.numberMonths,
             Amount: this.totalXlmToPay,
             Blockchain: "Stellar",
-            Currency: "XLM"
+            Asset: "XLM"
           }
         }).then(response => {
           if (response.status === 200) {
