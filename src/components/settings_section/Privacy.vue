@@ -19,16 +19,16 @@
     </select>
   </div>
   <div class="mt-5">
-    <div v-if="userPrivacy == 'all'" class="flex justify-around">
+    <div v-if="selectedUserPrivacy == 'all'" class="flex justify-around">
       Your profile is visible to everybody
     </div>
-    <div v-if="userPrivacy == 'private'" class="flex justify-around">
+    <div v-if="selectedUserPrivacy == 'private'" class="flex justify-around">
       Your profile is visible only to you
     </div>
-    <div v-if="userPrivacy == 'followers'" class="flex justify-around">
+    <div v-if="selectedUserPrivacy == 'followers'" class="flex justify-around">
       Your profile is visible only to your followers
     </div>
-    <div v-if="userPrivacy == 'subscribers'" class="flex justify-around">
+    <div v-if="selectedUserPrivacy == 'subscribers'" class="flex justify-around">
       Your profile is visible only to your subscribers
     </div>
   </div>
