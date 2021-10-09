@@ -11,9 +11,11 @@
 </template>
 
 <script>
+  import idb from "@/db/idb.js"
   export default {
     methods: {
       logout() {
+        idb.deleteUser(this.$store.getters["loginModule/sessionId"]) 
         this.$store.dispatch("loginModule/logout");
         this.$router.push({ name: "Home" });
       },

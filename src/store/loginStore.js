@@ -41,6 +41,7 @@ export default {
       localStorage.clear();
       commit("SET_SessionId", "");
       commit("SET_Username", "");
+      commit("SET_Usercode", "");
       commit("SET_ProfilePicture", "");
       document.cookie = "sessionId=;";
     },

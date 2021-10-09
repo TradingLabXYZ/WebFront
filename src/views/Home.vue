@@ -14,16 +14,19 @@
 
 <script>
   import { mapState } from "vuex";
+  import idb from "@/db/idb.js"
   export default {
     computed: {
-      ...mapState("loginModule", ["sessionId"])
+      ...mapState("loginModule", ["sessionId, username"])
     },
-    created: function() {
-      if (this.$store.getters["loginModule/sessionId"]) {
+    async created() {
+      if(document.cookie.match('(^|;)\\s*sessionId\\s*=\\s*([^;]+)')?.pop() || '' != "") {
+        var session_id = document.cookie.split("sessionId=")[1].split(";")[0];
+        var userData = await idb.getUser(session_id);
         this.$router.push({
           name: "UserTrades",
           params: {
-            username: this.$store.getters["loginModule/username"] 
+            username: userData.Username
           }
         })
       };

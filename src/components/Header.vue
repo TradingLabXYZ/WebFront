@@ -52,7 +52,7 @@
       }
     },
     created: function() {
-      if (this.$store.getters["loginModule/sessionId"]) {
+      if(document.cookie.match('(^|;)\\s*sessionId\\s*=\\s*([^;]+)')?.pop() || '' != "") {
         this.isSessionId = true;
       };
     }
