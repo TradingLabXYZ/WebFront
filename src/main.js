@@ -29,6 +29,7 @@ import Password from "./components/settings_section/Password.vue"
 import Privacy from "./components/settings_section/Privacy.vue"
 import Plans from "./components/plans_section/Plans.vue"
 import UpgradeToPremium from "./components/plans_section/UpgradeToPremium.vue"
+import UserPremiumData from "./components/plans_section/UserPremiumData.vue"
 
 app.component("Header", Header)
 app.component("Hero", Hero)
@@ -47,5 +48,6 @@ app.component("Password", Password)
 app.component("Privacy", Privacy)
 app.component("Plans", Plans)
 app.component("UpgradeToPremium", UpgradeToPremium)
+app.component("UserPremiumData", UserPremiumData)
 
 app.mount("#app")

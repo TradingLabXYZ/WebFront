@@ -3,7 +3,7 @@
     <label class="text-xs text-subtradelabel">Select Privacy Settings</label>
     <select
       class="w-full p-2 text-gray-800 bg-white border border-gray-200 border-gray-500"
-      v-model="userPrivacy.Privacy">
+      v-model="userPrivacy">
       <option value="all">
         All
       </option>
@@ -19,16 +19,16 @@
     </select>
   </div>
   <div class="mt-5">
-    <div v-if="userPrivacy.Privacy == 'all'" class="flex justify-around">
+    <div v-if="userPrivacy == 'all'" class="flex justify-around">
       Your profile is visible to everybody
     </div>
-    <div v-if="userPrivacy.Privacy == 'private'" class="flex justify-around">
+    <div v-if="userPrivacy == 'private'" class="flex justify-around">
       Your profile is visible only to you
     </div>
-    <div v-if="userPrivacy.Privacy == 'followers'" class="flex justify-around">
+    <div v-if="userPrivacy == 'followers'" class="flex justify-around">
       Your profile is visible only to your followers
     </div>
-    <div v-if="userPrivacy.Privacy == 'subscribers'" class="flex justify-around">
+    <div v-if="userPrivacy == 'subscribers'" class="flex justify-around">
       Your profile is visible only to your subscribers
     </div>
   </div>
