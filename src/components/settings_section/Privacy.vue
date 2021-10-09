@@ -71,7 +71,6 @@
     },
     methods: {
       saveUserPrivacy() {
-        console.log(this.userPrivacy);
         axios({
           method: "POST",
           headers: {
