@@ -89,31 +89,31 @@
           s.opacity = 1;
           (function fade(){(s.opacity-=.1)<0?s.display="none":setTimeout(fade,100)})();
         })
-      }
-    },
-    uploadImage(event) {
-      let uploader = new FormData();
-      uploader.append('file', event.target.files[0]); 
-      var file_size = [...uploader.entries()][0][1].size;
-      if (file_size < 50000) {
-        axios({
-          method: "PUT",
-          headers: {
-            Authorization: "Bearer " + document.cookie,
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "image/png"
-          },
-          url: import.meta.env.VITE_ROOT_API + "/insert_profile_picture",
-          data: uploader
-        }).then(response => {
-          var returnedProfilePicture = response.data;
-          localStorage.setItem("profilePicture", returnedProfilePicture);
-          this.$store.dispatch("loginModule/setProfilePicture", returnedProfilePicture);
-        }).catch(function (error) {
-          console.log(error);
-        })
-      } else {
-        alert("Please upload a picture smaller than 50 Kb");
+      },
+      uploadImage(event) {
+        let uploader = new FormData();
+        uploader.append('file', event.target.files[0]); 
+        var file_size = [...uploader.entries()][0][1].size;
+        if (file_size < 50000) {
+          axios({
+            method: "PUT",
+            headers: {
+              Authorization: "Bearer " + document.cookie,
+              "Access-Control-Allow-Origin": "*",
+              "Content-Type": "image/png"
+            },
+            url: import.meta.env.VITE_ROOT_API + "/insert_profile_picture",
+            data: uploader
+          }).then(response => {
+            var returnedProfilePicture = response.data;
+            localStorage.setItem("profilePicture", returnedProfilePicture);
+            this.$store.dispatch("loginModule/setProfilePicture", returnedProfilePicture);
+          }).catch(function (error) {
+            console.log(error);
+          })
+        } else {
+          alert("Please upload a picture smaller than 50 Kb");
+        }
       }
     }
   }

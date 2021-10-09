@@ -55,6 +55,9 @@ export default {
     }
   },
   actions: {
+    setUserPrivacy({commit}, userPrivacy) {
+      commit("SET_UserPrivacy", userPrivacy);
+    },
     getUserSettings({commit, dispatch}) {
       axios({
         method: "GET",

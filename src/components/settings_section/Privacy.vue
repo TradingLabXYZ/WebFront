@@ -3,7 +3,7 @@
     <label class="text-xs text-subtradelabel">Select Privacy Settings</label>
     <select
       class="w-full p-2 text-gray-800 bg-white border border-gray-200 border-gray-500"
-      v-model="userPrivacy">
+      v-model="selectedUserPrivacy">
       <option value="all">
         All
       </option>
@@ -58,11 +58,20 @@
   import { mapState } from 'vuex';
   import axios from "axios";
   export default {
+    data: function() {
+      return {
+        selectedUserPrivacy: "",
+      }
+    },
+    created: function() {
+      this.selectedUserPrivacy = this.userPrivacy;
+    },
     computed: {
       ...mapState("settingsModule", ["userPrivacy"])
     },
     methods: {
       saveUserPrivacy() {
+        console.log(this.userPrivacy);
         axios({
           method: "POST",
           headers: {
@@ -70,7 +79,9 @@
             "Access-Control-Allow-Origin": "*",
           },
           url: import.meta.env.VITE_ROOT_API + "/update_privacy",
-          data: this.userPrivacy
+          data: {
+            Privacy: this.selectedUserPrivacy
+          }
         }).then(response => {
           if (response.data == "OK") {
             var s = document.getElementById("userPrivacyOk").style;
