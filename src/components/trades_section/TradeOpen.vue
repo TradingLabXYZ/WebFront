@@ -91,7 +91,7 @@
                 {{ trade.SecondPairSymbol }}
               </td>
               <td class="py-4 text-center text-gray-700 text-md text-fade-effect" v-bind:id="trade.Id">
-                {{ trade.CurrentPrice.toFixed(5) }}
+                {{ trade.CurrentPrice > 1 ? trade.CurrentPrice.toFixed(2) : trade.CurrentPrice.toFixed(5) }}
                 <span class="text-xs">
                   {{ trade.FirstPairSymbol }} / {{ trade.SecondPairSymbol }}
                 </span>
@@ -103,7 +103,7 @@
                 </span>
               </td>
               <td class="py-4 text-center text-gray-700 text-md">
-                {{ trade.TotalReturn.toFixed(5) }} 
+                {{ trade.TotalReturn > 1 ? trade.TotalReturn.toFixed(2) : trade.TotalReturn.toFixed(5) }}
                 <span class="text-xs">
                   {{ trade.FirstPairSymbol }}
                 </span>
@@ -250,11 +250,10 @@
                               @change="updateTrade(trade)">
                           </div>
                         </td>
-                        <td>
+                        <td v-if="isUserProfile">
                           <div class="flex justify-around">
                             <div class="flex justify-around m-auto mx-3">
                               <button
-                                v-if="isUserProfile"
                                 @click="insertSubtrade(trade, i)"
                                 title="Insert subtrade"
                                 type="button">
@@ -270,7 +269,6 @@
                             </div>
                             <div class="flex justify-around m-auto">
                               <button
-                                v-if="isUserProfile"
                                 @click="removeSubtrade(trade, i)"
                                 title="Remove subtrade"
                                 type="button">
