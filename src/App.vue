@@ -3,14 +3,10 @@
 </template>
 
 <script>
-  import { mapState } from "vuex";
   import idb from "@/db/idb.js"
   export default {
-    computed: {
-      ...mapState("loginModule", ["sessionId"])
-    },
     async mounted() {
-      if(document.cookie.match('(^|;)\\s*sessionId\\s*=\\s*([^;]+)')?.pop() || '' != "") {
+      if(document.cookie.indexOf("sessionId") > -1) {
         var session_id = document.cookie.split("sessionId=")[1].split(";")[0];
         var userData = await idb.getUser(session_id);
         this.$store.dispatch("loginModule/setSessionId", session_id);

@@ -46,8 +46,6 @@ export default {
 		});
 	},
 	async deleteUser(key) {
-    console.log("I WANT TO DELETE")
-    console.log(key);
 		let db = await this.getDb();
 		return new Promise(resolve => {
 			let trans = db.transaction(['userData'],'readwrite');
@@ -58,9 +56,6 @@ export default {
       store.openCursor().onsuccess = function(event) {
         const cursor = event.target.result;
         if(cursor) {
-          console.log("cursor")
-          console.log(cursor);
-          console.log(cursor.value.SessionId);
           if(cursor.value.SessionId == key) {
             const request = cursor.delete();
             request.onsuccess = function() {

@@ -52,7 +52,7 @@
       }
     },
     created: function() {
-      if(document.cookie.match('(^|;)\\s*sessionId\\s*=\\s*([^;]+)')?.pop() || '' != "") {
+      if(document.cookie.indexOf("sessionId") > -1) {
         this.isSessionId = true;
       };
     }
