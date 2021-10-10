@@ -11,22 +11,3 @@
     <Footer/>
   </div>
 </template>
-
-<script>
-  import { mapState } from "vuex";
-  export default {
-    computed: {
-      ...mapState("loginModule", ["sessionId"])
-    },
-    created: function() {
-      if (this.$store.getters["loginModule/sessionId"]) {
-        this.$router.push({
-          name: "UserTrades",
-          params: {
-            username: this.$store.getters["loginModule/username"] 
-          }
-        })
-      };
-    }
-  }
-</script>

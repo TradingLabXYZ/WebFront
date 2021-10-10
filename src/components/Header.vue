@@ -52,7 +52,7 @@
       }
     },
     created: function() {
-      if (this.$store.getters["loginModule/sessionId"]) {
+      if(document.cookie.indexOf("sessionId") > -1) {
         this.isSessionId = true;
       };
     }
