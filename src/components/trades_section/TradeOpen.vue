@@ -435,7 +435,7 @@
               ); 
             }
           }).catch(function (error) {
-            console.log(error);
+            alert("Error, please contact the admin on Discord");
           })
         }
       },
