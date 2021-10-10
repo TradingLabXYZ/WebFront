@@ -57,6 +57,7 @@
 
 <script>
   import axios from "axios";
+  import idb from "@/db/idb.js"
   export default {
     components: {},
     data: () => ({
@@ -78,18 +79,24 @@
             let username = response.data.UserName;
             let usercode = response.data.Code;
             let profilePicture = response.data.ProfilePicture;
-            localStorage.setItem("sessionId", sessionId);
-            localStorage.setItem("username", username);
-            localStorage.setItem("usercode", usercode);
-            localStorage.setItem("profilePicture", profilePicture);
+
             this.$store.dispatch("loginModule/setSessionId", sessionId);
             this.$store.dispatch("loginModule/setUsername", username);
             this.$store.dispatch("loginModule/setUsercode", usercode);
             this.$store.dispatch("loginModule/setProfilePicture", profilePicture);
+
             let d = new Date();
             d.setTime(d.getTime() + 1000 * 24 * 60 * 60 * 1000);
             let expires = "expires=" + d.toUTCString();
             document.cookie = "sessionId=" + sessionId + ";" + expires + "; path=/";
+          
+            idb.saveUser({
+              SessionId: sessionId,
+              Username: username,
+              Usercode: usercode,
+              ProfilePicture: profilePicture
+            });
+
             this.$router.push({
               name: "UserTrades",
               params: {

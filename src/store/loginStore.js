@@ -1,4 +1,5 @@
 import axios from "axios";
+import idb from "@/db/idb.js"
 
 export default {
   namespaced: true,
@@ -37,12 +38,16 @@ export default {
     }
   },
   actions: {
-    logout({commit}) {
-      localStorage.clear();
+    logout({commit, getters}) {
+      idb.deleteUser(getters.sessionId);
       commit("SET_SessionId", "");
       commit("SET_Username", "");
+      commit("SET_Usercode", "");
       commit("SET_ProfilePicture", "");
-      document.cookie = "sessionId=;";
+      var c = document.cookie.split("; ");
+      for (var i in c) { 
+        document.cookie =/^[^=]+/.exec(c[i])[0]+"=;expires=Thu, 01 Jan 1970 00:00:00 GMT";    
+      }
     },
     setSessionId({commit}, sessionId) {
       commit("SET_SessionId", sessionId);
