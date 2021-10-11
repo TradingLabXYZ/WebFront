@@ -190,7 +190,7 @@
               ); 
             }
           }).catch(function (error) {
-            console.log(error);
+            console.log("ERROR: failed opening trade..")
           })
         }
       },

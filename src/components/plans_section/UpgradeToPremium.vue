@@ -179,7 +179,7 @@
             this.stellarPrice = parseFloat(response.data.Price);
           }
         }).catch(function (error) {
-          console.log(error);
+          console.log("ERROR: failed fetching stellar price...");
         })
       },
       completeStep1() {
@@ -197,7 +197,7 @@
             this.depositMemo = response.data.Memo;
           }
         }).catch(function (error) {
-          console.log(error);
+          console.log("ERROR: failed fetching transaction credentials...");
         })
       },
       completeStep2() {
@@ -231,7 +231,7 @@
             }
           }
         }).catch(function (error) {
-          console.log(error);
+          console.log("ERROR: failed fetching transactions...");
         })
       },
       copyTextToClipboard(element_id) {

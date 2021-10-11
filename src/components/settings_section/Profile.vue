@@ -88,6 +88,8 @@
           s.display = "block";
           s.opacity = 1;
           (function fade(){(s.opacity-=.1)<0?s.display="none":setTimeout(fade,100)})();
+        }).catch(function (error) {
+          console.log("ERROR: failed posting user settings...");
         })
       },
       uploadImage(event) {
@@ -109,7 +111,7 @@
             localStorage.setItem("profilePicture", returnedProfilePicture);
             this.$store.dispatch("loginModule/setProfilePicture", returnedProfilePicture);
           }).catch(function (error) {
-            console.log(error);
+            console.log("ERROR: failed inserting profile picture...");
           })
         } else {
           alert("Please upload a picture smaller than 50 Kb");

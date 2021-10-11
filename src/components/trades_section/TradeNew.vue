@@ -214,7 +214,7 @@
             this.cryptoPairs = response.data;
           }
         }).catch(function (error) {
-          console.log(error);
+          console.log("ERROR: failed getting pairs...");
         })
       },
       confirmInsertTrade() {
@@ -240,7 +240,7 @@
               );
             }
           }).catch(function (error) {
-            console.log(error);
+            console.log("ERROR: failed inserting trade...")
           })
         } else {
           alert("Please check the following errors:\n" + validateMessages.join("\n"));

@@ -63,7 +63,7 @@
               this.$router.push({ name: 'Login' })
             }
             else {
-              console.log(body)
+              console.log("ERROR: failed registering user...");
             }
           })
         },

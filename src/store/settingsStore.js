@@ -80,7 +80,7 @@ export default {
           }
         }
       }).catch(function (error) {
-        console.log(error);
+        console.log("ERROR: failed changing user settings...")
       })
     },
     getUserPremiumData({commit}) {
@@ -99,7 +99,7 @@ export default {
           });
         }
       }).catch(function (error) {
-        console.log(error);
+        console.log("ERROR: failed changing user premium data...")
       })
     }
   }

@@ -389,7 +389,7 @@
               this.calculateTradeReturn(trade);
             }
           }).catch(function (error) {
-            console.log(error);
+            console.log("ERROR: failed updating trade...");
           })
         } else {
           alert("Please check the following errors:\n" + validateMessages.join("\n"));
@@ -413,7 +413,7 @@
               ); 
             }
           }).catch(function (error) {
-            console.log(error);
+            console.log("ERROR: failed deleting trade...");
           })
         }
       },
@@ -435,7 +435,7 @@
               ); 
             }
           }).catch(function (error) {
-            alert("Error, please contact the admin on Discord");
+            console.log("ERROR: failed closing trade...");
           })
         }
       },
