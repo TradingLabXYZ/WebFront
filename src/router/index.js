@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import store from "@/store"
 import RoutesOut from '../router/out.js'
 import RoutesIn from '../router/in.js'
 
@@ -13,7 +12,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    if (store.getters["loginModule/sessionId"]) {
+    if(document.cookie.indexOf("sessionId") > -1) {
       next()
     } else {
       next("/login")
