@@ -1,4 +1,4 @@
-import { IDBPDatabase, openDB } from 'idb';
+import { IDBPDatabase, openDB, deleteDB } from 'idb';
 
 class IndexedDb {
   private database: string;
@@ -16,60 +16,40 @@ class IndexedDb {
             if (db.objectStoreNames.contains(tableName)) {
               continue;
             }
-            db.createObjectStore(tableName, { autoIncrement: true, keyPath: 'id' });
+            db.createObjectStore(
+              tableName, {
+                autoIncrement: true,
+                keyPath: 'id' }
+            ).createIndex(
+              'SessionIdIndex',
+              'SessionId',
+              {unique: true}
+            );
           }
         },
       });
     } catch (error) {
       return false;
     }
-  }
+  };
 
-  public async getValue(tableName: string, id: number) {
-    const tx = this.db.transaction(tableName, 'readonly');
-    const store = tx.objectStore(tableName);
-    const result = await store.get(id);
-    console.log('Get Data ', JSON.stringify(result));
-    return result;
-  }
-
-  public async getAllValue(tableName: string) {
-    const tx = this.db.transaction(tableName, 'readonly');
-    const store = tx.objectStore(tableName);
-    const result = await store.getAll();
-    console.log('Get All Data', JSON.stringify(result));
-    return result;
-  }
-
-  public async putValue(tableName: string, value: object) {
+  public async putUser(tableName: string, value: object) {
     const tx = this.db.transaction(tableName, 'readwrite');
     const store = tx.objectStore(tableName);
     const result = await store.put(value);
-    console.log('Put Data ', JSON.stringify(result));
     return result;
-  }
+  };
 
-  public async putBulkValue(tableName: string, values: object[]) {
-    const tx = this.db.transaction(tableName, 'readwrite');
+  public async getUser(tableName: string, sessionId: string) {
+    const tx = this.db.transaction(tableName, 'readonly');
     const store = tx.objectStore(tableName);
-    for (const value of values) {
-      const result = await store.put(value);
-      console.log('Put Bulk Data ', JSON.stringify(result));
-    }
-    return this.getAllValue(tableName);
-  }
+    var index = store.index("SessionIdIndex");
+    var result = await index.get(sessionId);
+    return result;
+  };
 
-  public async deleteValue(tableName: string, id: number) {
-    const tx = this.db.transaction(tableName, 'readwrite');
-    const store = tx.objectStore(tableName);
-    const result = await store.get(id);
-    if (!result) {
-      console.log('Id not found', id);
-      return result;
-    }
-    await store.delete(id);
-    console.log('Deleted Data', id);
-    return id;
+  public async deleteDatabase() {
+    await deleteDB('tradingLab');
   }
 }
 

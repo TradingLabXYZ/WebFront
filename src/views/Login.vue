@@ -52,30 +52,25 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
   import axios from "axios";
-
-  import { namespace } from 'vuex-class';
-  const User = namespace('User');
-
+  import { Component, Vue } from 'vue-property-decorator';
   import Header from '@/components/Header.vue';
   import Footer from '@/components/Footer.vue';
-  import IndexedDb from '../functions/indexedDb'
+
+  import { set } from 'idb-keyval';
+
+  import User from '@/store/userModule';
+  import { getModule } from 'vuex-module-decorators'
+  const userStore = getModule(User)
 
   @Component({
     components: {
       Header,
       Footer
-    },
+    }
   })
 
   export default class Login extends Vue {
-
-    @User.State
-    public username!: string;
-    
-    @User.Action
-    public updateName!: (newName: string) => void;
 
     private email: string = "";
     private password: string = "";
@@ -99,20 +94,17 @@
           document.cookie = "sessionId=" + sessionId + ";" + expires + "; path=/";
 
           // Save user's data in indexeddb
-          const runIndexDb = async () => {
-            const indexedDb = new IndexedDb('tradingLab');
-            await indexedDb.createObjectStore(['user']);
-            await indexedDb.putValue('user', {
-              Username: response.data['UserName'],
-              Usercode: response.data['Code'],
-              ProfilePicture: response.data['ProfilePicture'],
-            });
-          }
-          runIndexDb();
+          set(response.data['SessionId'], response.data);
 
-          console.log(this.username);
-          console.log(this.updateName("MIAO"));
-          console.log(this.username);
+          // Save user's info in store
+          userStore.updateUserDetails(response.data);
+
+          this.$router.push({
+            name: 'UserTrades',
+            params: {
+              username: response.data['Username']
+            }
+          })
 
         } else {
           alert("Credentials not valid");
