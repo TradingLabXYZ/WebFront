@@ -34,6 +34,10 @@
 
       // Delete user's info in store 
       userStore.updateUserDetails({});
+
+      this.$router.push({
+        name: 'Home'
+      })
     }
   }
 </script>

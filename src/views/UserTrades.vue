@@ -1,7 +1,9 @@
 <template>
   <div>
     <Header/>
-    CIAOMIAO
+
+    {{ userTrades }}
+
   </div>
 </template>
 
@@ -14,6 +16,22 @@
       Header
     }
   })
-  export default class UserTrades extends Vue {}
+  export default class UserTrades extends Vue {
+
+    private userTrades: object = {};
+    
+    created() {
+      this.initialiseTradesWs();
+    }
+    initialiseTradesWs() {
+      let username = this.$route.params['username'];
+      let ws = new WebSocket(process.env.VUE_APP_WS_URL + '/get_trades/' + username);
+      ws.onmessage = (event) => {
+        var ws_data = JSON.parse(event.data);
+        this.userTrades = ws_data;
+        console.log(this.userTrades);
+      }
+    }
+  }
 </script>
 
