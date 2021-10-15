@@ -17,7 +17,6 @@
     }
   })
   export default class UserTrades extends Vue {
-
     private userTrades: object = {};
     
     created() {
@@ -25,11 +24,17 @@
     }
     initialiseTradesWs() {
       let username = this.$route.params['username'];
-      let ws = new WebSocket(process.env.VUE_APP_WS_URL + '/get_trades/' + username);
+      let requestId = (Math.random() + 1).toString(36).substring(2);
+      let ws_url = [
+        process.env.VUE_APP_WS_URL,
+        'get_trades',
+        username,
+        requestId
+      ].join('/');
+      let ws = new WebSocket(ws_url);
       ws.onmessage = (event) => {
         var ws_data = JSON.parse(event.data);
         this.userTrades = ws_data;
-        console.log(this.userTrades);
       }
     }
   }
