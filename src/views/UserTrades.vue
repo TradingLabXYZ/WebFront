@@ -1,23 +1,24 @@
 <template>
   <div>
     <Header/>
-
-    {{ userTrades }}
-
+    <TradeOpen v-bind:openedTrades="openedTrades"/>
   </div>
 </template>
 
 <script lang="ts">
   import { Component, Vue } from 'vue-property-decorator';
   import Header from '@/components/Header.vue';
+  import TradeOpen from '@/components/trades/TradeOpen.vue';
 
   @Component({
     components: {
-      Header
+      Header,
+      TradeOpen
     }
   })
   export default class UserTrades extends Vue {
-    private userTrades: object = {};
+    private openedTrades: object[] = [];
+    private closedTrades: object[] = [];
     
     created() {
       this.initialiseTradesWs();
@@ -33,8 +34,15 @@
       ].join('/');
       let ws = new WebSocket(ws_url);
       ws.onmessage = (event) => {
-        var ws_data = JSON.parse(event.data);
-        this.userTrades = ws_data;
+        let ws_data = JSON.parse(event.data);
+        for (var i in ws_data['Trades']) {
+          let trade = ws_data['Trades'][i];
+          if (trade['IsOpen'] == "true") {
+            this.openedTrades.push(trade);
+          } else {
+            this.closedTrades.push(trade);
+          }
+        }
       }
     }
   }
