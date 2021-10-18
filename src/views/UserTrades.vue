@@ -9,6 +9,9 @@
   import { Component, Vue } from 'vue-property-decorator';
   import Header from '@/components/Header.vue';
   import TradeOpen from '@/components/trades/TradeOpen.vue';
+  import User from '@/store/userModule';
+  import { getModule } from 'vuex-module-decorators'
+  const userStore = getModule(User)
 
   @Component({
     components: {
@@ -22,6 +25,9 @@
     
     created() {
       this.initialiseTradesWs();
+      let sessionId = userStore.userDetails['SessionId'];
+      let username = userStore.userDetails['Username'];
+      console.log(sessionId);
     }
     initialiseTradesWs() {
       let username = this.$route.params['username'];

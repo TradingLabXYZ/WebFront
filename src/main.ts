@@ -9,7 +9,7 @@ Vue.config.devtools = true;
 Vue.config.performance = true;
 
 new Vue({
-  router,
   store,
+  router,
   render: h => h(App)
 }).$mount('#app')

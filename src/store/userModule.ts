@@ -10,6 +10,7 @@ export default class User extends VuexModule {
   };
   @Action
   public updateUserDetails(newUserDetails: object) {
+    console.log(newUserDetails);
     this.context.commit('setUserDetails', newUserDetails);
   };
   get getUserDetails(): object {
