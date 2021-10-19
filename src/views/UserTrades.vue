@@ -1,24 +1,33 @@
 <template>
   <div>
     <Header/>
+    <TradeHero
+      v-bind:totalTrades="totalTrades"/>
     <TradeOpen
       v-bind:openedTrades="openedTrades"
+      v-bind:isUserProfile="isUserProfile"/>
+    <TradeClose
+      v-bind:closedTrades="closedTrades"
       v-bind:isUserProfile="isUserProfile"/>
   </div>
 </template>
 
 <script lang="ts">
   import { Component, Vue } from 'vue-property-decorator';
-  import Header from '@/components/Header.vue';
-  import TradeOpen from '@/components/trades/TradeOpen.vue';
   import User from '@/store/userModule';
   import { getModule } from 'vuex-module-decorators'
   const userStore = getModule(User)
+  import Header from '@/components/Header.vue';
+  import TradeHero from '@/components/trades/TradeHero.vue';
+  import TradeOpen from '@/components/trades/TradeOpen.vue';
+  import TradeClose from '@/components/trades/TradeClose.vue';
 
   @Component({
     components: {
       Header,
-      TradeOpen
+      TradeHero,
+      TradeOpen,
+      TradeClose
     }
   })
   export default class UserTrades extends Vue {
@@ -57,6 +66,9 @@
           }
         }
       }
+    }
+    get totalTrades() {
+      return this.openedTrades.length + this.closedTrades.length;
     }
   }
 </script>
