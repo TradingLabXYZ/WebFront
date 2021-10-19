@@ -300,12 +300,127 @@
 
 <script lang="ts">
   import { Component, Vue, Prop } from 'vue-property-decorator';
+  import axios from "axios";
 
   @Component({})
   export default class TradeOpen extends Vue {
     private opened: number[] = [];
+    private isNewTrade: boolean = false;
     @Prop() openedTrades!: object[];
     @Prop() isUserProfile!: boolean;
+    validate(trade: object) {
+      var m = [];
+        for (var i in trade['Subtrades']) {
+          var tId = parseInt(i) + 1;
+          var tS = trade['Subtrades'][i];
+          if (!tS.Quantity || tS.Quantity <= 0) m.push("-Wrong Quantity in subtrade " + tId);
+          if (!tS.AvgPrice || tS.AvgPrice <= 0) m.push("-Wrong AvgPrice in subtrade " + tId);
+          if (!tS.Total || tS.Total <= 0) m.push("-Wrong Total in subtrade " + tId);
+          if (!tS.Reason) m.push("-Reason missing in subtrade " + tId);
+          if (!tS.Type) m.push("-Type missing in subtrade " + tId);
+          if (!tS.Timestamp) m.push("-Wrong Timestamp in subtrade " + tId);
+        }
+      return m;
+    }
+    updateTrade(trade: object) {
+      var validateMessages = this.validate(trade);
+      if (validateMessages.length <= 0) {
+        axios({
+          method: "POST",
+          headers: {
+            Authorization: "Bearer " + document.cookie,
+            "Access-Control-Allow-Origin": "*",
+          },
+          url: process.env.VUE_APP_HTTP_URL + "/update_trade",
+          data: trade
+        }).then(response => {
+          if (response.status === 200) {
+            console.log("Trade updated");
+          }
+        }).catch(function (error) {
+          console.log(error);
+        })
+      } else {
+        alert("Please check the following errors:\n" + validateMessages.join("\n"));
+      }
+    }
+    deleteTrade(trade: object) {
+      var answer = window.confirm("Are you sure deleting this trade?");
+      if (answer) {
+        axios({
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + document.cookie,
+            "Access-Control-Allow-Origin": "*",
+          },
+          url: process.env.VUE_APP_HTTP_URL + "/delete_trade/" + trade['Id'],
+        }).then(response => {
+          if (response.status === 200) {
+            console.log("Trade deleted");
+          }
+        }).catch(function (error) {
+          console.log(error);
+        })
+      }
+    }
+    closeTrade(trade: object) {
+      var answer = window.confirm("Are you sure closing this trade?");
+      if (answer) {
+        axios({
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + document.cookie,
+            "Access-Control-Allow-Origin": "*",
+          },
+          url: process.env.VUE_APP_HTTP_URL + "/close_trade/" + trade['Id'],
+        }).then(response => {
+          if (response.status === 200) {
+            console.log("Trade closed");
+          }
+        }).catch(function (error) {
+          console.log(error);
+        })
+      }
+    }
+    insertSubtrade(trade: object, subtradeid: number) {
+      var next = 1;
+      for (var i in trade['Subtrades']) {
+        if (trade['Subtrades'][i].SubtradeId >= next) {
+          next = next + 1
+        }
+      }
+      var now = new Date();
+      var customNow = now.getFullYear() + "-" + 
+        ('0' + (now.getMonth()+1)).slice(-2)  + "-" + 
+        ('0' + now.getDate()).slice(-2) + "T" + 
+        ('0' + (now.getHours())).slice(-2)  + ":" + 
+        ('0' + (now.getMinutes())).slice(-2);
+      trade['Subtrades'].splice(subtradeid + 1, 0, {
+        SubtradeId: next,
+        Timestamp: customNow,
+        Type: "BUY",
+        Reason: "Insert a reason",
+        Quantity: 0.0001,
+        AvgPrice: 0.0001,
+        Total: 0.0001
+      });
+    }
+    removeSubtrade(trade: object, subtradeid: number) {
+      var answer = window.confirm("Are you sure deleting this subtrade?");
+      if (answer) {
+        trade['Subtrades'].splice(subtradeid, 1);
+      }
+      if (trade['Subtrades'].length == 0) {
+        this.insertSubtrade(trade, subtradeid);
+      };
+      this.updateTrade(trade);
+    }
+    insertTrade() {
+      this.isNewTrade = true;
+    }
+    cancelInsertTrade() {
+      this.isNewTrade = false;
+    }
     toggle(id: number) {
       const index = this.opened.indexOf(id);
       if (index > -1) {

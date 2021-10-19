@@ -1,7 +1,9 @@
 <template>
   <div>
     <Header/>
-    <TradeOpen v-bind:openedTrades="openedTrades"/>
+    <TradeOpen
+      v-bind:openedTrades="openedTrades"
+      v-bind:isUserProfile="isUserProfile"/>
   </div>
 </template>
 
@@ -20,14 +22,17 @@
     }
   })
   export default class UserTrades extends Vue {
+    private isUserProfile: boolean = false;
     private openedTrades: object[] = [];
     private closedTrades: object[] = [];
     
     created() {
       this.initialiseTradesWs();
-      let sessionId = userStore.userDetails['SessionId'];
-      let username = userStore.userDetails['Username'];
-      console.log(sessionId);
+      let storeUsername = userStore.userDetails['Username'];
+      let routeUsername = this.$route.params.username;
+      if (storeUsername == routeUsername) {
+        this.isUserProfile = true; 
+      }
     }
     initialiseTradesWs() {
       let username = this.$route.params['username'];
@@ -40,6 +45,8 @@
       ].join('/');
       let ws = new WebSocket(ws_url);
       ws.onmessage = (event) => {
+        this.openedTrades = [];
+        this.closedTrades = [];
         let ws_data = JSON.parse(event.data);
         for (var i in ws_data['Trades']) {
           let trade = ws_data['Trades'][i];
