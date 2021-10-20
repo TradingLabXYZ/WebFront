@@ -2,6 +2,8 @@
   <div>
     <Header/>
     <TradeHero
+      v-bind:totalReturn="totalReturn"
+      v-bind:roi="roi"
       v-bind:totalTrades="totalTrades"/>
     <TradeOpen
       v-bind:openedTrades="openedTrades"
@@ -32,6 +34,8 @@
   })
   export default class UserTrades extends Vue {
     private isUserProfile: boolean = false;
+    private totalReturn: number = 0;
+    private roi: number = 0;
     private openedTrades: object[] = [];
     private closedTrades: object[] = [];
     
@@ -57,9 +61,11 @@
         this.openedTrades = [];
         this.closedTrades = [];
         let ws_data = JSON.parse(event.data);
-        for (var i in ws_data['Trades']) {
-          let trade = ws_data['Trades'][i];
-          if (trade['IsOpen'] == "true") {
+        this.totalReturn = ws_data.TotalReturnUsd;
+        this.roi = ws_data.Roi;
+        for (var i in ws_data.Trades) {
+          let trade = ws_data.Trades[i];
+          if (trade.IsOpen == "true") {
             this.openedTrades.push(trade);
           } else {
             this.closedTrades.push(trade);

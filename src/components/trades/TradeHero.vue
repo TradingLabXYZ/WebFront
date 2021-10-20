@@ -17,7 +17,7 @@
       </div>
       <div class="text-5xl">
         <span>
-          {{ totalReturn }}
+          {{ totalReturn.toFixed(2) }}
         </span>
       </div>
     </div>
@@ -26,7 +26,7 @@
         ROI
       </div>
       <div class="text-5xl">
-        {{ totalRoi + "%" }}
+        {{ roi.toFixed(2) + "%" }}
       </div>
     </div>
   </div>
@@ -34,12 +34,11 @@
 
 <script lang="ts">
   import { Component, Vue, Prop } from 'vue-property-decorator';
-  import axios from "axios";
 
   @Component({})
   export default class TradeHero extends Vue {
     @Prop() totalTrades!: number;
     @Prop() totalReturn!: number;
-    @Prop() totalRoi!: number;
+    @Prop() roi!: number;
   }
 </script>

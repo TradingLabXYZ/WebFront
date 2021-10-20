@@ -95,7 +95,6 @@
 
           // Save user's data in indexeddb
           set(response.data['SessionId'], response.data);
-          set('hello', 'world');
 
           // Save user's info in store
           userStore.updateUserDetails(response.data);
