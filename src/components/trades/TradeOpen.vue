@@ -22,7 +22,7 @@
     <div v-if="isUserProfile && isNewTrade" class="mb-5 grid grid-cols-8">
       <div class="col-span-2"></div>
       <div class="w-auto mt-5 col-span-4">
-        <TradeNew/>
+        <TradeNew @closeNewTradeSection="cancelInsertTrade"/>
       </div>
     </div>
     <div class="mb-10 grid grid-cols-8">
@@ -301,8 +301,13 @@
 <script lang="ts">
   import { Component, Vue, Prop } from 'vue-property-decorator';
   import axios from "axios";
+  import TradeNew from '@/components/trades/TradeNew.vue';
 
-  @Component({})
+  @Component({
+    components: {
+      TradeNew,
+    }
+  })
   export default class TradeOpen extends Vue {
     private opened: number[] = [];
     private isNewTrade: boolean = false;
