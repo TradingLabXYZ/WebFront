@@ -48,23 +48,28 @@
   </div>
 </template>
 
-<script>
-  import axios from "axios";
-  import { mapState } from 'vuex';
-  export default {
-    data: function() {
-      return {
-        settingsSection: "profile",
-      }
-    },
-    created: function() {
-      this.$store.dispatch("settingsModule/getUserSettings");
-    },
-    methods: {
-      changeSettingsSection(section) {
-        this.settingsSection = section;
-      }
+
+<script lang="ts">
+  import { Component, Vue } from 'vue-property-decorator';
+  import Header from '@/components/Header.vue';
+  import Profile from '@/components/settings/Profile.vue';
+  import Password from '@/components/settings/Password.vue';
+  import Privacy from '@/components/settings/Privacy.vue';
+  import Plans from '@/components/plans/Plans.vue';
+
+  @Component({
+    components: {
+      Header,
+      Profile,
+      Password,
+      Privacy,
+      Plans
+    }
+  })
+  export default class UserTrades extends Vue {
+    private settingsSection: string = 'profile';
+    changeSettingsSection(section: string) {
+      this.settingsSection = section;
     }
   }
 </script>
-
