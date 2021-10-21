@@ -1,44 +1,81 @@
 <template>
   <div>
     <Header/>
-    <div v-if="isTradesDisabled">
-      <div class="flex h-screen">
-        <div class="m-auto">
-          <span v-if="disabledReason=='login'">
-            <h1>You need to login to visualise user's profile</h1>
-          </span>
-          <span v-if="disabledReason=='private'">
-            <h1>It seems this user does like to keep things private</h1>
-          </span>
-          <span v-if="disabledReason=='follow'">
-            <h1>You need to follow this user to visualise the profile</h1>
-          </span>
-          <span v-if="disabledReason=='subscribe'">
-            <h1>You need to subscribe to visualise the profile</h1>
-          </span>
-        </div>
-      </div>
-    </div>
-    <div v-else>
-      <TradeHero/>
-      <TradeOpen/>
-      <TradeClose/>
-    </div>
+    <TradeHero
+      v-bind:totalReturn="totalReturn"
+      v-bind:roi="roi"
+      v-bind:totalTrades="totalTrades"/>
+    <TradeOpen
+      v-bind:openedTrades="openedTrades"
+      v-bind:isUserProfile="isUserProfile"/>
+    <TradeClose
+      v-bind:closedTrades="closedTrades"
+      v-bind:isUserProfile="isUserProfile"/>
   </div>
 </template>
 
-<script>
-  import { mapState } from 'vuex';
-  import axios from "axios";
-  export default {
-    computed: {
-      ...mapState("tradesModule", ["isTradesDisabled", "disabledReason"])
-    },
-    created: function() {
-      this.$store.dispatch(
-        "tradesModule/getTrades",
-        this.$route.params.username
-      ); 
+<script lang="ts">
+  import { Component, Vue } from 'vue-property-decorator';
+  import User from '@/store/userModule';
+  import { getModule } from 'vuex-module-decorators'
+  const userStore = getModule(User)
+  import Header from '@/components/Header.vue';
+  import TradeHero from '@/components/trades/TradeHero.vue';
+  import TradeOpen from '@/components/trades/TradeOpen.vue';
+  import TradeClose from '@/components/trades/TradeClose.vue';
+
+  @Component({
+    components: {
+      Header,
+      TradeHero,
+      TradeOpen,
+      TradeClose
+    }
+  })
+  export default class UserTrades extends Vue {
+    isUserProfile: boolean = false;
+    totalReturn: number = 0;
+    roi: number = 0;
+    openedTrades: object[] = [];
+    closedTrades: object[] = [];
+    
+    created() {
+      this.initialiseTradesWs();
+      let storeUsername = userStore.userDetails['Username'];
+      let routeUsername = this.$route.params.username;
+      if (storeUsername == routeUsername) {
+        this.isUserProfile = true; 
+      }
+    }
+    initialiseTradesWs() {
+      let username = this.$route.params['username'];
+      let requestId = (Math.random() + 1).toString(36).substring(2);
+      let ws_url = [
+        process.env.VUE_APP_WS_URL,
+        'get_trades',
+        username,
+        requestId
+      ].join('/');
+      let ws = new WebSocket(ws_url);
+      ws.onmessage = (event) => {
+        this.openedTrades = [];
+        this.closedTrades = [];
+        let ws_data = JSON.parse(event.data);
+        this.totalReturn = ws_data.TotalReturnUsd;
+        this.roi = ws_data.Roi;
+        for (var i in ws_data.Trades) {
+          let trade = ws_data.Trades[i];
+          if (trade.IsOpen == "true") {
+            this.openedTrades.push(trade);
+          } else {
+            this.closedTrades.push(trade);
+          }
+        }
+      }
+    }
+    get totalTrades() {
+      return this.openedTrades.length + this.closedTrades.length;
     }
   }
 </script>
+
