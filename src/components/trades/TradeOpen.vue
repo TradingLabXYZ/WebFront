@@ -309,8 +309,8 @@
     }
   })
   export default class TradeOpen extends Vue {
-    private opened: number[] = [];
-    private isNewTrade: boolean = false;
+    opened: number[] = [];
+    isNewTrade: boolean = false;
     @Prop() openedTrades!: object[];
     @Prop() isUserProfile!: boolean;
     validate(trade: object) {

@@ -34,6 +34,7 @@
       <div class="col-span-3"></div>
       <div class="flex justify-end mt-5 text-lg col-span-1">
         <span class="flex items-center text-lg font-extrabold tracking-tight">
+          <ButtonSettings/>
           <Logout/>
         </span>
       </div>
@@ -44,11 +45,12 @@
 <script lang="ts">
   import { Vue, Component } from 'vue-property-decorator';
   import Logout from '@/components/Logout.vue';
-
+  import ButtonSettings from '@/components/ButtonSettings.vue';
 
   @Component({
     components: {
-      Logout
+      Logout,
+      ButtonSettings
     }
   })
   export default class Header extends Vue {

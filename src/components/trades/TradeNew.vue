@@ -147,8 +147,8 @@
 
   @Component({})
   export default class TradeNew extends Vue {
-    private cryptoPairs: number[] = [];
-    private newTrade: object = {
+    cryptoPairs: number[] = [];
+    newTrade: object = {
       Exchange: null,
       FirstPair: null,
       SecondPair: null,

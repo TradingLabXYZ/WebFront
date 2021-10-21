@@ -161,7 +161,7 @@
 
   @Component({})
   export default class TradeClose extends Vue {
-    private opened: number[] = [];
+    opened: number[] = [];
     @Prop() closedTrades!: object[];
     @Prop() isUserProfile!: boolean;
     openTrade(trade: object) {

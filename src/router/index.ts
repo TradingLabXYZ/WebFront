@@ -1,13 +1,17 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
-import Home from '../views/Home.vue'
-import Login from '../views/Login.vue'
-import UserTrades from '../views/UserTrades.vue'
 Vue.use(VueRouter)
+
 import { get } from 'idb-keyval';
 import User from '@/store/userModule';
 import { getModule } from 'vuex-module-decorators'
 const userStore = getModule(User)
+
+import Home from '../views/Home.vue'
+import Login from '../views/Login.vue'
+import UserTrades from '../views/UserTrades.vue'
+import Settings from '../views/Settings.vue'
+
 const routes: Array<RouteConfig> = [
   {
     path: '/',
@@ -28,6 +32,20 @@ const routes: Array<RouteConfig> = [
     path: '/login',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/settings',
+    name: 'Settings',
+    component: Settings,
+    async beforeEnter (to, from, next) {
+      if(document.cookie.indexOf("sessionId") > -1) {
+        var session_id = document.cookie.split("sessionId=")[1].split(";")[0];
+        await get(session_id).then((val) => userStore.updateUserDetails(val));
+        next()
+      } else {
+        next('/login')
+      }
+    }
   },
   {
     path: '/:username',

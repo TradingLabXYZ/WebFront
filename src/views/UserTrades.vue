@@ -33,11 +33,11 @@
     }
   })
   export default class UserTrades extends Vue {
-    private isUserProfile: boolean = false;
-    private totalReturn: number = 0;
-    private roi: number = 0;
-    private openedTrades: object[] = [];
-    private closedTrades: object[] = [];
+    isUserProfile: boolean = false;
+    totalReturn: number = 0;
+    roi: number = 0;
+    openedTrades: object[] = [];
+    closedTrades: object[] = [];
     
     created() {
       this.initialiseTradesWs();
