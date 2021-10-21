@@ -10,7 +10,7 @@
             <div class="w-full max-w-xs p-5 m-auto bg-indigo-100 rounded">
               <div>
                 <img
-                  src="/src/assets/logo.png"
+                  src="../assets/logo.png"
                   alt="TradingLab"
                   class="w-20 mx-auto mb-5">
               </div>
@@ -40,10 +40,6 @@
                   Login
                 </button>
               </div>
-              <div class="mb-3">
-                <a class="float-left text-sm text-indigo-700 hover:text-pink-700" href="#">Forgot Password?</a>
-                <a class="float-right text-sm text-indigo-700 hover:text-pink-700" href="#">Create Account</a>
-              </div>
             </div>
           </div>  
         </div>
@@ -55,59 +51,65 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
   import axios from "axios";
-  import idb from "@/db/idb.js"
-  export default {
-    components: {},
-    data: () => ({
-      email: "",
-      password: "",
-    }),
-    methods: {
-      loginUser () {
-        axios({
-          method: "POST",
-          url: import.meta.env.VITE_ROOT_API + "/login",
-          data: {
-            email: this.email,
-            password: this.password
-          }
-        }).then(response => {
-          let sessionId = response.data.SessionId;
-          if (sessionId) {
-            let username = response.data.UserName;
-            let usercode = response.data.Code;
-            let profilePicture = response.data.ProfilePicture;
+  import { Component, Vue } from 'vue-property-decorator';
+  import Header from '@/components/Header.vue';
+  import Footer from '@/components/Footer.vue';
 
-            this.$store.dispatch("loginModule/setSessionId", sessionId);
-            this.$store.dispatch("loginModule/setUsername", username);
-            this.$store.dispatch("loginModule/setUsercode", usercode);
-            this.$store.dispatch("loginModule/setProfilePicture", profilePicture);
+  import { set } from 'idb-keyval';
 
-            let d = new Date();
-            d.setTime(d.getTime() + 1000 * 24 * 60 * 60 * 1000);
-            let expires = "expires=" + d.toUTCString();
-            document.cookie = "sessionId=" + sessionId + ";" + expires + "; path=/";
-          
-            idb.saveUser({
-              SessionId: sessionId,
-              Username: username,
-              Usercode: usercode,
-              ProfilePicture: profilePicture
-            });
+  import User from '@/store/userModule';
+  import { getModule } from 'vuex-module-decorators'
+  const userStore = getModule(User)
 
-            this.$router.push({
-              name: "UserTrades",
-              params: {
-                username: username
-              }
-            })
-          } else {
-            alert("Credentials not valid");
-          }
-        })
-      },
-    }, 
-  }  
+  @Component({
+    components: {
+      Header,
+      Footer
+    }
+  })
+
+  export default class Login extends Vue {
+
+    private email: string = "";
+    private password: string = "";
+
+    public loginUser() {
+      axios({
+        method: "POST",
+        url: process.env.VUE_APP_HTTP_URL + "/login",
+        data: {
+          email: this.email,
+          password: this.password
+        }
+      }).then(response => {
+        let sessionId: string = response.data['SessionId'];
+        if (sessionId) {
+
+          // Set cookie
+          let d = new Date();
+          d.setTime(d.getTime() + 1000 * 24 * 60 * 60 * 1000);
+          let expires = "expires=" + d.toUTCString();
+          document.cookie = "sessionId=" + sessionId + ";" + expires + "; path=/";
+
+          // Save user's data in indexeddb
+          set(response.data['SessionId'], response.data);
+
+          // Save user's info in store
+          userStore.updateUserDetails(response.data);
+
+          this.$router.push({
+            name: 'UserTrades',
+            params: {
+              username: response.data['Username']
+            }
+          })
+
+        } else {
+          alert("Credentials not valid");
+        }
+      })
+    }
+  }
 </script>
