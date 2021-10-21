@@ -76,6 +76,7 @@
     private password: string = "";
 
     public loginUser() {
+      console.log("I WILL LOG IN ")
       axios({
         method: "POST",
         url: process.env.VUE_APP_HTTP_URL + "/login",
