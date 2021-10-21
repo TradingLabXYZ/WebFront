@@ -55,7 +55,7 @@
   import Profile from '@/components/settings/Profile.vue';
   import Password from '@/components/settings/Password.vue';
   import Privacy from '@/components/settings/Privacy.vue';
-  import Plans from '@/components/settings/Plans.vue';
+  import Plans from '@/components/plans/Plans.vue';
 
   @Component({
     components: {

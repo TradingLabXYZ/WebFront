@@ -22,14 +22,28 @@
 
 <script lang="ts">
   import { Component, Vue } from 'vue-property-decorator';
-  import axios from "axios";
   import { getModule } from 'vuex-module-decorators'
   import User from '@/store/userModule';
   const userStore = getModule(User)
-  import { get, set } from 'idb-keyval';
+  import UpgradeToPremium from '@/components/plans/UpgradeToPremium.vue';
 
-  @Component({})
-  export default class Privacy extends Vue {
-    selectedUserPrivacy: string = '';
+  @Component({
+    components: {
+      UpgradeToPremium
+    }
+  })
+  export default class Plans extends Vue {
+    userPlan: string = '';
+    isUpgradeToPremium: boolean = false;
+    created() {
+      this.userPlan = userStore.userDetails['Plan'];
+    }
+    upgradeToPremium() {
+      if (!this.isUpgradeToPremium) {
+        this.isUpgradeToPremium = true;
+      } else {
+        this.isUpgradeToPremium = false;
+      }
+    }
   }
 </script>

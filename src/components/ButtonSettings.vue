@@ -1,6 +1,6 @@
 <template>
   <button
-    @click="logout"
+    @click="goToSettings"
     title="Settings"
     class="p-2 mr-2 rounded-full text-header-dark hover:text-gray-800">
     <svg class="w-6 h-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 458.317 458.317" style="enable-background:new 0 0 458.317 458.317" xml:space="preserve">
@@ -11,12 +11,18 @@
 
 <script lang="ts">
   import { Vue, Component } from 'vue-property-decorator';
+  import VueRouter from 'vue-router'
+  const { isNavigationFailure, NavigationFailureType } = VueRouter
   @Component({})
   export default class Header extends Vue {
-      logout() {
+      goToSettings() {
         this.$router.push({ 
           name: "Settings"
-        });
+        }).catch(failure => {
+          if (isNavigationFailure(failure, NavigationFailureType.duplicated)) {
+            console.log("Remaining in settings section...")
+          };
+        })
       }
-  }
+    }
 </script>
