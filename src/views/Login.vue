@@ -76,7 +76,6 @@
     private password: string = "";
 
     public loginUser() {
-      console.log("I WILL LOG IN ")
       axios({
         method: "POST",
         url: process.env.VUE_APP_HTTP_URL + "/login",
@@ -85,31 +84,34 @@
           password: this.password
         }
       }).then(response => {
-        let sessionId: string = response.data['SessionId'];
-        if (sessionId) {
+        if (response.status == 200) {
+          let sessionId: string = response.data['SessionId'];
+          if (sessionId) {
 
-          // Set cookie
-          let d = new Date();
-          d.setTime(d.getTime() + 1000 * 24 * 60 * 60 * 1000);
-          let expires = "expires=" + d.toUTCString();
-          document.cookie = "sessionId=" + sessionId + ";" + expires + "; path=/";
+            // Set cookie
+            let d = new Date();
+            d.setTime(d.getTime() + 1000 * 24 * 60 * 60 * 1000);
+            let expires = "expires=" + d.toUTCString();
+            document.cookie = "sessionId=" + sessionId + ";" + expires + "; path=/";
 
-          // Save user's data in indexeddb
-          set(response.data['SessionId'], response.data);
+            // Save user's data in indexeddb
+            set(response.data['SessionId'], response.data);
 
-          // Save user's info in store
-          userStore.updateUserDetails(response.data);
+            // Save user's info in store
+            userStore.updateUserDetails(response.data);
 
-          this.$router.push({
-            name: 'UserTrades',
-            params: {
-              username: response.data['Username']
-            }
-          })
-
-        } else {
-          alert("Credentials not valid");
+            this.$router.push({
+              name: 'UserTrades',
+              params: {
+                username: response.data['Username']
+              }
+            })
+          } else {
+            alert("Credentials not valid");
+          }
         }
+      }).catch(function () {
+        alert("Credentials not valid");
       })
     }
   }

@@ -56,6 +56,8 @@ const routes: Array<RouteConfig> = [
         var session_id = document.cookie.split("sessionId=")[1].split(";")[0];
         await get(session_id).then((val) => userStore.updateUserDetails(val));
         next()
+      } else {
+        next()
       }
     }
   }
