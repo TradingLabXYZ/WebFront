@@ -55,8 +55,8 @@ const routes: Array<RouteConfig> = [
       if(document.cookie.indexOf("sessionId") > -1) {
         var session_id = document.cookie.split("sessionId=")[1].split(";")[0];
         await get(session_id).then((val) => userStore.updateUserDetails(val));
-        next()
       }
+      next()
     }
   }
 ]
