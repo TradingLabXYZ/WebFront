@@ -47,7 +47,7 @@
               placeholder="Timestamp"
               type="datetime-local"
               class="w-full p-2 border border-gray-200 border-gray-500"
-              v-model="subtrade.Timestamp">
+              v-model="subtrade.CreatedAt">
           </div>
           <div class="mt-4 ml-4 mr-4 rounded-xl col-span-1">
             <label class="text-xs text-subtradelabel">Buy/Sell</label>
@@ -154,7 +154,7 @@
       SecondPair: null,
       Subtrades: [
         {
-          Timestamp: null,
+          CreatedAt: null,
           Type: null,
           Reason: null,
           Quantity: null,
@@ -185,7 +185,7 @@
     addSubtrade() {
       this.newTrade['Subtrades'].push(
         {
-          Timestamp: null,
+          CreatedAt: null,
           Type: null,
           Reason: null,
           Quantity: null,
@@ -210,7 +210,7 @@
           if (!tS.Total || tS.Total <= 0) m.push("-Wrong Total in subtrade " + tId);
           if (!tS.Reason) m.push("-Reason missing in subtrade " + tId);
           if (!tS.Type) m.push("-Type missing in subtrade " + tId);
-          if (!tS.Timestamp) m.push("-Wrong Timestamp in subtrade " + tId);
+          if (!tS.CreatedAt) m.push("-Wrong Timestamp in subtrade " + tId);
         }
       return m;
     }

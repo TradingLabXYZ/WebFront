@@ -66,7 +66,7 @@
               <tr :key="'A' + q">
                 <td class="py-4 text-center text-gray-700 text-md">
                   <button
-                    @click="toggle(trade.Id)"
+                    @click="toggle(trade.Code)"
                     title="Expand/Collapse trade"
                     type="button">
                     <svg v-if="opened.includes(trade.Id)" width="13" height="13" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -138,7 +138,7 @@
                   </button>
                 </td>
               </tr>
-              <tr :key="'B' + q" v-if="opened.includes(trade.Id)" class="bg-subtradesection">
+              <tr :key="'B' + q" v-if="opened.includes(trade.Code)" class="bg-subtradesection">
                 <td colspan="10" class="text-xs"> 
                   <div class="flex justify-around">
                     <table class="">
@@ -180,7 +180,7 @@
                               placeholder="Timestamp"
                               type="datetime-local"
                               class="w-full text-center bg-subtradeeditable"
-                              v-model="subtrade.Timestamp"
+                              v-model="subtrade.CreatedAt"
                               @change="updateTrade(trade)">
                               </div>
                           </td>
@@ -323,7 +323,7 @@
           if (!tS.Total || tS.Total <= 0) m.push("-Wrong Total in subtrade " + tId);
           if (!tS.Reason) m.push("-Reason missing in subtrade " + tId);
           if (!tS.Type) m.push("-Type missing in subtrade " + tId);
-          if (!tS.Timestamp) m.push("-Wrong Timestamp in subtrade " + tId);
+          if (!tS.CreatedAt) m.push("-Wrong Timestamp in subtrade " + tId);
         }
       return m;
     }
@@ -358,7 +358,7 @@
             Authorization: "Bearer " + document.cookie,
             "Access-Control-Allow-Origin": "*",
           },
-          url: process.env.VUE_APP_HTTP_URL + "/delete_trade/" + trade['Id'],
+          url: process.env.VUE_APP_HTTP_URL + "/delete_trade/" + trade['Code'],
         }).then(response => {
           if (response.status === 200) {
             console.log("Trade deleted");
@@ -377,7 +377,7 @@
             Authorization: "Bearer " + document.cookie,
             "Access-Control-Allow-Origin": "*",
           },
-          url: process.env.VUE_APP_HTTP_URL + "/close_trade/" + trade['Id'],
+          url: process.env.VUE_APP_HTTP_URL + "/close_trade/" + trade['Code'],
         }).then(response => {
           if (response.status === 200) {
             console.log("Trade closed");
@@ -402,7 +402,7 @@
         ('0' + (now.getMinutes())).slice(-2);
       trade['Subtrades'].splice(subtradeid + 1, 0, {
         SubtradeId: next,
-        Timestamp: customNow,
+        CreatedAt: customNow,
         Type: "BUY",
         Reason: "Insert a reason",
         Quantity: 0.0001,
