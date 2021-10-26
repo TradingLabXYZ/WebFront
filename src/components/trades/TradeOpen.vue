@@ -181,7 +181,7 @@
                               type="datetime-local"
                               class="w-full text-center bg-subtradeeditable"
                               v-model="subtrade.CreatedAt"
-                              @change="updateTrade(trade)">
+                              @change="updateSubtrade(subtrade)">
                               </div>
                           </td>
                           <td>
@@ -191,7 +191,7 @@
                                 name="formType" 
                                 class="text-center bg-subtradeeditable"
                                 v-model="subtrade.Type"
-                                @change="updateTrade(trade)">
+                                @change="updateSubtrade(subtrade)">
                                 <option value="BUY">BUY</option>
                                 <option value="SELL">SELL</option>
                               </select>
@@ -206,7 +206,7 @@
                                 type="text"
                                 class="text-center bg-subtradeeditable"
                                 v-model="subtrade.Reason"
-                                @change="updateTrade(trade)">
+                                @change="updateSubtrade(subtrade)">
                             </div>
                           </td>
                           <td>
@@ -220,7 +220,7 @@
                                 step="any"
                                 class="w-full text-center bg-subtradeeditable"
                                 v-model.number="subtrade.Quantity"
-                                @change="updateTrade(trade)">
+                                @change="updateSubtrade(subtrade)">
                             </div>
                           </td>
                           <td>
@@ -234,7 +234,7 @@
                                 step="any"
                                 class="w-full text-center bg-subtradeeditable"
                                 v-model.number="subtrade.AvgPrice"
-                                @change="updateTrade(trade)">
+                                @change="updateSubtrade(subtrade)">
                             </div>
                           </td>
                           <td>
@@ -248,7 +248,7 @@
                                 step="any"
                                 class="w-full text-center bg-subtradeeditable"
                                 v-model.number="subtrade.Total"
-                                @change="updateTrade(trade)">
+                                @change="updateSubtrade(subtrade)">
                             </div>
                           </td>
                           <td v-if="isUserProfile">
@@ -313,31 +313,27 @@
     isNewTrade: boolean = false;
     @Prop() openedTrades!: object[];
     @Prop() isUserProfile!: boolean;
-    validate(trade: object) {
-      var m = [];
-        for (var i in trade['Subtrades']) {
-          var tId = parseInt(i) + 1;
-          var tS = trade['Subtrades'][i];
-          if (!tS.Quantity || tS.Quantity <= 0) m.push("-Wrong Quantity in subtrade " + tId);
-          if (!tS.AvgPrice || tS.AvgPrice <= 0) m.push("-Wrong AvgPrice in subtrade " + tId);
-          if (!tS.Total || tS.Total <= 0) m.push("-Wrong Total in subtrade " + tId);
-          if (!tS.Reason) m.push("-Reason missing in subtrade " + tId);
-          if (!tS.Type) m.push("-Type missing in subtrade " + tId);
-          if (!tS.CreatedAt) m.push("-Wrong Timestamp in subtrade " + tId);
-        }
+    validateSubtrade(subtrade: object) {
+      var m = '';
+      if (!subtrade['Quantity'] || subtrade['Quantity'] <= 0) m = "Wrong Quantity";
+      if (!subtrade['AvgPrice'] || subtrade['AvgPrice'] <= 0) m = "Wrong AvgPrice";
+      if (!subtrade['Total'] || subtrade['Total'] <= 0) m = "Wrong Total in subtrade";
+      if (!subtrade['Reason']) m = "Reason missing in subtrade";
+      if (!subtrade['Type']) m = "Type missing in subtrade";
+      if (!subtrade['CreatedAt']) m = "Wrong Timestamp in subtrade";
       return m;
     }
-    updateTrade(trade: object) {
-      var validateMessages = this.validate(trade);
-      if (validateMessages.length <= 0) {
+    updateSubtrade(subtrade: object) {
+      var validateMessage = this.validateSubtrade(subtrade);
+      if (validateMessage == '') {
         axios({
           method: "POST",
           headers: {
             Authorization: "Bearer " + document.cookie,
             "Access-Control-Allow-Origin": "*",
           },
-          url: process.env.VUE_APP_HTTP_URL + "/update_trade",
-          data: trade
+          url: process.env.VUE_APP_HTTP_URL + "/update_subtrade",
+          data: subtrade
         }).then(response => {
           if (response.status === 200) {
             console.log("Trade updated");
@@ -346,7 +342,7 @@
           console.log(error);
         })
       } else {
-        alert("Please check the following errors:\n" + validateMessages.join("\n"));
+        alert("Please check the following errors:\n" + validateMessage);
       }
     }
     deleteTrade(trade: object) {
