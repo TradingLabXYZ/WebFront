@@ -398,6 +398,7 @@
         ('0' + (now.getMinutes())).slice(-2);
       trade['Subtrades'].splice(subtradeid + 1, 0, {
         SubtradeId: next,
+        TradeCode: trade['Code'],
         CreatedAt: customNow,
         Type: "BUY",
         Reason: "Insert a reason",
@@ -405,6 +406,21 @@
         AvgPrice: 0.0001,
         Total: 0.0001
       });
+      axios({
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + document.cookie,
+          "Access-Control-Allow-Origin": "*",
+        },
+        url: process.env.VUE_APP_HTTP_URL + "/insert_subtrade",
+        data: trade['Subtrades'][subtradeid + 1]
+      }).then(response => {
+        if (response.status === 200) {
+          console.log("Subtrade inserted");
+        }
+      }).catch(function (error) {
+        console.log(error);
+      })
     }
     removeSubtrade(trade: object, subtradeid: number) {
       var answer = window.confirm("Are you sure deleting this subtrade?");
@@ -414,7 +430,20 @@
       if (trade['Subtrades'].length == 0) {
         this.insertSubtrade(trade, subtradeid);
       };
-      this.updateTrade(trade);
+      axios({
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + document.cookie,
+          "Access-Control-Allow-Origin": "*",
+        },
+        url: process.env.VUE_APP_HTTP_URL + "/" + trade['Subtrades'][subtradeid]['Code'],
+      }).then(response => {
+        if (response.status === 200) {
+          console.log("Subtrade deleted");
+        }
+      }).catch(function (error) {
+        console.log(error);
+      })
     }
     insertTrade() {
       this.isNewTrade = true;
