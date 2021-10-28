@@ -143,12 +143,17 @@
 
 <script lang="ts">
   import { Component, Vue, Prop, Emit } from 'vue-property-decorator';
+  import { getModule } from 'vuex-module-decorators'
+  import User from '@/store/userModule';
+  const userStore = getModule(User)
   import axios from "axios";
 
   @Component({})
   export default class TradeNew extends Vue {
+    userCode: string = '';
     cryptoPairs: number[] = [];
     newTrade: object = {
+      Usercode: userStore.userDetails['Code'],
       Exchange: null,
       FirstPair: null,
       SecondPair: null,
