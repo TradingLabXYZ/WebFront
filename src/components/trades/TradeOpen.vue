@@ -253,7 +253,7 @@
                           </td>
                           <td v-if="isUserProfile">
                             <div class="flex">
-                              <div class="flex justify-start">
+                              <div class="flex justify-start" v-if="trade.Subtrades.length > 1">
                                 <button
                                   @click="removeSubtrade(subtrade)"
                                   title="Remove subtrade"
@@ -365,7 +365,7 @@
             Authorization: "Bearer " + document.cookie,
             "Access-Control-Allow-Origin": "*",
           },
-          url: process.env.VUE_APP_HTTP_URL + "/close_trade/" + trade['Code'],
+          url: process.env.VUE_APP_HTTP_URL + "/change_trade/" + trade['Code'] + "/false",
         }).catch(function (error) {
           console.log(error);
         })
