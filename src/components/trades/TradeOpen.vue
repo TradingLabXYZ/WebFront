@@ -358,6 +358,7 @@
     }
     closeTrade(trade: object) {
       var answer = window.confirm("Are you sure closing this trade?");
+      console.log("YES I AM SURE")
       if (answer) {
         axios({
           method: "GET",
