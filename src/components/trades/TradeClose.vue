@@ -173,11 +173,7 @@
             Authorization: "Bearer " + document.cookie,
             "Access-Control-Allow-Origin": "*",
           },
-          url: process.env.VUE_APP_HTTP_URL + "/open_trade/" + trade['Id'],
-        }).then(response => {
-          if (response.status === 200) {
-            console.log("Trade opened");
-          }
+          url: process.env.VUE_APP_HTTP_URL + "/change_trade/" + trade['Code'] + "/true",
         }).catch(function (error) {
           console.log(error);
         })

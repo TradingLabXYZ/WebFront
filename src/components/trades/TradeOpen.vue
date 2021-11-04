@@ -66,7 +66,7 @@
               <tr :key="'A' + q">
                 <td class="py-4 text-center text-gray-700 text-md">
                   <button
-                    @click="toggle(trade.Id)"
+                    @click="toggle(trade.Code)"
                     title="Expand/Collapse trade"
                     type="button">
                     <svg v-if="opened.includes(trade.Id)" width="13" height="13" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -138,7 +138,7 @@
                   </button>
                 </td>
               </tr>
-              <tr :key="'B' + q" v-if="opened.includes(trade.Id)" class="bg-subtradesection">
+              <tr :key="'B' + q" v-if="opened.includes(trade.Code)" class="bg-subtradesection">
                 <td colspan="10" class="text-xs"> 
                   <div class="flex justify-around">
                     <table class="">
@@ -180,8 +180,8 @@
                               placeholder="Timestamp"
                               type="datetime-local"
                               class="w-full text-center bg-subtradeeditable"
-                              v-model="subtrade.Timestamp"
-                              @change="updateTrade(trade)">
+                              v-model="subtrade.CreatedAt"
+                              @change="updateSubtrade(subtrade)">
                               </div>
                           </td>
                           <td>
@@ -191,7 +191,7 @@
                                 name="formType" 
                                 class="text-center bg-subtradeeditable"
                                 v-model="subtrade.Type"
-                                @change="updateTrade(trade)">
+                                @change="updateSubtrade(subtrade)">
                                 <option value="BUY">BUY</option>
                                 <option value="SELL">SELL</option>
                               </select>
@@ -206,7 +206,7 @@
                                 type="text"
                                 class="text-center bg-subtradeeditable"
                                 v-model="subtrade.Reason"
-                                @change="updateTrade(trade)">
+                                @change="updateSubtrade(subtrade)">
                             </div>
                           </td>
                           <td>
@@ -220,7 +220,7 @@
                                 step="any"
                                 class="w-full text-center bg-subtradeeditable"
                                 v-model.number="subtrade.Quantity"
-                                @change="updateTrade(trade)">
+                                @change="updateSubtrade(subtrade)">
                             </div>
                           </td>
                           <td>
@@ -234,7 +234,7 @@
                                 step="any"
                                 class="w-full text-center bg-subtradeeditable"
                                 v-model.number="subtrade.AvgPrice"
-                                @change="updateTrade(trade)">
+                                @change="updateSubtrade(subtrade)">
                             </div>
                           </td>
                           <td>
@@ -248,12 +248,26 @@
                                 step="any"
                                 class="w-full text-center bg-subtradeeditable"
                                 v-model.number="subtrade.Total"
-                                @change="updateTrade(trade)">
+                                @change="updateSubtrade(subtrade)">
                             </div>
                           </td>
                           <td v-if="isUserProfile">
-                            <div class="flex justify-around">
-                              <div class="flex justify-around m-auto mx-3">
+                            <div class="flex">
+                              <div class="flex justify-start" v-if="trade.Subtrades.length > 1">
+                                <button
+                                  @click="removeSubtrade(subtrade)"
+                                  title="Remove subtrade"
+                                  type="button">
+                                  <svg width="16" height="17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect y=".83" width="15.319" height="15.319" rx="7.66" fill="#FF92D1"/>
+                                    <path d="M2.872 9.447V7.532h9.575v1.915H2.872Z" fill="#fff"/>
+                                  </svg>
+                                </button>
+                                <span class="text-xs tracking-wide text-gray-500 font-extralight">
+                                  Remove
+                                </span>
+                              </div>
+                              <div class="flex justify-start mx-3" v-if="i == (trade.Subtrades.length - 1)">
                                 <button
                                   @click="insertSubtrade(trade, i)"
                                   title="Insert subtrade"
@@ -266,20 +280,6 @@
                                 </button>
                                 <span class="text-xs tracking-wide text-gray-500 font-extralight">
                                   Add
-                                </span>
-                              </div>
-                              <div class="flex justify-around m-auto">
-                                <button
-                                  @click="removeSubtrade(trade, i)"
-                                  title="Remove subtrade"
-                                  type="button">
-                                  <svg width="16" height="17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect y=".83" width="15.319" height="15.319" rx="7.66" fill="#FF92D1"/>
-                                    <path d="M2.872 9.447V7.532h9.575v1.915H2.872Z" fill="#fff"/>
-                                  </svg>
-                                </button>
-                                <span class="text-xs tracking-wide text-gray-500 font-extralight">
-                                  Remove
                                 </span>
                               </div>
                             </div>
@@ -313,40 +313,32 @@
     isNewTrade: boolean = false;
     @Prop() openedTrades!: object[];
     @Prop() isUserProfile!: boolean;
-    validate(trade: object) {
-      var m = [];
-        for (var i in trade['Subtrades']) {
-          var tId = parseInt(i) + 1;
-          var tS = trade['Subtrades'][i];
-          if (!tS.Quantity || tS.Quantity <= 0) m.push("-Wrong Quantity in subtrade " + tId);
-          if (!tS.AvgPrice || tS.AvgPrice <= 0) m.push("-Wrong AvgPrice in subtrade " + tId);
-          if (!tS.Total || tS.Total <= 0) m.push("-Wrong Total in subtrade " + tId);
-          if (!tS.Reason) m.push("-Reason missing in subtrade " + tId);
-          if (!tS.Type) m.push("-Type missing in subtrade " + tId);
-          if (!tS.Timestamp) m.push("-Wrong Timestamp in subtrade " + tId);
-        }
+    validateSubtrade(subtrade: object) {
+      var m = '';
+      if (!subtrade['Quantity'] || subtrade['Quantity'] <= 0) m = "Wrong Quantity";
+      if (!subtrade['AvgPrice'] || subtrade['AvgPrice'] <= 0) m = "Wrong AvgPrice";
+      if (!subtrade['Total'] || subtrade['Total'] <= 0) m = "Wrong Total in subtrade";
+      if (!subtrade['Reason']) m = "Reason missing in subtrade";
+      if (!subtrade['Type']) m = "Type missing in subtrade";
+      if (!subtrade['CreatedAt']) m = "Wrong Timestamp in subtrade";
       return m;
     }
-    updateTrade(trade: object) {
-      var validateMessages = this.validate(trade);
-      if (validateMessages.length <= 0) {
+    updateSubtrade(subtrade: object) {
+      var validateMessage = this.validateSubtrade(subtrade);
+      if (validateMessage == '') {
         axios({
           method: "POST",
           headers: {
             Authorization: "Bearer " + document.cookie,
             "Access-Control-Allow-Origin": "*",
           },
-          url: process.env.VUE_APP_HTTP_URL + "/update_trade",
-          data: trade
-        }).then(response => {
-          if (response.status === 200) {
-            console.log("Trade updated");
-          }
+          url: process.env.VUE_APP_HTTP_URL + "/update_subtrade",
+          data: subtrade
         }).catch(function (error) {
           console.log(error);
         })
       } else {
-        alert("Please check the following errors:\n" + validateMessages.join("\n"));
+        alert("Please check the following errors:\n" + validateMessage);
       }
     }
     deleteTrade(trade: object) {
@@ -358,11 +350,7 @@
             Authorization: "Bearer " + document.cookie,
             "Access-Control-Allow-Origin": "*",
           },
-          url: process.env.VUE_APP_HTTP_URL + "/delete_trade/" + trade['Id'],
-        }).then(response => {
-          if (response.status === 200) {
-            console.log("Trade deleted");
-          }
+          url: process.env.VUE_APP_HTTP_URL + "/delete_trade/" + trade['Code'],
         }).catch(function (error) {
           console.log(error);
         })
@@ -370,6 +358,7 @@
     }
     closeTrade(trade: object) {
       var answer = window.confirm("Are you sure closing this trade?");
+      console.log("YES I AM SURE")
       if (answer) {
         axios({
           method: "GET",
@@ -377,48 +366,38 @@
             Authorization: "Bearer " + document.cookie,
             "Access-Control-Allow-Origin": "*",
           },
-          url: process.env.VUE_APP_HTTP_URL + "/close_trade/" + trade['Id'],
-        }).then(response => {
-          if (response.status === 200) {
-            console.log("Trade closed");
-          }
+          url: process.env.VUE_APP_HTTP_URL + "/change_trade/" + trade['Code'] + "/false",
         }).catch(function (error) {
           console.log(error);
         })
       }
     }
-    insertSubtrade(trade: object, subtradeid: number) {
-      var next = 1;
-      for (var i in trade['Subtrades']) {
-        if (trade['Subtrades'][i].SubtradeId >= next) {
-          next = next + 1
-        }
-      }
-      var now = new Date();
-      var customNow = now.getFullYear() + "-" + 
-        ('0' + (now.getMonth()+1)).slice(-2)  + "-" + 
-        ('0' + now.getDate()).slice(-2) + "T" + 
-        ('0' + (now.getHours())).slice(-2)  + ":" + 
-        ('0' + (now.getMinutes())).slice(-2);
-      trade['Subtrades'].splice(subtradeid + 1, 0, {
-        SubtradeId: next,
-        Timestamp: customNow,
-        Type: "BUY",
-        Reason: "Insert a reason",
-        Quantity: 0.0001,
-        AvgPrice: 0.0001,
-        Total: 0.0001
-      });
+    insertSubtrade(trade: object) {
+      axios({
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + document.cookie,
+          "Access-Control-Allow-Origin": "*",
+        },
+        url: process.env.VUE_APP_HTTP_URL + "/insert_subtrade/" + trade["Code"],
+      }).catch(function (error) {
+        console.log(error);
+      })
     }
-    removeSubtrade(trade: object, subtradeid: number) {
+    removeSubtrade(subtrade: object) {
       var answer = window.confirm("Are you sure deleting this subtrade?");
       if (answer) {
-        trade['Subtrades'].splice(subtradeid, 1);
+        axios({
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + document.cookie,
+            "Access-Control-Allow-Origin": "*",
+          },
+          url: process.env.VUE_APP_HTTP_URL + "/delete_subtrade/" + subtrade['Code'],
+        }).catch(function (error) {
+          console.log(error);
+        })
       }
-      if (trade['Subtrades'].length == 0) {
-        this.insertSubtrade(trade, subtradeid);
-      };
-      this.updateTrade(trade);
     }
     insertTrade() {
       this.isNewTrade = true;
