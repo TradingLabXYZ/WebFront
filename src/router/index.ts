@@ -59,6 +59,7 @@ const routes: Array<RouteConfig> = [
       } else {
         next()
       }
+      next()
     }
   }
 ]
