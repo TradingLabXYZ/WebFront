@@ -12,6 +12,8 @@ import Login from '../views/Login.vue'
 import UserTrades from '../views/UserTrades.vue'
 import Settings from '../views/Settings.vue'
 
+import LoginMeta from '../views/LoginMeta.vue'
+
 const routes: Array<RouteConfig> = [
   {
     path: '/',
@@ -32,6 +34,11 @@ const routes: Array<RouteConfig> = [
     path: '/login',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/loginmeta',
+    name: 'LoginMeta',
+    component: LoginMeta
   },
   {
     path: '/settings',
