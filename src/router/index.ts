@@ -12,8 +12,6 @@ import Login from '../views/Login.vue'
 import UserTrades from '../views/UserTrades.vue'
 import Settings from '../views/Settings.vue'
 
-import LoginMeta from '../views/LoginMeta.vue'
-
 const routes: Array<RouteConfig> = [
   {
     path: '/',
@@ -23,7 +21,7 @@ const routes: Array<RouteConfig> = [
       if(document.cookie.indexOf("sessionId") > -1) {
         var sessionId = document.cookie.split("sessionId=")[1].split(";")[0];
         get(sessionId).then((sessionData) => 
-          next('/' + sessionData['Username'])
+          next('/' + sessionData['Wallet'])
         )
       } else {
         next()
@@ -34,11 +32,6 @@ const routes: Array<RouteConfig> = [
     path: '/login',
     name: 'Login',
     component: Login
-  },
-  {
-    path: '/loginmeta',
-    name: 'LoginMeta',
-    component: LoginMeta
   },
   {
     path: '/settings',
@@ -55,7 +48,7 @@ const routes: Array<RouteConfig> = [
     }
   },
   {
-    path: '/:username',
+    path: '/:wallet',
     name: 'UserTrades',
     component: UserTrades,
     async beforeEnter (to, from, next) {

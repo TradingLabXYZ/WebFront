@@ -41,19 +41,19 @@
     
     created() {
       this.initialiseTradesWs();
-      let storeUsername = userStore.userDetails['Username'];
-      let routeUsername = this.$route.params.username;
-      if (storeUsername == routeUsername) {
+      let storeWallet = userStore.userDetails['Wallet'];
+      let routeWallet = this.$route.params.wallet;
+      if (storeWallet == routeWallet) {
         this.isUserProfile = true; 
       }
     }
     initialiseTradesWs() {
-      let username = this.$route.params['username'];
+      let wallet = this.$route.params.wallet;
       let requestId = (Math.random() + 1).toString(36).substring(2);
       let ws_url = [
         process.env.VUE_APP_WS_URL,
         'get_trades',
-        username,
+        wallet,
         requestId
       ].join('/');
       let ws = new WebSocket(ws_url);

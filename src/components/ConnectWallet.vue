@@ -98,7 +98,7 @@
               this.$router.push({
                 name: 'UserTrades',
                 params: {
-                  username: response.data['Username']
+                  username: response.data['Wallet']
                 }
               })
             }
