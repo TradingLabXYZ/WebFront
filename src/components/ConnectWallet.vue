@@ -67,7 +67,7 @@
           let chainId = await window.web3.eth.getChainId(function(chainId: any) {
             return chainId;
           });
-          if (chainId != 1287) {
+          if (chainId != 1281) {
             alert("Please connect to Moonbase Alpha!")
             return;
           }
@@ -116,7 +116,6 @@
           return accounts;
         }
       });
-      console.log(accounts);
       if (accounts.length > 0) {
         let chainId = await window.web3.eth.getChainId(function(chainId: any) {
           return chainId;

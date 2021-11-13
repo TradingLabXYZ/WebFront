@@ -33,6 +33,20 @@ const routes: Array<RouteConfig> = [
     }
   },
   {
+    path: '/settings',
+    name: 'Settings',
+    component: Settings,
+    async beforeEnter ({}, {}, next) {
+      if (await isAllowedToGoNext()) {
+        var sessionId = document.cookie.split("sessionId=")[1].split(";")[0];
+        await get(sessionId).then((val) => userStore.updateUserDetails(val));
+        next()
+      } else {
+        next('/');
+      }
+    }
+  },
+  {
     path: '/:wallet',
     name: 'UserTrades',
     component: UserTrades,
@@ -43,18 +57,6 @@ const routes: Array<RouteConfig> = [
         next();
       } else {
         next();
-      }
-    }
-  },
-  {
-    path: '/settings',
-    name: 'Settings',
-    component: Settings,
-    async beforeEnter ({}, {}, next) {
-      if (await isAllowedToGoNext()) {
-        next()
-      } else {
-        next('/');
       }
     }
   },
