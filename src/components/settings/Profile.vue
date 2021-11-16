@@ -17,14 +17,6 @@
       </label>
     </div>
     <div class="p-2">
-      <label class="text-xs text-subtradelabel">Email</label>
-      <input
-        type="email"
-        placeholder="Email"
-        class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
-        v-model="email">
-    </div>
-    <div class="p-2">
       <label class="text-xs text-subtradelabel">Twitter</label>
       <input
         type="url"
@@ -73,12 +65,10 @@
 
   @Component({})
   export default class Profile extends Vue {
-    email: string = '';
     twitter: string = '';
     website: string = '';
     profilePicture: string = '';
     created() {
-      this.email = userStore.userDetails['Email'];
       this.twitter = userStore.userDetails['Twitter'];
       this.website = userStore.userDetails['Website'];
       this.profilePicture = userStore.userDetails['ProfilePicture'];
@@ -92,18 +82,18 @@
         },
         url: process.env.VUE_APP_HTTP_URL + "/user_settings",
         data: {
-          Email: this.email,
           Twitter: this.twitter,
           Website: this.website
         }
       }).then(response => {
-        if (response.data == "OK") {
+        if (response.status == 200) {
           const runIndexDb = async () => {
             await get(userStore.userDetails['SessionId']).then((sessionData) => {
-              sessionData['Email'] = this.email;
               sessionData['Twitter'] = this.twitter;
               sessionData['Website'] = this.website;
               set(userStore.userDetails['SessionId'], sessionData);
+              userStore.userDetails['Twitter'] = this.twitter;
+              userStore.userDetails['Website'] = this.website;
             })
           }
           runIndexDb();

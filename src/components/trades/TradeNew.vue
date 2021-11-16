@@ -153,7 +153,7 @@
     userCode: string = '';
     cryptoPairs: number[] = [];
     newTrade: object = {
-      Usercode: userStore.userDetails['Code'],
+      Userwallet: userStore.userDetails['Wallet'],
       Exchange: null,
       FirstPair: null,
       SecondPair: null,

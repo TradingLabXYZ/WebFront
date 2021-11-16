@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
+  import { Component, Vue, Watch } from 'vue-property-decorator';
   import User from '@/store/userModule';
   import { getModule } from 'vuex-module-decorators'
   const userStore = getModule(User)
@@ -30,7 +30,7 @@
       TradeHero,
       TradeOpen,
       TradeClose
-    }
+    },
   })
   export default class UserTrades extends Vue {
     isUserProfile: boolean = false;
@@ -38,26 +38,33 @@
     roi: number = 0;
     openedTrades: object[] = [];
     closedTrades: object[] = [];
-    
     created() {
       this.initialiseTradesWs();
-      let storeUsername = userStore.userDetails['Username'];
-      let routeUsername = this.$route.params.username;
+      let storeUsername = userStore.userDetails['Wallet'];
+      let routeUsername = this.$route.params.wallet;
       if (storeUsername == routeUsername) {
         this.isUserProfile = true; 
       }
     }
+    @Watch('$route', { immediate: true, deep: true })
+    onUrlChange() {
+      this.totalReturn = 0;
+      this.roi = 0;
+      this.openedTrades = [];
+      this.closedTrades = [];
+      this.initialiseTradesWs();
+    }
     initialiseTradesWs() {
-      let username = this.$route.params['username'];
+      let wallet = this.$route.params.wallet;
       let requestId = (Math.random() + 1).toString(36).substring(2);
       let ws_url = [
         process.env.VUE_APP_WS_URL,
         'get_trades',
-        username,
+        wallet,
         requestId
       ].join('/');
       let ws = new WebSocket(ws_url);
-      ws.onmessage = (event) => {
+      ws.onmessage = (event: any) => {
         this.openedTrades = [];
         this.closedTrades = [];
         let ws_data = JSON.parse(event.data);
