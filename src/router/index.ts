@@ -3,7 +3,6 @@ import VueRouter, { RouteConfig } from 'vue-router'
 Vue.use(VueRouter)
 
 declare let window: any;
-import Web3 from "web3";
 
 import { get } from 'idb-keyval';
 import { del } from 'idb-keyval';
@@ -77,14 +76,7 @@ async function isAllowedToGoNext() {
 }
 
 async function loadAccounts() {
-  window.web3 = new Web3(window.ethereum);
-  let accounts = await window.web3.eth.getAccounts(function(error: any, accounts: any) {
-    if (error) {
-      console.log("Error: ", error);
-    } else {
-      return accounts;
-    }
-  })
+  let accounts = await window.ethereum.request({ method: 'eth_accounts' });
   return accounts;
 }
 

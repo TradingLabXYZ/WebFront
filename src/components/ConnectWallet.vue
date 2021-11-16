@@ -42,10 +42,10 @@
     get userWallet() {
       return userStore.getUserDetails['Wallet'];
     }
-    async created() {
+    created() {
       this.instanciateMetamaskWatchers();
     }
-    async instanciateMetamaskWatchers() {
+    instanciateMetamaskWatchers() {
       var self = this;
       window.ethereum.on('accountsChanged', function() {
         self.clean();
@@ -62,7 +62,6 @@
         this.clean();
         return;
       }
-      console.log("SONO QUI");
       let chainIdHex = await window.ethereum.request({ method: 'eth_chainId' });
       let chainId = parseInt(chainIdHex, 16);
       if (chainId != 1281) {
@@ -71,7 +70,6 @@
         return;
       }
       let accounts = await window.ethereum.request({ method: 'eth_accounts' });
-      console.log(accounts);
       if (accounts.length == 0) {
         await window.ethereum.request({ method: 'eth_requestAccounts' });
         accounts = await window.ethereum.request({ method: 'eth_accounts' });

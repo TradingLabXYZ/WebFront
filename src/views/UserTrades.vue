@@ -39,7 +39,6 @@
     openedTrades: object[] = [];
     closedTrades: object[] = [];
     created() {
-      this.initialiseTradesWs();
       let storeUsername = userStore.userDetails['Wallet'];
       let routeUsername = this.$route.params.wallet;
       if (storeUsername == routeUsername) {
