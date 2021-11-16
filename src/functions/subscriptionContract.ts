@@ -5,7 +5,7 @@ import SubscriptionInterface from "@/functions/Subscription.json";
 const ContractSubscription = () => {
   let provider =  new ethers.providers.Web3Provider(window.ethereum);
   return new ethers.Contract(
-    "0xF9dAdE404348C6fE0342b2a64C80ca4F0425d90A",
+    "0x42e2EE7Ba8975c473157634Ac2AF4098190fc741",
     SubscriptionInterface.abi,
     provider
   );

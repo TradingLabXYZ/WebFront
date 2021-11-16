@@ -13,6 +13,11 @@
         <button>
           {{ userWallet.substring(0, 5) }}...{{ userWallet.slice(-5) }}
         </button>
+        <button
+          class="inline-block p-2 mr-2 text-gray-800 rounded hover:bg-header-dark"
+          @click="disconnectMetamask">
+          Disconnect
+        </button>
       </div>
     </div>
   </div>
@@ -21,10 +26,8 @@
 <script lang="ts">
   declare let window: any;
   import axios from "axios";
-  import Web3 from "web3";
   import { Component, Vue } from 'vue-property-decorator';
   import { getModule } from 'vuex-module-decorators'
-  import { get } from 'idb-keyval';
   import { set } from 'idb-keyval';
   import { del } from 'idb-keyval';
   import ButtonSettings from '@/components/ButtonSettings.vue';
@@ -40,106 +43,63 @@
       return userStore.getUserDetails['Wallet'];
     }
     async created() {
-      if(document.cookie.indexOf("sessionId") > -1) {
-        var sessionId = document.cookie.split("sessionId=")[1].split(";")[0];
-        await get(sessionId).then((val) => userStore.updateUserDetails(val));
-      };
+      this.instanciateMetamaskWatchers();
+    }
+    async instanciateMetamaskWatchers() {
       var self = this;
-      window.ethereum.on('accountsChanged', function () {
-        self.verifyConnection();
+      window.ethereum.on('accountsChanged', function() {
+        self.clean();
+        self.loginMetamask();
       });
-      window.ethereum.on('chainChanged', function(){
-        self.verifyConnection();
+      window.ethereum.on('chainChanged', function() {
+        self.clean();
+        window.location.reload();
       });
     }
     async loginMetamask() {
-      if (window.ethereum) {
-        await window.ethereum.send('eth_requestAccounts');
-        window.web3 = new Web3(window.ethereum);
-        let accounts = await window.web3.eth.getAccounts(function(error: any, accounts: any) {
-          if (error) {
-            console.log("Error: ", error);
-          } else {
-            return accounts;
-          }
-        });
-        if (accounts.length > 0) {
-          let chainId = await window.web3.eth.getChainId(function(chainId: any) {
-            return chainId;
-          });
-          if (chainId != 1281) {
-            alert("Please connect to Moonbase Alpha!")
-            return;
-          }
-          axios({
-            method: "GET",
-            url: process.env.VUE_APP_HTTP_URL + "/login/" + accounts[0],
-          }).then(response => {
-            if (response.status == 200) {
-              let sessionId: string = response.data['SessionId'];
-              if (sessionId) {
-                // Set cookie
-                let d = new Date();
-                d.setTime(d.getTime() + 1000 * 24 * 60 * 60 * 1000);
-                let expires = "expires=" + d.toUTCString();
-                document.cookie = "sessionId=" + sessionId + ";" + expires + "; path=/";
-                // Save user's info in store
-                userStore.updateUserDetails(response.data);
-                // Save user's data in indexeddb
-                set(response.data['SessionId'], response.data);
-                // Update local variables
-                console.log("SUCCESSFULLY CONNECTED WITH MOONBASE ALPHA:");
-                console.log("\tChainId: ", chainId);
-                console.log("\tAccount: ", accounts[0]);
-                if (this.$route.params['wallet'] == accounts[0]) {
-                  this.$router.go(0);
-                } else if (this.$route.params['wallet'] != accounts[0]) {
-                  this.$router.push({
-                    name: 'UserTrades',
-                    params: {
-                      wallet: accounts[0] 
-                    }
-                  })
-                }
-              }
-            }
-          })
-        }
-      }
-    }
-    async verifyConnection() {
-      window.web3 = new Web3(window.ethereum);
-      let accounts = await window.web3.eth.getAccounts(function(error: any, accounts: any) {
-        if (error) {
-          console.log("Error: ", error);
-        } else {
-          return accounts;
-        }
-      });
-      if (accounts.length > 0) {
-        let chainId = await window.web3.eth.getChainId(function(chainId: any) {
-          return chainId;
-        });
-        if (chainId != 1287) {
-          this.clean()
-          alert("Please connect to Moonbase Alpha!")
-          return;
-        } else {
-          if (this.$route.params['wallet'] != accounts[0]) {
-            this.$router.push({
-              name: 'UserTrades',
-              params: {
-                wallet: accounts[0] 
-              }
-            })
-          } else {
-            this.$router.go(0);
-          }
-        }
-      } else {
+      if (typeof window.ethereum === "undefined") {
+        alert("MetaMask not Detected");
         this.clean();
-        return
+        return;
       }
+      console.log("SONO QUI");
+      let chainIdHex = await window.ethereum.request({ method: 'eth_chainId' });
+      let chainId = parseInt(chainIdHex, 16);
+      if (chainId != 1281) {
+        alert("Onyl Moonbase Dev supported!");
+        this.clean();
+        return;
+      }
+      let accounts = await window.ethereum.request({ method: 'eth_accounts' });
+      console.log(accounts);
+      if (accounts.length == 0) {
+        await window.ethereum.request({ method: 'eth_requestAccounts' });
+        accounts = await window.ethereum.request({ method: 'eth_accounts' });
+      }
+      this.generateSession(accounts[0]);
+    }
+    generateSession(account: string) {
+      this.clean();
+      axios({
+        method: "GET",
+        url: process.env.VUE_APP_HTTP_URL + "/login/" + account,
+      }).then(response => {
+        if (response.status != 200) {
+          console.log("Cannot retrive sessionId");
+          return
+        }
+        let sessionId: string = response.data['SessionId'];
+        // Set cookie
+        let d = new Date();
+        d.setTime(d.getTime() + 1000 * 24 * 60 * 60 * 1000);
+        let expires = "expires=" + d.toUTCString();
+        document.cookie = "sessionId=" + sessionId + ";" + expires + "; path=/";
+        // Save user's info in store
+        userStore.updateUserDetails(response.data);
+        // Save user's data in indexeddb
+        set(response.data['SessionId'], response.data);
+        window.location.reload();
+      })
     }
     clean() {
       // Reset indexeddb
@@ -153,9 +113,10 @@
       document.cookie = "sessionId=; expires="+date.toUTCString()+"; path=/";
       // Reset user store
       userStore.updateUserDetails({});
-      // Reset local variables
-      // Refresh page
-      this.$router.go(0);
+    }
+    disconnectMetamask() {
+      this.clean();
+      window.location.reload();
     }
   }
 </script>
