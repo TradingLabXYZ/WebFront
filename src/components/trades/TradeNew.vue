@@ -153,7 +153,7 @@
     userCode: string = '';
     cryptoPairs: number[] = [];
     newTrade: object = {
-      Usercode: userStore.userDetails['Code'],
+      Userwallet: userStore.userDetails['Wallet'],
       Exchange: null,
       FirstPair: null,
       SecondPair: null,
@@ -203,7 +203,7 @@
       this.newTrade['Subtrades'].splice(i, 1);
     }
     validate() {
-      var m = [];
+      var m: string[] = [];
         if (!this.newTrade['Exchange']) m.push("-Exchange missing");
         if (!this.newTrade['FirstPair']) m.push("-First Pair missing");
         if (!this.newTrade['SecondPair']) m.push("-Second Pair missing");

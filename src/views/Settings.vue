@@ -13,12 +13,6 @@
         </div>
         <div
           class="px-2 py-2 pr-12 mr-1 rounded-md text-xol"
-          :class="settingsSection=='password' ? 'bg-tradehero text-white font-semibold' : 'bg-white'"
-          @click="changeSettingsSection('password')">
-          Password
-        </div>
-        <div
-          class="px-2 py-2 pr-12 mr-1 rounded-md text-xol"
           :class="settingsSection=='privacy' ? 'bg-tradehero text-white font-semibold' : 'bg-white'"
           @click="changeSettingsSection('privacy')">
           Privacy
@@ -34,14 +28,11 @@
         <section v-if="settingsSection=='profile'">
           <Profile/>
         </section> 
-        <section v-if="settingsSection=='password'">
-          <Password/>
-        </section> 
         <section v-if="settingsSection=='privacy'">
           <Privacy/>
         </section> 
         <section v-if="settingsSection=='plan'">
-          <Plans/>
+          <Plan/>
         </section> 
       </div>
     </div>
@@ -53,21 +44,19 @@
   import { Component, Vue } from 'vue-property-decorator';
   import Header from '@/components/Header.vue';
   import Profile from '@/components/settings/Profile.vue';
-  import Password from '@/components/settings/Password.vue';
   import Privacy from '@/components/settings/Privacy.vue';
-  import Plans from '@/components/plans/Plans.vue';
+  import Plan from '@/components/settings/Plan.vue';
 
   @Component({
     components: {
       Header,
       Profile,
-      Password,
       Privacy,
-      Plans
+      Plan
     }
   })
   export default class UserTrades extends Vue {
-    private settingsSection: string = 'profile';
+    settingsSection: string = 'profile';
     changeSettingsSection(section: string) {
       this.settingsSection = section;
     }

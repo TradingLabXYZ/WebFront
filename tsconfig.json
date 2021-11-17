@@ -7,6 +7,7 @@
     "importHelpers": true,
     "moduleResolution": "node",
     "experimentalDecorators": true,
+    "noImplicitAny": false,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -14,6 +15,7 @@
     "sourceMap": true,
     "downlevelIteration": true,
     "baseUrl": ".",
+    "resolveJsonModule": true,
     "types": [
       "webpack-env"
     ],

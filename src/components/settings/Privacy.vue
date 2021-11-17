@@ -82,15 +82,15 @@
           Privacy: this.selectedUserPrivacy
         }
       }).then(response => {
-        const runIndexDb = async () => {
-          await get(userStore.userDetails['SessionId']).then((sessionData) => {
-            sessionData['Privacy'] = this.selectedUserPrivacy;
-            set(userStore.userDetails['SessionId'], sessionData);
-          })
-        }
-        runIndexDb();
-        userStore.userDetails['Privacy'] = this.selectedUserPrivacy;
-        if (response.data == "OK") {
+        if (response.status == 200) {
+          const runIndexDb = async () => {
+            await get(userStore.userDetails['SessionId']).then((sessionData) => {
+              sessionData['Privacy'] = this.selectedUserPrivacy;
+              set(userStore.userDetails['SessionId'], sessionData);
+            })
+          }
+          runIndexDb();
+          userStore.userDetails['Privacy'] = this.selectedUserPrivacy;
           var s = document.getElementById("userPrivacyOk")!.style;
         } else {
           var s = document.getElementById("userPrivacyKo")!.style;

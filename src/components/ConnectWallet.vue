@@ -1,17 +1,22 @@
 <template>
   <div>
     <div class="hidden md:block">
-      <div v-if="errorMessage">
-        {{ errorMessage }}
-      </div>
-      <div v-else>
-        <button v-if="!isConnected"
+      <div v-if="!isUserConnected">
+        <button
           class="inline-block p-2 mr-2 text-gray-800 rounded hover:bg-header-dark"
           @click="loginMetamask">
           Connect Wallet
         </button>
-        <button v-else>
+      </div>
+      <div v-else>
+        <ButtonSettings/>
+        <button>
           {{ userWallet.substring(0, 5) }}...{{ userWallet.slice(-5) }}
+        </button>
+        <button
+          class="inline-block p-2 mr-2 text-gray-800 rounded hover:bg-header-dark"
+          @click="disconnectMetamask">
+          Disconnect
         </button>
       </div>
     </div>
@@ -21,94 +26,135 @@
 <script lang="ts">
   declare let window: any;
   import axios from "axios";
+  import { ethers } from "ethers";
   import { Component, Vue } from 'vue-property-decorator';
-  import Web3 from "web3";
-  import { set } from 'idb-keyval';
-  import User from '@/store/userModule';
   import { getModule } from 'vuex-module-decorators'
+  import { set, del } from 'idb-keyval';
+  import User from '@/store/userModule';
+  import Metamask from '@/store/metamaskModule';
+  import ButtonSettings from '@/components/ButtonSettings.vue';
   const userStore = getModule(User)
+  const metamaskStore = getModule(Metamask)
   @Component({
-    components: {}
+    components: {
+      ButtonSettings
+    }
   })
-  export default class LoginMeta extends Vue {
-    isConnected: boolean = false;
-    isAccountChanged: boolean = false;
-    userWallet: string = "";
-    errorMessage: string = "";
-    created() {
+  export default class ConnectWallet extends Vue {
+    vue_app_moonbeam_chainid = parseInt(process.env.VUE_APP_MOONBEAM_CHAINID || '');
+    get isUserConnected() {
+      return metamaskStore.getIsConnected;
+    }
+    get userWallet() {
+      return metamaskStore.getWallet;
+    }
+    async created() {
+      await this.defineMetamaskStoreVariables();
+      this.instantiateMetamaskWatchers();
+    }
+    async defineMetamaskStoreVariables() {
+      if(document.cookie.indexOf("sessionId") > -1) {
+        var accounts = await window.ethereum.request({ method: 'eth_accounts' })
+        if (accounts.length > 0) {
+          let chainIdHex = await window.ethereum.request({ method: 'eth_chainId' });
+          let chainId = parseInt(chainIdHex, 16);
+          if (chainId == this.vue_app_moonbeam_chainid) {
+            let balance = await window.ethereum.request({ method: 'eth_getBalance', params: [accounts[0], 'latest']});
+            let balanceEth = parseFloat(ethers.utils.formatEther(balance));
+            metamaskStore.updateWallet(accounts[0]);
+            metamaskStore.updateChainId(chainId);
+            metamaskStore.updateBalance(balanceEth);
+            metamaskStore.updateIsConnected(true);
+          }
+        }
+      }
+    }
+    instantiateMetamaskWatchers() {
       var self = this;
-      window.addEventListener("load", function() {
-        window.ethereum.on('accountsChanged', function () {
-          self.verifyConnection();
-        });
-        window.ethereum.on('chainChanged', function(){
-          self.verifyConnection();
-        });
-      })
-      this.verifyConnection();
+      window.ethereum.on('accountsChanged', function() {
+        self.clean();
+        self.loginMetamask();
+      });
+      window.ethereum.on('chainChanged', function() {
+        self.clean();
+        window.location.reload();
+      });
     }
     async loginMetamask() {
-      if (window.ethereum) {
-        await window.ethereum.send('eth_requestAccounts');
+      if (typeof window.ethereum === "undefined") {
+        alert("MetaMask not Detected");
+        this.clean();
+        return;
+      }
+      let chainIdHex = await window.ethereum.request({ method: 'eth_chainId' });
+      let chainId = parseInt(chainIdHex, 16);
+      console.log("THIS IS THE chainId", chainId);
+      console.log("THIS is this.vue_app_moonbeam_chainid", this.vue_app_moonbeam_chainid);
+      if (chainId != this.vue_app_moonbeam_chainid) {
+        alert("Onyl Moonbase Dev supported!");
+        this.clean();
+        return;
+      }
+      await window.ethereum.request({ method: 'eth_requestAccounts' });
+      let accounts = await window.ethereum.request({ method: 'eth_accounts' });
+      this.defineMetamaskStoreVariables();
+      if (accounts.length > 0) {
+        this.generateSession(accounts[0]);
       }
     }
-    async verifyConnection() {
-      window.web3 = new Web3(window.ethereum);
-      let accounts = await window.web3.eth.getAccounts(function(error: any, accounts: any) {
-        if (error) {
-          console.log("Error: ", error);
-        } else {
-          return accounts;
+    generateSession(account: string) {
+      this.clean();
+      axios({
+        method: "GET",
+        url: process.env.VUE_APP_HTTP_URL + "/login/" + account,
+      }).then(response => {
+        if (response.status != 200) {
+          console.log("Cannot retrive sessionId");
+          return
         }
-      });
-      if (accounts.length > 0) {
-        let chainId = await window.web3.eth.getChainId(function(chainId: any) {
-          return chainId;
-        });
-        if (chainId != 1287) {
-          this.isConnected = false;
-          this.errorMessage = "Wrong network"
-          alert("Please connect to Moonbase Alpha!")
+        let sessionId: string = response.data['SessionId'];
+        // Set cookie
+        let d = new Date();
+        d.setTime(d.getTime() + 1000 * 24 * 60 * 60 * 1000);
+        let expires = "expires=" + d.toUTCString();
+        document.cookie = "sessionId=" + sessionId + ";" + expires + "; path=/";
+        // Save user's info in store
+        userStore.updateUserDetails(response.data);
+        // Save user's data in indexeddb
+        set(response.data['SessionId'], response.data);
+        if (this.$route.params['wallet'] != account) {
+          this.$router.push({
+            name: 'UserTrades',
+            params: {
+              wallet: account
+            }
+          })
           return;
         }
-        this.isConnected = true;
-        this.userWallet = accounts[0];
-        this.errorMessage = ""
-        console.log("SUCCESSFULLY CONNECTED WITH MOONBASE ALPHA:");
-        console.log("\tChainId: ", chainId);
-        console.log("\tAccount: ", accounts[0]);
-        axios({
-          method: "GET",
-          url: process.env.VUE_APP_HTTP_URL + "/login/" + this.userWallet,
-        }).then(response => {
-          if (response.status == 200) {
-            let sessionId: string = response.data['SessionId'];
-            console.log("SESSIONID")
-            console.log(sessionId)
-            if (sessionId) {
-              // Set cookie
-              let d = new Date();
-              d.setTime(d.getTime() + 1000 * 24 * 60 * 60 * 1000);
-              let expires = "expires=" + d.toUTCString();
-              document.cookie = "sessionId=" + sessionId + ";" + expires + "; path=/";
-              // Save user's data in indexeddb
-              set(response.data['SessionId'], response.data);
-              // Save user's info in store
-              userStore.updateUserDetails(response.data);
-              this.$router.push({
-                name: 'UserTrades',
-                params: {
-                  username: response.data['Username']
-                }
-              })
-            }
-          }
-        })
-      } else {
-        console.log("User is not logged in to MetaMask");
-        this.isConnected = false;
-        return
+        window.location.reload();
+      })
+    }
+    clean() {
+      // Reset indexeddb
+      if(document.cookie.indexOf("sessionId") > -1) {
+        var sessionId = document.cookie.split("sessionId=")[1].split(";")[0];
+        del(sessionId);
       }
+      // Reset cookie
+      const date = new Date();
+      date.setTime(date.getTime() + (-1 * 24 * 60 * 60 * 1000));
+      document.cookie = "sessionId=; expires="+date.toUTCString()+"; path=/";
+      // Reset user store
+      userStore.updateUserDetails({});
+      // Reset metamask store
+      metamaskStore.updateIsConnected(false);
+      metamaskStore.updateBalance(0);
+      metamaskStore.updateChainId(0);
+      metamaskStore.updateWallet('');
+    }
+    disconnectMetamask() {
+      this.clean();
+      /* window.location.reload(); */
     }
   }
 </script>
