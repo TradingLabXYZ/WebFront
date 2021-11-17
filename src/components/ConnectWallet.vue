@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="hidden md:block">
-      <div v-if="!userWallet">
+      <div v-if="!isUserConnected">
         <button
           class="inline-block p-2 mr-2 text-gray-800 rounded hover:bg-header-dark"
           @click="loginMetamask">
@@ -26,26 +26,50 @@
 <script lang="ts">
   declare let window: any;
   import axios from "axios";
+  import { ethers } from "ethers";
   import { Component, Vue } from 'vue-property-decorator';
   import { getModule } from 'vuex-module-decorators'
-  import { set } from 'idb-keyval';
-  import { del } from 'idb-keyval';
-  import ButtonSettings from '@/components/ButtonSettings.vue';
+  import { set, del } from 'idb-keyval';
   import User from '@/store/userModule';
+  import Metamask from '@/store/metamaskModule';
+  import ButtonSettings from '@/components/ButtonSettings.vue';
   const userStore = getModule(User)
+  const metamaskStore = getModule(Metamask)
   @Component({
     components: {
       ButtonSettings
     }
   })
   export default class ConnectWallet extends Vue {
+    vue_app_moonbeam_chainid = parseInt(process.env.VUE_APP_MOONBEAM_CHAINID || '');
+    get isUserConnected() {
+      return metamaskStore.getIsConnected;
+    }
     get userWallet() {
-      return userStore.getUserDetails['Wallet'];
+      return metamaskStore.getWallet;
     }
-    created() {
-      this.instanciateMetamaskWatchers();
+    async created() {
+      await this.defineMetamaskStoreVariables();
+      this.instantiateMetamaskWatchers();
     }
-    instanciateMetamaskWatchers() {
+    async defineMetamaskStoreVariables() {
+      if(document.cookie.indexOf("sessionId") > -1) {
+        var accounts = await window.ethereum.request({ method: 'eth_accounts' })
+        if (accounts.length > 0) {
+          let chainIdHex = await window.ethereum.request({ method: 'eth_chainId' });
+          let chainId = parseInt(chainIdHex, 16);
+          if (chainId == this.vue_app_moonbeam_chainid) {
+            let balance = await window.ethereum.request({ method: 'eth_getBalance', params: [accounts[0], 'latest']});
+            let balanceEth = parseFloat(ethers.utils.formatEther(balance));
+            metamaskStore.updateWallet(accounts[0]);
+            metamaskStore.updateChainId(chainId);
+            metamaskStore.updateBalance(balanceEth);
+            metamaskStore.updateIsConnected(true);
+          }
+        }
+      }
+    }
+    instantiateMetamaskWatchers() {
       var self = this;
       window.ethereum.on('accountsChanged', function() {
         self.clean();
@@ -64,17 +88,17 @@
       }
       let chainIdHex = await window.ethereum.request({ method: 'eth_chainId' });
       let chainId = parseInt(chainIdHex, 16);
-      if (chainId != 1281) {
+      if (chainId != this.vue_app_moonbeam_chainid) {
         alert("Onyl Moonbase Dev supported!");
         this.clean();
         return;
       }
+      await window.ethereum.request({ method: 'eth_requestAccounts' });
       let accounts = await window.ethereum.request({ method: 'eth_accounts' });
-      if (accounts.length == 0) {
-        await window.ethereum.request({ method: 'eth_requestAccounts' });
-        accounts = await window.ethereum.request({ method: 'eth_accounts' });
+      this.defineMetamaskStoreVariables();
+      if (accounts.length > 0) {
+        this.generateSession(accounts[0]);
       }
-      this.generateSession(accounts[0]);
     }
     generateSession(account: string) {
       this.clean();
@@ -96,6 +120,15 @@
         userStore.updateUserDetails(response.data);
         // Save user's data in indexeddb
         set(response.data['SessionId'], response.data);
+        if (this.$route.params['wallet'] != account) {
+          this.$router.push({
+            name: 'UserTrades',
+            params: {
+              wallet: account
+            }
+          })
+          return;
+        }
         window.location.reload();
       })
     }
@@ -111,10 +144,15 @@
       document.cookie = "sessionId=; expires="+date.toUTCString()+"; path=/";
       // Reset user store
       userStore.updateUserDetails({});
+      // Reset metamask store
+      metamaskStore.updateIsConnected(false);
+      metamaskStore.updateBalance(0);
+      metamaskStore.updateChainId(0);
+      metamaskStore.updateWallet('');
     }
     disconnectMetamask() {
       this.clean();
-      window.location.reload();
+      /* window.location.reload(); */
     }
   }
 </script>

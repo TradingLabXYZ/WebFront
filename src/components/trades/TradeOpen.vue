@@ -6,7 +6,7 @@
         <div class="text-2xl font-bold">
           Open Trades
         </div>  
-        <div class="" v-if="isUserProfile && !isNewTrade">
+        <div class="" v-if="isUserConnected && isUserProfile && !isNewTrade">
           <button
             @click="insertTrade()"
             title="Insert a new trade"
@@ -19,7 +19,7 @@
         </div>
       </div>
     </div>
-    <div v-if="isUserProfile && isNewTrade" class="mb-5 grid grid-cols-8">
+    <div v-if="isUserConnected && isUserProfile && isNewTrade" class="mb-5 grid grid-cols-8">
       <div class="col-span-2"></div>
       <div class="w-auto mt-5 col-span-4">
         <TradeNew @closeNewTradeSection="cancelInsertTrade"/>
@@ -56,7 +56,7 @@
               <th scope="col" class="px-12 py-3 text-xs font-medium tracking-wider text-gray-800">
                 ROI
               </th>
-              <th v-if="isUserProfile" scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-gray-800">
+              <th v-if="isUserConnected && isUserProfile" scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-gray-800">
                 Actions
               </th>
             </tr>
@@ -112,9 +112,9 @@
                 <td class="py-4 text-center text-gray-700 text-md" :class="trade.Roi > 0 ? 'text-tradepositive' : 'text-tradenegative'">
                   {{ trade.Roi.toFixed(2) + "%" }}
                 </td>
-                <td v-if="isUserProfile" class="py-4 text-center text-gray-700 text-md">
+                <td v-if="isUserConnected && isUserProfile" class="py-4 text-center text-gray-700 text-md">
                   <button
-                    v-if="isUserProfile"
+                    v-if="isUserConnected && isUserProfile"
                     @click="closeTrade(trade)"
                     class="m-2"
                     title="Close trade"
@@ -125,7 +125,7 @@
                     </svg>
                   </button>
                   <button
-                    v-if="isUserProfile"
+                    v-if="isUserConnected && isUserProfile"
                     @click="deleteTrade(trade)"
                     class="m-2"
                     title="Delete trade"
@@ -175,7 +175,7 @@
                           <td class="">
                             <div class="w-40 mx-3 border-b border-subtradeeditableborder">
                             <input
-                              :disabled="!isUserProfile"
+                              :disabled="!isUserConnected || !isUserProfile"
                               name="formTimestamp" 
                               placeholder="Timestamp"
                               type="datetime-local"
@@ -187,7 +187,7 @@
                           <td>
                             <div class="mx-3 border-b border-subtradeeditableborder">
                               <select
-                                :disabled="!isUserProfile"
+                                :disabled="!isUserConnected || !isUserProfile"
                                 name="formType" 
                                 class="text-center bg-subtradeeditable"
                                 v-model="subtrade.Type"
@@ -200,7 +200,7 @@
                           <td>
                             <div class="mx-3 border-b border-subtradeeditableborder">
                               <input
-                                :disabled="!isUserProfile"
+                                :disabled="!isUserConnected || !isUserProfile"
                                 name="formReason" 
                                 placeholder="Insert a reason" 
                                 type="text"
@@ -212,7 +212,7 @@
                           <td>
                             <div class="w-24 mx-3 border-b border-subtradeeditableborder">
                               <input 
-                                :disabled="!isUserProfile"
+                                :disabled="!isUserConnected || !isUserProfile"
                                 min="0.00000000001"
                                 name="formQuantity" 
                                 placeholder="Quantity"
@@ -226,7 +226,7 @@
                           <td>
                             <div class="w-24 mx-3 border-b border-subtradeeditableborder">
                               <input
-                                :disabled="!isUserProfile"
+                                :disabled="!isUserConnected || !isUserProfile"
                                 min="0.00000000001"
                                 name="formAvgPrice" 
                                 placeholder="Avg Price"
@@ -240,7 +240,7 @@
                           <td>
                             <div class="w-24 mx-3 border-b border-subtradeeditableborder">
                               <input
-                                :disabled="!isUserProfile"
+                                :disabled="!isUserConnected || !isUserProfile"
                                 min="0.00000000001"
                                 name="formTotal" 
                                 placeholder="Total"
@@ -251,7 +251,7 @@
                                 @change="updateSubtrade(subtrade)">
                             </div>
                           </td>
-                          <td v-if="isUserProfile">
+                          <td v-if="isUserConnected && isUserProfile">
                             <div class="flex">
                               <div class="flex justify-start" v-if="trade.Subtrades.length > 1">
                                 <button
@@ -311,6 +311,7 @@
   export default class TradeOpen extends Vue {
     opened: number[] = [];
     isNewTrade: boolean = false;
+    @Prop() isUserConnected!: boolean;
     @Prop() openedTrades!: object[];
     @Prop() isUserProfile!: boolean;
     validateSubtrade(subtrade: object) {

@@ -33,7 +33,7 @@
               <th scope="col" class="px-20 py-3 text-xs font-medium tracking-wider text-gray-800">
                 ROI
               </th>
-              <th v-if="isUserProfile" scope="col" class="px-16 py-3 text-xs font-medium tracking-wider text-gray-800">
+              <th v-if="isUserConnected && isUserProfile" scope="col" class="px-16 py-3 text-xs font-medium tracking-wider text-gray-800">
                 Actions
               </th>
             </tr>
@@ -77,9 +77,9 @@
                 <td class="py-4 text-center text-gray-700 text-md" :class="trade.Roi > 0 ? 'text-tradepositive' : 'text-tradenegative'">
                   {{ trade.Roi.toFixed(2) + "%" }}
                 </td>
-                <td v-if="isUserProfile" class="py-4 text-center text-gray-700 text-md">
+                <td v-if="isUserConnected && isUserProfile" class="py-4 text-center text-gray-700 text-md">
                   <button
-                    v-if="isUserProfile"
+                    v-if="isUserConnected && isUserProfile"
                     @click="openTrade(trade)"
                     class="m-2"
                     title="Close trade"
@@ -162,6 +162,7 @@
   @Component({})
   export default class TradeClose extends Vue {
     opened: number[] = [];
+    @Prop() isUserConnected!: boolean;
     @Prop() closedTrades!: object[];
     @Prop() isUserProfile!: boolean;
     openTrade(trade: object) {

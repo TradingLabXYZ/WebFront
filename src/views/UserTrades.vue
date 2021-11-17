@@ -6,9 +6,11 @@
       v-bind:roi="roi"
       v-bind:totalTrades="totalTrades"/>
     <TradeOpen
+      v-bind:isUserConnected="isUserConnected"
       v-bind:openedTrades="openedTrades"
       v-bind:isUserProfile="isUserProfile"/>
     <TradeClose
+      v-bind:isUserConnected="isUserConnected"
       v-bind:closedTrades="closedTrades"
       v-bind:isUserProfile="isUserProfile"/>
   </div>
@@ -16,9 +18,11 @@
 
 <script lang="ts">
   import { Component, Vue, Watch } from 'vue-property-decorator';
-  import User from '@/store/userModule';
   import { getModule } from 'vuex-module-decorators'
+  import User from '@/store/userModule';
   const userStore = getModule(User)
+  import Metamask from '@/store/metamaskModule';
+  const metamaskStore = getModule(Metamask)
   import Header from '@/components/Header.vue';
   import TradeHero from '@/components/trades/TradeHero.vue';
   import TradeOpen from '@/components/trades/TradeOpen.vue';
@@ -38,6 +42,9 @@
     roi: number = 0;
     openedTrades: object[] = [];
     closedTrades: object[] = [];
+    get isUserConnected() {
+      return metamaskStore.getIsConnected;
+    }
     created() {
       let storeUsername = userStore.userDetails['Wallet'];
       let routeUsername = this.$route.params.wallet;

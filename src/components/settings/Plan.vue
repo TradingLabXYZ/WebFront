@@ -28,8 +28,8 @@
 <script lang="ts">
   import { Component, Vue } from 'vue-property-decorator';
   import { getModule } from 'vuex-module-decorators'
-  import User from '@/store/userModule';
-  const userStore = getModule(User)
+  import Metamask from '@/store/metamaskModule';
+  const metamaskStore = getModule(Metamask)
   import Contract from '@/store/contractModule';
   const contractStore = getModule(Contract)
 
@@ -42,7 +42,7 @@
       await contractStore.signContractSubscription();
       this.getNumber();
       contractStore.getContractSubscription.on("ChangePlan", (from, amount, {}) => {
-        if (from == userStore.getUserDetails['Wallet']) {
+        if (from.toLowerCase() == metamaskStore.getWallet.toLowerCase()) {
           this.usdcMonthlyPrice = amount.toString();
         }
       });
