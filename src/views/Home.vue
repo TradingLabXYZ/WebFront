@@ -13,7 +13,7 @@
 
 <script lang="ts">
   import { Component, Vue } from 'vue-property-decorator';
-  import Header from '@/components/Header.vue';
+  import Header from '@/components/header/Header.vue';
   import Hero from '@/components/Hero.vue';
   import Footer from '@/components/Footer.vue';
 

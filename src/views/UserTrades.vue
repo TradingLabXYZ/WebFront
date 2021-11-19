@@ -23,7 +23,7 @@
   const userStore = getModule(User)
   import Metamask from '@/store/metamaskModule';
   const metamaskStore = getModule(Metamask)
-  import Header from '@/components/Header.vue';
+  import Header from '@/components/header/Header.vue';
   import TradeHero from '@/components/trades/TradeHero.vue';
   import TradeOpen from '@/components/trades/TradeOpen.vue';
   import TradeClose from '@/components/trades/TradeClose.vue';

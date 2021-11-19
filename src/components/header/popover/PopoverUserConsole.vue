@@ -1,35 +1,37 @@
 <template>
-  <div class="mt-3 border-2 shadow-md bg-popoverUserConsole-background rounded-md">
-    <div class="pt-3 pl-3">
-      <div class="pb-2 font-semibold">
-        ACCOUNT
-      </div>
-      <div class="grid grid-cols-2">
-        <div class="col-span-1">
-          Wallet: {{ userWallet.substring(0, 5) }}...{{ userWallet.slice(-5) }}
+  <div class="mt-3 text-white shadow-md text-header-light border-1 bg-header-ultradark rounded-md">
+    <div class="px-3 pt-3 divide-y divide-gray-500">
+      <section>
+        <div class="p-2 tracking-widest grid grid-cols-6">
+          <div class="col-span-5">
+            <span class="font-bold">Wallet</span>: {{ userWallet.substring(0, 5) }}...{{ userWallet.slice(-5) }}
+          </div>
+          <div class="flex flex-row items-center pl-2 justify-left col-span-1">
+            <button
+              class="p-1 hover:bg-gray-400 hover:rounded"
+              title="Copy to clipboard"
+              @click="copyWalletToClipboard">
+              <CopyToClipboard/>
+            </button>
+          </div>
         </div>
-        <div class="flex flex-row items-center ml-2 col-span-1">
-          <button
-            @click="copyWalletToClipboard">
-            <svg width="13" height="15" viewBox="0 0 13 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M3.65646 7.5C4.57698 6.5481 5.09308 6.0144 6.01361 5.0625M3.65646 7.5L6.01361 10.0114M3.65646 7.5C6.11119 7.5 7.48745 7.5 9.94218 7.5M2.57143 1C1.70355 1 1 1.72754 1 2.625V12.375C1 13.2725 1.70355 14 2.57143 14H10.4286C11.2965 14 12 13.2725 12 12.375V11.5625V2.625C12 1.72754 11.2965 1 10.4286 1H2.57143Z" stroke="#4A5568" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
+        <div class="p-2">
+          <span class="font-bold">Balance</span>: {{ userBalance.toFixed(3) }}
         </div>
-      </div>
-      <div>
-        Balance: {{ userBalance.toFixed(3) }}
-      </div>
-      <div>
-        ChainId: {{ userChainId }}
-      </div>
-    </div>
-    <div class="flex justify-between p-3 px-4 py-1">
-      <button
-        class="inline-block p-2 mr-2 text-gray-800 rounded hover:bg-header-dark"
-        @click="disconnectMetamask">
-        Disconnect
-      </button>
+        <div class="p-2">
+          <span class="font-bold">ChainId</span>: {{ userChainId }}
+        </div>
+      </section>
+      <section class="flex justify-around p-3 px-4 py-1">
+        <Settings class="inline-block p-2 mr-2 font-bold rounded hover:bg-header-light hover:text-header-dark"/>
+      </section>
+      <section class="flex justify-around p-3 px-4 py-1">
+        <button
+          class="inline-block p-2 mr-2 font-bold rounded hover:bg-header-light hover:text-header-dark"
+          @click="disconnectMetamask">
+          Disconnect
+        </button>
+      </section>
     </div>
   </div>
 </template>
@@ -37,11 +39,15 @@
 <script lang="ts">
   import { Component, Vue, Emit } from 'vue-property-decorator';
   import { getModule } from 'vuex-module-decorators'
+  import CopyToClipboard from '@/components/svg/CopyToClipboard.vue'
+  import Settings from '@/components/header/btns/Settings.vue'
   import Metamask from '@/store/metamaskModule';
   const metamaskStore = getModule(Metamask)
   @Component({
     components: {
-      PopoverUserConsole
+      PopoverUserConsole,
+      Settings,
+      CopyToClipboard
     }
   })
   export default class PopoverUserConsole extends Vue {
