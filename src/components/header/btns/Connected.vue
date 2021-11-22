@@ -1,0 +1,50 @@
+<template>
+  <div class="">
+    <div
+      class="border-2 shadow-md border-header-dark rounded-md hover:border-header-light hover:bg-tradehero hover:text-white">
+      <button
+        @click="toggleMenu"
+        class="mx-6 my-1 tracking-wider">
+        {{ userWallet.substring(0, 5) }}...{{ userWallet.slice(-5) }}
+      </button>
+    </div>
+    <div v-show="showUserMenu" class="absolute">
+      <PopoverUserConsole @disconnectMetamask="disconnectMetamask"/>
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+  import { Component, Vue, Emit } from 'vue-property-decorator';
+  import { getModule } from 'vuex-module-decorators'
+  import Metamask from '@/store/metamaskModule';
+  import PopoverUserConsole from '@/components/header/popover/PopoverUserConsole.vue';
+  const metamaskStore = getModule(Metamask)
+  @Component({
+    components: {
+      PopoverUserConsole
+    }
+  })
+  export default class Connected extends Vue {
+    showUserMenu = false;
+    get userWallet() {
+      return metamaskStore.getWallet;
+    }
+    get userChainId() {
+      return metamaskStore.getChainId;
+    }
+    get userBalance() {
+      return metamaskStore.getBalance;
+    }
+    created() {}
+    toggleMenu() {
+      if (this.showUserMenu) {
+        this.showUserMenu = false;
+      } else {
+        this.showUserMenu = true;
+      }
+    }
+    @Emit('disconnectMetamask')
+    disconnectMetamask(){}
+  }
+</script>
