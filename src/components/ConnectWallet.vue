@@ -15,7 +15,7 @@
         </button>
         <button
           class="inline-block p-2 mr-2 text-gray-800 rounded hover:bg-header-dark"
-          @click="disconnectMetamask">
+          @click="clean">
           Disconnect
         </button>
       </div>
@@ -49,10 +49,12 @@
       return metamaskStore.getWallet;
     }
     async created() {
+      console.log("created");
       await this.defineMetamaskStoreVariables();
       this.instantiateMetamaskWatchers();
     }
     async defineMetamaskStoreVariables() {
+      console.log("defineMetamaskStoreVariables");
       if(document.cookie.indexOf("sessionId") > -1) {
         var accounts = await window.ethereum.request({ method: 'eth_accounts' })
         if (accounts.length > 0) {
@@ -72,6 +74,7 @@
     instantiateMetamaskWatchers() {
       var self = this;
       window.ethereum.on('accountsChanged', function() {
+        console.log("accountChanged");
         self.clean();
         self.loginMetamask();
       });
@@ -81,6 +84,7 @@
       });
     }
     async loginMetamask() {
+      console.log("login metamask");
       if (typeof window.ethereum === "undefined") {
         alert("MetaMask not Detected");
         this.clean();
@@ -89,7 +93,7 @@
       let chainIdHex = await window.ethereum.request({ method: 'eth_chainId' });
       let chainId = parseInt(chainIdHex, 16);
       if (chainId != this.vue_app_moonbeam_chainid) {
-        alert("Onyl Moonbase Dev supported!");
+        alert(`Onyl Moonbase ${process.env.VUE_APP_MOONBEAM_CHAINNAME} supported!`);
         this.clean();
         return;
       }
@@ -98,9 +102,21 @@
       this.defineMetamaskStoreVariables();
       if (accounts.length > 0) {
         this.generateSession(accounts[0]);
+        if (this.$route.params['wallet'] != accounts[0]) {
+          this.$router.push({
+            name: 'UserTrades',
+            params: {
+              wallet: accounts[0]
+            }
+          })
+          return;
+        } else {
+          window.location.reload();
+        }
       }
     }
     generateSession(account: string) {
+      console.log("generateSession");
       this.clean();
       axios({
         method: "GET",
@@ -120,16 +136,6 @@
         userStore.updateUserDetails(response.data);
         // Save user's data in indexeddb
         set(response.data['SessionId'], response.data);
-        if (this.$route.params['wallet'] != account) {
-          this.$router.push({
-            name: 'UserTrades',
-            params: {
-              wallet: account
-            }
-          })
-          return;
-        }
-        window.location.reload();
       })
     }
     clean() {
@@ -149,9 +155,6 @@
       metamaskStore.updateBalance(0);
       metamaskStore.updateChainId(0);
       metamaskStore.updateWallet('');
-    }
-    disconnectMetamask() {
-      this.clean();
     }
   }
 </script>
