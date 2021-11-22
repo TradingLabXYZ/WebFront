@@ -62,6 +62,7 @@
       return metamaskStore.getBalance;
     }
     copyWalletToClipboard() {
+      console.log("OKOKOKOKOKOK")
       navigator.clipboard.writeText(metamaskStore.getWallet);
     }
     @Emit('disconnectMetamask')
