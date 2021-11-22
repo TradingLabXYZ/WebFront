@@ -12,6 +12,10 @@ module.exports = {
           light: "#00e7ff",
           DEFAULT: "#00BED5",
           dark: "#018291",
+          ultradark: "#013940",
+        },
+        popoverUserConsole: {
+          text: "#B1ADAD"
         },
         tradehero: "#3400FA",
         tradetablehead: "#D2F8FD",

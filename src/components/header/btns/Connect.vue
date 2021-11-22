@@ -9,15 +9,7 @@
         </button>
       </div>
       <div v-else>
-        <Settings/>
-        <button>
-          {{ userWallet.substring(0, 5) }}...{{ userWallet.slice(-5) }}
-        </button>
-        <button
-          class="inline-block p-2 mr-2 text-gray-800 rounded hover:bg-header-dark"
-          @click="disconnectMetamask">
-          Disconnect
-        </button>
+        <Connected @disconnectMetamask="disconnectMetamask"/>
       </div>
     </div>
   </div>
@@ -32,21 +24,18 @@
   import { set, del } from 'idb-keyval';
   import User from '@/store/userModule';
   import Metamask from '@/store/metamaskModule';
-  import Settings from '@/components/header/btns/Settings.vue';
+  import Connected from '@/components/header/btns/Connected.vue';
   const userStore = getModule(User)
   const metamaskStore = getModule(Metamask)
   @Component({
     components: {
-      Settings
+      Connected
     }
   })
-  export default class ConnectWallet extends Vue {
+  export default class Connect extends Vue {
     vue_app_moonbeam_chainid = parseInt(process.env.VUE_APP_MOONBEAM_CHAINID || '');
     get isUserConnected() {
       return metamaskStore.getIsConnected;
-    }
-    get userWallet() {
-      return metamaskStore.getWallet;
     }
     async created() {
       await this.defineMetamaskStoreVariables();
