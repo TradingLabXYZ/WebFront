@@ -42,61 +42,77 @@
       this.instantiateMetamaskWatchers();
     }
     async defineMetamaskStoreVariables() {
-      if(document.cookie.indexOf("sessionId") > -1) {
-        var accounts = await window.ethereum.request({ method: 'eth_accounts' })
-        if (accounts.length > 0) {
-          let chainIdHex = await window.ethereum.request({ method: 'eth_chainId' });
-          let chainId = parseInt(chainIdHex, 16);
-          if (chainId == this.vue_app_moonbeam_chainid) {
-            let balance = await window.ethereum.request({ method: 'eth_getBalance', params: [accounts[0], 'latest']});
-            let balanceEth = parseFloat(ethers.utils.formatEther(balance));
-            metamaskStore.updateWallet(accounts[0]);
-            metamaskStore.updateChainId(chainId);
-            metamaskStore.updateBalance(balanceEth);
-            metamaskStore.updateIsConnected(true);
-          }
-        }
+      if(document.cookie.indexOf("sessionId") == -1) {
+        return;
       }
+      var accounts = await window.ethereum.request({ method: 'eth_accounts' })
+      if (accounts.length == 0) {
+        return;
+      }
+      let chainIdHex = await window.ethereum.request({ method: 'eth_chainId' });
+      let chainId = parseInt(chainIdHex, 16);
+      if (chainId != this.vue_app_moonbeam_chainid) {
+        return;
+      }
+      let balance = await window.ethereum.request({ method: 'eth_getBalance', params: [accounts[0], 'latest']});
+      let balanceEth = parseFloat(ethers.utils.formatEther(balance));
+      metamaskStore.updateWallet(accounts[0]);
+      metamaskStore.updateChainId(chainId);
+      metamaskStore.updateBalance(balanceEth);
+      metamaskStore.updateIsConnected(true);
     }
     instantiateMetamaskWatchers() {
       var self = this;
       window.ethereum.on('accountsChanged', function() {
-        self.clean();
+        self.cleanSession();
         self.loginMetamask();
       });
       window.ethereum.on('chainChanged', function() {
-        self.clean();
+        self.cleanSession();
         window.location.reload();
       });
     }
     async loginMetamask() {
       if (typeof window.ethereum === "undefined") {
         alert("MetaMask not Detected");
-        this.clean();
+        this.cleanSession();
         return;
       }
       let chainIdHex = await window.ethereum.request({ method: 'eth_chainId' });
       let chainId = parseInt(chainIdHex, 16);
       if (chainId != this.vue_app_moonbeam_chainid) {
-        alert("Onyl Moonbase Dev supported!");
-        this.clean();
+        alert(`Onyl Moonbase ${process.env.VUE_APP_MOONBEAM_CHAINNAME} supported!`);
+        this.cleanSession();
         return;
       }
       await window.ethereum.request({ method: 'eth_requestAccounts' });
       let accounts = await window.ethereum.request({ method: 'eth_accounts' });
-      this.defineMetamaskStoreVariables();
-      if (accounts.length > 0) {
-        this.generateSession(accounts[0]);
+      if (accounts.length == 0) {
+        alert(`No accounts have been connected!`);
+        this.cleanSession();
+        return;
       }
+      await this.generateSession(accounts[0])
+      this.defineMetamaskStoreVariables();
+      if (this.$route.params['wallet'] == accounts[0]) {
+        window.location.reload();
+        return;
+      }
+      this.$router.push({
+        name: 'UserTrades',
+        params: {
+          wallet: accounts[0]
+        }
+      })
+      return;
     }
-    generateSession(account: string) {
-      this.clean();
-      axios({
+    async generateSession(account: string) {
+      this.cleanSession();
+      await axios({
         method: "GET",
         url: process.env.VUE_APP_HTTP_URL + "/login/" + account,
       }).then(response => {
         if (response.status != 200) {
-          console.log("Cannot retrive sessionId");
           return
         }
         let sessionId: string = response.data['SessionId'];
@@ -109,19 +125,10 @@
         userStore.updateUserDetails(response.data);
         // Save user's data in indexeddb
         set(response.data['SessionId'], response.data);
-        if (this.$route.params['wallet'] != account) {
-          this.$router.push({
-            name: 'UserTrades',
-            params: {
-              wallet: account
-            }
-          })
-          return;
-        }
-        window.location.reload();
+        return;
       })
     }
-    clean() {
+    async cleanSession() {
       // Reset indexeddb
       if(document.cookie.indexOf("sessionId") > -1) {
         var sessionId = document.cookie.split("sessionId=")[1].split(";")[0];
@@ -139,8 +146,8 @@
       metamaskStore.updateChainId(0);
       metamaskStore.updateWallet('');
     }
-    disconnectMetamask() {
-      this.clean();
+    async disconnectMetamask() {
+      await this.cleanSession();
     }
   }
 </script>
