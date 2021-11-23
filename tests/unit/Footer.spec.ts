@@ -11,4 +11,7 @@ describe('Footer.vue', () => {
     const wrapper = shallowMount(Footer, {})
     expect(wrapper.isVisible());
   });
+  afterAll(() => {
+    jest.resetModules();
+  })
 })

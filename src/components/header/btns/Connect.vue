@@ -109,25 +109,22 @@
     }
     async generateSession(account: string) {
       this.cleanSession();
-      await axios({
-        method: "GET",
-        url: process.env.VUE_APP_HTTP_URL + "/login/" + account,
-      }).then(response => {
-        if (response.status != 200) {
-          return
-        }
-        let sessionId: string = response.data['SessionId'];
-        // Set cookie
-        let d = new Date();
-        d.setTime(d.getTime() + 1000 * 24 * 60 * 60 * 1000);
-        let expires = "expires=" + d.toUTCString();
-        document.cookie = "sessionId=" + sessionId + ";" + expires + "; path=/";
-        // Save user's info in store
-        userStore.updateUserDetails(response.data);
-        // Save user's data in indexeddb
-        set(response.data['SessionId'], response.data);
-        return;
-      })
+      let api_url = process.env.VUE_APP_HTTP_URL || '' + '/login/' + account;
+      const response = await axios.get(api_url);
+      if (response.status != 200) {
+        return
+      }
+      let sessionId: string = response.data['SessionId'];
+      // Set cookie
+      let d = new Date();
+      d.setTime(d.getTime() + 1000 * 24 * 60 * 60 * 1000);
+      let expires = "expires=" + d.toUTCString();
+      document.cookie = "sessionId=" + sessionId + ";" + expires + "; path=/";
+      // Save user's info in store
+      userStore.updateUserDetails(response.data);
+      // Save user's data in indexeddb
+      set(response.data['SessionId'], response.data);
+      return;
     }
     async cleanSession() {
       // Reset indexeddb
