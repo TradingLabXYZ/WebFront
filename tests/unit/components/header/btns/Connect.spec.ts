@@ -1,6 +1,5 @@
 import axios from 'axios';
-import Vuex from 'vuex'
-import { shallowMount, createLocalVue } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import Connect from '@/components/header/btns/Connect.vue'
 import { get } from 'idb-keyval';
 import { getModule } from 'vuex-module-decorators'
