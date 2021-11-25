@@ -105,17 +105,18 @@ describe('Connect.vue / cleanSession', () => {
 
 describe('Connect.vue / loginMetamask', () => {
 
-  const alertMock = jest.spyOn(window,'alert').mockImplementation(); 
+  const alertMock = jest.spyOn(window, 'alert').mockImplementation(); 
+  Object.defineProperty(window, 'location', {
+    value: { reload: jest.fn() }
+  })
   process.env.VUE_APP_MOONBEAM_CHAINID = '9999';
-
-  let methods = {
-    defineMetamaskStoreVariables: jest.fn(),
-    instantiateMetamaskWatchers: jest.fn()
-  }
 
   it('alerts user when Metamask is not installed', async () => {
     const wrapper = shallowMount(Connect, {
-      methods
+      methods: {
+        defineMetamaskStoreVariables: jest.fn(),
+        instantiateMetamaskWatchers: jest.fn()
+      }
     });
     global.ethereum = undefined;
     await (wrapper as any).vm.loginMetamask();
@@ -123,7 +124,10 @@ describe('Connect.vue / loginMetamask', () => {
   })
   it('alerts user when chainId is not correct', async () => {
     const wrapper = shallowMount(Connect, {
-      methods,
+      methods: {
+        defineMetamaskStoreVariables: jest.fn(),
+        instantiateMetamaskWatchers: jest.fn()
+      }
     });
     let fakeFunc = jest.fn();
     when(fakeFunc).calledWith({ method: 'eth_chainId' }).mockReturnValue('0x501')
@@ -136,7 +140,10 @@ describe('Connect.vue / loginMetamask', () => {
   })
   it('alerts user has 0 accounts connected', async () => {
     const wrapper = shallowMount(Connect, {
-      methods,
+      methods: {
+        defineMetamaskStoreVariables: jest.fn(),
+        instantiateMetamaskWatchers: jest.fn()
+      }
     });
     let fakeFunc = jest.fn();
     when(fakeFunc).calledWith(
@@ -154,6 +161,74 @@ describe('Connect.vue / loginMetamask', () => {
     }
     await (wrapper as any).vm.loginMetamask();
     expect(alertMock).toHaveBeenCalledTimes(1)
+  })
+  it('reloads the page when route params is equals to the account', async () => {
+    const wrapper = shallowMount(Connect, {
+      methods: {
+        defineMetamaskStoreVariables: jest.fn(),
+        instantiateMetamaskWatchers: jest.fn(),
+        generateSession: jest.fn(),
+      },
+      mocks: {
+        $route: {
+          params: {
+            wallet: 'testwallet'
+          }
+        }
+      }
+    })
+    let fakeFunc = jest.fn();
+    when(fakeFunc).calledWith(
+      { method: 'eth_chainId' }
+    ).mockReturnValue('270F')
+    when(fakeFunc).calledWith(
+      { method: 'eth_requestAccounts' }
+    ).mockReturnValue(1)
+    when(fakeFunc).calledWith(
+      { method: 'eth_accounts' }
+    ).mockReturnValue(['testwallet'])
+    global.ethereum = {
+      on: jest.fn(),
+      request: fakeFunc
+    }
+    await (wrapper as any).vm.loginMetamask();
+    expect(window.location.reload).toHaveBeenCalled();
+  })
+  it('invoques route push', async () => {
+    const $router = {
+      push: jest.fn()
+    }
+    const wrapper = shallowMount(Connect, {
+      methods: {
+        defineMetamaskStoreVariables: jest.fn(),
+        instantiateMetamaskWatchers: jest.fn(),
+        generateSession: jest.fn(),
+      },
+      mocks: {
+        $router,
+        $route: {
+          params: {
+            wallet: 'testwallet'
+          }
+        },
+      }
+    })
+    let fakeFunc = jest.fn();
+    when(fakeFunc).calledWith(
+      { method: 'eth_chainId' }
+    ).mockReturnValue('270F')
+    when(fakeFunc).calledWith(
+      { method: 'eth_requestAccounts' }
+    ).mockReturnValue(1)
+    when(fakeFunc).calledWith(
+      { method: 'eth_accounts' }
+    ).mockReturnValue(['testwalletdifferent'])
+    global.ethereum = {
+      on: jest.fn(),
+      request: fakeFunc
+    }
+    await (wrapper as any).vm.loginMetamask();
+    expect($router.push).toHaveBeenCalled();
   })
 
   afterEach(() => {

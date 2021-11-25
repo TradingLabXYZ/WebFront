@@ -81,7 +81,6 @@
       }
       let chainIdHex = await window.ethereum.request({ method: 'eth_chainId' });
       let chainId = parseInt(chainIdHex, 16);
-      console.log(chainId, this.vue_app_moonbeam_chainid);
       if (chainId != this.vue_app_moonbeam_chainid) {
         alert(`Onyl Moonbase ${process.env.VUE_APP_MOONBEAM_CHAINNAME} supported!`);
         this.cleanSession();
