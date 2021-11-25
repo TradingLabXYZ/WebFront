@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { shallowMount } from '@vue/test-utils'
+import Vuex from 'vuex'
+import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Connect from '@/components/header/btns/Connect.vue'
 import { get } from 'idb-keyval';
 import { getModule } from 'vuex-module-decorators'
@@ -84,7 +85,6 @@ describe('Connect.vue / cleanSession', () => {
   })
   it('resets cookie', async () => {
     let cookie = document.cookie;
-    console.log(cookie);
     expect(cookie).toBe('');
   })
   it('resets userStore', async () => {
@@ -130,7 +130,9 @@ describe('Connect.vue / loginMetamask', () => {
       }
     });
     let fakeFunc = jest.fn();
-    when(fakeFunc).calledWith({ method: 'eth_chainId' }).mockReturnValue('0x501')
+    when(fakeFunc).calledWith(
+      { method: 'eth_chainId' }
+    ).mockReturnValue('0x501')
     global.ethereum = {
       on: jest.fn(),
       request: fakeFunc
@@ -235,4 +237,56 @@ describe('Connect.vue / loginMetamask', () => {
     jest.resetModules();
   })
 
+})
+
+describe('Connect.vue / defineMetamaskStoreVariables', () => {
+
+  process.env.VUE_APP_MOONBEAM_CHAINID = '9999';
+
+  it('returns undefined when cookie is not settled', async () => {
+    const wrapper = shallowMount(Connect)
+    var x = await (wrapper as any).vm.defineMetamaskStoreVariables();
+    expect(x).toBeUndefined();
+  })
+  it('returns undefined when no accounts are connected', async () => {
+    Object.defineProperty(window.document, 'cookie', {
+      writable: true,
+      value: 'sessionId=thisIsATest',
+    });
+    let fakeFunc = jest.fn();
+    when(fakeFunc).calledWith(
+      { method: 'eth_accounts' }
+    ).mockReturnValue([])
+    global.ethereum = {
+      on: jest.fn(),
+      request: fakeFunc
+    }
+    const wrapper = shallowMount(Connect)
+    var x = await (wrapper as any).vm.defineMetamaskStoreVariables();
+    expect(x).toBeUndefined();
+  })
+  it('returns undefined when wrong chainId', async () => {
+    Object.defineProperty(window.document, 'cookie', {
+      writable: true,
+      value: 'sessionId=thisIsATest',
+    });
+    let fakeFunc = jest.fn();
+    when(fakeFunc).calledWith(
+      { method: 'eth_accounts' }
+    ).mockReturnValue(['testAccount'])
+    when(fakeFunc).calledWith(
+      { method: 'eth_chainId' }
+    ).mockReturnValue('1234')
+    global.ethereum = {
+      on: jest.fn(),
+      request: fakeFunc
+    }
+    const wrapper = shallowMount(Connect)
+    var x = await (wrapper as any).vm.defineMetamaskStoreVariables();
+    expect(x).toBeUndefined();
+  })
+
+  afterEach(() => {
+    jest.resetModules();
+  })
 })
