@@ -35,6 +35,7 @@
   })
   export default class Connect extends Vue {
     vue_app_moonbeam_chainid = parseInt(process.env.VUE_APP_MOONBEAM_CHAINID || '');
+    vue_app_http_url = process.env.VUE_APP_HTTP_URL;
     get isUserConnected() {
       return metamaskStore.getIsConnected;
     }
@@ -109,8 +110,9 @@
     }
     async generateSession(account: string) {
       this.cleanSession();
-      let api_url = process.env.VUE_APP_HTTP_URL || '' + '/login/' + account;
+      let api_url = this.vue_app_http_url + '/login/' + account;
       const response = await axios.get(api_url);
+      console.log(response)
       if (response.status != 200) {
         return
       }

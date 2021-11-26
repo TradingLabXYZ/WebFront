@@ -18,7 +18,8 @@
     "resolveJsonModule": true,
     "types": [
       "webpack-env",
-      "jest"
+      "jest",
+      "node"
     ],
     "paths": {
       "@/*": [

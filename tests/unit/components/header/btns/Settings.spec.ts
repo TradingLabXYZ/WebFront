@@ -14,6 +14,7 @@ describe('Settings.vue', () => {
     wrapper.find('button').trigger('click');
     expect($router.push).toHaveBeenCalled();
   })
+
   // TODO
   // it('catches error if user is already in Settings route', () => {
 })
