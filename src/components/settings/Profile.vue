@@ -73,38 +73,41 @@
       this.website = userStore.userDetails['Website'];
       this.profilePicture = userStore.userDetails['ProfilePicture'];
     }
-    saveUserSocial() {
-      axios({
-        method: "POST",
+    async saveUserSocial() {
+      let url = process.env.VUE_APP_HTTP_URL + "/user_settings";
+      let data = {
+        Twitter: this.twitter,
+        Website: this.website
+      };
+      const response = await axios.post(url, data, {
         headers: {
           Authorization: "Bearer " + document.cookie,
-          "Access-Control-Allow-Origin": "*",
-        },
-        url: process.env.VUE_APP_HTTP_URL + "/user_settings",
-        data: {
-          Twitter: this.twitter,
-          Website: this.website
+          "Access-Control-Allow-Origin": "*"
         }
-      }).then(response => {
-        if (response.status == 200) {
-          const runIndexDb = async () => {
-            await get(userStore.userDetails['SessionId']).then((sessionData) => {
-              sessionData['Twitter'] = this.twitter;
-              sessionData['Website'] = this.website;
-              set(userStore.userDetails['SessionId'], sessionData);
-              userStore.userDetails['Twitter'] = this.twitter;
-              userStore.userDetails['Website'] = this.website;
-            })
-          }
-          runIndexDb();
-          var s = document.getElementById("userSocialOk")!.style;
-        } else {
-          var s = document.getElementById("userSocialKo")!.style;
-        }
-        s.display = "block";
-        let opacity: number = 1; 
-        (function fade(){(opacity-=.1) < 0 ? s.display="none" : setTimeout(fade,100)})();
+      });
+      if (response.status == 200) {
+        this.updateProfileInIndexedDb();
+        userStore.userDetails['Twitter'] = this.twitter;
+        userStore.userDetails['Website'] = this.website;
+        this.showNotification('userSocialOk');
+      } else {
+        this.showNotification('userSocialKo');
+      }
+    }
+    async updateProfileInIndexedDb() {
+      await get(userStore.userDetails['SessionId']).then((sessionData) => {
+        sessionData['Twitter'] = this.twitter;
+        sessionData['Website'] = this.website;
+        set(userStore.userDetails['SessionId'], sessionData);
       })
+    }
+    showNotification(statusId: string) {
+      var s = document.getElementById(statusId)!.style;
+      s.display = "block";
+      let opacity: number = 1; 
+      (function fade() {
+        (opacity -= 0.1) < 0 ? s.display="none" : setTimeout(fade, 100);
+      })();
     }
     uploadImage(event: any) {
       let uploader = new FormData();
