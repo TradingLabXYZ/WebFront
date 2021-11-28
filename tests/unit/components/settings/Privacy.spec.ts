@@ -12,7 +12,6 @@ const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 describe('Privacy.vue / saveUserPrivacy', () => {
 
-
   it('sets selectedUserPrivacy on creation', async () => {
     userStore.updateUserDetails({Privacy: 'all'});
     const wrapper = shallowMount(Privacy);
@@ -35,10 +34,7 @@ describe('Privacy.vue / saveUserPrivacy', () => {
   })
   it('shows the green button when request returns 200', async () => {
     mockedAxios.post.mockImplementation(() => Promise.resolve({
-      status: 200,
-      data: {
-        Privacy: 'private'
-      }
+      status: 200
     }));
     const getElementById = jest.fn();
     global.document.getElementById = getElementById;
@@ -49,12 +45,9 @@ describe('Privacy.vue / saveUserPrivacy', () => {
     expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 100);
     expect(setTimeout).toHaveBeenCalledTimes(1);
   })
-  it('shows the red button when request returns 200', async () => {
+  it('shows the red button when request does not return 200', async () => {
     mockedAxios.post.mockImplementation(() => Promise.resolve({
-      status: 400,
-      data: {
-        Privacy: 'private'
-      }
+      status: 400
     }));
     const getElementById = jest.fn();
     global.document.getElementById = getElementById;

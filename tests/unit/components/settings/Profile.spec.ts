@@ -41,4 +41,40 @@ describe('Profile.vue / saveUserSocial', () => {
     expect(userStore.getUserDetails['Twitter']).toBe('thisNewTwitter');
     expect(userStore.getUserDetails['Website']).toBe('thisNewWebsite');
   })
+  it('shows the green button when request returns 200', async () => {
+    mockedAxios.post.mockImplementation(() => Promise.resolve({
+      status: 200
+    }));
+    const getElementById = jest.fn();
+    global.document.getElementById = getElementById;
+    getElementById.mockReturnValue({ style: {display: 'none'}});
+    let methods = {
+      updateProfileInIndexedDb: jest.fn()
+    }
+    const wrapper = mount(Profile, {
+      methods
+    });
+    jest.useFakeTimers();
+    await (wrapper as any).vm.saveUserSocial()
+    expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 100);
+    expect(setTimeout).toHaveBeenCalledTimes(1);
+  })
+  it('shows the red button when request does not returns 200', async () => {
+    mockedAxios.post.mockImplementation(() => Promise.resolve({
+      status: 400
+    }));
+    const getElementById = jest.fn();
+    global.document.getElementById = getElementById;
+    getElementById.mockReturnValue({ style: {display: 'none'}});
+    let methods = {
+      updateProfileInIndexedDb: jest.fn()
+    }
+    const wrapper = mount(Profile, {
+      methods
+    });
+    jest.useFakeTimers();
+    await (wrapper as any).vm.saveUserSocial()
+    expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 100);
+    expect(setTimeout).toHaveBeenCalledTimes(1);
+  })
 })
