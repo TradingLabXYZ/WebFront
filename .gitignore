@@ -4,4 +4,4 @@ dist
 dist-ssr
 *.local
 *.vim
-coverage/*
+coverage
