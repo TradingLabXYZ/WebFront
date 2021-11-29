@@ -4,9 +4,8 @@ import { shallowMount, mount } from '@vue/test-utils'
 import { getModule } from 'vuex-module-decorators'
 import User from '@/store/userModule';
 const userStore = getModule(User)
-import { get, set } from 'idb-keyval';
-require("fake-indexeddb/auto");
 import Profile from '@/components/settings/Profile.vue';
+require("fake-indexeddb/auto");
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
@@ -76,5 +75,43 @@ describe('Profile.vue / saveUserSocial', () => {
     await (wrapper as any).vm.saveUserSocial()
     expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 100);
     expect(setTimeout).toHaveBeenCalledTimes(1);
+  })
+  
+  it('raises alert if image size is too big', async () => {
+    const FormDataMock = {
+      append: jest.fn(),
+      entries: jest.fn()
+    };
+    const mockedFormEvent = { target: { files : jest.fn() }};
+    (global as any).FormData = jest.fn(() => FormDataMock);
+    mockedFormEvent.target.files.mockReturnValueOnce([]);
+    FormDataMock.entries.mockReturnValueOnce([['file', {size: 50001, name: 'abc'}]]);
+    const alertMock = jest.spyOn(window, 'alert').mockImplementation(); 
+    const wrapper = shallowMount(Profile);
+    await (wrapper as any).vm.uploadImage(mockedFormEvent);
+    expect(alertMock).toHaveBeenCalledTimes(1)
+  })
+  it('updates profile picture', async () => {
+    const FormDataMock = {
+      append: jest.fn(),
+      entries: jest.fn()
+    };
+    const mockedFormEvent = { target: { files : jest.fn() }};
+    (global as any).FormData = jest.fn(() => FormDataMock);
+    mockedFormEvent.target.files.mockReturnValueOnce([]);
+    FormDataMock.entries.mockReturnValueOnce([['file', {size: 49999, name: 'abc'}]]);
+    mockedAxios.put.mockImplementation(() => Promise.resolve({
+      status: 200,
+      data: 'thisIsTheNewProfilePicture'
+    }));
+    let methods = {
+      updatePictureInIndexedDb: jest.fn(),
+    }
+    const wrapper = shallowMount(Profile, {
+      methods
+    });
+    await (wrapper as any).vm.uploadImage(mockedFormEvent);
+    expect(wrapper.vm.$data.profilePicture).toBe('thisIsTheNewProfilePicture');
+    expect(userStore.getUserDetails['ProfilePicture']).toBe('thisIsTheNewProfilePicture');
   })
 })

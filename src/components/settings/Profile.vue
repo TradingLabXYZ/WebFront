@@ -86,7 +86,7 @@
         }
       });
       if (response.status == 200) {
-        this.updateProfileInIndexedDb();
+        await this.updateProfileInIndexedDb();
         userStore.userDetails['Twitter'] = this.twitter;
         userStore.userDetails['Website'] = this.website;
         this.showNotification('userSocialOk');
@@ -109,40 +109,40 @@
         (opacity -= 0.1) < 0 ? s.display="none" : setTimeout(fade, 100);
       })();
     }
-    uploadImage(event: any) {
+    async uploadImage(event: any) {
       let uploader = new FormData();
       const files = event.target.files;
       uploader.append('file', files[0]);
       let file_size = 0;
-      for (let [_, file] of uploader.entries()) {
-        file_size = file_size + file['size'];
+      for (let file of uploader.entries()) {
+        file_size = file_size + file[1]['size'];
       }
       if (file_size < 50000) {
-        axios({
-          method: "PUT",
+        let url = process.env.VUE_APP_HTTP_URL + "/insert_profile_picture";
+        const response = await axios.put(url, uploader, {
           headers: {
             Authorization: "Bearer " + document.cookie,
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "image/png"
-          },
-          url: process.env.VUE_APP_HTTP_URL + "/insert_profile_picture",
-          data: uploader
-        }).then(response => {
-          this.profilePicture = response.data;
-          const runIndexDb = async () => {
-            await get(userStore.userDetails['SessionId']).then((sessionData) => {
-              sessionData['ProfilePicture'] = this.profilePicture;
-              set(userStore.userDetails['SessionId'], sessionData);
-            })
           }
-          runIndexDb();
-          userStore.userDetails['ProfilePicture'] = response.data;
-        }).catch(function (error) {
-          console.log(error);
-        })
+        });
+        if (response.status == 200) {
+          let imgDate = new Date().getTime(); // To force img reload
+          this.profilePicture = response['data'].toString() + '?t=' + imgDate;
+          this.updatePictureInIndexedDb();
+          userStore.userDetails['ProfilePicture'] = response['data'].toString();
+        } else {
+          console.log('Could not update profile picture');
+        };
       } else {
         alert("Please upload a picture smaller than 50 Kb");
       }
+    }
+    async updatePictureInIndexedDb() {
+      await get(userStore.userDetails['SessionId']).then((sessionData) => {
+        sessionData['ProfilePicture'] = this.profilePicture;
+        set(userStore.userDetails['SessionId'], sessionData);
+      })
     }
   }
 </script>

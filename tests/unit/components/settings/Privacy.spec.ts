@@ -66,8 +66,4 @@ describe('Privacy.vue / saveUserPrivacy', () => {
     let finalText = wrapper.find('#displayedMessage').text(); 
     expect(initialText).not.toBe(finalText);
   })
-  it('raises alert if image size is too big', async () => {
-    const wrapper = shallowMount(Privacy);
-    await (wrapper as any).vm.uploadImage();
-  })
 })
