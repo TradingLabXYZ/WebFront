@@ -3,6 +3,7 @@
     <div
       class="border-2 shadow-md border-header-dark rounded-md hover:border-header-light hover:bg-tradehero hover:text-white">
       <button
+        id="buttonWallet"
         @click="toggleMenu"
         class="mx-6 my-1 tracking-wider">
         {{ userWallet.substring(0, 5) }}...{{ userWallet.slice(-5) }}
@@ -30,13 +31,6 @@
     get userWallet() {
       return metamaskStore.getWallet;
     }
-    get userChainId() {
-      return metamaskStore.getChainId;
-    }
-    get userBalance() {
-      return metamaskStore.getBalance;
-    }
-    created() {}
     toggleMenu() {
       if (this.showUserMenu) {
         this.showUserMenu = false;

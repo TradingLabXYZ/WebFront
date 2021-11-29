@@ -3,6 +3,7 @@
     <div class="hidden md:block">
       <div v-if="!isUserConnected">
         <button
+          id="connectButton"
           class="inline-block p-2 mr-2 text-gray-800 rounded hover:bg-header-dark"
           @click="loginMetamask">
           Connect Wallet
@@ -34,6 +35,7 @@
   })
   export default class Connect extends Vue {
     vue_app_moonbeam_chainid = parseInt(process.env.VUE_APP_MOONBEAM_CHAINID || '');
+    vue_app_http_url = process.env.VUE_APP_HTTP_URL;
     get isUserConnected() {
       return metamaskStore.getIsConnected;
     }
@@ -108,25 +110,22 @@
     }
     async generateSession(account: string) {
       this.cleanSession();
-      await axios({
-        method: "GET",
-        url: process.env.VUE_APP_HTTP_URL + "/login/" + account,
-      }).then(response => {
-        if (response.status != 200) {
-          return
-        }
-        let sessionId: string = response.data['SessionId'];
-        // Set cookie
-        let d = new Date();
-        d.setTime(d.getTime() + 1000 * 24 * 60 * 60 * 1000);
-        let expires = "expires=" + d.toUTCString();
-        document.cookie = "sessionId=" + sessionId + ";" + expires + "; path=/";
-        // Save user's info in store
-        userStore.updateUserDetails(response.data);
-        // Save user's data in indexeddb
-        set(response.data['SessionId'], response.data);
-        return;
-      })
+      let api_url = this.vue_app_http_url + '/login/' + account;
+      const response = await axios.get(api_url);
+      if (response.status != 200) {
+        return
+      }
+      let sessionId: string = response.data['SessionId'];
+      // Set cookie
+      let d = new Date();
+      d.setTime(d.getTime() + 1000 * 24 * 60 * 60 * 1000);
+      let expires = "expires=" + d.toUTCString();
+      document.cookie = "sessionId=" + sessionId + ";" + expires + "; path=/";
+      // Save user's info in store
+      userStore.updateUserDetails(response.data);
+      // Save user's data in indexeddb
+      set(response.data['SessionId'], response.data);
+      return;
     }
     async cleanSession() {
       // Reset indexeddb

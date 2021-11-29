@@ -13,14 +13,14 @@
   const { isNavigationFailure, NavigationFailureType } = VueRouter
   @Component({})
   export default class Settings extends Vue {
-      goToSettings() {
-        this.$router.push({ 
-          name: "Settings"
-        }).catch(failure => {
-          if (isNavigationFailure(failure, NavigationFailureType.duplicated)) {
-            console.log("Remaining in settings section...")
-          };
-        })
-      }
+    goToSettings() {
+      this.$router.push({ 
+        name: "Settings"
+      }).catch(failure => {
+        if (isNavigationFailure(failure, NavigationFailureType.duplicated)) {
+          console.log("Remaining in settings section...")
+        };
+      })
     }
+  }
 </script>
