@@ -90,25 +90,25 @@
                 <img :src="trade.SecondPairUrlIcon" width="15%"class="inline-block align-middle"/> {{ trade.SecondPairSymbol }}
               </td>
               <td class="py-4 text-center text-gray-700 text-md text-fade-effect" v-bind:id="trade.Id">
-                {{ trade.CurrentPrice > 1 ? trade.CurrentPrice.toFixed(2) : trade.CurrentPrice.toFixed(5) }}
+                {{ trade.CurrentPrice }}
                 <span class="text-xs">
                   {{ trade.FirstPairSymbol }} / {{ trade.SecondPairSymbol }}
                 </span>
               </td>
               <td class="py-4 text-center text-gray-700 text-md">
-                {{ trade.QtyAvailable.toFixed(2) }}
+                {{ trade.QtyAvailable }}
                 <span class="text-xs">
                   {{ trade.SecondPairSymbol }}
                 </span>
               </td>
               <td class="py-4 text-center text-gray-700 text-md">
-                {{ trade.TotalReturn > 1 ? trade.TotalReturn.toFixed(2) : trade.TotalReturn.toFixed(5) }}
+                {{ trade.TotalReturn }}
                 <span class="text-xs">
                   {{ trade.FirstPairSymbol }}
                 </span>
               </td>
               <td class="py-4 text-center text-gray-700 text-md" :class="trade.Roi > 0 ? 'text-tradepositive' : 'text-tradenegative'">
-                {{ trade.Roi.toFixed(2) + "%" }}
+                {{ trade.Roi + "%" }}
               </td>
               <td v-if="isUserConnected && isUserProfile" class="py-4 text-center text-gray-700 text-md">
                 <button

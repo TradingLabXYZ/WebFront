@@ -112,7 +112,6 @@
       this.cleanSession();
       let api_url = this.vue_app_http_url + '/login/' + account;
       const response = await axios.get(api_url);
-      console.log(response)
       if (response.status != 200) {
         return
       }
