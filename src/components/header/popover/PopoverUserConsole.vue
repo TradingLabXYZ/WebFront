@@ -16,7 +16,7 @@
           </div>
         </div>
         <div class="p-2">
-          <span class="font-bold">Balance</span>: {{ userBalance.toFixed(3) }}
+          <span class="font-bold">Balance</span>: {{ userBalance }}
         </div>
         <div class="p-2">
           <span class="font-bold">ChainId</span>: {{ userChainId }}
