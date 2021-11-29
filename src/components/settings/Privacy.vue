@@ -1,7 +1,9 @@
 <template>
   <div>
     <div class="p-2">
-      <label class="text-xs text-subtradelabel">Select Privacy Settings</label>
+      <label class="text-xs text-subtradelabel">
+        Select Privacy Settings
+      </label>
       <select
         class="w-full p-2 text-gray-800 bg-white border border-gray-200 border-gray-500"
         v-model="selectedUserPrivacy">
@@ -19,7 +21,7 @@
         </option>
       </select>
     </div>
-    <div class="mt-5">
+    <div id="displayedMessage" class="mt-5">
       <div v-if="selectedUserPrivacy == 'all'" class="flex justify-around">
         Your profile is visible to everybody
       </div>
@@ -63,42 +65,44 @@
   import User from '@/store/userModule';
   const userStore = getModule(User)
   import { get, set } from 'idb-keyval';
-
   @Component({})
   export default class Privacy extends Vue {
     selectedUserPrivacy: string = '';
     created() {
       this.selectedUserPrivacy = userStore.userDetails['Privacy'];
     }
-    saveUserPrivacy() {
-      axios({
-        method: "POST",
+    async saveUserPrivacy() {
+      let url = process.env.VUE_APP_HTTP_URL + "/update_privacy";
+      let data = {
+        Privacy: this.selectedUserPrivacy
+      };
+      const response = await axios.post(url, data, {
         headers: {
           Authorization: "Bearer " + document.cookie,
-          "Access-Control-Allow-Origin": "*",
-        },
-        url: process.env.VUE_APP_HTTP_URL + "/update_privacy",
-        data: {
-          Privacy: this.selectedUserPrivacy
+          "Access-Control-Allow-Origin": "*"
         }
-      }).then(response => {
-        if (response.status == 200) {
-          const runIndexDb = async () => {
-            await get(userStore.userDetails['SessionId']).then((sessionData) => {
-              sessionData['Privacy'] = this.selectedUserPrivacy;
-              set(userStore.userDetails['SessionId'], sessionData);
-            })
-          }
-          runIndexDb();
-          userStore.userDetails['Privacy'] = this.selectedUserPrivacy;
-          var s = document.getElementById("userPrivacyOk")!.style;
-        } else {
-          var s = document.getElementById("userPrivacyKo")!.style;
-        }
-        s.display = "block";
-        let opacity: number = 1; 
-        (function fade(){(opacity-=.1) < 0 ? s.display="none" : setTimeout(fade,100)})();
+      });
+      if (response.status == 200) {
+        this.updatePrivacyInIndexedDb();
+        userStore.userDetails['Privacy'] = this.selectedUserPrivacy;
+        this.showNotification('userPrivacyOk');
+      } else {
+        this.showNotification('userPrivacyKo');
+      }
+    }
+    async updatePrivacyInIndexedDb() {
+      await get(userStore.userDetails['SessionId']).then((sessionData) => {
+        sessionData['Privacy'] = this.selectedUserPrivacy;
+        set(userStore.userDetails['SessionId'], sessionData);
       })
+    }
+    showNotification(statusId: string) {
+      var s = document.getElementById(statusId)!.style;
+      s.display = "block";
+      let opacity: number = 1; 
+      (function fade() {
+        (opacity -= 0.1) < 0 ? s.display="none" : setTimeout(fade, 100);
+      })();
     }
   }
 </script>

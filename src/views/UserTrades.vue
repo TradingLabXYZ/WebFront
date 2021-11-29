@@ -27,7 +27,6 @@
   import TradeHero from '@/components/trades/TradeHero.vue';
   import TradeOpen from '@/components/trades/TradeOpen.vue';
   import TradeClose from '@/components/trades/TradeClose.vue';
-
   @Component({
     components: {
       Header,
@@ -91,4 +90,3 @@
     }
   }
 </script>
-

@@ -16,7 +16,7 @@
         </div>
         <div class="text-5xl">
           <span>
-            {{ totalReturn.toFixed(2) }}
+            {{ totalReturn }}
           </span>
         </div>
       </div>
@@ -25,7 +25,7 @@
           ROI
         </div>
         <div class="text-5xl">
-          {{ roi.toFixed(2) + "%" }}
+          {{ roi + "%" }}
         </div>
       </div>
     </div>

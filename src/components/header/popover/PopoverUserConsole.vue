@@ -3,7 +3,7 @@
     <div class="px-3 pt-3 divide-y divide-gray-500">
       <section>
         <div class="p-2 tracking-widest grid grid-cols-6">
-          <div class="col-span-5">
+          <div id="walletText" class="col-span-5">
             <span class="font-bold">Wallet</span>: {{ userWallet.substring(0, 5) }}...{{ userWallet.slice(-5) }}
           </div>
           <div class="flex flex-row items-center pl-2 justify-left col-span-1">
@@ -27,6 +27,7 @@
       </section>
       <section class="flex justify-around p-3 px-4 py-1">
         <button
+          id="disconnectButton"
           class="inline-block p-2 mr-2 font-bold rounded hover:bg-header-light hover:text-header-dark"
           @click="disconnectMetamask">
           Disconnect
