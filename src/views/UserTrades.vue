@@ -67,18 +67,18 @@
       this.closedTrades = [];
       this.initialiseTradesWs();
     }
-    generateRandomRequestId() {
-      return (Math.random() + 1).toString(36).substring(2);
-    }
     initialiseTradesWs() {
+      console.log("INITIALISING")
+      let sessionId = userStore.userDetails['SessionId'] ? userStore.userDetails['SessionId'] : 'undefined';
       let wallet = this.$route.params.wallet;
-      let requestId = this.generateRandomRequestId();
       let ws_url = [
         process.env.VUE_APP_WS_URL,
         'get_trades',
         wallet,
-        requestId
+        sessionId
       ].join('/');
+      console.log(userStore.userDetails['SessionId'])
+      console.log(ws_url)
       let ws = new WebSocket(ws_url);
       ws.onmessage = (event: any) => {
         let ws_data = JSON.parse(event.data);
