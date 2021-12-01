@@ -68,7 +68,6 @@
       this.initialiseTradesWs();
     }
     initialiseTradesWs() {
-      console.log("INITIALISING")
       let sessionId = userStore.userDetails['SessionId'] ? userStore.userDetails['SessionId'] : 'undefined';
       let wallet = this.$route.params.wallet;
       let ws_url = [
@@ -77,13 +76,9 @@
         wallet,
         sessionId
       ].join('/');
-      console.log(userStore.userDetails['SessionId'])
-      console.log(ws_url)
       let ws = new WebSocket(ws_url);
       ws.onmessage = (event: any) => {
         let ws_data = JSON.parse(event.data);
-        console.log("WS_DATA STATUS -->", ws_data.PrivacyStatus.Status);
-        console.log("WS_DATA REASON -->", ws_data.PrivacyStatus.Reason);
         this.privacyStatus = ws_data.PrivacyStatus.Status;
         this.privacyReason = ws_data.PrivacyStatus.Reason;
         this.totalReturn = ws_data.TotalReturnUsd;
