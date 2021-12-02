@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="h-20 bg-white grid grid-cols-8">
+    <div class="h-20 bg-white grid grid-cols-5">
       <div class="col-span-1"></div>
       <div class="flex justify-start mt-8 md-8 col-span-2">
         <div class="text-2xl font-bold">
@@ -30,9 +30,6 @@
         <thead class="bg-tradetablehead">
           <tr>
             <th scope="col" class="px-1 text-xs font-medium tracking-wider text-gray-800"></th>
-            <th scope="col" class="px-12 py-3 text-xs font-medium tracking-wider text-gray-800">
-              Trade ID
-            </th>
             <th scope="col" class="px-12 py-3 text-xs font-medium tracking-wider text-gray-800">
               Exchange
             </th>
@@ -76,9 +73,6 @@
                     <path fill-rule="evenodd" clip-rule="evenodd" d="m5.207 13.347-1.145-1.154L8.79 7.506 4.1 2.779l1.154-1.144 5.832 5.88-5.88 5.832Z" fill="#1A1A1A"/>
                   </svg>
                 </button>
-              </td>
-              <td class="py-4 text-center text-gray-700 text-md">
-                {{ q + 1 }}
               </td>
               <td class="py-4 text-center text-gray-700 text-md">
                 {{ trade.Exchange }}

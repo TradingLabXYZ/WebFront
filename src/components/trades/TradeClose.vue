@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="h-20 bg-white grid grid-cols-12">
-      <div class="col-span-2"></div>
+    <div class="h-20 bg-white grid grid-cols-5">
+      <div class="col-span-1"></div>
       <div class="flex justify-start mt-8 md-8 col-span-2">
         <div class="text-2xl font-bold">
           Closed Trades
@@ -14,9 +14,6 @@
           <tr>
             <th scope="col" class="px-1 text-xs font-medium tracking-wider text-gray-800"></th>
             <th scope="col" class="px-12 py-3 text-xs font-medium tracking-wider text-gray-800">
-              Trade ID
-            </th>
-            <th scope="col" class="px-12 py-3 text-xs font-medium tracking-wider text-gray-800">
               Exchange
             </th>
             <th scope="col" class="px-12 py-3 text-xs font-medium tracking-wider text-gray-800">
@@ -27,6 +24,9 @@
             </th>
             <th scope="col" class="px-12 py-3 text-xs font-medium tracking-wider text-gray-800">
               Current Price
+            </th>
+            <th scope="col" class="px-12 py-3 text-xs font-medium tracking-wider text-gray-800">
+              Qty Available
             </th>
             <th scope="col" class="px-12 py-3 text-xs font-medium tracking-wider text-gray-800">
               Return
@@ -58,9 +58,6 @@
                 </button>
               </td>
               <td class="py-4 text-center text-gray-700 text-md">
-                {{ q + 1 }}
-              </td>
-              <td class="py-4 text-center text-gray-700 text-md">
                 {{ trade.Exchange }}
               </td>
               <td class="text-center text-gray-700 fpy-4 text-md">
@@ -73,6 +70,12 @@
                 {{ trade.CurrentPrice }}
                 <span class="text-xs">
                   {{ trade.FirstPairSymbol }} / {{ trade.SecondPairSymbol }}
+                </span>
+              </td>
+              <td class="py-4 text-center text-gray-700 text-md">
+                {{ trade.QtyAvailable }}
+                <span class="text-xs">
+                  {{ trade.SecondPairSymbol }}
                 </span>
               </td>
               <td class="py-4 text-center text-gray-700 text-md">
