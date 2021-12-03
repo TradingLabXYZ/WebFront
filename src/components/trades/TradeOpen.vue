@@ -57,7 +57,7 @@
           </tr>
         </thead>
         <tbody class="">
-          <template v-for="(trade, q) in openedTrades"> 
+          <template v-for="(trade, q) in openedTrades">
             <tr :key="'A' + q">
               <td class="py-4 text-center text-gray-700 text-md">
                 <button
@@ -83,7 +83,7 @@
               <td class="text-center text-gray-700 fpy-4 text-md">
                 <img :src="trade.SecondPairUrlIcon" width="15%"class="inline-block align-middle"/> {{ trade.SecondPairSymbol }}
               </td>
-              <td class="py-4 text-center text-gray-700 text-md text-fade-effect" v-bind:id="trade.Id">
+              <td class="py-4 text-center text-gray-700 text-md text-fade-effect" v-bind:id="trade.Code">
                 {{ trade.CurrentPrice }}
                 <span class="text-xs">
                   {{ trade.FirstPairSymbol }} / {{ trade.SecondPairSymbol }}

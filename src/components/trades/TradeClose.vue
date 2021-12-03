@@ -34,9 +34,9 @@
             <th scope="col" class="px-12 py-3 text-xs font-medium tracking-wider text-gray-800">
               ROI
             </th>
-                <th v-if="isUserConnected && isUserProfile" scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-gray-800">
-                Actions
-              </th>          
+            <th v-if="isUserConnected && isUserProfile" scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-gray-800">
+              Actions
+            </th>          
           </tr>
         </thead>
         <tbody class="">
@@ -44,10 +44,10 @@
             <tr :key="'A' + q">
               <td class="py-4 text-center text-gray-700 text-md">
                 <button
-                  @click="toggle(trade.Id)"
+                  @click="toggle(trade.Code)"
                   title="Expand/Collapse trade"
                   type="button">
-                  <svg v-if="opened.includes(trade.Id)" width="13" height="13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <svg v-if="opened.includes(trade.Code)" width="13" height="13" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill="#D2F8FD" d="M0 0h13v13H0z"/>
                     <path fill-rule="evenodd" clip-rule="evenodd" d="m.644 4.23 1.15-1.148L6.5 7.788l4.707-4.706 1.149 1.149L6.5 10.086.644 4.231Z" fill="#1A1A1A"/>
                   </svg>
@@ -66,7 +66,7 @@
               <td class="text-center text-gray-700 fpy-4 text-md">
                 <img :src="trade.SecondPairUrlIcon" width="15%" class="inline-block align-middle"/> {{ trade.SecondPairSymbol }}
               </td>
-              <td class="py-4 text-center text-gray-700 text-md text-fade-effect" v-bind:id="trade.Id">
+              <td class="py-4 text-center text-gray-700 text-md text-fade-effect" v-bind:id="trade.Code">
                 {{ trade.CurrentPrice }}
                 <span class="text-xs">
                   {{ trade.FirstPairSymbol }} / {{ trade.SecondPairSymbol }}
@@ -101,7 +101,7 @@
                 </button>
               </td>
             </tr>
-            <tr :key="'B' + q" v-if="opened.includes(trade.Id)" class="bg-subtradesection">
+            <tr :key="'B' + q" v-if="opened.includes(trade.Code)" class="bg-subtradesection">
               <td colspan="10" class="text-xs"> 
                 <div class="flex justify-around">
                   <table class="">
@@ -134,7 +134,7 @@
                           {{ i + 1}}
                         </td>
                         <td class="w-40 mx-3 text-center bg-subtradesection">
-                          {{ subtrade.Timestamp }}
+                          {{ subtrade.CreatedAt }}
                         </td>
                         <td class="w-40 mx-3 text-center bg-subtradesection">
                           {{ subtrade.Type }}
