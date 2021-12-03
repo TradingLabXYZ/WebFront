@@ -9,7 +9,7 @@
           <label class="text-xs text-subtradelabel">Exchange</label>
           <input
             class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
-            v-model="newTrade.Exchange">
+            v-model="exchange">
         </div>
         <div class="p-2 mx-4 rounded-xl col-span-1">
           <label class="text-xs text-subtradelabel">Selling</label>
@@ -38,7 +38,7 @@
           </select>
         </div>
       </div>
-      <div v-for="(subtrade, i) in newTrade.Subtrades" :key="subtrade.Timestamp" class="mb-8 ml-8 rounded-xl grid grid-cols-12">
+      <div v-for="(subtrade, i) in subtrades" :key="subtrade.Timestamp" class="mb-8 ml-8 rounded-xl grid grid-cols-12">
         <div class="bg-subtradenew rounded-3xl col-span-11">
           <div class="pt-4 pl-4 pr-4 mt-3 grid grid-cols-6">
             <div class="ml-4 mr-4 rounded-xl col-span-2">
@@ -86,7 +86,7 @@
                 min="0.00000000001"
                 type="number"
                 class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
-                v-model="pairRatio">
+                v-model="subtrade.AvgPrice">
             </div>
             <div class="m-4 rounded-xl col-span-1">
               <label class="text-xs text-subtradelabel">Total</label>
@@ -107,7 +107,7 @@
               <AddSubtrade/>
             </button>
             <button
-              v-if="newTrade.Subtrades.length > 1"
+              v-if="subtrades.length > 1"
               @click="removeSubtrade(i)"
               title="Remove Subtrade"
               class="">
@@ -144,51 +144,49 @@
     }
   })
   export default class TradeNew extends Vue {
-    userCode: string = '';
     cryptoPairs: object = {};
+    exchange: string = '';
     firstPairCoinId: number = 0;
     secondPairCoinId: number = 0;
-    pairRatio: number = 0;
-    newTrade: object = {
-      Exchange: null,
-      FirstPair: null,
-      SecondPair: null,
-      Subtrades: [
-        {
-          CreatedAt: null,
-          Type: null,
-          Reason: null,
-          Quantity: null,
-          AvgPrice: null,
-          Total: null,
-        }
-      ]
-    }
+    subtrades: object[] = [
+      {
+        CreatedAt: null,
+        Type: null,
+        Reason: null,
+        AvgPrice: null,
+        Quantity: null,
+        Total: null,
+      }
+    ]
     @Watch('firstPairCoinId')
-    watchFirstPair(value: number, _: number) {
+    watchFirstPair(__: number, _: number) {
       if (this.secondPairCoinId > 0) {
-        this.getLatestPairRate(value, this.secondPairCoinId);
+        this.getLatestPairRate();
       }
     }
     @Watch('secondPairCoinId')
     watchSecondPair(value: number, _: number) {
       if (this.firstPairCoinId > 0) {
-        this.getLatestPairRate(this.firstPairCoinId, value);
+        this.getLatestPairRate();
       }
     }
-    getLatestPairRate(firstPair: number, secondPair: number) {
-      console.log(firstPair, secondPair);
+    getLatestPairRate() {
+      let request_url = [
+        process.env.VUE_APP_HTTP_URL,
+        'get_pair_ratio',
+        this.firstPairCoinId,
+        this.secondPairCoinId
+      ].join('/');
       axios({
         method: "GET",
         headers: {
           Authorization: "Bearer " + document.cookie,
           "Access-Control-Allow-Origin": "*",
         },
-        url: process.env.VUE_APP_HTTP_URL + "/get_pair_ratio/" + this.firstPairCoinId + '/' + this.secondPairCoinId,
+        url: request_url,
       }).then(response => {
         if (response.status === 200) {
-          console.log(response.data);
-          this.pairRatio = response.data;
+          this.subtrades[0]['AvgPrice'] = response.data;
         }
       }).catch(function (error) {
         console.log(error);
@@ -214,7 +212,7 @@
       })
     }
     addSubtrade() {
-      this.newTrade['Subtrades'].push(
+      this.subtrades.push(
         {
           CreatedAt: null,
           Type: null,
@@ -226,30 +224,35 @@
       );
     }
     removeSubtrade(i: number) {
-      this.newTrade['Subtrades'].splice(i, 1);
+      this.subtrades.splice(i, 1);
     }
     validate() {
       var m: string[] = [];
-        if (!this.newTrade['Exchange']) m.push("-Exchange missing");
-        if (!this.newTrade['FirstPair']) m.push("-First Pair missing");
-        if (!this.newTrade['SecondPair']) m.push("-Second Pair missing");
-        for (var i in this.newTrade['Subtrades']) {
-          var tId = parseInt(i) + 1;
-          var tS = this.newTrade['Subtrades'][i];
-          if (!tS.Quantity || tS.Quantity <= 0) m.push("-Wrong Quantity in subtrade " + tId);
-          if (!tS.AvgPrice || tS.AvgPrice <= 0) m.push("-Wrong AvgPrice in subtrade " + tId);
-          if (!tS.Total || tS.Total <= 0) m.push("-Wrong Total in subtrade " + tId);
-          if (!tS.Reason) m.push("-Reason missing in subtrade " + tId);
-          if (!tS.Type) m.push("-Type missing in subtrade " + tId);
-          if (!tS.CreatedAt) m.push("-Wrong Timestamp in subtrade " + tId);
-        }
+      if (!this.exchange) m.push("-Exchange missing");
+      if (!this.firstPairCoinId) m.push("-First Pair missing");
+      if (!this.secondPairCoinId) m.push("-Second Pair missing");
+      for (var i in this.subtrades) {
+        var tId = parseInt(i) + 1;
+        var tS = this.subtrades[i];
+        if (!tS['Quantity'] || tS['Quantity'] <= 0) m.push("-Wrong Quantity in subtrade " + tId);
+        if (!tS['AvgPrice'] || tS['AvgPrice'] <= 0) m.push("-Wrong AvgPrice in subtrade " + tId);
+        if (!tS['Total'] || tS['Total'] <= 0) m.push("-Wrong Total in subtrade " + tId);
+        if (!tS['Reason']) m.push("-Reason missing in subtrade " + tId);
+        if (!tS['Type']) m.push("-Type missing in subtrade " + tId);
+        if (!tS['CreatedAt']) m.push("-Wrong Timestamp in subtrade " + tId);
+      }
       return m;
     }
     confirmInsertTrade() {
       var validateMessages = this.validate();
       if (validateMessages.length <= 0) {
-        this.newTrade['FirstPair'] = this.cryptoPairs[this.newTrade['FirstPair']]['CoinId'];
-        this.newTrade['SecondPair'] = this.cryptoPairs[this.newTrade['SecondPair']]['CoinId'];
+        let newTrade = {
+          Exchange: this.exchange,
+          FirstPair: this.firstPairCoinId,
+          SecondPair: this.secondPairCoinId,
+          Subtrades: this.subtrades
+        }
+        console.log(newTrade);
         axios({
           method: "POST",
           headers: {
@@ -257,10 +260,9 @@
             "Access-Control-Allow-Origin": "*",
           },
           url: process.env.VUE_APP_HTTP_URL + "/insert_trade",
-          data: this.newTrade
+          data: newTrade
         }).then(response => {
           if (response.status === 200) {
-            this.newTrade = {};
             this.cancelInsertTrade();
           }
         }).catch(function (error) {
