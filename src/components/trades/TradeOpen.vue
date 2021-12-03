@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="h-20 bg-white grid grid-cols-8">
+    <div class="h-20 bg-white grid grid-cols-5">
       <div class="col-span-1"></div>
       <div class="flex justify-start mt-8 md-8 col-span-2">
         <div class="text-2xl font-bold">
@@ -31,9 +31,6 @@
           <tr>
             <th scope="col" class="px-1 text-xs font-medium tracking-wider text-gray-800"></th>
             <th scope="col" class="px-12 py-3 text-xs font-medium tracking-wider text-gray-800">
-              Trade ID
-            </th>
-            <th scope="col" class="px-12 py-3 text-xs font-medium tracking-wider text-gray-800">
               Exchange
             </th>
             <th scope="col" class="px-12 py-3 text-xs font-medium tracking-wider text-gray-800">
@@ -60,7 +57,7 @@
           </tr>
         </thead>
         <tbody class="">
-          <template v-for="(trade, q) in openedTrades"> 
+          <template v-for="(trade, q) in openedTrades">
             <tr :key="'A' + q">
               <td class="py-4 text-center text-gray-700 text-md">
                 <button
@@ -78,9 +75,6 @@
                 </button>
               </td>
               <td class="py-4 text-center text-gray-700 text-md">
-                {{ q + 1 }}
-              </td>
-              <td class="py-4 text-center text-gray-700 text-md">
                 {{ trade.Exchange }}
               </td>
               <td class="text-center text-gray-700 fpy-4 text-md">
@@ -89,7 +83,7 @@
               <td class="text-center text-gray-700 fpy-4 text-md">
                 <img :src="trade.SecondPairUrlIcon" width="15%"class="inline-block align-middle"/> {{ trade.SecondPairSymbol }}
               </td>
-              <td class="py-4 text-center text-gray-700 text-md text-fade-effect" v-bind:id="trade.Id">
+              <td class="py-4 text-center text-gray-700 text-md text-fade-effect" v-bind:id="trade.Code">
                 {{ trade.CurrentPrice }}
                 <span class="text-xs">
                   {{ trade.FirstPairSymbol }} / {{ trade.SecondPairSymbol }}

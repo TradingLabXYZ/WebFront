@@ -22,7 +22,7 @@
   import { ethers } from "ethers";
   import { Component, Vue } from 'vue-property-decorator';
   import { getModule } from 'vuex-module-decorators'
-  import { set, del } from 'idb-keyval';
+  import { set, clear } from 'idb-keyval';
   import User from '@/store/userModule';
   import Metamask from '@/store/metamaskModule';
   import Connected from '@/components/header/btns/Connected.vue';
@@ -129,10 +129,7 @@
     }
     async cleanSession() {
       // Reset indexeddb
-      if(document.cookie.indexOf("sessionId") > -1) {
-        var sessionId = document.cookie.split("sessionId=")[1].split(";")[0];
-        del(sessionId);
-      }
+      clear()
       // Reset cookie
       const date = new Date();
       date.setTime(date.getTime() + (-1 * 24 * 60 * 60 * 1000));

@@ -1,34 +1,34 @@
 <template>
   <div class="flex pt-10 text-white place-content-center h-44 bg-tradehero">
-      <div class="mr-10 text-right">
-        <div class="text-2xl">
-          Trades
-        </div>
-        <div class="text-5xl">
-          {{ totalTrades }}
-        </div>
+    <div class="mr-20 text-center">
+      <div class="text-2xl">
+        Trades
       </div>
-      <div class="text-center">
-        <div class="text-2xl">
-          <span>
-            $ Return
-          </span>
-        </div>
-        <div class="text-5xl">
-          <span>
-            {{ totalReturn }}
-          </span>
-        </div>
-      </div>
-      <div class="ml-10 text-left">
-        <div class="text-2xl">
-          ROI
-        </div>
-        <div class="text-5xl">
-          {{ roi + "%" }}
-        </div>
+      <div class="text-5xl">
+        {{ totalTrades }}
       </div>
     </div>
+    <div class="text-center">
+      <div class="text-2xl">
+        <span>
+          $ Return
+        </span>
+      </div>
+      <div class="text-5xl">
+        <span>
+          {{ totalReturn }}
+        </span>
+      </div>
+    </div>
+    <div class="ml-20 text-center">
+      <div class="text-2xl">
+        ROI
+      </div>
+      <div class="text-5xl">
+        {{ roi + "%" }}
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
