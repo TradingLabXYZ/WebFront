@@ -15,10 +15,10 @@
           <label class="text-xs text-subtradelabel">Selling</label>
           <select
             class="w-full p-2 text-gray-800 bg-white border border-gray-200 border-gray-500"
-            v-model="newTrade.FirstPair">
+            v-model="firstPairCoinId">
             <option
               v-for="(key, value) in cryptoPairs" 
-              :value="value"
+              :value="key.CoinId"
               :key="value">
               {{ value }} - {{ key.Name }}
             </option>
@@ -28,10 +28,10 @@
           <label class="text-xs text-subtradelabel">Buying</label>
           <select
             class="w-full p-2 text-gray-800 bg-white border border-gray-200 border-gray-500"
-            v-model="newTrade.SecondPair">
+            v-model="secondPairCoinId">
             <option
               v-for="(key, value) in cryptoPairs" 
-              :value="value"
+              :value="key.CoinId"
               :key="value">
               {{ value }} - {{ key.Name }}
             </option>
@@ -86,7 +86,7 @@
                 min="0.00000000001"
                 type="number"
                 class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
-                v-model="subtrade.AvgPrice">
+                v-model="pairRatio">
             </div>
             <div class="m-4 rounded-xl col-span-1">
               <label class="text-xs text-subtradelabel">Total</label>
@@ -133,7 +133,7 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue, Emit } from 'vue-property-decorator';
+  import { Component, Vue, Emit, Watch } from 'vue-property-decorator';
   import axios from "axios";
   import AddSubtrade from '@/components/svg/AddSubtrade.vue'
   import RemoveSubtrade from '@/components/svg/RemoveSubtrade.vue'
@@ -146,6 +146,9 @@
   export default class TradeNew extends Vue {
     userCode: string = '';
     cryptoPairs: object = {};
+    firstPairCoinId: number = 0;
+    secondPairCoinId: number = 0;
+    pairRatio: number = 0;
     newTrade: object = {
       Exchange: null,
       FirstPair: null,
@@ -157,9 +160,39 @@
           Reason: null,
           Quantity: null,
           AvgPrice: null,
-          Total: null 
+          Total: null,
         }
       ]
+    }
+    @Watch('firstPairCoinId')
+    watchFirstPair(value: number, _: number) {
+      if (this.secondPairCoinId > 0) {
+        this.getLatestPairRate(value, this.secondPairCoinId);
+      }
+    }
+    @Watch('secondPairCoinId')
+    watchSecondPair(value: number, _: number) {
+      if (this.firstPairCoinId > 0) {
+        this.getLatestPairRate(this.firstPairCoinId, value);
+      }
+    }
+    getLatestPairRate(firstPair: number, secondPair: number) {
+      console.log(firstPair, secondPair);
+      axios({
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + document.cookie,
+          "Access-Control-Allow-Origin": "*",
+        },
+        url: process.env.VUE_APP_HTTP_URL + "/get_pair_ratio/" + this.firstPairCoinId + '/' + this.secondPairCoinId,
+      }).then(response => {
+        if (response.status === 200) {
+          console.log(response.data);
+          this.pairRatio = response.data;
+        }
+      }).catch(function (error) {
+        console.log(error);
+      })
     }
     created() {
       this.getPairs();
