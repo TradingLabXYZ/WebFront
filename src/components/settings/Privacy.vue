@@ -21,17 +21,27 @@
         </option>
       </select>
     </div>
-    <div id="displayedMessage" class="mt-5">
-      <div v-if="selectedUserPrivacy == 'all'" class="flex justify-around">
+    <div
+      id="displayedMessage"
+      class="mt-5">
+      <div
+        v-if="selectedUserPrivacy == 'all'"
+        class="flex justify-around">
         Your profile is visible to everybody
       </div>
-      <div v-if="selectedUserPrivacy == 'private'" class="flex justify-around">
+      <div
+        v-if="selectedUserPrivacy == 'private'"
+        class="flex justify-around">
         Your profile is visible only to you
       </div>
-      <div v-if="selectedUserPrivacy == 'followers'" class="flex justify-around">
+      <div
+        v-if="selectedUserPrivacy == 'followers'"
+        class="flex justify-around">
         Your profile is visible only to your followers
       </div>
-      <div v-if="selectedUserPrivacy == 'subscribers'" class="flex justify-around">
+      <div
+        v-if="selectedUserPrivacy == 'subscribers'"
+        class="flex justify-around">
         Your profile is visible only to your subscribers
       </div>
     </div>
@@ -72,11 +82,14 @@
       this.selectedUserPrivacy = userStore.userDetails['Privacy'];
     }
     async saveUserPrivacy() {
-      let url = process.env.VUE_APP_HTTP_URL + "/update_privacy";
+      let request_url = [
+        process.env.VUE_APP_HTTP_URL,
+        'update_privacy'
+      ].join('/');
       let data = {
         Privacy: this.selectedUserPrivacy
       };
-      const response = await axios.post(url, data, {
+      const response = await axios.post(request_url, data, {
         headers: {
           Authorization: "Bearer " + document.cookie,
           "Access-Control-Allow-Origin": "*"

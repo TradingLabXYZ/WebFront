@@ -17,7 +17,9 @@
       </label>
     </div>
     <div class="p-2">
-      <label class="text-xs text-subtradelabel">Twitter</label>
+      <label class="text-xs text-subtradelabel">
+        Twitter
+      </label>
       <input
         type="url"
         placeholder="Twitter"
@@ -25,7 +27,9 @@
         v-model="twitter">
     </div>
     <div class="p-2">
-      <label class="text-xs text-subtradelabel">Website</label>
+      <label class="text-xs text-subtradelabel">
+        Website
+      </label>
       <input
         type="url"
         placeholder="Website"
@@ -118,8 +122,11 @@
         file_size = file_size + file[1]['size'];
       }
       if (file_size < 50000) {
-        let url = process.env.VUE_APP_HTTP_URL + "/insert_profile_picture";
-        const response = await axios.put(url, uploader, {
+        let request_url = [
+          process.env.VUE_APP_HTTP_URL,
+          'insert_profile_picture'
+        ].join('/');
+        const response = await axios.put(request_url, uploader, {
           headers: {
             Authorization: "Bearer " + document.cookie,
             "Access-Control-Allow-Origin": "*",

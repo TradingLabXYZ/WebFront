@@ -3,8 +3,13 @@
     <div class="px-3 pt-3 divide-y divide-gray-500">
       <section>
         <div class="p-2 tracking-widest grid grid-cols-6">
-          <div id="walletText" class="col-span-5">
-            <span class="font-bold">Wallet</span>: {{ userWallet.substring(0, 5) }}...{{ userWallet.slice(-5) }}
+          <div
+            id="walletText"
+            class="col-span-5">
+            <span class="font-bold">
+              Wallet
+            </span>
+            : {{ userWallet.substring(0, 5) }}...{{ userWallet.slice(-5) }}
           </div>
           <div class="flex flex-row items-center pl-2 justify-left col-span-1">
             <button
@@ -16,10 +21,16 @@
           </div>
         </div>
         <div class="p-2">
-          <span class="font-bold">Balance</span>: {{ userBalance }}
+          <span class="font-bold">
+            Balance
+          </span>
+          : {{ userBalance }}
         </div>
         <div class="p-2">
-          <span class="font-bold">ChainId</span>: {{ userChainId }}
+          <span class="font-bold">
+            ChainId
+          </span>
+          : {{ userChainId }}
         </div>
       </section>
       <section class="flex justify-around p-3 px-4 py-1">

@@ -6,13 +6,17 @@
     <div>
       <div class="m-1 mb-3 grid grid-cols-4">
         <div class="p-2 mx-4 rounded-xl col-span-2">
-          <label class="text-xs text-subtradelabel">Exchange</label>
+          <label class="text-xs text-subtradelabel">
+            Exchange
+          </label>
           <input
             class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
             v-model="exchange">
         </div>
         <div class="p-2 mx-4 rounded-xl col-span-1">
-          <label class="text-xs text-subtradelabel">Selling</label>
+          <label class="text-xs text-subtradelabel">
+            Selling
+          </label>
           <select
             class="w-full p-2 text-gray-800 bg-white border border-gray-200 border-gray-500"
             v-model="firstPairCoinId">
@@ -25,7 +29,9 @@
           </select>
         </div>
         <div class="p-2 mx-4 rounded-xl col-span-1">
-          <label class="text-xs text-subtradelabel">Buying</label>
+          <label class="text-xs text-subtradelabel">
+            Buying
+          </label>
           <select
             class="w-full p-2 text-gray-800 bg-white border border-gray-200 border-gray-500"
             v-model="secondPairCoinId">
@@ -38,11 +44,16 @@
           </select>
         </div>
       </div>
-      <div v-for="(subtrade, i) in subtrades" :key="subtrade.Timestamp" class="mb-8 ml-8 rounded-xl grid grid-cols-12">
+      <div
+        v-for="(subtrade, i) in subtrades"
+        :key="subtrade.Timestamp"
+        class="mb-8 ml-8 rounded-xl grid grid-cols-12">
         <div class="bg-subtradenew rounded-3xl col-span-11">
           <div class="pt-4 pl-4 pr-4 mt-3 grid grid-cols-6">
             <div class="ml-4 mr-4 rounded-xl col-span-2">
-              <label class="text-xs text-subtradelabel">Date/Time</label>
+              <label class="text-xs text-subtradelabel">
+                Date/Time
+              </label>
               <input
                 name="date"
                 type="text"
@@ -52,7 +63,9 @@
                 v-model="subtrade.CreatedAt">
             </div>
             <div class="ml-4 mr-4 rounded-xl col-span-1">
-              <label class="text-xs text-subtradelabel">Buy/Sell</label>
+              <label class="text-xs text-subtradelabel">
+                Buy/Sell
+              </label>
               <select
                 class="w-full p-2 text-gray-800 bg-white border border-gray-200 border-gray-500"
                 v-model="subtrade.Type">
@@ -65,7 +78,9 @@
               </select>
             </div>
             <div class="ml-4 mr-4 rounded-xl col-span-3">
-              <label class="text-xs text-subtradelabel">Trade reason / Description</label>
+              <label class="text-xs text-subtradelabel">
+                Trade reason / Description
+              </label>
               <input
                 class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
                 v-model="subtrade.Reason">
@@ -73,7 +88,9 @@
           </div>
           <div class="p-4 grid grid-cols-3">
             <div class="m-4 rounded-xl col-span-1">
-              <label class="text-xs text-subtradelabel">Quantity</label>
+              <label class="text-xs text-subtradelabel">
+                Quantity
+              </label>
               <input
                 min="0.00000000001"
                 type="number"
@@ -81,7 +98,9 @@
                 v-model="subtrade.Quantity">
             </div>
             <div class="m-4 rounded-xl col-span-1">
-              <label class="text-xs text-subtradelabel">Average price</label>
+              <label class="text-xs text-subtradelabel">
+                Average price
+              </label>
               <input
                 min="0.00000000001"
                 type="number"
@@ -89,7 +108,9 @@
                 v-model="subtrade.AvgPrice">
             </div>
             <div class="m-4 rounded-xl col-span-1">
-              <label class="text-xs text-subtradelabel">Total</label>
+              <label class="text-xs text-subtradelabel">
+                Total
+              </label>
               <input
                 min="0.00000000001"
                 type="number"
@@ -159,13 +180,13 @@
       }
     ]
     @Watch('firstPairCoinId')
-    watchFirstPair(__: number, _: number) {
+    watchFirstPair(_: number, __: number) {
       if (this.secondPairCoinId > 0) {
         this.getLatestPairRate();
       }
     }
     @Watch('secondPairCoinId')
-    watchSecondPair(value: number, _: number) {
+    watchSecondPair(_: number, __: number) {
       if (this.firstPairCoinId > 0) {
         this.getLatestPairRate();
       }
@@ -196,13 +217,17 @@
       this.getPairs();
     }
     getPairs() {
+      let request_url = [
+        process.env.VUE_APP_HTTP_URL,
+        'get_pairs'
+      ].join('/');
       axios({
         method: "GET",
         headers: {
           Authorization: "Bearer " + document.cookie,
           "Access-Control-Allow-Origin": "*",
         },
-        url: process.env.VUE_APP_HTTP_URL + "/get_pairs",
+        url: request_url
       }).then(response => {
         if (response.status === 200) {
           this.cryptoPairs = response.data;
@@ -252,14 +277,17 @@
           SecondPair: this.secondPairCoinId,
           Subtrades: this.subtrades
         }
-        console.log(newTrade);
+        let request_url = [
+          process.env.VUE_APP_HTTP_URL,
+          'insert_trade'
+        ].join('/');
         axios({
           method: "POST",
           headers: {
             Authorization: "Bearer " + document.cookie,
             "Access-Control-Allow-Origin": "*",
           },
-          url: process.env.VUE_APP_HTTP_URL + "/insert_trade",
+          url: request_url,
           data: newTrade
         }).then(response => {
           if (response.status === 200) {
