@@ -7,7 +7,7 @@ describe('UserTrades.vue / initialiseTradeWs', () => {
 
   it('instantiates a websocket and fill the data', async () => {
     process.env.VUE_APP_WS_URL = 'ws://localhost:1234';
-    const server = new WS('ws://localhost:1234/get_trades/0xabc/ABC');
+    const server = new WS('ws://localhost:1234/get_trades/0xabc/undefined');
     const mockGenerateRandomRequestId = jest.fn();
     mockGenerateRandomRequestId.mockReturnValue('ABC')
     let methods = {
@@ -24,6 +24,10 @@ describe('UserTrades.vue / initialiseTradeWs', () => {
       }
     });
     server.send(JSON.stringify({
+      PrivacyStatus: {
+        Status: "OK",
+        Reason: "RandomReason",
+      },
       TotalReturnUsd: 100,
       Roi: 20,
       CountTrades: 3,

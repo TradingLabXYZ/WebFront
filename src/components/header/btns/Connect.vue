@@ -83,9 +83,40 @@
       let chainIdHex = await window.ethereum.request({ method: 'eth_chainId' });
       let chainId = parseInt(chainIdHex, 16);
       if (chainId != this.vue_app_moonbeam_chainid) {
-        alert(`Onyl Moonbase ${process.env.VUE_APP_MOONBEAM_CHAINNAME} supported!`);
-        this.cleanSession();
-        return;
+        try {
+          await window.ethereum.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: '0x507' }],
+          });
+        } catch (switchError: any) {
+          if (switchError.code === 4902) {
+            try {
+              const params = [{
+                chainId: '0x507',
+                chainName: 'Moonbase Alpha',
+                nativeCurrency: {
+                  name: 'DEV',
+                  symbol: 'DEV',
+                  decimals: 18
+                },
+                rpcUrls: ['https://rpc.testnet.moonbeam.network'],
+                blockExplorerUrls: ['https://moonbase-blockscout.testnet.moonbeam.network/']
+              }]
+              await window.ethereum.request({
+                method: 'wallet_addEthereumChain',
+                params
+              });
+            } catch (addError) {
+              alert(`Onyl Moonbase ${process.env.VUE_APP_MOONBEAM_CHAINNAME} supported!`);
+              this.cleanSession();
+              return;
+            }
+          } else {
+            alert(`Onyl Moonbase ${process.env.VUE_APP_MOONBEAM_CHAINNAME} supported!`);
+            this.cleanSession();
+            return;
+          }
+        }
       }
       await window.ethereum.request({ method: 'eth_requestAccounts' });
       let accounts = await window.ethereum.request({ method: 'eth_accounts' });

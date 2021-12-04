@@ -111,7 +111,7 @@ describe('Profile.vue / saveUserSocial', () => {
       methods
     });
     await (wrapper as any).vm.uploadImage(mockedFormEvent);
-    expect(wrapper.vm.$data.profilePicture).toBe('thisIsTheNewProfilePicture');
+    expect(wrapper.vm.$data.profilePicture).toContain('thisIsTheNewProfilePicture');
     expect(userStore.getUserDetails['ProfilePicture']).toBe('thisIsTheNewProfilePicture');
   })
 })
