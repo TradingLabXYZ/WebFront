@@ -1,17 +1,15 @@
 <template>
   <div>
-    <div class="hidden md:block">
-      <div v-if="!isUserConnected">
-        <button
-          id="connectButton"
-          class="inline-block p-2 mr-2 text-gray-800 rounded hover:bg-header-dark"
-          @click="loginMetamask">
-          Connect Wallet
-        </button>
-      </div>
-      <div v-else>
-        <Connected @disconnectMetamask="disconnectMetamask"/>
-      </div>
+    <div v-if="!isUserConnected">
+      <button
+        id="connectButton"
+        class="inline-block p-2 mr-2 text-gray-800 rounded hover:bg-header-dark"
+        @click="loginMetamask">
+        Connect Wallet
+      </button>
+    </div>
+    <div v-else>
+      <Connected @disconnectMetamask="disconnectMetamask"/>
     </div>
   </div>
 </template>
