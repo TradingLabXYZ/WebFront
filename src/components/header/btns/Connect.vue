@@ -86,7 +86,7 @@
         try {
           await window.ethereum.request({
             method: 'wallet_switchEthereumChain',
-            params: [{ chainId: '0x507' }],
+            params: [{ chainId: process.env.VUE_APP_MOONBEAM_CHAINHEX }],
           });
         } catch (switchError: any) {
           if (switchError.code === 4902) {
