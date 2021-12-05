@@ -1,30 +1,30 @@
 <template>
-  <div class="flex pt-10 text-white place-content-center h-44 bg-tradehero">
-    <div class="mr-20 text-center">
-      <div class="text-2xl">
+  <div class="justify-around header-base header-responsive">
+    <div class="flex flex-col">
+      <div class="kpi-title-responsive">
         Trades
       </div>
-      <div class="text-5xl">
+      <div class="kpi-value-responsive">
         {{ totalTrades }}
       </div>
     </div>
-    <div class="text-center">
-      <div class="text-2xl">
+    <div class="flex flex-col">
+      <div class="kpi-title-responsive">
         <span>
           $ Return
         </span>
       </div>
-      <div class="text-5xl">
+      <div class="kpi-value-responsive">
         <span>
           {{ totalReturn }}
         </span>
       </div>
     </div>
-    <div class="ml-20 text-center">
-      <div class="text-2xl">
+    <div class="flex flex-col">
+      <div class="kpi-title-responsive">
         ROI
       </div>
-      <div class="text-5xl">
+      <div class="kpi-value-responsive">
         {{ roi + "%" }}
       </div>
     </div>
@@ -40,3 +40,30 @@
     @Prop() roi!: number;
   }
 </script>
+
+<style>
+  .header-base {
+    @apply flex;
+    @apply flex-row;
+    @apply text-white;
+    @apply place-content-center;
+    @apply bg-tradehero;
+  }
+  @responsive {
+    .header-responsive {
+      @apply sm:h-24;
+      @apply md:h-32;
+      @apply lg:h-40;
+    }
+    .kpi-title-responsive {
+      @apply sm:text-base;
+      @apply md:text-xl;
+      @apply lg:text-3xl;
+    }
+    .kpi-value-responsive {
+      @apply sm:text-xl;
+      @apply md:text-2xl;
+      @apply lg:text-6xl;
+    }
+  }
+</style>
