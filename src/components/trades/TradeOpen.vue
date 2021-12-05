@@ -289,7 +289,7 @@
                               class="flex justify-start mx-3"
                               v-if="i == (trade.Subtrades.length - 1)">
                               <button
-                                @click="insertSubtrade(trade, i)"
+                                @click="insertSubtrade(trade)"
                                 title="Insert subtrade"
                                 type="button">
                                 <AddSubtradeOpen/>
