@@ -5,17 +5,17 @@
       v-bind:totalReturn="totalReturn"
       v-bind:roi="roi"
       v-bind:totalTrades="totalTrades"/>
-    <!--
     <div v-if="privacyStatus == 'OK'">
       <TradeOpen
         v-bind:isUserConnected="isUserConnected"
         v-bind:openedTrades="openedTrades"
         v-bind:isUserProfile="isUserProfile"/>
+    </div>
+    <!--
       <TradeClose
         v-bind:isUserConnected="isUserConnected"
         v-bind:closedTrades="closedTrades"
         v-bind:isUserProfile="isUserProfile"/>
-    </div>
     <div v-else class="flex items-center justify-center h-screen">
       {{ privacyReason }}
     </div>

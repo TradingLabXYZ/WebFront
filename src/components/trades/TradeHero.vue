@@ -46,7 +46,6 @@
     @apply flex;
     @apply flex-row;
     @apply text-white;
-    @apply justify-evenly;
     @apply place-content-center;
     @apply bg-tradehero;
   }
