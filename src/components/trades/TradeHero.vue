@@ -1,6 +1,6 @@
 <template>
   <div class="trade-hero-base trade-hero-responsive">
-    <div class="flex flex-col items-center justify-center kpi-section-responsive testtt">
+    <div class="flex flex-col items-center justify-center kpi-section-responsive">
       <div class="kpi-title-responsive">
         Trades
       </div>
@@ -50,13 +50,6 @@
     @apply bg-tradehero;
   }
   @responsive {
-    .testtt {
-      @apply bg-purple-500;
-      @apply xs:bg-red-500;
-      @apply sm:bg-blue-500;
-      @apply md:bg-gray-500;
-      @apply lg:bg-yellow-500;
-    }
     .trade-hero-responsive {
       @apply h-20;
       @apply sm:h-24;

@@ -1,7 +1,8 @@
 <template>
   <div>
-    <div class="h-20 bg-white">
-      <div class="flex justify-center p-8">
+    <div class="h-20 bg-white grid grid-cols-5">
+      <div class="col-span-1"></div>
+      <div class="flex justify-start mt-8 md-8 col-span-2">
         <div class="text-2xl font-bold">
           Opened Trades
         </div>  
@@ -24,9 +25,9 @@
       </div>
     </div>
     <div class="mb-10 grid place-items-center">
-      <table class="block md:table">
-        <thead class="block md:table-header-group bg-tradetablehead">
-          <tr class="absolute block md:table-row -top-full md:top-auto -left-full md:left-auto md:relative ">
+      <table>
+        <thead class="bg-tradetablehead">
+          <tr>
             <th 
               class="px-1 text-xs font-medium tracking-wider text-gray-800"
               scope="col">
@@ -74,80 +75,63 @@
             </th>
           </tr>
         </thead>
-        <tbody class="block md:table-row-group">
+        <tbody class="">
           <template v-for="(trade, q) in openedTrades">
-            <tr :key="'A' + q" class="block md:table-row">
-              <td class="block p-2 text-left md:table-cell">
+            <tr :key="'A' + q">
+              <td class="py-4 text-center text-gray-700 text-md">
                 <button
                   @click="toggle(trade.Code)"
-                  class="xs:hidden md:block"
                   title="Expand/Collapse trade"
                   type="button">
                   <ExpandTrade v-if="opened.includes(trade.Code)"/>
                   <CollapseTrade v-else/>
                 </button>
               </td>
-              <td class="block p-2 text-left md:table-cell">
-                <span class="inline-block w-1/3 font-bold md:hidden">
-                  Exchange
-                </span>
+              <td class="py-4 text-center text-gray-700 text-md">
                 {{ trade.Exchange }}
               </td>
-              <td class="block p-2 text-left md:table-cell">
-                <span class="inline-block w-1/3 font-bold md:hidden">
-                  First Pair
-                </span>
+              <td class="text-center text-gray-700 fpy-4 text-md">
                 <img
                   :src="trade.FirstPairUrlIcon"
                   width="15%"
                   class="inline-block align-middle"/>
                 {{ trade.FirstPairSymbol }}
               </td>
-              <td class="block p-2 text-left md:table-cell">
-                <span class="inline-block w-1/3 font-bold md:hidden">
-                  Second Pair
-                </span>
+              <td class="text-center text-gray-700 fpy-4 text-md">
                 <img
                   :src="trade.SecondPairUrlIcon"
                   width="15%"
                   class="inline-block align-middle"/>
                 {{ trade.SecondPairSymbol }}
               </td>
-              <td class="block p-2 text-left md:table-cell">
-                <span class="inline-block w-1/3 font-bold md:hidden">
-                  Current Price
-                </span>
+              <td
+                class="py-4 text-center text-gray-700 text-md text-fade-effect"
+                v-bind:id="trade.Code">
                 {{ trade.CurrentPrice }}
                 <span class="text-xs">
                   {{ trade.FirstPairSymbol }} / {{ trade.SecondPairSymbol }}
                 </span>
               </td>
-              <td class="block p-2 text-left md:table-cell">
-                <span class="inline-block w-1/3 font-bold md:hidden">
-                  Qty Available
-                </span>
+              <td class="py-4 text-center tex-gray-700 text-md">
                 {{ trade.QtyAvailable }}
                 <span class="text-xs">
                   {{ trade.SecondPairSymbol }}
                 </span>
               </td>
-              <td class="block p-2 text-left md:table-cell">
-                <span class="inline-block w-1/3 font-bold md:hidden">
-                  Total Return
-                </span>
+              <td class="py-4 text-center text-gray-700 text-md">
                 {{ trade.TotalReturn }}
                 <span class="text-xs">
                   {{ trade.FirstPairSymbol }}
                 </span>
               </td>
-              <td class="block p-2 text-left md:table-cell">
-                <span class="inline-block w-1/3 font-bold md:hidden">
-                  ROI
-                </span>
+              <td
+                class="py-4 text-center text-gray-700 text-md"
+                :class="trade.Roi > 0 ? 'text-tradepositive' : 'text-tradenegative'">
                 {{ trade.Roi + "%" }}
               </td>
-              <td class="block p-2 text-left md:table-cell"
-                v-if="isUserConnected && isUserProfile">
+              <td
+                v-if="isUserConnected && isUserProfile"
+                class="py-4 text-center text-gray-700 text-md">
                 <button
                   v-if="isUserConnected && isUserProfile"
                   @click="closeTrade(trade)"
@@ -165,16 +149,6 @@
                   <DeleteTrade/>
                 </button>
               </td>
-              <td class="block p-2 text-left md:table-cell">
-                <button
-                  @click="toggle(trade.Code)"
-                  class="md:hidden"
-                  title="Expand/Collapse trade"
-                  type="button">
-                  <ExpandTrade v-if="opened.includes(trade.Code)"/>
-                  <CollapseTrade v-else/>
-                </button>
-              </td>
             </tr>
             <tr
               :key="'B' + q"
@@ -184,64 +158,52 @@
                 colspan="10"
                 class="text-xs"> 
                 <div class="flex justify-around">
-                  <table class="block md:table">
-                    <thead class="block md:table-header-group bg-tradetablehead">
-                      <tr class="absolute block md:table-row -top-full md:top-auto -left-full md:left-auto md:relative ">
-                        <th class="tracking-wide text-gray-500 font-extralight">
-                          Id
-                        </th>
-                        <th class="tracking-wide text-gray-500 font-extralight">
-                          Timestamp
-                        </th>
-                        <th class="tracking-wide text-gray-500 font-extralight">
-                          Type
-                        </th>
-                        <th class="tracking-wide text-gray-500 font-extralight">
-                          Reason
-                        </th>
-                        <th class="tracking-wide text-gray-500 font-extralight">
-                          Quantity
-                        </th>
-                        <th class="tracking-wide text-gray-500 font-extralight">
-                          Avg Price
-                        </th>
-                        <th class="tracking-wide text-gray-500 font-extralight">
-                          Total
-                        </th>
-                      </tr>
+                  <table>
+                    <thead>
+                      <th class="tracking-wide text-gray-500 font-extralight">
+                        Id
+                      </th>
+                      <th class="tracking-wide text-gray-500 font-extralight">
+                        Timestamp
+                      </th>
+                      <th class="tracking-wide text-gray-500 font-extralight">
+                        Type
+                      </th>
+                      <th class="tracking-wide text-gray-500 font-extralight">
+                        Reason
+                      </th>
+                      <th class="tracking-wide text-gray-500 font-extralight">
+                        Quantity
+                      </th>
+                      <th class="tracking-wide text-gray-500 font-extralight">
+                        Avg Price
+                      </th>
+                      <th class="tracking-wide text-gray-500 font-extralight">
+                        Total
+                      </th>
                     </thead>
                     <tbody>
                       <tr
-                        class="block md:table-row"
                         v-for="(subtrade, i) in trade.Subtrades"
                         :key="i">
-                        <td class="block p-2 text-left md:table-cell">
-                          <span class="inline-block w-1/3 font-bold md:hidden">
-                            Id 
-                          </span>
+                        <td>
                           <div class="mx-8">
                             {{ i + 1}}
                           </div>
                         </td>
-                        <td class="block p-2 text-left md:table-cell">
-                          <span class="inline-block w-1/3 font-bold md:hidden">
-                            CreatedAt
-                          </span>
+                        <td>
                           <div class="w-40 mx-3 border-b border-subtradeeditableborder">
-                            <input
-                              :disabled="!isUserConnected || !isUserProfile"
-                              name="formTimestamp" 
-                              placeholder="Timestamp"
-                              type="datetime-local"
-                              class="w-full text-center bg-subtradeeditable"
-                              v-model="subtrade.CreatedAt"
-                              @change="updateSubtrade(subtrade)">
+                          <input
+                            :disabled="!isUserConnected || !isUserProfile"
+                            name="formTimestamp" 
+                            placeholder="Timestamp"
+                            type="datetime-local"
+                            class="w-full text-center bg-subtradeeditable"
+                            v-model="subtrade.CreatedAt"
+                            @change="updateSubtrade(subtrade)">
                             </div>
                         </td>
-                        <td class="block p-2 text-left md:table-cell">
-                          <span class="inline-block w-1/3 font-bold md:hidden">
-                            Type
-                          </span>
+                        <td>
                           <div class="mx-3 border-b border-subtradeeditableborder">
                             <select
                               :disabled="!isUserConnected || !isUserProfile"
@@ -254,10 +216,7 @@
                             </select>
                           </div>
                         </td>
-                        <td class="block p-2 text-left md:table-cell">
-                          <span class="inline-block w-1/3 font-bold md:hidden">
-                            Reason
-                          </span>
+                        <td>
                           <div class="mx-3 border-b border-subtradeeditableborder">
                             <input
                               :disabled="!isUserConnected || !isUserProfile"
@@ -269,10 +228,7 @@
                               @change="updateSubtrade(subtrade)">
                           </div>
                         </td>
-                        <td class="block p-2 text-left md:table-cell">
-                          <span class="inline-block w-1/3 font-bold md:hidden">
-                            Quantity
-                          </span>
+                        <td>
                           <div class="w-24 mx-3 border-b border-subtradeeditableborder">
                             <input 
                               :disabled="!isUserConnected || !isUserProfile"
@@ -286,10 +242,7 @@
                               @change="updateSubtrade(subtrade)">
                           </div>
                         </td>
-                        <td class="block p-2 text-left md:table-cell">
-                          <span class="inline-block w-1/3 font-bold md:hidden">
-                            Avg Price
-                          </span>
+                        <td>
                           <div class="w-24 mx-3 border-b border-subtradeeditableborder">
                             <input
                               :disabled="!isUserConnected || !isUserProfile"
@@ -303,10 +256,7 @@
                               @change="updateSubtrade(subtrade)">
                           </div>
                         </td>
-                        <td class="block p-2 text-left md:table-cell">
-                          <span class="inline-block w-1/3 font-bold md:hidden">
-                            Total
-                          </span>
+                        <td>
                           <div class="w-24 mx-3 border-b border-subtradeeditableborder">
                             <input
                               :disabled="!isUserConnected || !isUserProfile"
@@ -320,7 +270,7 @@
                               @change="updateSubtrade(subtrade)">
                           </div>
                         </td>
-                        <td v-if="isUserConnected && isUserProfile" class="block p-2 text-left md:table-cell">
+                        <td v-if="isUserConnected && isUserProfile">
                           <div class="flex">
                             <div
                               class="flex justify-start"
@@ -517,4 +467,4 @@
       }
     }
   }
-</script>
+</script>t

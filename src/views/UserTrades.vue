@@ -10,16 +10,14 @@
         v-bind:isUserConnected="isUserConnected"
         v-bind:openedTrades="openedTrades"
         v-bind:isUserProfile="isUserProfile"/>
-    </div>
-    <!--
       <TradeClose
         v-bind:isUserConnected="isUserConnected"
         v-bind:closedTrades="closedTrades"
         v-bind:isUserProfile="isUserProfile"/>
+    </div>
     <div v-else class="flex items-center justify-center h-screen">
       {{ privacyReason }}
     </div>
-    -->
   </div>
 </template>
 
