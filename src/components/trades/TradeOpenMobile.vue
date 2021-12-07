@@ -21,16 +21,20 @@
         <TradeNew @closeNewTradeSection="cancelInsertTrade"/>
       </div>
     </div>
-    <div class="grid">
-      <div class="flex flex-row justify-around mb-1" v-for="(trade, q) in openedTrades" v-bind:key="q">
-        <div class="grid grid-cols-12">
+    <div
+      v-for="(trade, q) in openedTrades"
+      v-bind:key="q">
+      <div class="flex flex-row justify-around mb-1">
+        <div
+          class="grid grid-cols-12"
+          @click="toggle(trade.Code)">
           <div class="relative flex flex-row items-center p-1 col-span-1">
             <img
               :src="trade.FirstPairUrlIcon"
               class="absolute ml-1 align-middle transform scale-50"/>
             <img
               :src="trade.SecondPairUrlIcon"
-              class="absolute ml-1 align-middle transform scale-50 left-4"/>
+              class="absolute ml-1 align-middle transform scale-50 right-1"/>
           </div>
           <div class="flex flex-col justify-center p-2 text-center col-span-3">
             <div class="text-xxs">
@@ -70,7 +74,9 @@
               {{ trade.Roi }}%
             </span>
           </div>
-          <div class="flex flex-col justify-center p-2 text-center col-span-2">
+          <div
+            class="flex flex-col justify-center p-2 text-center col-span-2"
+            v-if="isUserConnected && isUserProfile">
             <div class="text-xxs">
               Actions
             </div>
@@ -90,6 +96,77 @@
                 <DeleteTrade/>
               </button>
             </div>
+          </div>
+        </div>
+      </div>
+      <div
+        :key="'B' + q"
+        v-if="opened.includes(trade.Code)">
+        <div
+          class="text-xxs"
+          v-for="(subtrade, i) in trade.Subtrades"
+          :key="i">
+          <div class="flex justify-center">
+            <div class="flex flex-col">
+            <label class="text-center text-xxs">CreatedAt</label>
+            <input
+              :disabled="!isUserConnected || !isUserProfile"
+              name="formTimestamp" 
+              placeholder="Timestamp"
+              type="datetime-local"
+              class="mr-1 text-center border-b w-30 bg-subtradeeditable border-subtradeeditableborder"
+              v-model="subtrade.CreatedAt"
+              @change="updateSubtrade(subtrade)">
+              </div>
+            <input
+              :disabled="!isUserConnected || !isUserProfile"
+              name="formReason" 
+              placeholder="Insert a reason" 
+              type="text"
+              class="text-center border-b bg-subtradeeditable border-subtradeeditableborder"
+              v-model="subtrade.Reason"
+              @change="updateSubtrade(subtrade)">
+          </div>
+          <div class="flex justify-center">
+            <select
+              :disabled="!isUserConnected || !isUserProfile"
+              name="formType" 
+              class="mr-1 text-center border-b bg-subtradeeditable border-subtradeeditableborder"
+              v-model="subtrade.Type"
+              @change="updateSubtrade(subtrade)">
+              <option value="BUY">BUY</option>
+              <option value="SELL">SELL</option>
+            </select>
+            <input 
+              :disabled="!isUserConnected || !isUserProfile"
+              min="0.00000000001"
+              name="formQuantity" 
+              placeholder="Quantity"
+              type="number"
+              step="any"
+              class="w-10 mr-1 text-center border-b bg-subtradeeditable border-subtradeeditableborder"
+              v-model.number="subtrade.Quantity"
+              @change="updateSubtrade(subtrade)">
+            <input 
+              :disabled="!isUserConnected || !isUserProfile"
+              min="0.00000000001"
+              name="formAvgPrice" 
+              placeholder="Avg Price"
+              type="number"
+              step="any"
+              class="w-20 mr-1 text-center border-b bg-subtradeeditable col-span-1 border-subtradeeditableborder"
+              v-model.number="subtrade.AvgPrice"
+              @change="updateSubtrade(subtrade)">
+            <input 
+              :disabled="!isUserConnected || !isUserProfile"
+              min="0.00000000001"
+              name="formTotal" 
+              placeholder="Total"
+              type="number"
+              step="any"
+              class="w-20 mr-1 text-center border-b bg-subtradeeditable col-span-1 border-subtradeeditableborder"
+              v-model.number="subtrade.Total"
+              @change="updateSubtrade(subtrade)">
           </div>
         </div>
       </div>
