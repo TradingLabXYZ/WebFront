@@ -22,7 +22,9 @@
         class="mb-5 grid grid-cols-8">
         <div class="col-span-2"></div>
         <div class="w-auto mt-5 col-span-4">
-          <TradeNew @closeNewTradeSection="cancelInsertTrade"/>
+          <TradeNew
+            v-bind:isMobile="isMobile"
+            @closeNewTradeSection="cancelInsertTrade"/>
         </div>
       </div>
       <div class="flex justify-center mb-10">
@@ -340,10 +342,12 @@
       </div>
       <div
         v-if="isUserConnected && isUserProfile && isNewTrade"
-        class="mb-5 grid grid-cols-8">
-        <div class="col-span-2"></div>
-        <div class="w-auto mt-5 col-span-4">
-          <TradeNew @closeNewTradeSection="cancelInsertTrade"/>
+        class="grid grid-cols-8">
+        <div class="col-span-1"></div>
+        <div class="w-auto col-span-6">
+          <TradeNew
+            v-bind:isMobile="isMobile"
+            @closeNewTradeSection="cancelInsertTrade"/>
         </div>
       </div>
       <div
