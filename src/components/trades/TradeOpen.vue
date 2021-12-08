@@ -337,85 +337,87 @@
       <div
         v-for="(trade, q) in openedTrades"
         v-bind:key="q">
-        <div class="flex flex-row justify-around mb-1 bg-subtradesection">
+        <div class="flex flex-row justify-around mx-1 mb-1 bg-subtradesection">
           <div
-            class="grid grid-cols-12">
-            <div
-              class="relative flex flex-row items-center p-1 col-span-1"
-              @click="toggle(trade.Code)">
+            class="flex flex-col justify-center"
+            @click="toggle(trade.Code)">
+            <div>
               <img
                 :src="trade.FirstPairUrlIcon"
-                class="absolute ml-1 align-middle transform scale-75"/>
+                class="w-5"/>
+            </div>
+            <div>
               <img
                 :src="trade.SecondPairUrlIcon"
-                class="absolute ml-1 align-middle transform scale-75 right-2"/>
+                class="w-5"/>
             </div>
-            <div
-              class="flex flex-col justify-center p-2 text-center col-span-3"
-              @click="toggle(trade.Code)">
-              <div class="text-gray-500 text-xxs">
-                Price
-              </div>
-              <div class="text-xs">
-                {{ trade.CurrentPrice }}
-              </div>
-              <div class="text-xxs">
-                {{ trade.FirstPairSymbol }}/{{ trade.SecondPairSymbol }}
-              </div>
+          </div>
+          <div
+            class="flex flex-col justify-center p-2 m-2 text-center"
+            @click="toggle(trade.Code)">
+            <div class="text-gray-500 text-xxs">
+              Price
             </div>
-            <div
-              class="flex flex-col justify-center p-2 text-center col-span-3"
-              @click="toggle(trade.Code)">
-              <div class="text-gray-500 text-xxs">
-                QtyAvailable
-              </div>
-              <div class="text-xs">
-                {{ trade.QtyAvailable }}
-              </div>
-              <div class="text-xxs">
-                {{ trade.SecondPairSymbol }}
-              </div>
+            <div class="text-xs">
+              {{ trade.CurrentPrice }}
             </div>
-            <div
-              class="flex flex-col justify-center p-2 text-center col-span-3"
-              @click="toggle(trade.Code)">
-              <div class="text-gray-500 text-xxs">
-                Return
-              </div>
-              <div class="text-xs">
-                {{ trade.TotalReturn }}
-              </div>
-              <div class="text-xxs">
-                {{ trade.FirstPairSymbol }}
-              </div>
-              <span
-                class="text-xxs"
-                :class="trade.Roi > 0 ? 'text-tradepositive' : 'text-tradenegative'">
-                {{ trade.Roi }}%
-              </span>
+            <div class="text-xxs">
+              {{ trade.FirstPairSymbol }}/{{ trade.SecondPairSymbol }}
             </div>
-            <div
-              class="flex flex-col justify-center p-2 text-center col-span-2"
-              v-if="isUserConnected && isUserProfile">
-              <div class="text-gray-500 text-xxs">
-                Actions
-              </div>
-              <div class="flex flex-row">
-                <button
-                  @click="closeTrade(trade)"
-                  class="transform scale-75"
-                  title="Close trade"
-                  type="button">
-                  <CloseTrade/>
-                </button>
-                <button
-                  @click="deleteTrade(trade)"
-                  class="transform scale-75"
-                  title="Delete trade"
-                  type="button">
-                  <DeleteTrade/>
-                </button>
-              </div>
+          </div>
+          <div
+            class="flex flex-col justify-center p-2 m-2 text-center"
+            @click="toggle(trade.Code)">
+            <div class="text-gray-500 text-xxs">
+              QtyAvailable
+            </div>
+            <div class="text-xs">
+              {{ trade.QtyAvailable }}
+            </div>
+            <div class="text-xxs">
+              {{ trade.SecondPairSymbol }}
+            </div>
+          </div>
+          <div
+            class="flex flex-col justify-center p-2 m-2 text-center"
+            @click="toggle(trade.Code)">
+            <div class="text-gray-500 text-xxs">
+              Return
+            </div>
+            <div class="text-xs">
+              {{ trade.TotalReturn }}
+            </div>
+            <div class="text-xxs">
+              {{ trade.FirstPairSymbol }}
+            </div>
+          </div>
+          <div
+            class="flex flex-col justify-center p-2 m-2 text-center"
+            @click="toggle(trade.Code)">
+            <span
+              class="text-sm"
+              :class="trade.Roi > 0 ? 'text-tradepositive' : 'text-tradenegative'">
+              {{ trade.Roi }}%
+            </span>
+          </div>
+          <div
+            class="flex flex-col justify-center p-2 text-center col-span-2"
+            v-if="isUserConnected && isUserProfile">
+            <div class="flex flex-col">
+              <button
+                @click="closeTrade(trade)"
+                class="transform scale-50"
+                title="Close trade"
+                type="button">
+                <CloseTrade/>
+              </button>
+              <button
+                @click="deleteTrade(trade)"
+                class="transform scale-50"
+                title="Delete trade"
+                type="button">
+                <DeleteTrade/>
+              </button>
             </div>
           </div>
         </div>
@@ -423,7 +425,7 @@
           :key="'B' + q"
           v-if="opened.includes(trade.Code)">
           <div
-            class="mb-3 bg-red-100 text-xxs bg-subtradesection"
+            class="mx-10 mb-3 bg-red-100 text-xxs bg-subtradesection"
             v-for="(subtrade, i) in trade.Subtrades"
             :key="i">
             <div class="flex justify-center">
@@ -503,7 +505,9 @@
                   @change="updateSubtrade(subtrade)">
               </div>
             </div>
-            <div class="flex flex-row items-center justify-center mt-1">
+            <div
+              class="flex flex-row items-center justify-center mt-1"
+              v-if="isUserConnected && isUserProfile">
               <div
                 class="flex flex-row items-center justify-center"
                 v-if="trade.Subtrades.length > 1">
