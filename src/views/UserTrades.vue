@@ -7,14 +7,16 @@
       v-bind:totalTrades="totalTrades"/>
     <div v-if="privacyStatus == 'OK'">
       <TradeOpen
+        v-bind:isMobile="isMobile"
         v-bind:isUserConnected="isUserConnected"
         v-bind:openedTrades="openedTrades"
         v-bind:isUserProfile="isUserProfile"/>
+    </div>
+      <!--
       <TradeClose
         v-bind:isUserConnected="isUserConnected"
         v-bind:closedTrades="closedTrades"
-        v-bind:isUserProfile="isUserProfile"/>
-    </div>
+        v-bind:isUserProfile="isUserProfile"/> -->
     <div v-else class="flex items-center justify-center h-screen">
       {{ privacyReason }}
     </div>
@@ -49,10 +51,15 @@
     totalTrades: number = 0;
     openedTrades: object[] = [];
     closedTrades: object[] = [];
+    isMobile = false;
     get isUserConnected() {
       return metamaskStore.getIsConnected;
     }
     created() {
+
+      window.addEventListener('resize', this.checkIfMobile);
+      this.checkIfMobile();
+
       let storeWallet = userStore.userDetails['Wallet'];
       let routeWallet = this.$route.params.wallet;
       if (storeWallet == routeWallet) {
@@ -94,6 +101,13 @@
             this.closedTrades.push(trade);
           }
         }
+      }
+    }
+    checkIfMobile() {
+      if( screen.width <= 450 ) {
+        this.isMobile = true;
+      } else {
+        this.isMobile = false;
       }
     }
   }

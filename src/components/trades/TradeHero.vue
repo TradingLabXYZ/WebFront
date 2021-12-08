@@ -48,26 +48,30 @@
     @apply text-white;
     @apply place-content-center;
     @apply bg-tradehero;
+    @apply justify-center;
   }
   @responsive {
     .trade-hero-responsive {
-      @apply h-20;
+      @apply xs:h-20;
       @apply sm:h-24;
       @apply md:h-32;
       @apply lg:h-40;
     }
     .kpi-section-responsive {
+      @apply xs:p-4;
       @apply sm:p-6;
       @apply md:p-6;
       @apply lg:p-10;
     }
     .kpi-title-responsive {
-      @apply sm:text-xl;
+      @apply xs:text-xl;
+      @apply sm:text-2xl;
       @apply md:text-2xl;
       @apply lg:text-3xl;
     }
     .kpi-value-responsive {
-      @apply sm:text-2xl;
+      @apply xs:text-2xl;
+      @apply sm:text-4xl;
       @apply md:text-4xl;
       @apply lg:text-6xl;
     }
