@@ -1,11 +1,11 @@
 <template>
   <div class="">
     <div
-      class="border-2 shadow-md border-header-dark rounded-md hover:border-header-light hover:bg-tradehero hover:text-white">
+      class="border-2 border-header-dark rounded-md hover:border-header-light hover:bg-tradehero hover:text-white">
       <button
         id="buttonWallet"
         @click="toggleMenu"
-        class="mx-6 my-1 tracking-wider">
+        class="mx-2 my-1 text-xs tracking-wider sm:text-sm md:text-sm lg:text-base">
         {{ userWallet.substring(0, 5) }}...{{ userWallet.slice(-5) }}
       </button>
     </div>
