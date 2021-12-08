@@ -30,8 +30,8 @@
 <script lang="ts">
   import { Component, Vue, Watch } from 'vue-property-decorator';
   import { getModule } from 'vuex-module-decorators'
-  import User from '@/store/userModule';
-  const userStore = getModule(User)
+  import UserModule from '@/store/userModule';
+  const userStore = getModule(UserModule)
   import Metamask from '@/store/metamaskModule';
   const metamaskStore = getModule(Metamask)
   import Header from '@/components/header/Header.vue';
@@ -44,7 +44,7 @@
       TradeConsole
     },
   })
-  export default class UserTrades extends Vue {
+  export default class User extends Vue {
     privacyStatus: string = '';
     privacyReason: string = '';
     isUserProfile: boolean = false;
@@ -58,7 +58,6 @@
       return metamaskStore.getIsConnected;
     }
     created() {
-      console.log("CREATING")
       window.addEventListener('resize', this.checkIfMobile);
       this.checkIfMobile();
       let storeWallet = userStore.userDetails['Wallet'];
@@ -66,7 +65,6 @@
       if (storeWallet == routeWallet) {
         this.isUserProfile = true; 
       }
-      console.log("STOP CREATING")
     }
     @Watch('$route', { immediate: true, deep: true })
     onUrlChange() {

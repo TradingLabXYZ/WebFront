@@ -130,7 +130,7 @@
         return;
       }
       this.$router.push({
-        name: 'UserTrades',
+        name: 'User',
         params: {
           wallet: accounts[0]
         }
