@@ -1,8 +1,8 @@
 <template>
-  <div class="sticky top-0 z-50 bg-header">
-    <div class="flex flex-row items-center justify-center justify-around p-4">
+  <div class="sticky top-0 z-50 bg-header xs:h-16 sm:h-20 md:h-24">
+    <div class="flex flex-row items-center justify-around p-4">
       <router-link to="/">
-        <img src="@/assets/logo.png" width="50" alt="Logo">
+        <img src="@/assets/logo.png" class="xs:h-10 md:h-16" alt="Logo">
       </router-link>
       <div>
         <Connect/>

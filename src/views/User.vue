@@ -6,17 +6,21 @@
       v-bind:roi="roi"
       v-bind:totalTrades="totalTrades"/>
     <div v-if="privacyStatus == 'OK'">
-      <TradeOpen
+      <TradeConsole
+        tradesType="open"
+        title="Opened Trades"
         v-bind:isMobile="isMobile"
         v-bind:isUserConnected="isUserConnected"
-        v-bind:openedTrades="openedTrades"
+        v-bind:trades="openedTrades"
+        v-bind:isUserProfile="isUserProfile"/>
+      <TradeConsole
+        tradesType="close"
+        title="Closed Trades"
+        v-bind:isMobile="isMobile"
+        v-bind:isUserConnected="isUserConnected"
+        v-bind:trades="closedTrades"
         v-bind:isUserProfile="isUserProfile"/>
     </div>
-      <!--
-      <TradeClose
-        v-bind:isUserConnected="isUserConnected"
-        v-bind:closedTrades="closedTrades"
-        v-bind:isUserProfile="isUserProfile"/> -->
     <div v-else class="flex items-center justify-center h-screen">
       {{ privacyReason }}
     </div>
@@ -32,14 +36,12 @@
   const metamaskStore = getModule(Metamask)
   import Header from '@/components/header/Header.vue';
   import TradeHero from '@/components/trades/TradeHero.vue';
-  import TradeOpen from '@/components/trades/TradeOpen.vue';
-  import TradeClose from '@/components/trades/TradeClose.vue';
+  import TradeConsole from '@/components/trades/TradeConsole.vue';
   @Component({
     components: {
       Header,
       TradeHero,
-      TradeOpen,
-      TradeClose
+      TradeConsole
     },
   })
   export default class UserTrades extends Vue {
@@ -104,7 +106,7 @@
       }
     }
     checkIfMobile() {
-      if( screen.width <= 450 ) {
+      if( screen.width <= 800 ) {
         this.isMobile = true;
       } else {
         this.isMobile = false;
