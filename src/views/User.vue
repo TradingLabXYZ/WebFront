@@ -58,15 +58,15 @@
       return metamaskStore.getIsConnected;
     }
     created() {
-
+      console.log("CREATING")
       window.addEventListener('resize', this.checkIfMobile);
       this.checkIfMobile();
-
       let storeWallet = userStore.userDetails['Wallet'];
       let routeWallet = this.$route.params.wallet;
       if (storeWallet == routeWallet) {
         this.isUserProfile = true; 
       }
+      console.log("STOP CREATING")
     }
     @Watch('$route', { immediate: true, deep: true })
     onUrlChange() {
