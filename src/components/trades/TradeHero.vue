@@ -1,5 +1,5 @@
 <template>
-  <div class="trade-hero-base trade-hero-responsive">
+  <div class="trade-hero-base">
     <div class="flex flex-col items-center justify-center kpi-section-responsive">
       <div class="kpi-title-responsive">
         Trades
@@ -51,17 +51,11 @@
     @apply justify-center;
   }
   @responsive {
-    .trade-hero-responsive {
-      @apply xs:h-20;
-      @apply sm:h-24;
-      @apply md:h-32;
-      @apply lg:h-40;
-    }
     .kpi-section-responsive {
-      @apply xs:p-4;
-      @apply sm:p-6;
-      @apply md:p-6;
-      @apply lg:p-10;
+      @apply xs:p-1;
+      @apply sm:p-2;
+      @apply md:p-2;
+      @apply lg:p-4;
     }
     .kpi-title-responsive {
       @apply xs:text-xl;
