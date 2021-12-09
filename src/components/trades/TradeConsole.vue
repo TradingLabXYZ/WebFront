@@ -207,16 +207,13 @@
                             </div>
                           </td>
                           <td>
-                            <div class="w-40 border-b border-subtradeeditableborder">
-                            <input
-                              :disabled="!isUserConnected || !isUserProfile || tradesType == 'close'"
-                              name="formTimestamp" 
-                              placeholder="Timestamp"
-                              type="datetime-local"
-                              class="w-full text-center bg-subtradeeditable"
-                              v-model="subtrade.CreatedAt"
-                              @change="updateSubtrade(subtrade)">
-                              </div>
+                            <div class="border-b w-30 border-subtradeeditableborder">
+                              <datetime
+                                type="datetime"
+                                class="text-center bg-subtradeeditable">
+                                CIAO
+                              </datetime>
+                            </div>
                           </td>
                           <td>
                             <div class="border-b border-subtradeeditableborder">
@@ -369,7 +366,7 @@
             </div>
           </div>
           <div
-            class="flex flex-col justify-center p-2 m-2 text-center"
+            class="flex flex-col justify-center p-1 text-center"
             @click="toggle(trade.Code)">
             <div class="text-gray-500 text-xxs">
               Price
@@ -382,7 +379,7 @@
             </div>
           </div>
           <div
-            class="flex flex-col justify-center p-2 m-2 text-center"
+            class="flex flex-col justify-center p-1 text-center"
             @click="toggle(trade.Code)">
             <div class="text-gray-500 text-xxs">
               QtyAvailable
@@ -395,7 +392,7 @@
             </div>
           </div>
           <div
-            class="flex flex-col justify-center p-2 m-2 text-center"
+            class="flex flex-col justify-center p-1 text-center"
             @click="toggle(trade.Code)">
             <div class="text-gray-500 text-xxs">
               Return
@@ -408,7 +405,7 @@
             </div>
           </div>
           <div
-            class="flex flex-col justify-center p-2 m-2 text-center"
+            class="flex flex-col justify-center p-1 text-center"
             @click="toggle(trade.Code)">
             <span
               class="text-sm"
@@ -417,7 +414,7 @@
             </span>
           </div>
           <div
-            class="flex flex-col justify-center p-2 text-center col-span-2"
+            class="flex flex-col justify-center p-1 text-center col-span-2"
             v-if="isUserConnected && isUserProfile && tradesType == 'open'">
             <div class="flex flex-col">
               <button
@@ -577,6 +574,8 @@
   import DeleteTrade from '@/components/svg/DeleteTrade.vue';
   import AddSubtradeOpen from '@/components/svg/AddSubtradeOpen.vue';
   import RemoveSubtradeOpen from '@/components/svg/RemoveSubtradeOpen.vue';
+  import { Datetime } from 'vue-datetime';
+  import 'vue-datetime/dist/vue-datetime.css'
   @Component({
     components: {
       TradeNew,
@@ -587,7 +586,8 @@
       OpenTrade,
       DeleteTrade,
       AddSubtradeOpen,
-      RemoveSubtradeOpen
+      RemoveSubtradeOpen,
+      datetime: Datetime
     }
   })
   export default class TradeOpen extends Vue {
@@ -745,4 +745,20 @@
       }
     }
   }
-</script>t
+</script>
+
+<style>
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+input[type="date"]::-webkit-inner-spin-button,    
+input[type="date"]::-webkit-clear-button { display: none; }
+</style>
