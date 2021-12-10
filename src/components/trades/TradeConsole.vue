@@ -206,7 +206,7 @@
                               {{ i + 1}}
                             </div>
                           </td>
-                          <td>
+                            <td>
                             <div class="w-40 border-b border-subtradeeditableborder">
                             <input
                               :disabled="!isUserConnected || !isUserProfile || tradesType == 'close'"
@@ -369,7 +369,7 @@
             </div>
           </div>
           <div
-            class="flex flex-col justify-center p-2 m-2 text-center"
+            class="flex flex-col justify-center p-1 text-center"
             @click="toggle(trade.Code)">
             <div class="text-gray-500 text-xxs">
               Price
@@ -382,7 +382,7 @@
             </div>
           </div>
           <div
-            class="flex flex-col justify-center p-2 m-2 text-center"
+            class="flex flex-col justify-center p-1 text-center"
             @click="toggle(trade.Code)">
             <div class="text-gray-500 text-xxs">
               QtyAvailable
@@ -395,7 +395,7 @@
             </div>
           </div>
           <div
-            class="flex flex-col justify-center p-2 m-2 text-center"
+            class="flex flex-col justify-center p-1 text-center"
             @click="toggle(trade.Code)">
             <div class="text-gray-500 text-xxs">
               Return
@@ -408,7 +408,7 @@
             </div>
           </div>
           <div
-            class="flex flex-col justify-center p-2 m-2 text-center"
+            class="flex flex-col justify-center p-1 text-center"
             @click="toggle(trade.Code)">
             <span
               class="text-sm"
@@ -417,7 +417,7 @@
             </span>
           </div>
           <div
-            class="flex flex-col justify-center p-2 text-center col-span-2"
+            class="flex flex-col justify-center p-1 text-center col-span-2"
             v-if="isUserConnected && isUserProfile && tradesType == 'open'">
             <div class="flex flex-col">
               <button
@@ -745,4 +745,19 @@
       }
     }
   }
-</script>t
+</script>
+
+<style>
+  /* Chrome, Safari, Edge, Opera */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  /* Firefox */
+  input[type=number] {
+    -moz-appearance: textfield;
+  }
+  input[type="date"]::-webkit-inner-spin-button,    
+  input[type="date"]::-webkit-clear-button { display: none; }
+</style>
