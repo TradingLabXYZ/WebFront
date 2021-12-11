@@ -1,37 +1,36 @@
 <template>
   <div>
     <Header/>
-    <div class="mt-5 mb-5 text-2xl text-center">My Settings</div>
-    <div class="h-screen grid grid-cols-12 gap-10">
-      <div class="col-span-3"></div>
-      <div class="border-r-2 col-span-1">
+    <div class="mt-5 mb-5 text-center xs:text-xl sm:text-2xl">My Settings</div>
+    <div class="flex flex-col h-screen">
+      <div class="flex flex-row justify-center mb-4">
         <div
-          class="px-2 py-2 pr-12 mr-1 rounded-md text-xol"
+          class="px-6 py-2 mr-1 text-xl border-2 rounded-md"
           :class="settingsSection=='profile' ? 'bg-tradehero text-white font-semibold' : 'bg-white'"
           @click="changeSettingsSection('profile')">
           Profile
         </div>
         <div
-          class="px-2 py-2 pr-12 mr-1 rounded-md text-xol"
+          class="px-6 py-2 mr-1 text-xl border-2 rounded-md"
           :class="settingsSection=='privacy' ? 'bg-tradehero text-white font-semibold' : 'bg-white'"
           @click="changeSettingsSection('privacy')">
           Privacy
         </div>
         <div
-          class="px-2 py-2 pr-12 mr-1 rounded-md text-xol"
+          class="hidden px-2 py-2 pr-12 mr-1 text-xl rounded-md"
           :class="settingsSection=='plan' ? 'bg-tradehero text-white font-semibold' : 'bg-white'"
           @click="changeSettingsSection('plan')">
           Plan
         </div>
       </div>
-      <div class="col-span-4">
+      <div class="flex justify-center">
         <section v-if="settingsSection=='profile'">
           <Profile/>
         </section> 
         <section v-if="settingsSection=='privacy'">
           <Privacy/>
         </section> 
-        <section v-if="settingsSection=='plan'">
+        <section v-if="settingsSection=='plan'" class="hidden">
           <Plan/>
         </section> 
       </div>
@@ -46,7 +45,6 @@
   import Profile from '@/components/settings/Profile.vue';
   import Privacy from '@/components/settings/Privacy.vue';
   import Plan from '@/components/settings/Plan.vue';
-
   @Component({
     components: {
       Header,

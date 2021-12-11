@@ -1,12 +1,21 @@
 <template>
-  <div class="sticky top-0 z-50 bg-header xs:h-16 sm:h-20 md:h-24">
-    <div class="flex flex-row items-center justify-around p-4">
+  <div class="sticky top-0 z-50 flex flex-row items-center justify-around p-4 bg-tradehero xs:h-16 sm:h-20 md:h-24">
+    <div class="flex flex-row items-center align-middle space-x-3">
       <router-link to="/">
         <img src="@/assets/logo.png" class="xs:h-10 md:h-16" alt="Logo">
       </router-link>
-      <div>
-        <Connect/>
+      <div class="text-2xl font-bold text-tradenew">
+        TradingLab
       </div>
+    </div>
+    <div class="flex flex-row justify-around space-x-4 text-tradenew">
+      <button class="inline-block p-2 font-bold rounded hover:bg-header-dark">
+        Whitepaper
+      </button>
+      <button class="inline-block p-2 font-bold rounded hover:bg-header-dark">
+        Community
+      </button>
+      <Connect class="p-2"/>
     </div>
   </div>
 </template>
