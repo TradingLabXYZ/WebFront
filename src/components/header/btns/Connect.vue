@@ -5,7 +5,7 @@
         id="connectButton"
         class="inline-block p-2 mr-2 font-bold rounded hover:bg-header-dark bg-homebutton"
         @click="loginMetamask">
-        Connect Wallet
+        Connect
       </button>
     </div>
     <div v-else>
