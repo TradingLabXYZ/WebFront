@@ -36,7 +36,10 @@ module.exports = {
         subtradeeditable: "#D0F9FF",
         subtradeeditableborder: "#6ADFED",
         tradenewbuttonconfirm: "#3400FA", 
-        tradenewbuttoncancel: "#B8E7EF"
+        tradenewbuttoncancel: "#B8E7EF",
+        homebutton: "#C901A1",
+        homeherotext: "#1B064C",
+        hometextband: "#710B79"
       }
     },
   },
