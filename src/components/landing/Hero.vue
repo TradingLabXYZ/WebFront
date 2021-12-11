@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="flex justify-center text-center h-fit bg-header">
-      <div class="py-52">
-        <div class="p-2 text-5xl tracking-widest text-homeherotext">
+      <div class="xs:py-28 sm:py-52">
+        <div class="p-2 tracking-widest sm:text-5xl xs:text-3xl text-homeherotext">
           <span class="font-medium">H</span>
           <span class="italic">y</span>
           <span class="font-serif font-semibold">p</span>
@@ -16,7 +16,7 @@
           <span class="font-mono">i</span>
           <span class="">d</span>
         </div>
-        <div class="p-2 text-6xl tracking-widest text-homeherotext">
+        <div class="p-2 tracking-widest xs:text-3xl sm:text-6xl text-homeherotext">
           Crypto Trading Community
         </div>
         <div class="flex flex-row justify-center p-2 mt-4">
@@ -34,7 +34,7 @@
         </button>
       </div>
     </div>
-    <div class="flex justify-around py-16 text-4xl font-extrabold h-fit bg-tradenew text-hometextband">
+    <div class="flex justify-around py-16 font-extrabold text-center xs:space-y-3 sm:space-y-0 xs:text-3xl md:text-4xl xs:flex-col sm:flex-row h-fit bg-tradenew text-hometextband">
       <div class="">
         Decentralised
       </div>
