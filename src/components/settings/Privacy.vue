@@ -45,7 +45,7 @@
         Your profile is visible only to your subscribers
       </div>
     </div>
-    <div class="flex justify-start">
+    <div class="flex justify-center">
       <button
         class="px-4 py-2 m-6 font-bold text-white rounded bg-header-light hover:bg-header-dark"
         type="submit"

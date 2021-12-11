@@ -36,7 +36,7 @@
         class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
         v-model="website">
     </div>
-    <div class="flex justify-start">
+    <div class="flex justify-center">
       <button
         class="px-4 py-2 m-6 font-bold text-white rounded bg-header-light hover:bg-header-dark"
         type="submit"
@@ -60,7 +60,7 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
+  import { Component, Vue, Prop } from 'vue-property-decorator';
   import axios from "axios";
   import { getModule } from 'vuex-module-decorators'
   import User from '@/store/userModule';
@@ -72,6 +72,7 @@
     twitter: string = '';
     website: string = '';
     profilePicture: string = '';
+    @Prop() isMobile!: boolean;
     created() {
       this.twitter = userStore.userDetails['Twitter'];
       this.website = userStore.userDetails['Website'];
