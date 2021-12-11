@@ -10,10 +10,14 @@
     </div>
     <div class="flex flex-row justify-around space-x-4 text-tradenew">
       <button class="inline-block p-2 font-bold rounded hover:bg-header-dark">
-        Whitepaper
+        <a href="https://github.com/TradingLabXYZ/Docs/tree/main/Whitepaper" target="_blank">
+          Whitepaper
+        </a>
       </button>
       <button class="inline-block p-2 font-bold rounded hover:bg-header-dark">
-        Community
+        <a href="https://discord.gg/PEEUfrbQ9c" target="_blank">
+          Community
+        </a>
       </button>
       <Connect class="p-2"/>
     </div>

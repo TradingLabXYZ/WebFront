@@ -1,9 +1,21 @@
 <template>
   <div class="flex flex-col justify-center py-16 text-center bg-header space-y-2">
     <div class="flex flex-row justify-center">
-      <Discord class="transform scale-75"/>
-      <Twitter class="transform scale-75"/>
-      <Github class="transform scale-75"/>
+      <button>
+        <a href="https://discord.gg/PEEUfrbQ9c" target="_blank">
+          <Discord class="transform scale-75"/>
+        </a>
+      </button>
+      <button>
+        <a href="https://twitter.com/TradingLabXYZ" target="_blank">
+          <Twitter class="transform scale-75"/>
+        </a>
+      </button>
+      <button>
+        <a href="https://github.com/TradingLabXYZ" target="_blank">
+          <Github class="transform scale-75"/>
+        </a>
+      </button>
     </div>
     <div class="text-2xl font-semibold">
       TradingLab
