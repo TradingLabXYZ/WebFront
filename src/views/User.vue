@@ -89,6 +89,7 @@
         sessionId
       ].join('/');
       let ws = new WebSocket(ws_url);
+      this.heartbeat(ws);
       ws.onmessage = (event: any) => {
         let ws_data = JSON.parse(event.data);
         this.privacyStatus = ws_data.PrivacyStatus.Status;
@@ -107,6 +108,14 @@
           }
         }
       }
+    }
+    heartbeat(ws: any) {
+      setTimeout(()=>{
+        if (!ws) return;
+        if (ws.readyState !== 1) return;
+        ws.send('ping');
+        this.heartbeat(ws);
+      }, 5000)
     }
     checkIfMobile() {
       if( screen.width <= 800 ) {
