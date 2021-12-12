@@ -75,7 +75,12 @@
       this.initialiseTradesWs();
     }
     initialiseTradesWs() {
-      let sessionId = userStore.userDetails['SessionId'] ? userStore.userDetails['SessionId'] : 'undefined';
+      var sessionId: string;
+      if (userStore.userDetails['SessionId']) {
+        sessionId = userStore.userDetails['SessionId'];
+      } else {
+        sessionId = "noLogIn_" + (Math.random() + 1).toString(36).substring(2);
+      }
       let wallet = this.$route.params.wallet;
       let ws_url = [
         process.env.VUE_APP_WS_URL,
