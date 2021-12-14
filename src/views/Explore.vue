@@ -2,32 +2,32 @@
   <div>
     <Header/>
     <div class="mt-5 mb-5 text-center xs:text-xl sm:text-2xl">Explore</div>
-    <div class="flex flex-col h-screen">
+    <div class="flex flex-col">
       <div
         v-for="event in events"
         :key="event.createdat"
-        class="py-4 grid grid-cols-12 divide-y-2 divide-gray-300">
+        class="grid grid-cols-12 divide-y-2 divide-gray-300">
         <div class="col-span-4"></div>
-        <div v-if="event.eventtype=='trade'" class="p-5 text-center col-span-4">
+        <div v-if="event.eventtype=='trade'" class="py-12 text-center col-span-4">
           <router-link :to="'/' + event.userwallet">
             <div class="flex flex-row items-center justify-center align-middle space-x-5">
               <img  
                 :src="event.profilepicture"
                 class="rounded-full h-14">
               <div class="text-left">
-                <div class="flex flex-row items-center align-middle">
+                <div class="flex flex-row items-center align-middle space-x-1">
                   <div class="text-lg font-bold">
                     New trade
                   </div>
-                  <div class="ml-1">
+                  <div class="">
                     on {{ event.exchange }}
-                  </div>
-                  <div class="ml-1">
-                    {{ event.minuteago }} minutes ago
                   </div>
                 </div>
                 <div class="text-xs italic text-gray-500">
                   {{ event.userwallet }}
+                </div>
+                <div class="text-xs italic text-gray-500">
+                {{ event.timeago }}
                 </div>
               </div>
               <div class="flex flex-row items-center justify-center text-center align-middle space-x-5">
@@ -51,10 +51,10 @@
             </div>
           </router-link>
         </div>
-        <div v-else class="p-5 text-center col-span-4">
+        <div v-else class="py-12 text-center col-span-4">
           <router-link :to="'/' + event.userwallet">
-            <div class="flex flex-row items-center justify-center align-middle space-x-5">
-              <img  
+            <div class="flex flex-row items-center justify-center align-middle space-x-8">
+              <img
                 :src="event.profilepicture"
                 class="rounded-full h-14">
               <div class="text-left">
@@ -75,7 +75,7 @@
                       {{ event.secondpairsymbol }}
                   </div>
                   <div class="">
-                    {{ event.minuteago }} minutes ago
+                    {{ event.timeago }}
                   </div>
                 </div>
                 <div class="text-xs italic text-gray-500">
