@@ -27,11 +27,11 @@
             <img src="@/assets/dot.webp" alt="Polkadot" class="w-4 top-6">
           </div>
         </div>
-        <button
-          class="inline-block px-10 py-2 mt-6 text-xl font-bold text-white rounded bg-homebutton"
-          v-on:click="comingSoon">
-          Explore
-        </button>
+        <router-link to="/explore">
+          <button class="inline-block px-10 py-2 mt-6 text-xl font-bold text-white rounded bg-homebutton">
+            Explore
+          </button>
+        </router-link>
       </div>
     </div>
     <div class="flex justify-around py-16 font-extrabold text-center xs:space-y-3 sm:space-y-0 xs:text-3xl md:text-4xl xs:flex-col sm:flex-row h-fit bg-tradenew text-hometextband">
@@ -52,9 +52,5 @@
 <script lang="ts">
   import { Vue, Component } from 'vue-property-decorator';
   @Component({})
-  export default class Hero extends Vue {
-    comingSoon() {
-      alert("Coming soon!");
-    }
-  }
+  export default class Hero extends Vue {}
 </script>

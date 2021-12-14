@@ -4,14 +4,16 @@ Vue.use(VueRouter)
 
 declare let window: any;
 
-import { get } from 'idb-keyval';
-import { del } from 'idb-keyval';
+import { get, clear } from 'idb-keyval';
 
 import User from '@/store/userModule';
+import Metamask from '@/store/metamaskModule';
 import { getModule } from 'vuex-module-decorators'
 const userStore = getModule(User)
+const metamaskStore = getModule(Metamask)
 
 import Home from '../views/Home.vue'
+import Explore from '../views/Explore.vue'
 import UserView from '../views/User.vue'
 import Settings from '../views/Settings.vue'
 
@@ -28,6 +30,20 @@ const routes: Array<RouteConfig> = [
         next('/' + sessionData['Wallet']);
       } else {
         next()
+      }
+    }
+  },
+  {
+    path: '/explore',
+    name: 'Explore',
+    component: Explore,
+    async beforeEnter ({}, {}, next) {
+      if (await isAllowedToGoNext()) {
+        var sessionId = document.cookie.split("sessionId=")[1].split(";")[0];
+        await get(sessionId).then((val) => userStore.updateUserDetails(val));
+        next()
+      } else {
+        next();
       }
     }
   },
@@ -67,7 +83,7 @@ async function isAllowedToGoNext() {
     if (accounts.length > 0) {
       return true
     } else {
-      clean();
+      cleanSession();
       return false
     }
   } else {
@@ -80,18 +96,20 @@ async function loadAccounts() {
   return accounts;
 }
 
-function clean() {
+function cleanSession() {
   // Reset indexeddb
-  if(document.cookie.indexOf("sessionId") > -1) {
-    var sessionId = document.cookie.split("sessionId=")[1].split(";")[0];
-    del(sessionId);
-  }
+  clear()
   // Reset cookie
   const date = new Date();
   date.setTime(date.getTime() + (-1 * 24 * 60 * 60 * 1000));
   document.cookie = "sessionId=; expires="+date.toUTCString()+"; path=/";
   // Reset user store
   userStore.updateUserDetails({});
+  // Reset metamask store
+  metamaskStore.updateIsConnected(false);
+  metamaskStore.updateBalance(0);
+  metamaskStore.updateChainId(0);
+  metamaskStore.updateWallet('');
 }
 
 
