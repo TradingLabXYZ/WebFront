@@ -27,9 +27,9 @@
       v-else
       class="flex flex-row justify-around xs:text-sm sm:text-base xs:space-x-0 sm:space-x-4 text-tradenew">
       <button class="inline-block font-bold rounded xs:p-1 sm:p-2 hover:bg-header-dark">
-        <a href="https://www.wikipedia.org/">
+        <router-link to="/explore">
           Explore
-        </a>
+        </router-link>
       </button>
       <Connect class="xs:p-1 sm:p-2"/>
     </div>
