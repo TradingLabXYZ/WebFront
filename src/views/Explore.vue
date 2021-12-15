@@ -9,7 +9,7 @@
         v-for="event in events"
         :key="event.createdat"
         class="my-4 grid sm:grid-cols-9 md:grid-cols-11 lg:grid-cols-12">
-        <div class="xs:hidden sm:col-span-2 md:col-span-3 lg:col-span-4"></div>
+        <div class="xs:hidden sm:block sm:col-span-2 md:col-span-3 lg:col-span-4"></div>
         <div class="flex flex-col text-center border-t border-b border-gray-200 xs:mx-3 sm:col-span-5 md:col-span-5 lg:col-span-4">
           <router-link :to="'/' + event.userwallet">
             <div class="flex flex-row justify-between">
