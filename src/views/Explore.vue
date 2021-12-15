@@ -8,9 +8,9 @@
       <div
         v-for="event in events"
         :key="event.createdat"
-        class="my-4 grid grid-cols-11">
-        <div class="col-span-4"></div>
-        <div class="flex flex-col text-center border-t border-b border-gray-200 col-span-3">
+        class="my-4 grid sm:grid-cols-9 md:grid-cols-11 lg:grid-cols-12">
+        <div class="xs:hidden sm:col-span-2 md:col-span-3 lg:col-span-4"></div>
+        <div class="flex flex-col text-center border-t border-b border-gray-200 xs:mx-3 sm:col-span-5 md:col-span-5 lg:col-span-4">
           <router-link :to="'/' + event.userwallet">
             <div class="flex flex-row justify-between">
               <div class="flex flex-row items-center justify-start mt-1 align-middle space-x-1">
@@ -18,15 +18,15 @@
                   :src="event.profilepicture"
                   height="30" width="30"
                   class="rounded-full">
-                <span class="font-light text-gray-700 text-md">
+                <span class="text-sm font-light text-gray-700">
                   {{ event.type }} {{ event.quantity }} {{ event.secondpairsymbol }}
                 </span>
               </div>
-              <div class="flex items-center mt-1 text-sm italic font-light text-gray-700 align-middle">
+              <div class="flex items-center mt-1 text-xs italic font-light text-gray-700 align-middle">
                 "{{ event.reason }}"
               </div>
               <div class="flex flex-row items-center justify-end align-middle">
-                <span class="font-light text-gray-700 text-md">
+                <span class="text-sm font-light text-gray-700">
                   {{ event.firstpairsymbol }}/{{ event.secondpairsymbol }}
                 </span>
                 <img
