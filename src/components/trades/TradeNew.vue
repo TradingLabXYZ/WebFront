@@ -97,6 +97,7 @@
                 min="0.00000000001"
                 type="number"
                 class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
+                id ="Quantity_1"
                 v-model="subtrade.Quantity">
             </div>
             <div class="m-4 rounded-xl col-span-1">
@@ -107,6 +108,7 @@
                 min="0.00000000001"
                 type="number"
                 class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
+                id="Avg_price_1"
                 v-model="subtrade.AvgPrice">
             </div>
             <div class="m-4 rounded-xl col-span-1">
@@ -117,6 +119,7 @@
                 min="0.00000000001"
                 type="number"
                 class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
+                id="Total_1"
                 v-model="subtrade.Total">
             </div>
           </div>
@@ -252,6 +255,7 @@
             min="0.00000000001"
             type="number"
             class="w-full h-5 text-xs text-gray-800 border border-gray-500"
+            id="Quantity_2"
             v-model="subtrade.Quantity">
         </div>
         <div class="flex flex-col ml-2">
@@ -262,6 +266,7 @@
             min="0.00000000001"
             type="number"
             class="w-full h-5 text-xs text-gray-800 border border-gray-500"
+            id="Avg_Price_2"
             v-model="subtrade.AvgPrice">
         </div>
         <div class="flex flex-col ml-2">
@@ -272,6 +277,7 @@
             min="0.00000000001"
             type="number"
             class="w-full h-5 text-xs text-gray-800 border border-gray-500"
+            id="Total_2"
             v-model="subtrade.Total">
         </div>
       </div>
