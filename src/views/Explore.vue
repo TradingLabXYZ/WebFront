@@ -1,86 +1,92 @@
 <template>
   <div>
     <Header/>
-    <div class="mt-5 mb-5 text-center xs:text-xl sm:text-2xl">Explore</div>
-    <div class="flex flex-col h-screen">
+    <div class="mt-5 mb-3 text-center xs:text-xl sm:text-2xl">
+      Explore
+    </div>
+    <div class="flex flex-col">
       <div
         v-for="event in events"
         :key="event.createdat"
-        class="py-4 grid grid-cols-12 divide-y-2 divide-gray-300">
-        <div class="col-span-4"></div>
-        <div v-if="event.eventtype=='trade'" class="p-5 text-center col-span-4">
+        class="my-4 grid sm:grid-cols-9 md:grid-cols-11 lg:grid-cols-12">
+        <div class="xs:hidden sm:col-span-2 md:col-span-3 lg:col-span-4"></div>
+        <div class="flex flex-col text-center border-t border-b border-gray-200 xs:mx-3 sm:col-span-5 md:col-span-5 lg:col-span-4">
           <router-link :to="'/' + event.userwallet">
-            <div class="flex flex-row items-center justify-center align-middle space-x-5">
-              <img  
-                :src="event.profilepicture"
-                class="rounded-full h-14">
-              <div class="text-left">
-                <div class="flex flex-row items-center align-middle">
-                  <div class="text-lg font-bold">
-                    New trade
-                  </div>
-                  <div class="ml-1">
-                    on {{ event.exchange }}
-                  </div>
-                  <div class="ml-1">
-                    {{ event.minuteago }} minutes ago
-                  </div>
+            <div class="flex flex-row justify-between">
+              <div class="flex flex-row items-center justify-start mt-1 align-middle space-x-1">
+                <img
+                  :src="event.profilepicture"
+                  height="30" width="30"
+                  class="rounded-full">
+                <span class="text-sm font-light text-gray-700">
+                  {{ event.type }} {{ event.quantity }} {{ event.secondpairsymbol }}
+                </span>
+              </div>
+              <div class="flex items-center mt-1 text-xs italic font-light text-gray-700 align-middle">
+                "{{ event.reason }}"
+              </div>
+              <div class="flex flex-row items-center justify-end align-middle">
+                <span class="text-sm font-light text-gray-700">
+                  {{ event.firstpairsymbol }}/{{ event.secondpairsymbol }}
+                </span>
+                <img
+                  :src="event.firstpairurlicon"
+                  class="relative border rounded-full left-1"
+                  height="20"
+                  width="20">
+                <img
+                  :src="event.secondpairurlicon"
+                  class="border rounded-full"
+                  height="20"
+                  width="20">
+              </div>
+            </div>
+            <div class="flex flex-row items-center mt-2 mb-4 align-middle justify-evenly">
+              <div class="flex flex-col text-center">
+                <div class="text-gray-400 text-xxs">
+                  Avg Price {{ event.firstpairsymbol }}/{{ event.secondpairsymbol }}
                 </div>
-                <div class="text-xs italic text-gray-500">
-                  {{ event.userwallet }}
+                <div class="text-lg leading-3">
+                  {{ event.avgprice }}
                 </div>
               </div>
-              <div class="flex flex-row items-center justify-center text-center align-middle space-x-5">
-                <div class="">
-                  <img
-                    :src="event.firstpairurlicon"
-                    height="30px" width="30px">
-                  <div class="text-gray-500 text-xxs">
-                    {{ event.firstpairsymbol }}
-                  </div>
+              <div class="flex flex-col text-center">
+                <div class="text-gray-400 text-xxs">
+                  Total {{ event.firstpairsymbol }}
                 </div>
-                <div>
-                  <img
-                    :src="event.secondpairurlicon"
-                    height="30px" width="30px">
-                  <div class="text-gray-500 text-xxs">
-                    {{ event.secondpairsymbol }}
+                <div class="text-lg leading-3">
+                  {{ event.total }}
+                </div>
+              </div>
+              <div class="flex flex-col text-center">
+                <div class="text-gray-400 text-xxs">
+                  Current Price {{ event.firstpairsymbol }}/{{ event.secondpairsymbol }}
+                </div>
+                <div class="flex flex-row items-start justify-center align-middle space-x-1">
+                  <div class="text-lg leading-3">
+                    {{ event.currentprice }}
+                  </div>
+                  <div
+                    v-if="event.type=='BUY'"
+                    class="text-xs"
+                    :class="event.deltapriceperc > 0 ? 'text-tradepositive' : 'text-tradenegative'">
+                    {{ event.deltapriceperc + "%" }}
+                  </div>
+                  <div
+                    v-else
+                    class="text-xs"
+                    :class="event.deltapriceperc > 0 ? 'text-tradenegative' : 'text-tradepositive'">
+                    {{ event.deltapriceperc + "%" }}
                   </div>
                 </div>
               </div>
             </div>
-          </router-link>
-        </div>
-        <div v-else class="p-5 text-center col-span-4">
-          <router-link :to="'/' + event.userwallet">
-            <div class="flex flex-row items-center justify-center align-middle space-x-5">
-              <img  
-                :src="event.profilepicture"
-                class="rounded-full h-14">
-              <div class="text-left">
-                <div class="flex flex-row items-center align-middle space-x-1">
-                  <div class="font-bold">
-                    {{ event.type }}
-                  </div>
-                  <div class="">
-                    {{ event.quantity }}
-                  </div>
-                  <div class="">
-                    <img
-                      :src="event.secondpairurlicon"
-                      class="inline-block"
-                      height="30px" width="30px">
-                  </div>
-                  <div class="">
-                      {{ event.secondpairsymbol }}
-                  </div>
-                  <div class="">
-                    {{ event.minuteago }} minutes ago
-                  </div>
-                </div>
-                <div class="text-xs italic text-gray-500">
-                  {{ event.userwallet }}
-                </div>
+            <div class="flex flex-row justify-between text-gray-400 text-xxs">
+              <div>
+                {{ event.userwallet }}
+              </div>
+              <div>
+                {{ event.timeago }}
               </div>
             </div>
           </router-link>
@@ -105,10 +111,14 @@
     created() {
       this.getLatestEvents();
     }
+    mounted () {
+      this.scroll()
+    }
     getLatestEvents() {
       let request_url = [
         process.env.VUE_APP_HTTP_URL,
-        'get_explore'
+        'get_explore',
+        this.events.length
       ].join('/');
       axios({
         method: "GET",
@@ -119,12 +129,23 @@
         url: request_url,
       }).then(response => {
         if (response.status === 200) {
-          console.log(response.data);
-          this.events = response.data;
+          this.events.push.apply(this.events, response.data);
         }
       }).catch(function (error) {
         console.log(error);
       })
+    }
+    scroll () {
+      window.onscroll = () => {
+        let bottomOfWindow = Math.max(
+          window.pageYOffset,
+          document.documentElement.scrollTop,
+          document.body.scrollTop
+        ) + window.innerHeight === document.documentElement.offsetHeight
+        if (bottomOfWindow) {
+          this.getLatestEvents();
+        }
+      }
     }
   }
 </script>
