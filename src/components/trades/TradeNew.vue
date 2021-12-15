@@ -335,6 +335,13 @@
         Total: null,
       }
     ]
+    @Watch('subtrades', { deep: true })
+    watchTotalSpent(new_value: number, old_value: number) {
+      for (let i = 0; i < this.subtrades.length; i++) {
+        this.subtrades[i]["Total"] = new_value[i]["AvgPrice"] * new_value[i]["Quantity"];   
+      }
+    }
+
     @Watch('firstPairCoinId')
     watchFirstPair(_: number, __: number) {
       if (this.secondPairCoinId > 0) {
