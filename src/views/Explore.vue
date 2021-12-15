@@ -111,10 +111,14 @@
     created() {
       this.getLatestEvents();
     }
+    mounted () {
+      this.scroll()
+    }
     getLatestEvents() {
       let request_url = [
         process.env.VUE_APP_HTTP_URL,
-        'get_explore'
+        'get_explore',
+        this.events.length
       ].join('/');
       axios({
         method: "GET",
@@ -125,11 +129,23 @@
         url: request_url,
       }).then(response => {
         if (response.status === 200) {
-          this.events = response.data;
+          this.events.push.apply(this.events, response.data);
         }
       }).catch(function (error) {
         console.log(error);
       })
+    }
+    scroll () {
+      window.onscroll = () => {
+        let bottomOfWindow = Math.max(
+          window.pageYOffset,
+          document.documentElement.scrollTop,
+          document.body.scrollTop
+        ) + window.innerHeight === document.documentElement.offsetHeight
+        if (bottomOfWindow) {
+          this.getLatestEvents();
+        }
+      }
     }
   }
 </script>
