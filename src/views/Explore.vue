@@ -8,25 +8,22 @@
       <div
         v-for="event in events"
         :key="event.createdat"
-        class="my-4 grid sm:grid-cols-9 md:grid-cols-11 lg:grid-cols-12">
-        <div class="xs:hidden sm:block sm:col-span-2 md:col-span-3 lg:col-span-4"></div>
-        <div class="flex flex-col text-center border-t border-b border-gray-200 xs:mx-3 sm:col-span-5 md:col-span-5 lg:col-span-4">
+        class="my-4 grid sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-11">
+        <div class="xs:hidden sm:block sm:col-span-1 md:col-span-2 lg:col-span-3"></div>
+        <div class="flex flex-col text-center border-t border-b border-gray-200 xs:mx-3 sm:col-span-6 md:col-span-6 lg:col-span-5">
           <router-link :to="'/' + event.userwallet">
-            <div class="flex flex-row justify-between">
+            <div class="flex flex-row justify-between font-light text-gray-700 xs:text-sm md:text-xl">
               <div class="flex flex-row items-center justify-start mt-1 align-middle space-x-1">
                 <img
                   :src="event.profilepicture"
                   height="30" width="30"
                   class="rounded-full">
-                <span class="text-sm font-light text-gray-700">
+                <span class="font-normal">
                   {{ event.type }} {{ event.quantity }} {{ event.secondpairsymbol }}
                 </span>
               </div>
-              <div class="flex items-center mt-1 text-xs italic font-light text-gray-700 align-middle">
-                "{{ event.reason }}"
-              </div>
               <div class="flex flex-row items-center justify-end align-middle">
-                <span class="text-sm font-light text-gray-700">
+                <span class="font-normal">
                   {{ event.firstpairsymbol }}/{{ event.secondpairsymbol }}
                 </span>
                 <img
@@ -41,47 +38,59 @@
                   width="20">
               </div>
             </div>
-            <div class="flex flex-row items-center mt-2 mb-4 align-middle justify-evenly">
+            <div class="mt-1 italic font-light text-center text-gray-700 xs:text-sm sm:text-xl">
+              "{{ event.reason }}"
+            </div>
+            <div class="flex flex-row items-center justify-around mt-2 mb-4 align-middle">
               <div class="flex flex-col text-center">
-                <div class="text-gray-400 text-xxs">
-                  Avg Price {{ event.firstpairsymbol }}/{{ event.secondpairsymbol }}
+                <div class="relative text-gray-300 xs:text-xxs xs:text-sm top-1">
+                  Avg Price
                 </div>
-                <div class="text-lg leading-3">
+                <div class="xs:text-md sm:text-xl lg:text-2xl">
                   {{ event.avgprice }}
                 </div>
+                <div class="relative text-gray-300 xs:text-xxs xs:text-sm bottom-1">
+                  {{ event.firstpairsymbol }}/{{ event.secondpairsymbol }}
+                </div>
               </div>
               <div class="flex flex-col text-center">
-                <div class="text-gray-400 text-xxs">
-                  Total {{ event.firstpairsymbol }}
+                <div class="relative text-gray-300 xs:text-xxs xs:text-sm top-1">
+                  Total
                 </div>
-                <div class="text-lg leading-3">
+                <div class="xs:text-md sm:text-xl lg:text-2xl">
                   {{ event.total }}
                 </div>
+                <div class="relative text-gray-300 xs:text-xxs xs:text-sm bottom-1">
+                  {{ event.firstpairsymbol }}
+                </div>
               </div>
               <div class="flex flex-col text-center">
-                <div class="text-gray-400 text-xxs">
-                  Current Price {{ event.firstpairsymbol }}/{{ event.secondpairsymbol }}
+                <div class="relative text-gray-300 xs:text-xxs xs:text-sm top-1">
+                  Current Price
                 </div>
-                <div class="flex flex-row items-start justify-center align-middle space-x-1">
-                  <div class="text-lg leading-3">
+                <div class="flex flex-row justify-center space-x-1">
+                  <div class="xs:text-md sm:text-xl lg:text-2xl">
                     {{ event.currentprice }}
                   </div>
                   <div
                     v-if="event.type=='BUY'"
-                    class="text-xs"
+                    class="flex items-center text-xs align-bottom"
                     :class="event.deltapriceperc > 0 ? 'text-tradepositive' : 'text-tradenegative'">
                     {{ event.deltapriceperc + "%" }}
                   </div>
                   <div
                     v-else
-                    class="text-xs"
+                    class="flex items-center text-xs align-bottom"
                     :class="event.deltapriceperc > 0 ? 'text-tradenegative' : 'text-tradepositive'">
                     {{ event.deltapriceperc + "%" }}
                   </div>
                 </div>
+                <div class="relative text-gray-300 xs:text-xxs xs:text-sm bottom-1">
+                  {{ event.firstpairsymbol }}/{{ event.secondpairsymbol }}
+                </div>
               </div>
             </div>
-            <div class="flex flex-row justify-between text-gray-400 text-xxs">
+            <div class="flex flex-row justify-between text-gray-400 xs:text-xxs sm:text-xs">
               <div>
                 {{ event.userwallet }}
               </div>
