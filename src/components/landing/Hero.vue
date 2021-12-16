@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="flex justify-center text-center h-fit bg-header">
+    <div class="flex justify-center text-center text-gray-300 h-fit somediv">
       <div class="xs:py-28 sm:py-52">
-        <div class="p-2 tracking-widest sm:text-5xl xs:text-3xl text-homeherotext">
+        <div class="p-2 tracking-widest sm:text-5xl xs:text-3xl">
           <span class="font-medium">H</span>
           <span class="italic">y</span>
           <span class="font-serif font-semibold">p</span>
@@ -16,7 +16,7 @@
           <span class="font-mono">i</span>
           <span class="">d</span>
         </div>
-        <div class="p-2 tracking-widest xs:text-3xl sm:text-6xl text-homeherotext">
+        <div class="p-2 tracking-widest xs:text-3xl sm:text-6xl">
           Crypto Trading Community
         </div>
         <div class="flex flex-row justify-center p-2 mt-4">
@@ -54,3 +54,9 @@
   @Component({})
   export default class Hero extends Vue {}
 </script>
+
+<style>
+  .somediv {
+    background-image: url('~@/assets/background.png');
+  }
+</style>
