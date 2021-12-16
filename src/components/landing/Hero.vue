@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex justify-center text-center text-gray-300 h-fit somediv">
+    <div id="checkMouse" class="flex justify-center text-center text-gray-300 h-fit bgimg">
       <div class="xs:py-28 sm:py-52">
         <div class="p-2 tracking-widest sm:text-5xl xs:text-3xl">
           <span class="font-medium">H</span>
@@ -56,7 +56,8 @@
 </script>
 
 <style>
-  .somediv {
+  .bgimg {
     background-image: url('~@/assets/background.png');
+    background-size: cover;
   }
 </style>
