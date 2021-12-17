@@ -9,17 +9,17 @@
       </div>
       <div class="flex flex-col justify-center space-y-2">
         <button>
-          <a href="https://discord.gg/PEEUfrbQ9c" target="_blank">
-            <Discord class="text-white fill-current" height="18" width="18"/>
-          </a>
-        </button>
-        <button>
-          <a href="https://twitter.com/TradingLabXYZ" target="_blank">
+          <a v-bind:href="'https://twitter.com/'+ twitter" target="_blank">
             <Twitter class="text-white fill-current" height="18" width="18"/>
           </a>
         </button>
         <button>
-          <a href="https://github.com/TradingLabXYZ" target="_blank">
+          <a v-bind:href="'https://discord.com/users/'+ discord" target="_blank">
+            <Discord class="text-white fill-current" height="18" width="18"/>
+          </a>
+        </button>
+        <button>
+          <a v-bind:href="'https://github.com/'+ github" target="_blank">
             <Github class="text-white fill-current" height="18" width="18"/>
           </a>
         </button>
@@ -27,7 +27,7 @@
     </div>
     <div class="flex flex-col justify-center text-white text-md">
       <div class="font-bold">
-        USERNAME
+        {{ username }}
       </div>
       <div>
         45
@@ -95,13 +95,17 @@
     @Prop() totalTrades!: number;
     @Prop() totalReturn!: number;
     @Prop() roi!: number;
+    username: string = '';
     twitter: string = '';
-    website: string = '';
+    discord: string = '';
+    github: string = '';
     profilePicture: string = '';
     @Prop() isMobile!: boolean;
     created() {
+      this.username = userStore.userDetails['Username'];
       this.twitter = userStore.userDetails['Twitter'];
-      this.website = userStore.userDetails['Website'];
+      this.discord = userStore.userDetails['Discord'];
+      this.github = userStore.userDetails['Github'];
       this.profilePicture = userStore.userDetails['ProfilePicture'];
     }
   }

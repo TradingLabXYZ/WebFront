@@ -28,7 +28,7 @@
     </div>
     <div class="p-2">
       <label class="text-xs text-subtradelabel">
-        Twitter
+        Twitter Username
       </label>
       <input
         type="text"
@@ -38,7 +38,7 @@
     </div>
     <div class="p-2">
       <label class="text-xs text-subtradelabel">
-        Discord
+        Discord ID
       </label>
       <input
         type="text"
@@ -48,7 +48,7 @@
     </div>
     <div class="p-2">
       <label class="text-xs text-subtradelabel">
-        Github
+        Github Username
       </label>
       <input
         type="text"
