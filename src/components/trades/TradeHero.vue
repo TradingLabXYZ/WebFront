@@ -8,17 +8,17 @@
           class="rounded-full">
       </div>
       <div class="flex flex-col justify-center space-y-2">
-        <button>
+        <button v-if="twitter">
           <a v-bind:href="'https://twitter.com/'+ twitter" target="_blank">
             <Twitter class="text-white fill-current" height="18" width="18"/>
           </a>
         </button>
-        <button>
+        <button v-if="discord">
           <a v-bind:href="'https://discord.com/users/'+ discord" target="_blank">
             <Discord class="text-white fill-current" height="18" width="18"/>
           </a>
         </button>
-        <button>
+        <button v-if="github">
           <a v-bind:href="'https://github.com/'+ github" target="_blank">
             <Github class="text-white fill-current" height="18" width="18"/>
           </a>
@@ -42,7 +42,7 @@
         </span>
       </div>
       <div class="text-sm">
-        Joined March 2021
+        Joined {{ joinTime }}
       </div>
     </div>
     <div class="flex flex-col justify-center text-white text-md">
@@ -100,6 +100,7 @@
     @Prop() profilePicture!: string;
     @Prop() followers!: number;
     @Prop() subscribers!: number;
+    @Prop() joinTime!: string;
     @Prop() totalTrades!: number;
     @Prop() totalReturn!: number;
     @Prop() roi!: number;

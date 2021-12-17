@@ -9,6 +9,7 @@
       v-bind:profilePicture="profilePicture"
       v-bind:followers="followers"
       v-bind:subscribers="subscribers"
+      v-bind:joinTime="joinTime"
       v-bind:totalReturn="totalReturn"
       v-bind:roi="roi"
       v-bind:totalTrades="totalTrades"/>
@@ -64,6 +65,7 @@
     profilePicture: string = '';
     followers: number = 0;
     subscribers: number = 0;
+    joinTime: string = "";
     totalTrades: number = 0;
     openedTrades: object[] = [];
     closedTrades: object[] = [];
@@ -118,6 +120,7 @@
         this.profilePicture = ws_data.UserDetails.ProfilePicture;
         this.followers = ws_data.UserDetails.Followers;
         this.subscribers = ws_data.UserDetails.Subscribers;
+        this.joinTime = ws_data.UserDetails.JoinTime;
         this.openedTrades = [];
         this.closedTrades = [];
         for (var i in ws_data.Trades) {
