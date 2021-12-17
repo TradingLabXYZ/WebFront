@@ -2,6 +2,14 @@
   <div>
     <Header/>
     <TradeHero
+      v-bind:username="username"
+      v-bind:twitter="twitter"
+      v-bind:discord="discord"
+      v-bind:github="github"
+      v-bind:profilePicture="profilePicture"
+      v-bind:followers="followers"
+      v-bind:subscribers="subscribers"
+      v-bind:joinTime="joinTime"
       v-bind:totalReturn="totalReturn"
       v-bind:roi="roi"
       v-bind:totalTrades="totalTrades"/>
@@ -50,6 +58,14 @@
     isUserProfile: boolean = false;
     totalReturn: number = 0;
     roi: number = 0;
+    username: string = '';
+    twitter: string = '';
+    discord: string = '';
+    github: string = '';
+    profilePicture: string = '';
+    followers: number = 0;
+    subscribers: number = 0;
+    joinTime: string = "";
     totalTrades: number = 0;
     openedTrades: object[] = [];
     closedTrades: object[] = [];
@@ -95,8 +111,16 @@
         this.privacyStatus = ws_data.PrivacyStatus.Status;
         this.privacyReason = ws_data.PrivacyStatus.Reason;
         this.totalReturn = ws_data.TotalReturnUsd;
-        this.roi = ws_data.Roi;
         this.totalTrades = ws_data.CountTrades;
+        this.roi = ws_data.Roi;
+        this.username = ws_data.UserDetails.Username;
+        this.twitter = ws_data.UserDetails.Twitter;
+        this.discord = ws_data.UserDetails.Discord;
+        this.github = ws_data.UserDetails.Github;
+        this.profilePicture = ws_data.UserDetails.ProfilePicture;
+        this.followers = ws_data.UserDetails.Followers;
+        this.subscribers = ws_data.UserDetails.Subscribers;
+        this.joinTime = ws_data.UserDetails.JoinTime;
         this.openedTrades = [];
         this.closedTrades = [];
         for (var i in ws_data.Trades) {
