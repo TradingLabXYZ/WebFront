@@ -18,23 +18,43 @@
     </div>
     <div class="p-2">
       <label class="text-xs text-subtradelabel">
+        Username
+      </label>
+      <input
+        type="text"
+        placeholder="Username"
+        class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
+        v-model="username">
+    </div>
+    <div class="p-2">
+      <label class="text-xs text-subtradelabel">
         Twitter
       </label>
       <input
-        type="url"
+        type="text"
         placeholder="Twitter"
         class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
         v-model="twitter">
     </div>
     <div class="p-2">
       <label class="text-xs text-subtradelabel">
-        Website
+        Discord
       </label>
       <input
-        type="url"
-        placeholder="Website"
+        type="text"
+        placeholder="discord"
         class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
-        v-model="website">
+        v-model="discord">
+    </div>
+    <div class="p-2">
+      <label class="text-xs text-subtradelabel">
+        Github
+      </label>
+      <input
+        type="text"
+        placeholder="github"
+        class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
+        v-model="github">
     </div>
     <div class="flex justify-center">
       <button
@@ -69,20 +89,26 @@
 
   @Component({})
   export default class Profile extends Vue {
+    username: string = '';
     twitter: string = '';
-    website: string = '';
+    discord: string = '';
+    github: string = '';
     profilePicture: string = '';
     @Prop() isMobile!: boolean;
     created() {
+      this.username = userStore.userDetails['Username'];
       this.twitter = userStore.userDetails['Twitter'];
-      this.website = userStore.userDetails['Website'];
+      this.discord = userStore.userDetails['Discord'];
+      this.github = userStore.userDetails['Github'];
       this.profilePicture = userStore.userDetails['ProfilePicture'];
     }
     async saveUserSocial() {
       let url = process.env.VUE_APP_HTTP_URL + "/user_settings";
       let data = {
+        Username: this.username,
         Twitter: this.twitter,
-        Website: this.website
+        Discord: this.discord,
+        Github: this.github
       };
       const response = await axios.post(url, data, {
         headers: {
@@ -92,8 +118,10 @@
       });
       if (response.status == 200) {
         await this.updateProfileInIndexedDb();
+        userStore.userDetails['Username'] = this.username;
         userStore.userDetails['Twitter'] = this.twitter;
-        userStore.userDetails['Website'] = this.website;
+        userStore.userDetails['Discord'] = this.discord;
+        userStore.userDetails['Github'] = this.github;
         this.showNotification('userSocialOk');
       } else {
         this.showNotification('userSocialKo');
@@ -101,8 +129,10 @@
     }
     async updateProfileInIndexedDb() {
       await get(userStore.userDetails['SessionId']).then((sessionData) => {
+        sessionData['ProfilePicture'] = this.profilePicture;
         sessionData['Twitter'] = this.twitter;
-        sessionData['Website'] = this.website;
+        sessionData['discord'] = this.discord;
+        sessionData['github'] = this.github;
         set(userStore.userDetails['SessionId'], sessionData);
       })
     }
