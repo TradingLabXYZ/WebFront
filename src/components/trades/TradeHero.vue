@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-row justify-center py-2 space-x-12 bg-tradehero">
+  <div v-if="!isMobile" class="flex flex-row justify-center py-2 space-x-12 bg-tradehero">
     <div class="flex flex-row justify-center mt-1 space-x-3">
       <div class="flex items-center align-middle rounded-full">
         <img  
@@ -78,6 +78,93 @@
       </button>
     </div>
   </div>
+  <div v-else class="flex flex-col py-2 text-white space-y-3 bg-tradehero">
+    <div class="flex flex-row justify-center space-x-6">
+      <div class="flex flex-col space-y-3">
+        <div class="flex justify-center rounded-full">
+          <img  
+            :src="profilePicture"
+            height="60" width="60"
+            class="rounded-full">
+        </div>
+        <div class="flex flex-row justify-center space-x-2">
+          <button v-if="twitter">
+            <a v-bind:href="'https://twitter.com/'+ twitter" target="_blank">
+              <Twitter class="fill-current" height="18" width="18"/>
+            </a>
+          </button>
+          <button v-if="discord">
+            <a v-bind:href="'https://discord.com/users/'+ discord" target="_blank">
+              <Discord class="fill-current" height="18" width="18"/>
+            </a>
+          </button>
+          <button v-if="github">
+            <a v-bind:href="'https://github.com/'+ github" target="_blank">
+              <Github class="fill-current" height="18" width="18"/>
+            </a>
+          </button>
+        </div>
+      </div>
+      <div class="flex flex-col justify-center text-sm">
+        <div class="font-bold">
+          {{ username }}
+        </div>
+        <div>
+          {{ followers }}
+          <span class="">
+            followers
+          </span>
+        </div>
+        <div>
+          {{ subscribers }}
+          <span class="">
+            subscribers
+          </span>
+        </div>
+        <div class="">
+          Joined {{ joinTime }}
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-row text-center justify-evenly">
+      <div class="flex flex-col">
+        <div>
+          {{ totalTrades }}
+        </div>
+        <div class="text-xs">
+          Trades
+        </div>
+      </div>
+      <div class="flex flex-col">
+        <div>
+          {{ totalReturn }}
+        </div>
+        <div class="text-xs">
+          $ Return
+        </div>
+      </div>
+      <div class="flex flex-col">
+        <div>
+        {{ roi + "%" }}
+        </div>
+        <div class="text-xs">
+          ROI
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-row text-sm justify-evenly space-x-1 text-bold">
+      <button
+        class="inline-block px-2 py-1 font-bold rounded bg-homebutton"
+        v-on:click="tempFunction">
+        Follow
+      </button>
+      <button
+        class="inline-block px-2 py-1 font-bold rounded bg-homebutton"
+        v-on:click="tempFunction">
+        Subscribe
+      </button>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -93,6 +180,7 @@
     }
   })
   export default class TradeHero extends Vue {
+    @Prop() isMobile!: boolean;
     @Prop() username!: string;
     @Prop() twitter!: string;
     @Prop() discord!: string;
@@ -104,7 +192,6 @@
     @Prop() totalTrades!: number;
     @Prop() totalReturn!: number;
     @Prop() roi!: number;
-    @Prop() isMobile!: boolean;
     tempFunction() {
       alert("Coming soon!");
     }
