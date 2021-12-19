@@ -2,6 +2,7 @@
   <div>
     <Header/>
     <TradeHero
+      v-bind:isMobile="isMobile"
       v-bind:username="username"
       v-bind:twitter="twitter"
       v-bind:discord="discord"
