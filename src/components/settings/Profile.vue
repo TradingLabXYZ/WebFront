@@ -129,10 +129,10 @@
     }
     async updateProfileInIndexedDb() {
       await get(userStore.userDetails['SessionId']).then((sessionData) => {
-        sessionData['ProfilePicture'] = this.profilePicture;
+        sessionData['Username'] = this.username;
         sessionData['Twitter'] = this.twitter;
-        sessionData['discord'] = this.discord;
-        sessionData['github'] = this.github;
+        sessionData['Discord'] = this.discord;
+        sessionData['Github'] = this.github;
         set(userStore.userDetails['SessionId'], sessionData);
       })
     }
