@@ -146,12 +146,10 @@
     }
     scroll () {
       window.onscroll = () => {
-        let bottomOfWindow = Math.max(
-          window.pageYOffset,
-          document.documentElement.scrollTop,
-          document.body.scrollTop
-        ) + window.innerHeight === document.documentElement.offsetHeight
-        if (bottomOfWindow) {
+        var d = document.documentElement;
+        var offset = d.scrollTop + window.innerHeight;
+        var height = d.offsetHeight;
+        if (offset >= height) {
           this.getLatestEvents();
         }
       }
