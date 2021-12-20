@@ -5,9 +5,9 @@
         <div class="col-span-1"></div>
         <div class="flex justify-start mt-8 md-8 col-span-2">
           <div class="text-2xl font-bold">
-            {{ title }}
+            My Trades
           </div>  
-          <div v-if="isUserConnected && isUserProfile && !isNewTrade && tradesType == 'open'">
+          <div v-if="isUserConnected && isUserProfile && !isNewTrade">
             <button
               @click="insertTrade()"
               title="Insert a new trade"
@@ -133,16 +133,8 @@
                   {{ trade.Roi + "%" }}
                 </td>
                 <td
-                  v-if="isUserConnected && isUserProfile && tradesType == 'open'"
+                  v-if="isUserConnected && isUserProfile"
                   class="py-4 text-center text-gray-700 text-md">
-                  <button
-                    v-if="isUserConnected && isUserProfile"
-                    @click="closeTrade(trade)"
-                    class="m-2"
-                    title="Close trade"
-                    type="button">
-                    <CloseTrade/>
-                  </button>
                   <button
                     v-if="isUserConnected && isUserProfile"
                     @click="deleteTrade(trade)"
@@ -150,18 +142,6 @@
                     title="Delete trade"
                     type="button">
                     <DeleteTrade/>
-                  </button>
-                </td>
-                <td
-                  v-if="isUserConnected && isUserProfile && tradesType == 'close'"
-                  class="py-4 text-center text-gray-700 text-md">
-                  <button
-                    v-if="isUserConnected && isUserProfile"
-                    @click="openTrade(trade)"
-                    class="m-2"
-                    title="Open trade"
-                    type="button">
-                    <OpenTrade/>
                   </button>
                 </td>
               </tr>
@@ -209,7 +189,7 @@
                             <td>
                             <div class="w-40 border-b border-subtradeeditableborder">
                             <input
-                              :disabled="!isUserConnected || !isUserProfile || tradesType == 'close'"
+                              :disabled="!isUserConnected || !isUserProfile"
                               name="formTimestamp" 
                               placeholder="Timestamp"
                               type="datetime-local"
@@ -221,7 +201,7 @@
                           <td>
                             <div class="border-b border-subtradeeditableborder">
                               <select
-                                :disabled="!isUserConnected || !isUserProfile || tradesType == 'close'"
+                                :disabled="!isUserConnected || !isUserProfile"
                                 name="formType" 
                                 class="text-center bg-subtradeeditable"
                                 v-model="subtrade.Type"
@@ -234,7 +214,7 @@
                           <td>
                             <div class="border-b border-subtradeeditableborder">
                               <input
-                                :disabled="!isUserConnected || !isUserProfile || tradesType == 'close'"
+                                :disabled="!isUserConnected || !isUserProfile"
                                 name="formReason" 
                                 placeholder="Insert a reason" 
                                 type="text"
@@ -246,7 +226,7 @@
                           <td>
                             <div class="w-24 border-b border-subtradeeditableborder">
                               <input 
-                                :disabled="!isUserConnected || !isUserProfile || tradesType == 'close'"
+                                :disabled="!isUserConnected || !isUserProfile"
                                 min="0.00000000001"
                                 name="formQuantity" 
                                 placeholder="Quantity"
@@ -260,7 +240,7 @@
                           <td>
                             <div class="w-24 border-b border-subtradeeditableborder">
                               <input
-                                :disabled="!isUserConnected || !isUserProfile || tradesType == 'close'"
+                                :disabled="!isUserConnected || !isUserProfile"
                                 min="0.00000000001"
                                 name="formAvgPrice" 
                                 placeholder="Avg Price"
@@ -274,7 +254,7 @@
                           <td>
                             <div class="w-24 border-b border-subtradeeditableborder">
                               <input
-                                :disabled="!isUserConnected || !isUserProfile || tradesType == 'close'"
+                                :disabled="!isUserConnected || !isUserProfile"
                                 min="0.00000000001"
                                 name="formTotal" 
                                 placeholder="Total"
@@ -285,7 +265,7 @@
                                 @change="updateSubtrade(subtrade)">
                             </div>
                           </td>
-                          <td v-if="isUserConnected && isUserProfile && tradesType == 'open'">
+                          <td v-if="isUserConnected && isUserProfile">
                             <div class="flex">
                               <div
                                 class="flex justify-start"
@@ -329,9 +309,9 @@
     <div v-else>
       <div class="flex justify-center mt-4 mb-2">
         <div class="text-xl font-bold">
-          {{ title }}
+          My Trades
         </div>  
-        <div v-if="isUserConnected && isUserProfile && !isNewTrade && tradesType == 'open'">
+        <div v-if="isUserConnected && isUserProfile && !isNewTrade">
           <button
             @click="insertTrade()"
             title="Insert a new trade"
@@ -418,34 +398,14 @@
           </div>
           <div
             class="flex flex-col justify-center p-1 text-center col-span-2"
-            v-if="isUserConnected && isUserProfile && tradesType == 'open'">
+            v-if="isUserConnected && isUserProfile">
             <div class="flex flex-col">
-              <button
-                @click="closeTrade(trade)"
-                class="transform scale-50"
-                title="Close trade"
-                type="button">
-                <CloseTrade/>
-              </button>
               <button
                 @click="deleteTrade(trade)"
                 class="transform scale-50"
                 title="Delete trade"
                 type="button">
                 <DeleteTrade/>
-              </button>
-            </div>
-          </div>
-          <div
-            class="flex flex-col justify-center p-2 text-center col-span-2"
-            v-if="isUserConnected && isUserProfile && tradesType == 'close'">
-            <div class="flex flex-col">
-              <button
-                @click="openTrade(trade)"
-                class="transform scale-50"
-                title="Delete trade"
-                type="button">
-                <OpenTrade/>
               </button>
             </div>
           </div>
@@ -461,7 +421,7 @@
               <div class="flex flex-col">
                 <label class="text-center text-gray-400 text-xxs">CreatedAt</label>
                 <input
-                  :disabled="!isUserConnected || !isUserProfile || tradesType == 'close'"
+                  :disabled="!isUserConnected || !isUserProfile"
                   name="formTimestamp" 
                   placeholder="Timestamp"
                   type="datetime-local"
@@ -472,7 +432,7 @@
               <div class="flex flex-col">
                 <label class="text-center text-gray-400 text-xxs">Reason / Description</label>
                 <input
-                  :disabled="!isUserConnected || !isUserProfile || tradesType == 'close'"
+                  :disabled="!isUserConnected || !isUserProfile"
                   name="formReason" 
                   placeholder="Insert a reason" 
                   type="text"
@@ -485,7 +445,7 @@
               <div class="flex flex-col">
                 <label class="text-center text-gray-400 text-xxs">Type</label>
                 <select
-                  :disabled="!isUserConnected || !isUserProfile || tradesType == 'close'"
+                  :disabled="!isUserConnected || !isUserProfile"
                   name="formType" 
                   class="mr-1 text-center border-b bg-subtradeeditable border-subtradeeditableborder"
                   v-model="subtrade.Type"
@@ -497,7 +457,7 @@
               <div class="flex flex-col">
                 <label class="text-center text-gray-400 text-xxs">Quantity</label>
                 <input 
-                  :disabled="!isUserConnected || !isUserProfile || tradesType == 'close'"
+                  :disabled="!isUserConnected || !isUserProfile"
                   min="0.00000000001"
                   name="formQuantity" 
                   placeholder="Quantity"
@@ -510,7 +470,7 @@
               <div class="flex flex-col">
                 <label class="text-center text-gray-400 text-xxs">Avg Price</label>
                 <input 
-                  :disabled="!isUserConnected || !isUserProfile || tradesType == 'close'"
+                  :disabled="!isUserConnected || !isUserProfile"
                   min="0.00000000001"
                   name="formAvgPrice" 
                   placeholder="Avg Price"
@@ -523,7 +483,7 @@
               <div class="flex flex-col">
                 <label class="text-center text-gray-400 text-xxs">Total</label>
                 <input 
-                  :disabled="!isUserConnected || !isUserProfile || tradesType == 'close'"
+                  :disabled="!isUserConnected || !isUserProfile"
                   min="0.00000000001"
                   name="formTotal" 
                   placeholder="Total"
@@ -536,7 +496,7 @@
             </div>
             <div
               class="flex flex-row items-center justify-center mt-1"
-              v-if="isUserConnected && isUserProfile && tradesType == 'open'">
+              v-if="isUserConnected && isUserProfile">
               <div
                 class="flex flex-row items-center justify-center"
                 v-if="trade.Subtrades.length > 1">
@@ -593,8 +553,6 @@
   export default class TradeOpen extends Vue {
     opened: number[] = [];
     isNewTrade: boolean = false;
-    @Prop() tradesType!: string;
-    @Prop() title!: string;
     @Prop() isMobile!: boolean;
     @Prop() isUserConnected!: boolean;
     @Prop() trades!: object[];
@@ -638,48 +596,6 @@
           process.env.VUE_APP_HTTP_URL,
           'delete_trade',
           trade['Code']
-        ].join('/');
-        axios({
-          method: "GET",
-          headers: {
-            Authorization: "Bearer " + document.cookie,
-            "Access-Control-Allow-Origin": "*",
-          },
-          url: request_url
-        }).catch(function (error) {
-          console.log(error);
-        })
-      }
-    }
-    closeTrade(trade: object) {
-      var answer = window.confirm("Are you sure closing this trade?");
-      if (answer) {
-        let request_url = [
-          process.env.VUE_APP_HTTP_URL,
-          'change_trade',
-          trade['Code'],
-          'false'
-        ].join('/');
-        axios({
-          method: "GET",
-          headers: {
-            Authorization: "Bearer " + document.cookie,
-            "Access-Control-Allow-Origin": "*",
-          },
-          url: request_url
-        }).catch(function (error) {
-          console.log(error);
-        })
-      }
-    }
-    openTrade(trade: object) {
-      var answer = window.confirm("Are you sure re-opening this trade?");
-      if (answer) {
-        let request_url = [
-          process.env.VUE_APP_HTTP_URL,
-          'change_trade',
-          trade['Code'],
-          'true'
         ].join('/');
         axios({
           method: "GET",
