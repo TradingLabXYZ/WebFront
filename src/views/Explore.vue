@@ -150,7 +150,6 @@
         var offset = d.scrollTop + window.innerHeight;
         var height = d.offsetHeight;
         if (offset >= height) {
-          alert('offset = ' + offset + ' AND heigth = ' + height);
           this.getLatestEvents();
         }
       }
