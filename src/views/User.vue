@@ -16,18 +16,9 @@
       v-bind:totalTrades="totalTrades"/>
     <div v-if="privacyStatus == 'OK'">
       <TradeConsole
-        tradesType="open"
-        title="Opened Trades"
         v-bind:isMobile="isMobile"
         v-bind:isUserConnected="isUserConnected"
-        v-bind:trades="openedTrades"
-        v-bind:isUserProfile="isUserProfile"/>
-      <TradeConsole
-        tradesType="close"
-        title="Closed Trades"
-        v-bind:isMobile="isMobile"
-        v-bind:isUserConnected="isUserConnected"
-        v-bind:trades="closedTrades"
+        v-bind:trades="trades"
         v-bind:isUserProfile="isUserProfile"/>
     </div>
     <div v-else class="flex items-center justify-center h-screen">
@@ -68,8 +59,7 @@
     subscribers: number = 0;
     joinTime: string = "";
     totalTrades: number = 0;
-    openedTrades: object[] = [];
-    closedTrades: object[] = [];
+    trades: object[] = [];
     isMobile = false;
     get isUserConnected() {
       return metamaskStore.getIsConnected;
@@ -87,8 +77,7 @@
     onUrlChange() {
       this.totalReturn = 0;
       this.roi = 0;
-      this.openedTrades = [];
-      this.closedTrades = [];
+      this.trades = [];
       this.initialiseTradesWs();
     }
     initialiseTradesWs() {
@@ -122,15 +111,10 @@
         this.followers = ws_data.UserDetails.Followers;
         this.subscribers = ws_data.UserDetails.Subscribers;
         this.joinTime = ws_data.UserDetails.JoinTime;
-        this.openedTrades = [];
-        this.closedTrades = [];
+        this.trades = [];
         for (var i in ws_data.Trades) {
           let trade = ws_data.Trades[i];
-          if (trade.IsOpen == "true") {
-            this.openedTrades.push(trade);
-          } else {
-            this.closedTrades.push(trade);
-          }
+          this.trades.push(trade);
         }
       }
     }
