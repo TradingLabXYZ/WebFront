@@ -2,6 +2,11 @@
   <div>
     <Header/>
     <TradeHero
+      @follow="manageFollow"
+      v-bind:isUserConnected="isUserConnected"
+      v-bind:isUserProfile="isUserProfile"
+      v-bind:isFollower="isFollower"
+      v-bind:isSubscriber="isSubscriber"
       v-bind:isMobile="isMobile"
       v-bind:username="username"
       v-bind:twitter="twitter"
@@ -28,6 +33,7 @@
 </template>
 
 <script lang="ts">
+  import axios from "axios";
   import { Component, Vue, Watch } from 'vue-property-decorator';
   import { getModule } from 'vuex-module-decorators'
   import UserModule from '@/store/userModule';
@@ -50,6 +56,8 @@
     isUserProfile: boolean = false;
     totalReturn: number = 0;
     roi: number = 0;
+    isFollower: boolean = false;
+    isSubscriber: boolean = false;
     username: string = '';
     twitter: string = '';
     discord: string = '';
@@ -67,14 +75,14 @@
     created() {
       window.addEventListener('resize', this.checkIfMobile);
       this.checkIfMobile();
+    }
+    @Watch('$route', { immediate: true, deep: true })
+    onUrlChange() {
       let storeWallet = userStore.userDetails['Wallet'];
       let routeWallet = this.$route.params.wallet;
       if (storeWallet == routeWallet) {
         this.isUserProfile = true; 
       }
-    }
-    @Watch('$route', { immediate: true, deep: true })
-    onUrlChange() {
       this.totalReturn = 0;
       this.roi = 0;
       this.trades = [];
@@ -103,6 +111,8 @@
         this.totalReturn = ws_data.TotalReturnUsd;
         this.totalTrades = ws_data.CountTrades;
         this.roi = ws_data.Roi;
+        this.isFollower = ws_data.IsFollower;
+        this.isSubscriber = ws_data.IsSubscriber;
         this.username = ws_data.UserDetails.Username;
         this.twitter = ws_data.UserDetails.Twitter;
         this.discord = ws_data.UserDetails.Discord;
@@ -132,6 +142,38 @@
       } else {
         this.isMobile = false;
       }
+    }
+    manageFollow() {
+      if (!this.isUserConnected) {
+        alert("Please connect your wallet!");
+        return;
+      }
+      let request_url = [
+        process.env.VUE_APP_HTTP_URL,
+        'follow',
+        this.$route.params.wallet,
+        this.isFollower
+      ].join('/');
+      axios({
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + document.cookie,
+          "Access-Control-Allow-Origin": "*",
+        },
+        url: request_url,
+      }).then(response => {
+        if (response.status === 200) {
+          if (this.isFollower) {
+            this.isFollower = false;
+            this.followers = this.followers - 1;
+          } else {
+            this.isFollower = true;
+            this.followers = this.followers + 1;
+          }
+        }
+      }).catch(function (error) {
+        console.log(error);
+      })
     }
   }
 </script>
