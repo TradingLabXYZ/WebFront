@@ -29,12 +29,22 @@
       <div class="font-bold">
         {{ username }}
       </div>
-      <div>
+      <router-link
+        :event="privacyStatus == 'OK' ? 'click' : ''"
+        :to="{path: '/' + $route.params.wallet + '/relations', query: {view: 'followers'}}">
         {{ followers }}
         <span class="text-sm">
           followers
         </span>
-      </div>
+      </router-link>
+      <router-link
+        :event="privacyStatus == 'OK' ? 'click' : ''"
+        :to="{path: '/' + $route.params.wallet + '/relations', query: {view: 'following'}}">
+        {{ followings }}
+        <span class="text-sm">
+          following
+        </span>
+      </router-link>
       <div>
         {{ subscribers }}
         <span class="text-sm">
@@ -111,12 +121,22 @@
         <div class="font-bold">
           {{ username }}
         </div>
-        <div>
+        <router-link
+          :disabled="privacyStatus != 'OK'"
+          :to="{path: '/' + $route.params.wallet + '/relations', query: {view: 'followers'}}">
           {{ followers }}
           <span class="">
             followers
           </span>
-        </div>
+        </router-link>
+        <router-link
+          :disabled="privacyStatus != 'OK'"
+          :to="{path: '/' + $route.params.wallet + '/relations', query: {view: 'following'}}">
+          {{ followings }}
+          <span class="">
+            following
+          </span>
+        </router-link>
         <div>
           {{ subscribers }}
           <span class="">
@@ -186,6 +206,7 @@
     }
   })
   export default class TradeHero extends Vue {
+    @Prop() privacyStatus!: string;
     @Prop() isUserProfile!: boolean;
     @Prop() isUserConnected!: boolean;
     @Prop() isFollower!: boolean;
@@ -197,6 +218,7 @@
     @Prop() github!: string;
     @Prop() profilePicture!: string;
     @Prop() followers!: number;
+    @Prop() followings!: number;
     @Prop() subscribers!: number;
     @Prop() joinTime!: string;
     @Prop() totalTrades!: number;

@@ -107,9 +107,9 @@
 
 
 <script lang="ts">
+  import axios from "axios";
   import { Component, Vue, Watch } from 'vue-property-decorator';
   import Header from '@/components/header/Header.vue';
-  import axios from "axios";
   Component.registerHooks([
     'beforeRouteLeave'
   ])
