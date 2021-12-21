@@ -65,17 +65,19 @@
         </span>
       </div>
     </div>
-    <div class="flex flex-col justify-center space-y-2">
-      <button
-        class="inline-block px-2 py-1 text-sm font-bold text-white rounded bg-homebutton"
-        v-on:click="tempFunction">
-        Follow
-      </button>
-      <button
-        class="inline-block px-2 py-1 text-sm font-bold text-white rounded bg-homebutton"
-        v-on:click="tempFunction">
-        Subscribe
-      </button>
+    <div v-if="!isUserProfile" class="flex flex-col justify-center space-y-2">
+      <div>
+        <button v-if="!isFollower"
+          class="inline-block px-2 py-1 text-sm font-bold text-white bg-green-400 rounded"
+          v-on:click="follow">
+          Follow
+        </button>
+        <button v-else
+          class="inline-block px-2 py-1 text-sm font-normal text-white bg-gray-600 rounded"
+          v-on:click="follow">
+          Followed
+        </button>
+      </div>
     </div>
   </div>
   <div v-else class="flex flex-col py-2 text-white space-y-3 bg-tradehero">
@@ -152,23 +154,27 @@
         </div>
       </div>
     </div>
-    <div class="flex flex-row text-sm justify-evenly space-x-1 text-bold">
-      <button
-        class="inline-block px-2 py-1 font-bold rounded bg-homebutton"
-        v-on:click="tempFunction">
-        Follow
-      </button>
-      <button
-        class="inline-block px-2 py-1 font-bold rounded bg-homebutton"
-        v-on:click="tempFunction">
-        Subscribe
-      </button>
+    <div v-if="!isUserProfile" class="flex flex-row text-sm justify-evenly space-x-1 text-bold">
+      <div>
+        <button
+          v-if="!isFollower"
+          class="inline-block px-2 py-1 font-bold bg-green-400 rounded"
+          v-on:click="follow">
+          Follow
+        </button>
+        <button
+          v-else
+          class="inline-block px-2 py-1 font-normal bg-gray-600 rounded"
+          v-on:click="follow">
+          Followed
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-  import { Component, Vue, Prop } from 'vue-property-decorator';
+  import { Component, Vue, Prop, Emit } from 'vue-property-decorator';
   import Discord from '@/components/svg/Discord.vue';
   import Twitter from '@/components/svg/Twitter.vue';
   import Github from '@/components/svg/Github.vue';
@@ -180,6 +186,10 @@
     }
   })
   export default class TradeHero extends Vue {
+    @Prop() isUserProfile!: boolean;
+    @Prop() isUserConnected!: boolean;
+    @Prop() isFollower!: boolean;
+    @Prop() isSubscriber!: boolean;
     @Prop() isMobile!: boolean;
     @Prop() username!: string;
     @Prop() twitter!: string;
@@ -192,8 +202,7 @@
     @Prop() totalTrades!: number;
     @Prop() totalReturn!: number;
     @Prop() roi!: number;
-    tempFunction() {
-      alert("Coming soon!");
-    }
+    @Emit('follow')
+    follow(){}
   }
 </script>

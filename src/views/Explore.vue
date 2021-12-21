@@ -107,9 +107,12 @@
 
 
 <script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
+  import { Component, Vue, Watch } from 'vue-property-decorator';
   import Header from '@/components/header/Header.vue';
   import axios from "axios";
+  Component.registerHooks([
+    'beforeRouteLeave'
+  ])
   @Component({
     components: {
       Header
@@ -121,7 +124,19 @@
       this.getLatestEvents();
     }
     mounted () {
-      this.scroll()
+      window.addEventListener('scroll', this.scroll);
+    }
+    beforeRouteLeave(_: any, __: any, next: any) {
+      window.removeEventListener('scroll', this.scroll);
+      next()
+    }
+    scroll () {
+      var d = document.documentElement;
+      var offset = d.scrollTop + window.innerHeight;
+      var height = d.offsetHeight;
+      if (offset >= height) {
+        this.getLatestEvents();
+      }
     }
     getLatestEvents() {
       let request_url = [
@@ -143,16 +158,6 @@
       }).catch(function (error) {
         console.log(error);
       })
-    }
-    scroll () {
-      window.onscroll = () => {
-        var d = document.documentElement;
-        var offset = d.scrollTop + window.innerHeight;
-        var height = d.offsetHeight;
-        if (offset >= height) {
-          this.getLatestEvents();
-        }
-      }
     }
   }
 </script>
