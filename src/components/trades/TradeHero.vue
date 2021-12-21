@@ -29,12 +29,12 @@
       <div class="font-bold">
         {{ username }}
       </div>
-      <div>
+      <router-link :to="'/' + $route.params.wallet + '/relations'">
         {{ followers }}
         <span class="text-sm">
           followers
         </span>
-      </div>
+      </router-link>
       <div>
         {{ subscribers }}
         <span class="text-sm">
@@ -111,12 +111,12 @@
         <div class="font-bold">
           {{ username }}
         </div>
-        <div>
+        <router-link :to="'/' + $route.params.wallet + '/relations'">
           {{ followers }}
           <span class="">
             followers
           </span>
-        </div>
+        </router-link>
         <div>
           {{ subscribers }}
           <span class="">
