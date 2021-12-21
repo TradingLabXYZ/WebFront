@@ -3,6 +3,7 @@
     <Header/>
     <TradeHero
       @follow="manageFollow"
+      v-bind:privacyStatus="privacyStatus"
       v-bind:isUserConnected="isUserConnected"
       v-bind:isUserProfile="isUserProfile"
       v-bind:isFollower="isFollower"
@@ -14,6 +15,7 @@
       v-bind:github="github"
       v-bind:profilePicture="profilePicture"
       v-bind:followers="followers"
+      v-bind:followings="followings"
       v-bind:subscribers="subscribers"
       v-bind:joinTime="joinTime"
       v-bind:totalReturn="totalReturn"
@@ -64,6 +66,7 @@
     github: string = '';
     profilePicture: string = '';
     followers: number = 0;
+    followings: number = 0;
     subscribers: number = 0;
     joinTime: string = "";
     totalTrades: number = 0;
@@ -126,6 +129,7 @@
         this.github = ws_data.UserDetails.Github;
         this.profilePicture = ws_data.UserDetails.ProfilePicture;
         this.followers = ws_data.UserDetails.Followers;
+        this.followings = ws_data.UserDetails.Followings;
         this.subscribers = ws_data.UserDetails.Subscribers;
         this.joinTime = ws_data.UserDetails.JoinTime;
         this.trades = [];
