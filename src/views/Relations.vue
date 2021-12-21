@@ -17,13 +17,51 @@
           Following
         </div>
       </div>
-      <div class="flex justify-center">
-        <section v-if="relationSection=='followers'">
-          LIST OF FOLLOWERS
-        </section> 
-        <section v-if="relationSection=='following'">
-          LIST OF FOLLOWINGS
-        </section> 
+      <div
+        v-if="relationSection=='followers'"
+        class="flex flex-col justify-center mt-3 space-y-5">
+        <div
+          v-for="(follower) in followers"
+          :key="follower.Wallet"
+          class="flex flex-row justify-evenly">
+          <router-link :to="'/' + follower.Wallet" class="flex flex-row p-2 border-b-2 space-x-4">
+            <img
+              :src="follower.ProfilePicture"
+              height="60" width="60"
+              class="rounded-full">
+            <div class="flex flex-col justify-center">
+              <div class="text-base text-right">
+                {{ follower.CountTrades }} Trades
+              </div>
+              <div class="text-xs text-gray-400">
+                {{ follower.Wallet }} 
+              </div>
+            </div>
+          </router-link>
+        </div>
+      </div>
+      <div
+        v-if="relationSection=='following'"
+        class="flex flex-col justify-center mt-3 space-y-5">
+        <div
+          v-for="(following) in followings"
+          :key="following.Wallet"
+          class="flex flex-row justify-evenly">
+          <router-link :to="'/' + following.Wallet" class="flex flex-row p-2 border-b-2 space-x-4">
+            <img
+              :src="following.ProfilePicture"
+              height="60" width="60"
+              class="rounded-full">
+            <div class="flex flex-col justify-center">
+              <div class="text-base text-right">
+                {{ following.CountTrades }} Trades
+              </div>
+              <div class="text-xs text-gray-400">
+                {{ following.Wallet }} 
+              </div>
+            </div>
+          </router-link>
+        </div>
       </div>
     </div>
   </div>
@@ -32,7 +70,7 @@
 
 <script lang="ts">
   import axios from "axios";
-  import { Component, Vue } from 'vue-property-decorator';
+  import { Component, Vue, Prop } from 'vue-property-decorator';
   import Header from '@/components/header/Header.vue';
   @Component({
     components: {
@@ -42,7 +80,14 @@
   export default class Settings extends Vue {
     relationSection: string = 'followers';
     followers: object[] = [];
-    following: object[] = [];
+    followings: object[] = [];
+    created() {
+      this.getRelations();
+      let view = this.$route.query.view;
+      if (typeof view !== "undefined") {
+        this.relationSection = view.toString();
+      }
+    }
     changeRelationsSection(section: string) {
       this.relationSection = section;
     }
@@ -61,7 +106,8 @@
         url: request_url,
       }).then(response => {
         if (response.status === 200) {
-          // TODO
+          this.followers = response.data['Followers'];
+          this.followings = response.data['Following'];
         }
       }).catch(function (error) {
         console.log(error);

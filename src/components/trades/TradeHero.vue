@@ -29,10 +29,18 @@
       <div class="font-bold">
         {{ username }}
       </div>
-      <router-link :to="'/' + $route.params.wallet + '/relations'">
+      <router-link
+        :to="{path: '/' + $route.params.wallet + '/relations', query: {view: 'followers'}}">
         {{ followers }}
         <span class="text-sm">
           followers
+        </span>
+      </router-link>
+      <router-link
+        :to="{path: '/' + $route.params.wallet + '/relations', query: {view: 'following'}}">
+        {{ followings }}
+        <span class="text-sm">
+          following
         </span>
       </router-link>
       <div>
@@ -111,10 +119,18 @@
         <div class="font-bold">
           {{ username }}
         </div>
-        <router-link :to="'/' + $route.params.wallet + '/relations'">
+        <router-link
+          :to="{path: '/' + $route.params.wallet + '/relations', query: {view: 'followers'}}">
           {{ followers }}
           <span class="">
             followers
+          </span>
+        </router-link>
+        <router-link
+          :to="{path: '/' + $route.params.wallet + '/relations', query: {view: 'following'}}">
+          {{ followings }}
+          <span class="">
+            following
           </span>
         </router-link>
         <div>
@@ -197,6 +213,7 @@
     @Prop() github!: string;
     @Prop() profilePicture!: string;
     @Prop() followers!: number;
+    @Prop() followings!: number;
     @Prop() subscribers!: number;
     @Prop() joinTime!: string;
     @Prop() totalTrades!: number;
