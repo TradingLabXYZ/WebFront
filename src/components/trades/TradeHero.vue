@@ -45,7 +45,7 @@
         Joined {{ joinTime }}
       </div>
     </div>
-    <div class="flex flex-col justify-center text-white text-md">
+    <div class="flex flex-col justify-center text-2xl text-white">
       <div class="">
         {{ totalTrades }}
         <span class="text-sm">

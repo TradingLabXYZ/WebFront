@@ -8,23 +8,30 @@
         TradingLab
       </div>
     </div>
-    <div
-      v-if="!isUserConnected"
+    <div v-if="!isUserConnected && currentRoute == '/'"
       class="flex flex-row justify-around xs:text-sm sm:text-base xs:space-x-0 sm:space-x-4 text-tradenew">
-      <button class="inline-block font-bold rounded xs:p-1 sm:p-2 hover:bg-header-dark">
+      <button class="font-bold rounded xs:p-1 sm:p-2 hover:bg-header-dark">
         <a href="https://github.com/TradingLabXYZ/Docs/tree/main/Whitepaper" target="_blank">
           Whitepaper
         </a>
       </button>
-      <button class="inline-block font-bold rounded xs:p-1 sm:p-2 hover:bg-header-dark">
+      <button class="font-bold rounded xs:p-1 sm:p-2 hover:bg-header-dark">
         <a href="https://discord.gg/PEEUfrbQ9c" target="_blank">
           Community
         </a>
       </button>
       <Connect class="xs:p-1 sm:p-2"/>
     </div>
-    <div
-      v-else
+    <div v-if="!isUserConnected && currentRoute != '/'"
+      class="flex flex-row justify-around xs:text-sm sm:text-base xs:space-x-0 sm:space-x-4 text-tradenew">
+      <button class="font-bold rounded xs:p-1 sm:p-2 hover:bg-header-dark">
+        <router-link to="/explore">
+          Explore
+        </router-link>
+      </button>
+      <Connect class="xs:p-1 sm:p-2"/>
+    </div>
+    <div v-if="isUserConnected"
       class="flex flex-row justify-around xs:text-sm sm:text-base xs:space-x-0 sm:space-x-4 text-tradenew">
       <button class="inline-block font-bold rounded xs:p-1 sm:p-2 hover:bg-header-dark">
         <router-link to="/">
@@ -55,6 +62,9 @@
   export default class Header extends Vue {
     get isUserConnected() {
       return metamaskStore.getIsConnected;
+    }
+    get currentRoute() {
+      return this.$route.path;
     }
   }
 </script>
