@@ -26,8 +26,8 @@
         v-bind:trades="trades"
         v-bind:isUserProfile="isUserProfile"/>
     </div>
-    <div v-else class="flex items-center justify-center h-screen">
-      {{ privacyReason }}
+    <div v-else class="flex flex-col justify-around text-xl text-center sm:text-4xl h-80">
+      {{ dynamicPrivacyReason }}
     </div>
   </div>
 </template>
@@ -87,6 +87,13 @@
       this.roi = 0;
       this.trades = [];
       this.initialiseTradesWs();
+    }
+    get dynamicPrivacyReason() {
+      if (this.privacyReason == 'user is not follower') {
+        return 'This user shares trades only with followers!';
+      } else {
+        return this.privacyReason;
+      }
     }
     initialiseTradesWs() {
       var sessionId: string;
@@ -170,6 +177,7 @@
             this.isFollower = true;
             this.followers = this.followers + 1;
           }
+          this.initialiseTradesWs();
         }
       }).catch(function (error) {
         console.log(error);
