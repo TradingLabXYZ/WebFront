@@ -30,6 +30,7 @@
         {{ username }}
       </div>
       <router-link
+        :event="privacyStatus == 'OK' ? 'click' : ''"
         :to="{path: '/' + $route.params.wallet + '/relations', query: {view: 'followers'}}">
         {{ followers }}
         <span class="text-sm">
@@ -37,6 +38,7 @@
         </span>
       </router-link>
       <router-link
+        :event="privacyStatus == 'OK' ? 'click' : ''"
         :to="{path: '/' + $route.params.wallet + '/relations', query: {view: 'following'}}">
         {{ followings }}
         <span class="text-sm">
@@ -120,6 +122,7 @@
           {{ username }}
         </div>
         <router-link
+          :disabled="privacyStatus != 'OK'"
           :to="{path: '/' + $route.params.wallet + '/relations', query: {view: 'followers'}}">
           {{ followers }}
           <span class="">
@@ -127,6 +130,7 @@
           </span>
         </router-link>
         <router-link
+          :disabled="privacyStatus != 'OK'"
           :to="{path: '/' + $route.params.wallet + '/relations', query: {view: 'following'}}">
           {{ followings }}
           <span class="">
@@ -202,6 +206,7 @@
     }
   })
   export default class TradeHero extends Vue {
+    @Prop() privacyStatus!: string;
     @Prop() isUserProfile!: boolean;
     @Prop() isUserConnected!: boolean;
     @Prop() isFollower!: boolean;

@@ -3,6 +3,7 @@
     <Header/>
     <TradeHero
       @follow="manageFollow"
+      v-bind:privacyStatus="privacyStatus"
       v-bind:isUserConnected="isUserConnected"
       v-bind:isUserProfile="isUserProfile"
       v-bind:isFollower="isFollower"
