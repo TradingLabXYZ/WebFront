@@ -377,27 +377,8 @@
       })
     }
     created() {
-      this.getPairs();
-    }
-    getPairs() {
-      let request_url = [
-        process.env.VUE_APP_HTTP_URL,
-        'get_pairs'
-      ].join('/');
-      axios({
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + document.cookie,
-          "Access-Control-Allow-Origin": "*",
-        },
-        url: request_url
-      }).then(response => {
-        if (response.status === 200) {
-          this.cryptoPairs = response.data;
-        }
-      }).catch(function (error) {
-        console.log(error);
-      })
+      this.cryptoPairs = JSON.parse(
+        localStorage.getItem('cryptoPairs') || '{}');
     }
     addSubtrade() {
       this.subtrades.push(
