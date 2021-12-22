@@ -101,14 +101,16 @@
                 <td class="py-4 text-center text-gray-700 text-md">
                   <img
                     :src="trade.FirstPairUrlIcon"
-                    width="15%"
+                    height="30"
+                    width="30"
                     class="inline-block align-middle"/>
                   {{ trade.FirstPairSymbol }}
                 </td>
                 <td class="py-4 text-center text-gray-700 text-md">
                   <img
                     :src="trade.SecondPairUrlIcon"
-                    width="15%"
+                    height="30"
+                    width="30"
                     class="inline-block align-middle"/>
                   {{ trade.SecondPairSymbol }}
                 </td>
@@ -345,12 +347,14 @@
             <div>
               <img
                 :src="trade.FirstPairUrlIcon"
-                class="w-5"/>
+                height="20"
+                width="20"/>
             </div>
             <div>
               <img
                 :src="trade.SecondPairUrlIcon"
-                class="w-5"/>
+                height="20"
+                width="20"/>
             </div>
           </div>
           <div
