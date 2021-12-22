@@ -16,7 +16,7 @@ import Home from '../views/Home.vue'
 import Explore from '../views/Explore.vue'
 import UserView from '../views/User.vue'
 import Settings from '../views/Settings.vue'
-import Relations from '../views/Relations.vue'
+import Connections from '../views/Connections.vue'
 
 const routes: Array<RouteConfig> = [
   {
@@ -77,9 +77,9 @@ const routes: Array<RouteConfig> = [
     }
   },
   {
-    path: '/:wallet/relations',
-    name: 'Relations',
-    component: Relations,
+    path: '/:wallet/connections',
+    name: 'Connections',
+    component: Connections,
     async beforeEnter ({}, {}, next) {
       if (await isAllowedToGoNext()) {
         var sessionId = document.cookie.split("sessionId=")[1].split(";")[0];

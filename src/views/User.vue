@@ -29,7 +29,7 @@
         v-bind:isUserProfile="isUserProfile"/>
     </div>
     <div v-else class="flex flex-col justify-around text-xl text-center sm:text-4xl h-80">
-      {{ dynamicPrivacyReason }}
+      {{ privacyMessage }}
     </div>
   </div>
 </template>
@@ -55,6 +55,7 @@
   export default class User extends Vue {
     privacyStatus: string = '';
     privacyReason: string = '';
+    privacyMessage: string = '';
     isUserProfile: boolean = false;
     totalReturn: number = 0;
     roi: number = 0;
@@ -91,13 +92,6 @@
       this.trades = [];
       this.initialiseTradesWs();
     }
-    get dynamicPrivacyReason() {
-      if (this.privacyReason == 'user is not follower') {
-        return 'This user shares trades only with followers!';
-      } else {
-        return this.privacyReason;
-      }
-    }
     initialiseTradesWs() {
       var sessionId: string;
       if (userStore.userDetails['SessionId']) {
@@ -118,6 +112,7 @@
         let ws_data = JSON.parse(event.data);
         this.privacyStatus = ws_data.PrivacyStatus.Status;
         this.privacyReason = ws_data.PrivacyStatus.Reason;
+        this.privacyMessage = ws_data.PrivacyStatus.Message;
         this.totalReturn = ws_data.TotalReturnUsd;
         this.totalTrades = ws_data.CountTrades;
         this.roi = ws_data.Roi;
