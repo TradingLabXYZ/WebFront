@@ -31,7 +31,7 @@
       </div>
       <router-link
         :event="privacyStatus == 'OK' ? 'click' : ''"
-        :to="{path: '/' + $route.params.wallet + '/relations', query: {view: 'followers'}}">
+        :to="{path: '/' + $route.params.wallet + '/connections', query: {view: 'followers'}}">
         {{ followers }}
         <span class="text-sm">
           followers
@@ -39,7 +39,7 @@
       </router-link>
       <router-link
         :event="privacyStatus == 'OK' ? 'click' : ''"
-        :to="{path: '/' + $route.params.wallet + '/relations', query: {view: 'following'}}">
+        :to="{path: '/' + $route.params.wallet + '/connections', query: {view: 'following'}}">
         {{ followings }}
         <span class="text-sm">
           following
@@ -123,7 +123,7 @@
         </div>
         <router-link
           :disabled="privacyStatus != 'OK'"
-          :to="{path: '/' + $route.params.wallet + '/relations', query: {view: 'followers'}}">
+          :to="{path: '/' + $route.params.wallet + '/connections', query: {view: 'followers'}}">
           {{ followers }}
           <span class="">
             followers
@@ -131,7 +131,7 @@
         </router-link>
         <router-link
           :disabled="privacyStatus != 'OK'"
-          :to="{path: '/' + $route.params.wallet + '/relations', query: {view: 'following'}}">
+          :to="{path: '/' + $route.params.wallet + '/connections', query: {view: 'following'}}">
           {{ followings }}
           <span class="">
             following
