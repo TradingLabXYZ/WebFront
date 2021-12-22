@@ -123,6 +123,7 @@
         this.cleanSession();
         return;
       }
+      await this.getCryptoPairs();
       await this.generateSession(accounts[0])
       this.defineMetamaskStoreVariables();
       if (this.$route.params['wallet'] == accounts[0]) {
@@ -173,6 +174,32 @@
     }
     async disconnectMetamask() {
       await this.cleanSession();
+      localStorage.clear();
+    }
+    async getCryptoPairs() {
+      if (localStorage.getItem('cryptoPairs') === null) {
+        let request_url = [
+          process.env.VUE_APP_HTTP_URL,
+          'get_pairs'
+        ].join('/');
+        axios({
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + document.cookie,
+            "Access-Control-Allow-Origin": "*",
+          },
+          url: request_url
+        }).then(response => {
+          if (response.status === 200) {
+            localStorage.setItem(
+              'cryptoPairs',
+              JSON.stringify(response.data)
+            );
+          }
+        }).catch(function (error) {
+          console.log(error);
+        })
+      }
     }
   }
 </script>
