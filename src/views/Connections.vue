@@ -7,13 +7,13 @@
         <div
           class="px-6 py-2 mr-1 text-xl border-2 rounded-md"
           :class="connectionSection=='followers' ? 'bg-tradehero text-white font-semibold' : 'bg-white'"
-          @click="changeconnectionsSection('followers')">
+          @click="changeConnectionsSection('followers')">
           Followers
         </div>
         <div
           class="px-6 py-2 mr-1 text-xl border-2 rounded-md"
           :class="connectionSection=='following' ? 'bg-tradehero text-white font-semibold' : 'bg-white'"
-          @click="changeconnectionsSection('following')">
+          @click="changeConnectionsSection('following')">
           Following
         </div>
       </div>
