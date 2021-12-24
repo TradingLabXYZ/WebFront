@@ -17,7 +17,7 @@
           <span class="">d</span>
         </div>
         <div class="p-2 tracking-widest xs:text-3xl sm:text-6xl">
-          Crypto Trading Community
+          Crypto Portfolio
         </div>
         <div class="flex flex-row justify-center p-2 mt-4">
           <div class="text-xl font-light">
