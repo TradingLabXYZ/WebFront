@@ -6,13 +6,13 @@
       <div class="flex flex-row justify-center mb-4">
         <div
           class="px-6 py-2 mr-1 text-xl border-2 rounded-md"
-          :class="connectionSection=='followers' ? 'bg-tradehero text-white font-semibold' : 'bg-white'"
+          :class="connectionSection=='followers' ? 'bg-blueshine text-white font-semibold' : 'bg-white'"
           @click="changeConnectionsSection('followers')">
           Followers
         </div>
         <div
           class="px-6 py-2 mr-1 text-xl border-2 rounded-md"
-          :class="connectionSection=='following' ? 'bg-tradehero text-white font-semibold' : 'bg-white'"
+          :class="connectionSection=='following' ? 'bg-blueshine text-white font-semibold' : 'bg-white'"
           @click="changeConnectionsSection('following')">
           Following
         </div>

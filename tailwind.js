@@ -1,7 +1,7 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 module.exports = {
   purge: [],
-  darkMode: false, // or 'media' or 'class'
+  darkMode: 'class',
   theme: {
     fontSize: {
       xxs: '.5rem',
@@ -13,33 +13,21 @@ module.exports = {
     },
     extend: {
       colors: {
-        // fonts
-        tradebigtext: "#104248",
-        tradesmalltext: "#1A1A1A",
-        // backgrounds
-        header: {
-          light: "#00e7ff",
-          DEFAULT: "#00BED5",
-          dark: "#018291",
-          ultradark: "#013940",
-        },
-        popoverUserConsole: {
-          text: "#B1ADAD"
-        },
-        tradehero: "#3400FA",
-        tradetablehead: "#D2F8FD",
-        tradepositive: "#00BED5",
-        tradenegative: "#FA6060",
-        tradenew: "#D2F8FD",
-        subtradenew: "#AEEBF3",
-        subtradesection: "#ECFDFF",
-        subtradeeditable: "#D0F9FF",
-        subtradeeditableborder: "#6ADFED",
-        tradenewbuttonconfirm: "#3400FA", 
-        tradenewbuttoncancel: "#B8E7EF",
-        homebutton: "#C901A1",
-        homeherotext: "#1B064C",
-        hometextband: "#710B79"
+        blueshine: "#3400FA",
+        deepgray: "#104248",
+        azure: "#00e7ff",
+        lagune: "#00BED5",
+        deeplagune: "#018291",
+        softlagune: "#6ADFED",
+        verysoftcyan: "#AEEBF3",
+        cream: "#ECFDFF",
+        dutchorange: "#FA6060",
+        magentashine: "#C901A1",
+        deepviolet: "#1B064C",
+        deepmagenta: "#710B79",
+        deeppurple: "#4200FF",
+        universe: "#121634",
+        oldpurple: "#252083"
       }
     },
   },

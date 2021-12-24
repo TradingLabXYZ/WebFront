@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="border-2 border-header-dark rounded-md hover:border-header-light hover:bg-tradehero hover:text-white">
+    <div class="border-2 border-header-dark rounded-md hover:border-header-light hover:bg-blueshine hover:text-white">
       <button
         id="buttonWallet"
         @click="toggleMenu"

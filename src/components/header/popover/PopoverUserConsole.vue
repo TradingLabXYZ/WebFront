@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-3 text-white shadow-md text-header-light border-1 bg-header-ultradark rounded-md">
+  <div class="mt-3 text-white shadow-md text-header-light border-1 bg-deepgray rounded-md">
     <div class="px-3 pt-3 divide-y divide-gray-500">
       <section>
         <div class="p-2 tracking-widest grid grid-cols-6">
@@ -34,12 +34,12 @@
         </div>
       </section>
       <section class="flex justify-around p-3 px-4 py-1">
-        <Settings class="inline-block p-2 mr-2 font-bold rounded hover:bg-header-light hover:text-header-dark"/>
+        <Settings class="inline-block p-2 mr-2 font-bold rounded hover:bg-azure hover:text-header-dark"/>
       </section>
       <section class="flex justify-around p-3 px-4 py-1">
         <button
           id="disconnectButton"
-          class="inline-block p-2 mr-2 font-bold rounded hover:bg-header-light hover:text-header-dark"
+          class="inline-block p-2 mr-2 font-bold rounded hover:bg-azure hover:text-header-dark"
           @click="disconnectMetamask">
           Disconnect
         </button>

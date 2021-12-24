@@ -1,8 +1,8 @@
 <template>
   <div
     v-if="!isMobile"
-    class="p-5 mb-5 rounded-3xl bg-tradenew divide-y divide-subtradenew">
-    <div class="p-1 text-2xl font-bold text-center text-tradebigtext">
+    class="p-5 mb-5 rounded-3xl bg-verysoftcyan divide-y divide-verysoftcyan">
+    <div class="p-1 text-2xl font-bold text-center text-deepgray">
       Add a new trade
     </div>
     <div>
@@ -50,7 +50,7 @@
         v-for="(subtrade, i) in subtrades"
         :key="subtrade.Timestamp"
         class="mb-8 ml-8 rounded-xl grid grid-cols-12">
-        <div class="bg-subtradenew rounded-3xl col-span-11">
+        <div class="bg-verysoftcyan rounded-3xl col-span-11">
           <div class="pt-4 pl-4 pr-4 mt-3 grid grid-cols-6">
             <div class="ml-4 mr-4 rounded-xl col-span-2">
               <label class="text-xs text-subtradelabel">
@@ -142,19 +142,19 @@
       <div class="flex justify-center">
         <button
           @click="confirmInsertTrade()"
-          class="p-2 mr-2 text-lg text-white rounded-lg bg-tradenewbuttonconfirm">
+          class="p-2 mr-2 text-lg text-white rounded-lg bg-blueshine">
           CONFIRM
         </button>
         <button
           @click="cancelInsertTrade()"
-          class="p-2 ml-2 text-lg rounded-lg bg-tradenewbuttoncancel">
+          class="p-2 ml-2 text-lg rounded-lg bg-verysoftcyan">
           CANCEL
         </button>
       </div>
     </div>
   </div>
   <div v-else class="">
-    <div class="p-1 text-xs font-bold text-center text-tradebigtext">
+    <div class="p-1 text-xs font-bold text-center text-deepgray">
       Add a new trade
     </div>
     <div class="mb-2">
@@ -202,7 +202,7 @@
     <div
       v-for="(subtrade, i) in subtrades"
       :key="subtrade.Timestamp"
-      class="p-1 px-3 bg-subtradeeditable">
+      class="p-1 px-3 bg-verysoftcyan">
       <div class="text-xs font-bold text-center">
         Subtrade {{ i + 1 }}
       </div>
@@ -296,12 +296,12 @@
     <div class="flex justify-center mt-2 mb-4">
       <button
         @click="confirmInsertTrade()"
-        class="p-1 mr-1 text-xs text-white rounded-lg bg-tradenewbuttonconfirm">
+        class="p-1 mr-1 text-xs text-white rounded-lg bg-blueshine">
         CONFIRM
       </button>
       <button
         @click="cancelInsertTrade()"
-        class="p-1 text-xs rounded-lg bg-tradenewbuttoncancel">
+        class="p-1 text-xs rounded-lg bg-verysoftcyan">
         CANCEL
       </button>
     </div>

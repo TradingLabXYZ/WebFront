@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col justify-center py-16 text-center bg-header space-y-2">
+  <div class="flex flex-col justify-center py-16 text-center bg-lagune space-y-2">
     <div class="flex flex-row justify-center">
       <button>
         <a href="https://discord.gg/PEEUfrbQ9c" target="_blank">

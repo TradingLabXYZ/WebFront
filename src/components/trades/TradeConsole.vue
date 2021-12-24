@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="!isMobile">
-      <div class="h-20 bg-white grid grid-cols-5">
+      <div class="h-20 bg-white dark:bg-universe grid grid-cols-5 dark:text-cream">
         <div class="col-span-1"></div>
         <div class="flex justify-start mt-8 md-8 col-span-2">
           <div class="text-2xl font-bold">
@@ -34,7 +34,7 @@
       </div>
       <div class="flex justify-center mb-10">
         <table>
-          <thead class="bg-tradetablehead">
+          <thead class="bg-verysoftcyan">
             <tr>
               <th 
                 class="px-1 text-xs font-medium tracking-wider text-gray-800"
@@ -136,7 +136,7 @@
                 </td>
                 <td
                   class="py-4 text-center text-gray-700 text-md"
-                  :class="trade.Roi > 0 ? 'text-tradepositive' : 'text-tradenegative'">
+                  :class="trade.Roi > 0 ? 'text-lagune' : 'text-dutchorange'">
                   {{ trade.Roi + "%" }}
                 </td>
                 <td
@@ -155,7 +155,7 @@
               <tr
                 :key="'B' + q"
                 v-if="opened.includes(trade.Code)"
-                class="bg-subtradesection">
+                class="bg-cream">
                 <td 
                   colspan="10"
                   class="text-xs"> 
@@ -194,23 +194,23 @@
                             </div>
                           </td>
                             <td>
-                            <div class="w-40 border-b border-subtradeeditableborder">
+                            <div class="w-40 border-b border-softlagune">
                             <input
                               :disabled="!isUserConnected || !isUserProfile"
                               name="formTimestamp" 
                               placeholder="Timestamp"
                               type="datetime-local"
-                              class="w-full text-center bg-subtradeeditable"
+                              class="w-full text-center bg-verysoftcyan"
                               v-model="subtrade.CreatedAt"
                               @change="updateSubtrade(subtrade)">
                               </div>
                           </td>
                           <td>
-                            <div class="border-b border-subtradeeditableborder">
+                            <div class="border-b border-softlagune">
                               <select
                                 :disabled="!isUserConnected || !isUserProfile"
                                 name="formType" 
-                                class="text-center bg-subtradeeditable"
+                                class="text-center bg-verysoftcyan"
                                 v-model="subtrade.Type"
                                 @change="updateSubtrade(subtrade)">
                                 <option value="BUY">BUY</option>
@@ -219,19 +219,19 @@
                             </div>
                           </td>
                           <td>
-                            <div class="border-b border-subtradeeditableborder">
+                            <div class="border-b border-softlagune">
                               <input
                                 :disabled="!isUserConnected || !isUserProfile"
                                 name="formReason" 
                                 placeholder="Insert a reason" 
                                 type="text"
-                                class="text-center bg-subtradeeditable"
+                                class="text-center bg-verysoftcyan"
                                 v-model="subtrade.Reason"
                                 @change="updateSubtrade(subtrade)">
                             </div>
                           </td>
                           <td>
-                            <div class="w-24 border-b border-subtradeeditableborder">
+                            <div class="w-24 border-b border-softlagune">
                               <input 
                                 :disabled="!isUserConnected || !isUserProfile"
                                 min="0.00000000001"
@@ -239,13 +239,13 @@
                                 placeholder="Quantity"
                                 type="number"
                                 step="any"
-                                class="w-full text-center bg-subtradeeditable"
+                                class="w-full text-center bg-verysoftcyan"
                                 v-model.number="subtrade.Quantity"
                                 @change="updateSubtrade(subtrade)">
                             </div>
                           </td>
                           <td>
-                            <div class="w-24 border-b border-subtradeeditableborder">
+                            <div class="w-24 border-b border-softlagune">
                               <input
                                 :disabled="!isUserConnected || !isUserProfile"
                                 min="0.00000000001"
@@ -253,13 +253,13 @@
                                 placeholder="Avg Price"
                                 type="number"
                                 step="any"
-                                class="w-full text-center bg-subtradeeditable"
+                                class="w-full text-center bg-verysoftcyan"
                                 v-model.number="subtrade.AvgPrice"
                                 @change="updateSubtrade(subtrade)">
                             </div>
                           </td>
                           <td>
-                            <div class="w-24 border-b border-subtradeeditableborder">
+                            <div class="w-24 border-b border-softlagune">
                               <input
                                 :disabled="!isUserConnected || !isUserProfile"
                                 min="0.00000000001"
@@ -267,7 +267,7 @@
                                 placeholder="Total"
                                 type="number"
                                 step="any"
-                                class="w-full text-center bg-subtradeeditable"
+                                class="w-full text-center bg-verysoftcyan"
                                 v-model.number="subtrade.Total"
                                 @change="updateSubtrade(subtrade)">
                             </div>
@@ -340,7 +340,7 @@
       <div
         v-for="(trade, q) in trades"
         v-bind:key="q">
-        <div class="flex flex-row justify-around mx-1 mb-1 bg-subtradesection">
+        <div class="flex flex-row justify-around mx-1 mb-1 bg-cream">
           <div
             class="flex flex-col justify-center"
             @click="toggle(trade.Code)">
@@ -401,7 +401,7 @@
             @click="toggle(trade.Code)">
             <span
               class="text-sm"
-              :class="trade.Roi > 0 ? 'text-tradepositive' : 'text-tradenegative'">
+              :class="trade.Roi > 0 ? 'text-lagune' : 'text-dutchorange'">
               {{ trade.Roi }}%
             </span>
           </div>
@@ -423,7 +423,7 @@
           :key="'B' + q"
           v-if="opened.includes(trade.Code)">
           <div
-            class="mx-10 mb-3 bg-red-100 text-xxs bg-subtradesection"
+            class="mx-10 mb-3 bg-red-100 text-xxs bg-cream"
             v-for="(subtrade, i) in trade.Subtrades"
             :key="i">
             <div class="flex justify-center">
@@ -434,7 +434,7 @@
                   name="formTimestamp" 
                   placeholder="Timestamp"
                   type="datetime-local"
-                  class="mr-1 text-center border-b w-30 bg-subtradeeditable border-subtradeeditableborder"
+                  class="mr-1 text-center border-b w-30 bg-verysoftcyan border-softlagune"
                   v-model="subtrade.CreatedAt"
                   @change="updateSubtrade(subtrade)">
                 </div>
@@ -445,7 +445,7 @@
                   name="formReason" 
                   placeholder="Insert a reason" 
                   type="text"
-                  class="text-center border-b bg-subtradeeditable border-subtradeeditableborder"
+                  class="text-center border-b bg-verysoftcyan border-softlagune"
                   v-model="subtrade.Reason"
                   @change="updateSubtrade(subtrade)">
               </div>
@@ -456,7 +456,7 @@
                 <select
                   :disabled="!isUserConnected || !isUserProfile"
                   name="formType" 
-                  class="mr-1 text-center border-b bg-subtradeeditable border-subtradeeditableborder"
+                  class="mr-1 text-center border-b bg-verysoftcyan border-softlagune"
                   v-model="subtrade.Type"
                   @change="updateSubtrade(subtrade)">
                   <option value="BUY">BUY</option>
@@ -472,7 +472,7 @@
                   placeholder="Quantity"
                   type="number"
                   step="any"
-                  class="w-10 mr-1 text-center border-b bg-subtradeeditable border-subtradeeditableborder"
+                  class="w-10 mr-1 text-center border-b bg-verysoftcyan border-softlagune"
                   v-model.number="subtrade.Quantity"
                   @change="updateSubtrade(subtrade)">
               </div>
@@ -485,7 +485,7 @@
                   placeholder="Avg Price"
                   type="number"
                   step="any"
-                  class="w-20 mr-1 text-center border-b bg-subtradeeditable col-span-1 border-subtradeeditableborder"
+                  class="w-20 mr-1 text-center border-b bg-verysoftcyan col-span-1 border-softlagune"
                   v-model.number="subtrade.AvgPrice"
                   @change="updateSubtrade(subtrade)">
               </div>
@@ -498,7 +498,7 @@
                   placeholder="Total"
                   type="number"
                   step="any"
-                  class="w-20 mr-1 text-center border-b bg-subtradeeditable col-span-1 border-subtradeeditableborder"
+                  class="w-20 mr-1 text-center border-b bg-verysoftcyan col-span-1 border-softlagune"
                   v-model.number="subtrade.Total"
                   @change="updateSubtrade(subtrade)">
               </div>
