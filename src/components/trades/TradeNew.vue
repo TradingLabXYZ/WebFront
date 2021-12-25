@@ -1,26 +1,25 @@
 <template>
   <div
     v-if="!isMobile"
-    class="p-5 mb-5 rounded-3xl bg-verysoftcyan divide-y divide-verysoftcyan">
-    <div class="p-1 text-2xl font-bold text-center text-deepgray">
+    class="p-5 mb-5 rounded-3xl bg-verysoftcyan dark:bg-deeppurple">
+    <div class="p-1 text-2xl font-bold text-center text-deepgray dark:text-gray-200">
       Add a new trade
     </div>
-    <div>
       <div class="m-1 mb-3 grid grid-cols-4">
         <div class="p-2 mx-4 rounded-xl col-span-2">
-          <label class="text-xs text-subtradelabel">
+          <label class="text-xs text-subtradelabel dark:text-gray-200">
             Exchange
           </label>
           <input
-            class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
+            class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500 dark:bg-deepmagenta dark:text-gray-200"
             v-model="exchange">
         </div>
         <div class="p-2 mx-4 rounded-xl col-span-1">
-          <label class="text-xs text-subtradelabel">
+          <label class="text-xs text-subtradelabel dark:text-gray-200">
             Selling
           </label>
           <select
-            class="w-full p-2 text-gray-800 bg-white border border-gray-200 border-gray-500"
+            class="w-full p-2 text-gray-800 bg-white border border-gray-200 border-gray-500 dark:bg-deepmagenta dark:text-gray-200"
             v-model="firstPairCoinId">
             <option
               v-for="(key, value) in cryptoPairs" 
@@ -31,11 +30,11 @@
           </select>
         </div>
         <div class="p-2 mx-4 rounded-xl col-span-1">
-          <label class="text-xs text-subtradelabel">
+          <label class="text-xs text-subtradelabel dark:text-gray-200">
             Buying
           </label>
           <select
-            class="w-full p-2 text-gray-800 bg-white border border-gray-200 border-gray-500"
+            class="w-full p-2 text-gray-800 bg-white border border-gray-200 border-gray-500 dark:bg-deepmagenta dark:text-gray-200"
             v-model="secondPairCoinId">
             <option
               v-for="(key, value) in cryptoPairs" 
@@ -50,10 +49,10 @@
         v-for="(subtrade, i) in subtrades"
         :key="subtrade.Timestamp"
         class="mb-8 ml-8 rounded-xl grid grid-cols-12">
-        <div class="bg-verysoftcyan rounded-3xl col-span-11">
+        <div class="bg-verysoftcyan rounded-3xl col-span-11 dark:bg-sandpurple">
           <div class="pt-4 pl-4 pr-4 mt-3 grid grid-cols-6">
             <div class="ml-4 mr-4 rounded-xl col-span-2">
-              <label class="text-xs text-subtradelabel">
+              <label class="text-xs text-subtradelabel dark:text-gray-200">
                 Date/Time
               </label>
               <input
@@ -61,15 +60,15 @@
                 type="text"
                 onfocus="(this.type='datetime-local')"
                 onfocusout="(this.type='text')"
-                class="w-full p-2 border border-gray-200 border-gray-500"
+                class="w-full p-2 border border-gray-200 border-gray-500 dark:bg-deepmagenta dark:text-gray-200"
                 v-model="subtrade.CreatedAt">
             </div>
             <div class="ml-4 mr-4 rounded-xl col-span-1">
-              <label class="text-xs text-subtradelabel">
+              <label class="text-xs text-subtradelabel dark:text-gray-200">
                 Buy/Sell
               </label>
               <select
-                class="w-full p-2 text-gray-800 bg-white border border-gray-200 border-gray-500"
+                class="w-full p-2 text-gray-800 bg-white border border-gray-200 border-gray-500 dark:bg-deepmagenta dark:text-gray-200"
                 v-model="subtrade.Type">
                 <option value="BUY">
                   BUY
@@ -80,43 +79,43 @@
               </select>
             </div>
             <div class="ml-4 mr-4 rounded-xl col-span-3">
-              <label class="text-xs text-subtradelabel">
+              <label class="text-xs text-subtradelabel dark:text-gray-200">
                 Trade reason / Description
               </label>
               <input
-                class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
+                class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500 dark:bg-deepmagenta dark:text-gray-200"
                 v-model="subtrade.Reason">
             </div>
           </div>
           <div class="p-4 grid grid-cols-3">
             <div class="m-4 rounded-xl col-span-1">
-              <label class="text-xs text-subtradelabel">
+              <label class="text-xs text-subtradelabel dark:text-gray-200">
                 Quantity
               </label>
               <input
                 min="0.00000000001"
                 type="number"
-                class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
+                class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500 dark:bg-deepmagenta dark:text-gray-200"
                 v-model="subtrade.Quantity">
             </div>
             <div class="m-4 rounded-xl col-span-1">
-              <label class="text-xs text-subtradelabel">
+              <label class="text-xs text-subtradelabel dark:text-gray-200">
                 Average price
               </label>
               <input
                 min="0.00000000001"
                 type="number"
-                class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
+                class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500 dark:bg-deepmagenta dark:text-gray-200"
                 v-model="subtrade.AvgPrice">
             </div>
             <div class="m-4 rounded-xl col-span-1">
-              <label class="text-xs text-subtradelabel">
+              <label class="text-xs text-subtradelabel dark:text-gray-200">
                 Total
               </label>
               <input
                 min="0.00000000001"
                 type="number"
-                class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
+                class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500 dark:bg-deepmagenta dark:text-gray-200"
                 v-model="subtrade.Total">
             </div>
           </div>
@@ -127,14 +126,14 @@
               @click="addSubtrade()"
               title="Add Subtrade"
               class="p-1">
-              <AddSubtrade/>
+              <AddSubtradeOpen class="text-green-400 fill-current dark:text-green-800"/>
             </button>
             <button
               v-if="subtrades.length > 1"
               @click="removeSubtrade(i)"
               title="Remove Subtrade"
               class="">
-              <RemoveSubtrade/>
+              <RemoveSubtradeOpen class="text-red-400 fill-current dark:text-red-800"/>
             </button>
           </div>
         </div>
@@ -311,12 +310,12 @@
 <script lang="ts">
   import { Component, Vue, Emit, Watch, Prop } from 'vue-property-decorator';
   import axios from "axios";
-  import AddSubtrade from '@/components/svg/AddSubtrade.vue'
-  import RemoveSubtrade from '@/components/svg/RemoveSubtrade.vue'
+  import AddSubtradeOpen from '@/components/svg/AddSubtradeOpen.vue'
+  import RemoveSubtradeOpen from '@/components/svg/RemoveSubtradeOpen.vue'
   @Component({
     components: {
-      AddSubtrade,
-      RemoveSubtrade
+      AddSubtradeOpen,
+      RemoveSubtradeOpen
     }
   })
   export default class TradeNew extends Vue {

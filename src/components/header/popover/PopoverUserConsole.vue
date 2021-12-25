@@ -34,6 +34,14 @@
         </div>
       </section>
       <section class="flex justify-around p-3 px-4 py-1">
+        <span class="font-bold">
+          DarkMode
+        </span>
+        <input
+          type="checkbox"
+          @change="toggleTheme">
+      </section>
+      <section class="flex justify-around p-3 px-4 py-1">
         <Settings class="inline-block p-2 mr-2 font-bold rounded hover:bg-azure hover:text-header-dark"/>
       </section>
       <section class="flex justify-around p-3 px-4 py-1">
@@ -63,6 +71,7 @@
     }
   })
   export default class PopoverUserConsole extends Vue {
+    theme = 'dark';
     showUserMenu = false;
     get userWallet() {
       return metamaskStore.getWallet;
@@ -75,6 +84,15 @@
     }
     copyWalletToClipboard() {
       navigator.clipboard.writeText(metamaskStore.getWallet);
+    }
+    toggleTheme() {
+      if (this.theme == 'dark') {
+        document.getElementById('html')?.classList.remove('dark')
+        this.theme = '';
+      } else {
+        document.getElementById('html')?.classList.add('dark');
+        this.theme = 'dark';
+      }
     }
     @Emit('disconnectMetamask')
     disconnectMetamask(){}

@@ -1,8 +1,5 @@
 <template>
   <div class="sticky top-0 z-10 flex flex-row items-center justify-around border-b-2 border-magentashine xs:p-0 sm:p-4 bg-deepviolet xs:h-16 sm:h-20 md:h-24">
-    <input
-      type="checkbox"
-      @change="toggleTheme">
     <div class="flex flex-row items-center align-middle xs:space-x-1 sm:space-x-3">
       <router-link to="/">
         <img src="@/assets/logo.png" class="xs:h-10 md:h-16" alt="Logo">
@@ -63,21 +60,11 @@
     }
   })
   export default class Header extends Vue {
-    theme = 'dark';
     get isUserConnected() {
       return metamaskStore.getIsConnected;
     }
     get currentRoute() {
       return this.$route.path;
-    }
-    toggleTheme() {
-      if (this.theme == 'dark') {
-        document.getElementById('html')?.classList.remove('dark')
-        this.theme = '';
-      } else {
-        document.getElementById('html')?.classList.add('dark');
-        this.theme = 'dark';
-      }
     }
   }
 </script>
