@@ -3,7 +3,7 @@
     <div v-if="!isUserConnected">
       <button
         id="connectButton"
-        class="inline-block p-2 mr-2 font-bold rounded hover:bg-header-dark bg-homebutton"
+        class="inline-block p-2 mr-2 font-bold rounded hover:bg-deeplagune bg-magentashine"
         @click="loginMetamask">
         Connect
       </button>

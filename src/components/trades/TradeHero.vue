@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!isMobile" class="flex flex-row justify-center py-2 space-x-12 bg-tradehero">
+  <div v-if="!isMobile" class="flex flex-row justify-center py-2 space-x-12 bg-blueshine dark:bg-oldpurple">
     <div class="flex flex-row justify-center mt-1 space-x-3">
       <div class="flex items-center align-middle rounded-full">
         <img  
@@ -90,7 +90,7 @@
       </div>
     </div>
   </div>
-  <div v-else class="flex flex-col py-2 text-white space-y-3 bg-tradehero">
+  <div v-else class="flex flex-col py-2 text-white space-y-3 bg-blueshine">
     <div class="flex flex-row justify-center space-x-6">
       <div class="flex flex-col space-y-3">
         <div class="flex justify-center rounded-full">

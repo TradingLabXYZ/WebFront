@@ -6,19 +6,19 @@
       <div class="flex flex-row justify-center mb-4">
         <div
           class="px-6 py-2 mr-1 text-xl border-2 rounded-md"
-          :class="settingsSection=='profile' ? 'bg-tradehero text-white font-semibold' : 'bg-white'"
+          :class="settingsSection=='profile' ? 'bg-blueshine text-white font-semibold' : 'bg-white'"
           @click="changeSettingsSection('profile')">
           Profile
         </div>
         <div
           class="px-6 py-2 mr-1 text-xl border-2 rounded-md"
-          :class="settingsSection=='privacy' ? 'bg-tradehero text-white font-semibold' : 'bg-white'"
+          :class="settingsSection=='privacy' ? 'bg-blueshine text-white font-semibold' : 'bg-white'"
           @click="changeSettingsSection('privacy')">
           Privacy
         </div>
         <div
           class="hidden px-2 py-2 pr-12 mr-1 text-xl rounded-md"
-          :class="settingsSection=='plan' ? 'bg-tradehero text-white font-semibold' : 'bg-white'"
+          :class="settingsSection=='plan' ? 'bg-blueshine text-white font-semibold' : 'bg-white'"
           @click="changeSettingsSection('plan')">
           Plan
         </div>
