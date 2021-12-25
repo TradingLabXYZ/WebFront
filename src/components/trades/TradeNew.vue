@@ -141,37 +141,37 @@
       <div class="flex justify-center">
         <button
           @click="confirmInsertTrade()"
-          class="p-2 mr-2 text-lg text-white rounded-lg bg-blueshine">
+          class="p-2 mr-2 text-lg text-white rounded-lg bg-blueshine dark:bg-verysoftcyan dark:text-gray-800">
           CONFIRM
         </button>
         <button
           @click="cancelInsertTrade()"
-          class="p-2 ml-2 text-lg rounded-lg bg-verysoftcyan">
+          class="p-2 ml-2 text-lg rounded-lg bg-verysoftcyan dark:bg-blueshine dark:text-gray-200">
           CANCEL
         </button>
       </div>
     </div>
   </div>
-  <div v-else class="">
-    <div class="p-1 text-xs font-bold text-center text-deepgray">
+  <div v-else class="px-3 py-1 my-1 rounded dark:bg-deeppurple">
+    <div class="p-1 text-xs font-bold text-center text-deepgray dark:text-gray-200">
       Add a new trade
     </div>
     <div class="mb-2">
       <div class="grid grid-cols-4 space-x-1">
         <div class="flex flex-col justify-center text-center rounded-xl col-span-2">
-          <label class="text-gray-500 text-xxs text-subtradelabel">
+          <label class="text-gray-500 text-xxs text-subtradelabel dark:text-gray-200">
             Exchange
           </label>
           <input
-            class="h-5 text-xs text-gray-800 border border-gray-200"
+            class="h-5 text-xs text-gray-800 border border-gray-200 dark:bg-deepmagenta dark:text-gray-200"
             v-model="exchange">
         </div>
         <div class="flex flex-col items-center justify-center rounded-xl col-span-1">
-          <label class="text-gray-500 text-xxs text-subtradelabel">
+          <label class="text-gray-500 text-xxs text-subtradelabel dark:text-gray-200">
             Selling
           </label>
           <select
-            class="w-full h-5 text-xs text-gray-800 bg-white border border-gray-200"
+            class="w-full h-5 text-xs text-gray-800 bg-white border border-gray-200 dark:bg-deepmagenta dark:text-gray-200"
             v-model="firstPairCoinId">
             <option
               v-for="(key, value) in cryptoPairs" 
@@ -182,11 +182,11 @@
           </select>
         </div>
         <div class="flex flex-col items-center justify-center col-span-1 rounded-xl">
-          <label class="text-gray-500 text-xxs text-subtradelabel">
+          <label class="text-gray-500 text-xxs text-subtradelabel dark:text-gray-200">
             Buying
           </label>
           <select
-            class="w-full h-5 text-xs text-gray-800 bg-white border border-gray-200"
+            class="w-full h-5 text-xs text-gray-800 bg-white border border-gray-200 dark:bg-deepmagenta dark:text-gray-200"
             v-model="secondPairCoinId">
             <option
               v-for="(key, value) in cryptoPairs" 
@@ -201,17 +201,17 @@
     <div
       v-for="(subtrade, i) in subtrades"
       :key="subtrade.Timestamp"
-      class="p-1 px-3 bg-verysoftcyan">
-      <div class="text-xs font-bold text-center">
+      class="p-1 px-3 bg-verysoftcyan dark:bg-sandpurple">
+      <div class="text-xs font-bold text-center dark:text-gray-200">
         Subtrade {{ i + 1 }}
       </div>
       <div class="mb-2 text-center grid grid-cols-6">
         <div class="flex flex-col col-span-2">
-          <label class="text-gray-500 text-xxs">
+          <label class="text-gray-500 text-xxs dark:text-gray-200">
             Buy/Sell
           </label>
           <select
-            class="w-full h-5 text-xs text-gray-800 bg-white border border-gray-500"
+            class="w-full h-5 text-xs text-gray-800 bg-white border border-gray-500 dark:bg-deepmagenta dark:text-gray-200"
             v-model="subtrade.Type">
             <option value="BUY">
               BUY
@@ -222,7 +222,7 @@
           </select>
         </div>
         <div class="flex flex-col ml-2 col-span-4">
-          <label class="text-gray-500 text-xxs">
+          <label class="text-gray-500 text-xxs dark:text-gray-200">
             Date/Time
           </label>
           <input
@@ -230,47 +230,47 @@
             type="text"
             onfocus="(this.type='datetime-local')"
             onfocusout="(this.type='text')"
-            class="w-full h-5 text-xs border border-gray-500"
+            class="w-full h-5 text-xs border border-gray-500 dark:bg-deepmagenta dark:text-gray-200"
             v-model="subtrade.CreatedAt">
         </div>
       </div>
       <div class="flex flex-col mb-2">
-        <label class="text-gray-500 text-xxs">
+        <label class="text-gray-500 text-xxs dark:text-gray-200">
           Trade reason / Description
         </label>
         <input
-          class="w-full h-5 text-xs text-gray-800 border border-gray-500"
+          class="w-full h-5 text-xs text-gray-800 border border-gray-500 dark:bg-deepmagenta dark:text-gray-200"
           v-model="subtrade.Reason">
       </div>
       <div class="flex flex-row mb-2">
         <div class="flex flex-col">
-          <label class="text-gray-500 text-xxs">
+          <label class="text-gray-500 text-xxs dark:text-gray-200">
             Quantity
           </label>
           <input
             min="0.00000000001"
             type="number"
-            class="w-full h-5 text-xs text-gray-800 border border-gray-500"
+            class="w-full h-5 text-xs text-gray-800 border border-gray-500 dark:bg-deepmagenta dark:text-gray-200"
             v-model="subtrade.Quantity">
         </div>
         <div class="flex flex-col ml-2">
-          <label class="text-gray-500 text-xxs">
+          <label class="text-gray-500 text-xxs dark:text-gray-200">
             Average price
           </label>
           <input
             min="0.00000000001"
             type="number"
-            class="w-full h-5 text-xs text-gray-800 border border-gray-500"
+            class="w-full h-5 text-xs text-gray-800 border border-gray-500 dark:bg-deepmagenta dark:text-gray-200"
             v-model="subtrade.AvgPrice">
         </div>
         <div class="flex flex-col ml-2">
-          <label class="text-gray-500 text-xxs">
+          <label class="text-gray-500 text-xxs dark:text-gray-200">
             Total
           </label>
           <input
             min="0.00000000001"
             type="number"
-            class="w-full h-5 text-xs text-gray-800 border border-gray-500"
+            class="w-full h-5 text-xs text-gray-800 border border-gray-500 dark:bg-deepmagenta dark:text-gray-200"
             v-model="subtrade.Total">
         </div>
       </div>
@@ -280,14 +280,14 @@
             @click="addSubtrade()"
             title="Add Subtrade"
             class="transform scale-50">
-            <AddSubtrade/>
+            <AddSubtradeOpen class="text-green-400 fill-current dark:text-green-800"/>
           </button>
           <button
             v-if="subtrades.length > 1"
             @click="removeSubtrade(i)"
             title="Remove Subtrade"
             class="transform scale-50">
-            <RemoveSubtrade/>
+            <RemoveSubtradeOpen class="text-red-400 fill-current dark:text-red-800"/>
           </button>
         </div>
       </div>
@@ -295,12 +295,12 @@
     <div class="flex justify-center mt-2 mb-4">
       <button
         @click="confirmInsertTrade()"
-        class="p-1 mr-1 text-xs text-white rounded-lg bg-blueshine">
+        class="p-1 mr-1 text-xs text-white rounded-lg bg-blueshine dark:bg-verysoftcyan dark:text-gray-800">
         CONFIRM
       </button>
       <button
         @click="cancelInsertTrade()"
-        class="p-1 text-xs rounded-lg bg-verysoftcyan">
+        class="p-1 text-xs rounded-lg bg-verysoftcyan dark:bg-blueshine dark:text-gray-200">
         CANCEL
       </button>
     </div>
