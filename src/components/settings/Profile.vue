@@ -17,48 +17,48 @@
       </label>
     </div>
     <div class="p-2">
-      <label class="text-xs text-subtradelabel">
+      <label class="text-xs text-subtradelabel dark:text-gray-200">
         Username
       </label>
       <input
         type="text"
         placeholder="Username"
-        class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
+        class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500 dark:bg-deepmagenta dark:text-gray-200"
         v-model="username">
     </div>
     <div class="p-2">
-      <label class="text-xs text-subtradelabel">
+      <label class="text-xs text-subtradelabel dark:text-gray-200">
         Twitter Username
       </label>
       <input
         type="text"
         placeholder="Twitter"
-        class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
+        class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500 dark:bg-deepmagenta dark:text-gray-200"
         v-model="twitter">
     </div>
     <div class="p-2">
-      <label class="text-xs text-subtradelabel">
+      <label class="text-xs text-subtradelabel dark:text-gray-200">
         Discord ID
       </label>
       <input
         type="text"
         placeholder="discord"
-        class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
+        class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500 dark:bg-deepmagenta dark:text-gray-200"
         v-model="discord">
     </div>
     <div class="p-2">
-      <label class="text-xs text-subtradelabel">
+      <label class="text-xs text-subtradelabel dark:text-gray-200">
         Github Username
       </label>
       <input
         type="text"
         placeholder="github"
-        class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
+        class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500 dark:bg-deepmagenta dark:text-gray-200"
         v-model="github">
     </div>
     <div class="flex justify-center">
       <button
-        class="px-4 py-2 m-6 font-bold text-white rounded bg-azure hover:bg-deeplagune"
+        class="px-4 py-2 m-6 font-bold text-white rounded bg-azure hover:bg-deeplagune dark:bg-magentashine"
         type="submit"
         @click="saveUserSocial()">
         Save
