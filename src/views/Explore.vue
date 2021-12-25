@@ -75,13 +75,13 @@
                   <div
                     v-if="event.type=='BUY'"
                     class="flex items-center text-xs align-bottom"
-                    :class="event.deltapriceperc > 0 ? 'text-tradepositive' : 'text-tradenegative'">
+                    :class="event.deltapriceperc > 0 ? 'text-lagune' : 'text-dutchorange'">
                     {{ event.deltapriceperc + "%" }}
                   </div>
                   <div
                     v-else
                     class="flex items-center text-xs align-bottom"
-                    :class="event.deltapriceperc > 0 ? 'text-tradenegative' : 'text-tradepositive'">
+                    :class="event.deltapriceperc > 0 ? 'text-dutchorange' : 'text-lagune'">
                     {{ event.deltapriceperc + "%" }}
                   </div>
                 </div>

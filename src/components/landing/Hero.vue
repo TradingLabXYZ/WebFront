@@ -28,13 +28,13 @@
           </div>
         </div>
         <router-link to="/explore">
-          <button class="inline-block px-10 py-2 mt-6 text-xl font-bold text-white rounded bg-homebutton">
+          <button class="inline-block px-10 py-2 mt-6 text-xl font-bold text-white rounded bg-magentashine">
             Explore
           </button>
         </router-link>
       </div>
     </div>
-    <div class="flex justify-around py-16 font-extrabold text-center xs:space-y-3 sm:space-y-0 xs:text-3xl md:text-4xl xs:flex-col sm:flex-row h-fit bg-tradenew text-hometextband">
+    <div class="flex justify-around py-16 font-extrabold text-center xs:space-y-3 sm:space-y-0 xs:text-3xl md:text-4xl xs:flex-col sm:flex-row h-fit bg-verysoftcyan text-deepmagenta">
       <div class="">
         Decentralised
       </div>
