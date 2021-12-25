@@ -27,7 +27,8 @@ module.exports = {
         deepmagenta: "#710B79",
         deeppurple: "#4200FF",
         universe: "#121634",
-        oldpurple: "#252083"
+        oldpurple: "#252083",
+        sandpurple: "#26327F"
       }
     },
   },

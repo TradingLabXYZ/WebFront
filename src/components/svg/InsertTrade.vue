@@ -1,7 +1,7 @@
 <template>
   <svg width="25" height="25" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="12.5" cy="12.5" r="12" stroke="#000"/>
-    <path stroke="#000" d="M12.5 7v12M6 12.5h13"/>
+    <circle cx="12.5" cy="12.5" r="12"/>
+    <path d="M12.5 7v12M6 12.5h13"/>
   </svg>
 </template>
 

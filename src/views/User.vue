@@ -1,5 +1,5 @@
 <template>
-  <div class="dark:bg-universe">
+  <div class="h-screen dark:bg-universe">
     <Header/>
     <TradeHero
       @follow="manageFollow"

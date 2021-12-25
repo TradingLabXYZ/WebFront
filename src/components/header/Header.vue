@@ -72,11 +72,9 @@
     }
     toggleTheme() {
       if (this.theme == 'dark') {
-        console.log("SONO QUI")
         document.getElementById('html')?.classList.remove('dark')
         this.theme = '';
       } else {
-        console.log("ORA SONO QUI")
         document.getElementById('html')?.classList.add('dark');
         this.theme = 'dark';
       }
