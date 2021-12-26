@@ -19,6 +19,7 @@
       v-bind:subscribers="subscribers"
       v-bind:joinTime="joinTime"
       v-bind:totalReturn="totalReturn"
+      v-bind:totalValueUsd="totalValueUsd"
       v-bind:roi="roi"
       v-bind:totalTrades="totalTrades"/>
     <div v-if="privacyStatus == 'OK'">
@@ -58,6 +59,7 @@
     privacyMessage: string = '';
     isUserProfile: boolean = false;
     totalReturn: number = 0;
+    totalValueUsd: number = 0;
     roi: number = 0;
     isFollower: boolean = false;
     isSubscriber: boolean = false;
@@ -114,6 +116,7 @@
         this.privacyReason = ws_data.PrivacyStatus.Reason;
         this.privacyMessage = ws_data.PrivacyStatus.Message;
         this.totalReturn = ws_data.TotalReturnUsd;
+        this.totalValueUsd = ws_data.TotalPortfolioUsd;
         this.totalTrades = ws_data.CountTrades;
         this.roi = ws_data.Roi;
         this.isFollower = ws_data.IsFollower;
