@@ -63,6 +63,12 @@
         </span>
       </div>
       <div class="">
+        {{ totalValueUsd }}
+        <span class="text-sm">
+          $ Portfolio
+        </span>
+      </div>
+      <div class="">
         {{ totalReturn }}
         <span class="text-sm">
           $ Return
@@ -159,6 +165,14 @@
       </div>
       <div class="flex flex-col">
         <div>
+          {{ totalValueUsd }}
+        </div>
+        <div class="text-xs">
+          $ Portfolio
+        </div>
+      </div>
+      <div class="flex flex-col">
+        <div>
           {{ totalReturn }}
         </div>
         <div class="text-xs">
@@ -223,6 +237,7 @@
     @Prop() joinTime!: string;
     @Prop() totalTrades!: number;
     @Prop() totalReturn!: number;
+    @Prop() totalValueUsd!: number;
     @Prop() roi!: number;
     @Emit('follow')
     follow(){}

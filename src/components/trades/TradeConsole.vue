@@ -68,6 +68,11 @@
               <th
                 class="py-3 text-xs font-medium tracking-wider text-gray-800 lg:px-12 md:px-6 sm:px-3 dark:text-gray-200"
                 scope="col">
+                $ Value
+              </th>
+              <th
+                class="py-3 text-xs font-medium tracking-wider text-gray-800 lg:px-12 md:px-6 sm:px-3 dark:text-gray-200"
+                scope="col">
                 Return
               </th>
               <th
@@ -129,7 +134,13 @@
                   </span>
                 </td>
                 <td class="py-4 text-center text-gray-700 text-md dark:text-gray-200">
-                  {{ trade.TotalReturn }}
+                  {{ trade.TotalValueUsdS }}
+                  <span class="text-xs">
+                    USD
+                  </span>
+                </td>
+                <td class="py-4 text-center text-gray-700 text-md dark:text-gray-200">
+                  {{ trade.TotalReturnS }}
                   <span class="text-xs">
                     {{ trade.FirstPairSymbol }}
                   </span>
@@ -390,7 +401,7 @@
               Return
             </div>
             <div class="text-xs dark:text-gray-200">
-              {{ trade.TotalReturn }}
+              {{ trade.TotalReturnS }}
             </div>
             <div class="text-xxs dark:text-gray-400">
               {{ trade.FirstPairSymbol }}
