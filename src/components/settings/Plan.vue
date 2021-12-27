@@ -22,26 +22,6 @@
       @click="changePlan()">
       Save
     </button>
-    <div class="m-10"></div>
-    <div class="mt-6 p2">
-      TEST STORE
-      <input
-        type="text"
-        class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
-        v-model="key"
-        placeholder="Plan Type">
-      <input
-        type="text"
-        class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
-        v-model="value"
-        placeholder="Plan Type">
-    </div>
-    <button
-      class="px-4 py-2 m-6 font-bold text-white rounded bg-azure hover:bg-deeplagune"
-      type="submit"
-      @click="changeStore()">
-      Save
-    </button>
   </div>
 </template>
 
@@ -62,8 +42,6 @@
     async created() {
       await contractStore.updateContractSubscription();
       await contractStore.signContractSubscription();
-      await contractStore.updateContractStore();
-      await contractStore.signContractStore();
       this.getNumber();
       contractStore.getContractSubscription.on("ChangePlan", (from, amount, {}) => {
         if (from.toLowerCase() == metamaskStore.getWallet.toLowerCase()) {
@@ -79,9 +57,6 @@
     }
     async changePlan() {
       await contractStore.getContractSubscriptionSigned.changePlan(this.newUsdcMonthlyPrice);
-    }
-    async changeStore() {
-      await contractStore.getContractStoreSigned.setItem(this.key, this.value);
     }
   }
 </script>
