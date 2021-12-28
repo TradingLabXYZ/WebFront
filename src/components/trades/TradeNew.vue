@@ -16,6 +16,31 @@
         </div>
         <div class="p-2 mx-4 rounded-xl col-span-1">
           <label class="text-xs text-subtradelabel dark:text-gray-200">
+            TEST
+          </label>
+          <input
+            type="text"
+            class="w-full p-2 border border-gray-200 border-gray-500 dark:bg-deepmagenta dark:text-gray-200"
+            @focus="onFocus()"
+            v-model="userInput"
+            @keydown="test"
+            tabindex="0">
+          <div
+            class="absolute z-50 bg-gray-200">
+            <div v-if="focused">
+              <div
+                class="px-2 hover:bg-gray-600 hover:text-gray-50 rounded-md"
+                v-for="(key, value) in dynamicUserInput"
+                :class="{ focus: value === focus }"
+                v-bind:key="value"
+                v-on:click="fillBar(key)">
+                {{ key[0] }} - {{ key[1] }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="p-2 mx-4 rounded-xl col-span-1">
+          <label class="text-xs text-subtradelabel dark:text-gray-200">
             Selling
           </label>
           <select
@@ -320,10 +345,13 @@
   })
   export default class TradeNew extends Vue {
     @Prop() isMobile!: boolean;
+    focused: boolean = false;
+    userInput: string = "";
     cryptoPairs: object = {};
     exchange: string = '';
     firstPairCoinId: number = 0;
     secondPairCoinId: number = 0;
+    focus: number = 0;
     subtrades: object[] = [
       {
         CreatedAt: null,
@@ -334,6 +362,58 @@
         Total: null,
       }
     ]
+    onFocus() {
+      this.focused = true;
+    }
+    get dynamicUserInput() {
+      const tempDict: any[][] = [];
+      let counter = 0;
+      if (this.userInput != "") {
+        for (var key in this.cryptoPairs) {
+          if (counter < 10) {
+            let tempValue = key + this.cryptoPairs[key]['Name'];
+            if (tempValue.indexOf(this.userInput) > -1) {
+              let symbol: string = this.cryptoPairs[key]['Symbol'];
+              let name: string = this.cryptoPairs[key]['Name'];
+              console.log(symbol,name)
+              tempDict.push([
+                symbol,
+                name
+              ])
+              counter = counter + 1;
+            }
+          }
+        }
+      }
+      return tempDict;
+    }
+    fillBar(key: object) {
+      this.userInput = key[0] + ' - ' + key[1];
+    }
+    test(event: any) {
+      console.log(this.focus);
+      console.log(event)
+      switch (event.keyCode) {
+        case 13:
+          this.userInput = this.dynamicUserInput[this.focus][0] + ' - ' + this.dynamicUserInput[this.focus][1];
+        case 38:
+          console.log("UP")
+          if (this.focus === null) {
+            this.focus = 0;
+          } else if (this.focus > 0) {
+            this.focus--;
+          }
+          break;
+        case 40:
+          console.log("DOWN")
+          if (this.focus === null) {
+            this.focus = 0;
+          } else if (this.focus < Object.keys(this.dynamicUserInput).length - 1) {
+            this.focus++;
+          }
+          break;
+      }
+    }
     @Watch('subtrades', { deep: true })
     watchTotalSpent(new_value: number, old_value: number) {
       for (let i = 0; i < this.subtrades.length; i++) {
@@ -447,3 +527,9 @@
     cancelInsertTrade(){}
   }
 </script>
+
+<style>
+div.focus {
+  border: 1px solid blue;
+}
+</style>
