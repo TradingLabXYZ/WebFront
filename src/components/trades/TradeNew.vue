@@ -16,58 +16,51 @@
         </div>
         <div class="p-2 mx-4 rounded-xl col-span-1">
           <label class="text-xs text-subtradelabel dark:text-gray-200">
-            TEST
+            Selling
           </label>
           <input
             type="text"
             class="w-full p-2 border border-gray-200 border-gray-500 dark:bg-deepmagenta dark:text-gray-200"
-            @focus="onFocus()"
-            v-model="userInput"
-            @keydown="test"
+            @focus="onFocusFirstPair()"
+            v-model="userInputFirstPair"
+            @keydown="monitorKeysFirstPair"
             tabindex="0">
           <div
+            v-if="focusedFirstPair"
             class="absolute z-50 bg-gray-200">
-            <div v-if="focused">
-              <div
-                class="px-2 hover:bg-gray-600 hover:text-gray-50 rounded-md"
-                v-for="(key, value) in dynamicUserInput"
-                :class="{ focus: value === focus }"
-                v-bind:key="value"
-                v-on:click="fillBar(key)">
-                {{ key[0] }} - {{ key[1] }}
-              </div>
+            <div
+              v-for="(key, value) in dynamicUserFirstInput"
+              v-bind:key="value"
+              v-on:click="fillBarFirstInput(key)"
+              class="px-2 hover:bg-gray-600 hover:text-gray-50 rounded-md"
+              :class="{ ['bg-azure']: value === selectedFirstPair }">
+              {{ key[0] }} - {{ key[1] }}
             </div>
           </div>
         </div>
         <div class="p-2 mx-4 rounded-xl col-span-1">
           <label class="text-xs text-subtradelabel dark:text-gray-200">
-            Selling
-          </label>
-          <select
-            class="w-full p-2 text-gray-800 bg-white border border-gray-200 border-gray-500 dark:bg-deepmagenta dark:text-gray-200"
-            v-model="firstPairCoinId">
-            <option
-              v-for="(key, value) in cryptoPairs" 
-              :value="key.CoinId"
-              :key="value">
-              {{ value }} - {{ key.Name }}
-            </option>
-          </select>
-        </div>
-        <div class="p-2 mx-4 rounded-xl col-span-1">
-          <label class="text-xs text-subtradelabel dark:text-gray-200">
             Buying
           </label>
-          <select
-            class="w-full p-2 text-gray-800 bg-white border border-gray-200 border-gray-500 dark:bg-deepmagenta dark:text-gray-200"
-            v-model="secondPairCoinId">
-            <option
-              v-for="(key, value) in cryptoPairs" 
-              :value="key.CoinId"
-              :key="value">
-              {{ value }} - {{ key.Name }}
-            </option>
-          </select>
+          <input
+            type="text"
+            class="w-full p-2 border border-gray-200 border-gray-500 dark:bg-deepmagenta dark:text-gray-200"
+            @focus="onFocusSecondPair()"
+            v-model="userInputSecondPair"
+            @keydown="monitorKeysSecondPair"
+            tabindex="0">
+          <div
+            v-if="focusedSecondPair"
+            class="absolute z-50 bg-gray-200">
+            <div
+              v-for="(key, value) in dynamicUserSecondInput"
+              v-bind:key="value"
+              v-on:click="fillBarSecondInput(key)"
+              class="px-2 hover:bg-gray-600 hover:text-gray-50 rounded-md"
+              :class="{ ['bg-azure']: value === selectedSecondPair }">
+              {{ key[0] }} - {{ key[1] }}
+            </div>
+          </div>
         </div>
       </div>
       <div
@@ -345,13 +338,16 @@
   })
   export default class TradeNew extends Vue {
     @Prop() isMobile!: boolean;
-    focused: boolean = false;
-    userInput: string = "";
+
+    focusedFirstPair: boolean = false;
+    focusedSecondPair: boolean = false;
+    userInputFirstPair: string = "";
+    userInputSecondPair: string = "";
+    selectedFirstPair: number = 0;
+    selectedSecondPair: number = 0;
+
     cryptoPairs: object = {};
     exchange: string = '';
-    firstPairCoinId: number = 0;
-    secondPairCoinId: number = 0;
-    focus: number = 0;
     subtrades: object[] = [
       {
         CreatedAt: null,
@@ -362,20 +358,22 @@
         Total: null,
       }
     ]
-    onFocus() {
-      this.focused = true;
+    onFocusFirstPair() {
+      this.focusedFirstPair = true;
     }
-    get dynamicUserInput() {
+    onFocusSecondPair() {
+      this.focusedSecondPair = true;
+    }
+    get dynamicUserFirstInput() {
       const tempDict: any[][] = [];
       let counter = 0;
-      if (this.userInput != "") {
+      if (this.userInputFirstPair != "") {
         for (var key in this.cryptoPairs) {
           if (counter < 10) {
-            let tempValue = key + this.cryptoPairs[key]['Name'];
-            if (tempValue.indexOf(this.userInput) > -1) {
-              let symbol: string = this.cryptoPairs[key]['Symbol'];
-              let name: string = this.cryptoPairs[key]['Name'];
-              console.log(symbol,name)
+            let symbol: string = this.cryptoPairs[key]['Symbol'];
+            let name: string = this.cryptoPairs[key]['Name'];
+            let tempValue = symbol + name;
+            if (tempValue.indexOf(this.userInputFirstPair) > -1) {
               tempDict.push([
                 symbol,
                 name
@@ -387,40 +385,91 @@
       }
       return tempDict;
     }
-    fillBar(key: object) {
-      this.userInput = key[0] + ' - ' + key[1];
+    get dynamicUserSecondInput() {
+      const tempDict: any[][] = [];
+      let counter = 0;
+      if (this.userInputSecondPair != "") {
+        for (var key in this.cryptoPairs) {
+          if (counter < 10) {
+            let symbol: string = this.cryptoPairs[key]['Symbol'];
+            let name: string = this.cryptoPairs[key]['Name'];
+            let tempValue = symbol + name;
+            if (tempValue.indexOf(this.userInputSecondPair) > -1) {
+              tempDict.push([
+                symbol,
+                name
+              ])
+              counter = counter + 1;
+            }
+          }
+        }
+      }
+      return tempDict;
     }
-    test(event: any) {
-      console.log(this.focus);
-      console.log(event)
+    fillBarFirstInput(key: object) {
+      this.userInputFirstPair = key[0] + ' - ' + key[1];
+    }
+    fillBarSecondInput(key: object) {
+      this.userInputSecondPair = key[0] + ' - ' + key[1];
+    }
+    monitorKeysFirstPair(event: any) {
       switch (event.keyCode) {
         case 13:
-          this.userInput = this.dynamicUserInput[this.focus][0] + ' - ' + this.dynamicUserInput[this.focus][1];
+          this.userInputFirstPair = this.dynamicUserFirstInput[this.selectedFirstPair][0] + ' - ' + this.dynamicUserFirstInput[this.selectedFirstPair][1];
         case 38:
-          console.log("UP")
-          if (this.focus === null) {
-            this.focus = 0;
-          } else if (this.focus > 0) {
-            this.focus--;
+          if (this.selectedFirstPair > 0) {
+            this.selectedFirstPair--;
           }
           break;
         case 40:
-          console.log("DOWN")
-          if (this.focus === null) {
-            this.focus = 0;
-          } else if (this.focus < Object.keys(this.dynamicUserInput).length - 1) {
-            this.focus++;
+          if (this.selectedFirstPair < Object.keys(this.dynamicUserFirstInput).length - 1) {
+            this.selectedFirstPair++;
           }
           break;
       }
     }
+    monitorKeysSecondPair(event: any) {
+      switch (event.keyCode) {
+        case 13:
+          this.userInputSecondPair = this.dynamicUserSecondInput[this.selectedSecondPair][0] + ' - ' + this.dynamicUserSecondInput[this.selectedSecondPair][1];
+        case 38:
+          if (this.selectedSecondPair > 0) {
+            this.selectedSecondPair--;
+          }
+          break;
+        case 40:
+          if (this.selectedSecondPair < Object.keys(this.dynamicUserSecondInput).length - 1) {
+            this.selectedSecondPair++;
+          }
+          break;
+      }
+    }
+    get firstPairCoinId() {
+      let selectedFirstPairId = 0;
+      var symbolUserInput = this.userInputFirstPair.split(' - ')[0];
+      for (var key in this.cryptoPairs) {
+        if (this.cryptoPairs[key]['Symbol'] == symbolUserInput) {
+          selectedFirstPairId = parseInt(key);
+        }
+      }
+      return selectedFirstPairId;
+    } 
+    get secondPairCoinId() {
+      let selectedSecondPairId = 0;
+      var symbolUserInput = this.userInputSecondPair.split(' - ')[0];
+      for (var key in this.cryptoPairs) {
+        if (this.cryptoPairs[key]['Symbol'] == symbolUserInput) {
+          selectedSecondPairId = parseInt(key);
+        }
+      }
+      return selectedSecondPairId;
+    } 
     @Watch('subtrades', { deep: true })
     watchTotalSpent(new_value: number, old_value: number) {
       for (let i = 0; i < this.subtrades.length; i++) {
         this.subtrades[i]["Total"] = new_value[i]["AvgPrice"] * new_value[i]["Quantity"];   
       }
     }
-
     @Watch('firstPairCoinId')
     watchFirstPair(_: number, __: number) {
       if (this.secondPairCoinId > 0) {
@@ -527,9 +576,3 @@
     cancelInsertTrade(){}
   }
 </script>
-
-<style>
-div.focus {
-  border: 1px solid blue;
-}
-</style>
