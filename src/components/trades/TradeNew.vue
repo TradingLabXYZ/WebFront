@@ -27,7 +27,7 @@
             tabindex="0">
           <div
             v-if="focusedFirstPair"
-            class="absolute z-50 bg-gray-200">
+            class="absolute z-50 bg-gray-200 dark:bg-gray-600">
             <div
               v-for="(key, value) in dynamicUserFirstInput"
               v-bind:key="value"
@@ -51,7 +51,7 @@
             tabindex="0">
           <div
             v-if="focusedSecondPair"
-            class="absolute z-50 bg-gray-200">
+            class="absolute z-50 bg-gray-200 dark:bg-gray-600">
             <div
               v-for="(key, value) in dynamicUserSecondInput"
               v-bind:key="value"
@@ -175,8 +175,8 @@
       Add a new trade
     </div>
     <div class="mb-2">
-      <div class="grid grid-cols-4 space-x-1">
-        <div class="flex flex-col justify-center text-center rounded-xl col-span-2">
+      <div class="flex flex-col space-y-1">
+        <div class="flex flex-col justify-center text-center rounded-xl">
           <label class="text-gray-500 text-xxs text-subtradelabel dark:text-gray-200">
             Exchange
           </label>
@@ -184,35 +184,53 @@
             class="h-5 text-xs text-gray-800 border border-gray-200 dark:bg-deepmagenta dark:text-gray-200"
             v-model="exchange">
         </div>
-        <div class="flex flex-col items-center justify-center rounded-xl col-span-1">
+        <div class="flex flex-col items-center justify-center rounded-xl">
           <label class="text-gray-500 text-xxs text-subtradelabel dark:text-gray-200">
             Selling
           </label>
-          <select
-            class="w-full h-5 text-xs text-gray-800 bg-white border border-gray-200 dark:bg-deepmagenta dark:text-gray-200"
-            v-model="firstPairCoinId">
-            <option
-              v-for="(key, value) in cryptoPairs" 
-              :value="key.CoinId"
-              :key="value">
-              {{ value }} - {{ key.Name }}
-            </option>
-          </select>
+          <input
+            type="text"
+            class="w-full h-5 text-xs text-center text-gray-800 bg-white border border-gray-200 dark:bg-deepmagenta dark:text-gray-200"
+            @focus="onFocusFirstPair()"
+            v-model="userInputFirstPair"
+            @keydown="monitorKeysFirstPair"
+            tabindex="0">
+          <div
+            v-if="focusedFirstPair"
+            class="absolute z-50 text-xs bg-gray-200 dark:bg-gray-600">
+            <div
+              v-for="(key, value) in dynamicUserFirstInput"
+              v-bind:key="value"
+              v-on:click="fillBarFirstInput(key)"
+              class="px-2 text-xs hover:bg-gray-600 hover:text-gray-50 rounded-md"
+              :class="{ ['bg-azure']: value === selectedFirstPair }">
+              {{ key[0] }} - {{ key[1] }}
+            </div>
+          </div>
         </div>
-        <div class="flex flex-col items-center justify-center col-span-1 rounded-xl">
+        <div class="flex flex-col items-center justify-center rounded-xl">
           <label class="text-gray-500 text-xxs text-subtradelabel dark:text-gray-200">
             Buying
           </label>
-          <select
-            class="w-full h-5 text-xs text-gray-800 bg-white border border-gray-200 dark:bg-deepmagenta dark:text-gray-200"
-            v-model="secondPairCoinId">
-            <option
-              v-for="(key, value) in cryptoPairs" 
-              :value="key.CoinId"
-              :key="value">
-              {{ value }} - {{ key.Name }}
-            </option>
-          </select>
+          <input
+            type="text"
+            class="w-full h-5 text-xs text-center text-gray-800 bg-white border border-gray-200 dark:bg-deepmagenta dark:text-gray-200"
+            @focus="onFocusSecondPair()"
+            v-model="userInputSecondPair"
+            @keydown="monitorKeysSecondPair"
+            tabindex="0">
+          <div
+            v-if="focusedSecondPair"
+            class="absolute z-50 text-xs bg-gray-200 dark:bg-gray-600">
+            <div
+              v-for="(key, value) in dynamicUserSecondInput"
+              v-bind:key="value"
+              v-on:click="fillBarSecondInput(key)"
+              class="px-2 text-xs hover:bg-gray-600 hover:text-gray-50 rounded-md"
+              :class="{ ['bg-azure']: value === selectedSecondPair }">
+              {{ key[0] }} - {{ key[1] }}
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -338,14 +356,12 @@
   })
   export default class TradeNew extends Vue {
     @Prop() isMobile!: boolean;
-
     focusedFirstPair: boolean = false;
     focusedSecondPair: boolean = false;
     userInputFirstPair: string = "";
     userInputSecondPair: string = "";
     selectedFirstPair: number = 0;
     selectedSecondPair: number = 0;
-
     cryptoPairs: object = {};
     exchange: string = '';
     subtrades: object[] = [
@@ -365,36 +381,21 @@
       this.focusedSecondPair = true;
     }
     get dynamicUserFirstInput() {
-      const tempDict: any[][] = [];
-      let counter = 0;
-      if (this.userInputFirstPair != "") {
-        for (var key in this.cryptoPairs) {
-          if (counter < 10) {
-            let symbol: string = this.cryptoPairs[key]['Symbol'];
-            let name: string = this.cryptoPairs[key]['Name'];
-            let tempValue = symbol + name;
-            if (tempValue.indexOf(this.userInputFirstPair) > -1) {
-              tempDict.push([
-                symbol,
-                name
-              ])
-              counter = counter + 1;
-            }
-          }
-        }
-      }
-      return tempDict;
+      return this.dynamicUserInput(this.userInputFirstPair);
     }
     get dynamicUserSecondInput() {
+      return this.dynamicUserInput(this.userInputSecondPair);
+    }
+    dynamicUserInput(userInputPair: string) {
       const tempDict: any[][] = [];
       let counter = 0;
-      if (this.userInputSecondPair != "") {
+      if (userInputPair != "") {
         for (var key in this.cryptoPairs) {
           if (counter < 10) {
             let symbol: string = this.cryptoPairs[key]['Symbol'];
             let name: string = this.cryptoPairs[key]['Name'];
             let tempValue = symbol + name;
-            if (tempValue.indexOf(this.userInputSecondPair) > -1) {
+            if (tempValue.indexOf(userInputPair) > -1) {
               tempDict.push([
                 symbol,
                 name
@@ -413,59 +414,62 @@
       this.userInputSecondPair = key[0] + ' - ' + key[1];
     }
     monitorKeysFirstPair(event: any) {
-      switch (event.keyCode) {
-        case 13:
-          this.userInputFirstPair = this.dynamicUserFirstInput[this.selectedFirstPair][0] + ' - ' + this.dynamicUserFirstInput[this.selectedFirstPair][1];
-        case 38:
-          if (this.selectedFirstPair > 0) {
-            this.selectedFirstPair--;
-          }
-          break;
-        case 40:
-          if (this.selectedFirstPair < Object.keys(this.dynamicUserFirstInput).length - 1) {
-            this.selectedFirstPair++;
-          }
-          break;
-      }
+      this.monitorKeysPair('first', event);
     }
     monitorKeysSecondPair(event: any) {
+      this.monitorKeysPair('second', event);
+    }
+    monitorKeysPair(pairOrder: string, event: any) {
       switch (event.keyCode) {
         case 13:
-          this.userInputSecondPair = this.dynamicUserSecondInput[this.selectedSecondPair][0] + ' - ' + this.dynamicUserSecondInput[this.selectedSecondPair][1];
+          if (pairOrder == 'first') {
+            this.userInputFirstPair = this.dynamicUserFirstInput[this.selectedFirstPair].join(' - ');
+          } else if (pairOrder == 'second') {
+            this.userInputSecondPair = this.dynamicUserSecondInput[this.selectedSecondPair].join(' - ');
+          }
+          break;
         case 38:
-          if (this.selectedSecondPair > 0) {
-            this.selectedSecondPair--;
+          if (pairOrder == 'first') {
+            if (this.selectedFirstPair > 0) {
+              this.selectedFirstPair--;
+            }
+          } else if (pairOrder == 'second') {
+            if (this.selectedSecondPair > 0) {
+              this.selectedSecondPair--;
+            }
           }
           break;
         case 40:
-          if (this.selectedSecondPair < Object.keys(this.dynamicUserSecondInput).length - 1) {
-            this.selectedSecondPair++;
+          if (pairOrder == 'first') {
+            if (this.selectedFirstPair < Object.keys(this.dynamicUserFirstInput).length - 1) {
+              this.selectedFirstPair++;
+            }
+          } else if (pairOrder == 'second') {
+            if (this.selectedSecondPair < Object.keys(this.dynamicUserSecondInput).length - 1) {
+              this.selectedSecondPair++;
+            }
           }
           break;
       }
     }
     get firstPairCoinId() {
-      let selectedFirstPairId = 0;
-      var symbolUserInput = this.userInputFirstPair.split(' - ')[0];
-      for (var key in this.cryptoPairs) {
-        if (this.cryptoPairs[key]['Symbol'] == symbolUserInput) {
-          selectedFirstPairId = parseInt(key);
-        }
-      }
-      return selectedFirstPairId;
+      return this.managePairCoinId(this.userInputFirstPair);
     } 
     get secondPairCoinId() {
-      let selectedSecondPairId = 0;
-      var symbolUserInput = this.userInputSecondPair.split(' - ')[0];
+      return this.managePairCoinId(this.userInputSecondPair);
+    } 
+    managePairCoinId(userInputPair: string) {
+      let selectedPairId = 0;
+      var symbolUserInput = userInputPair.split(' - ')[0];
       for (var key in this.cryptoPairs) {
         if (this.cryptoPairs[key]['Symbol'] == symbolUserInput) {
-          selectedSecondPairId = parseInt(key);
+          selectedPairId = parseInt(key);
         }
       }
-      return selectedSecondPairId;
-    } 
+      return selectedPairId;
+    }
     @Watch('subtrades', { deep: true })
-    watchTotalSpent(new_value: number, old_value: number) {
+    watchTotalSpent(new_value: number, _: number) {
       for (let i = 0; i < this.subtrades.length; i++) {
         this.subtrades[i]["Total"] = new_value[i]["AvgPrice"] * new_value[i]["Quantity"];   
       }

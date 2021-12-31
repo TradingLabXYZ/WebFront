@@ -58,7 +58,7 @@
     </div>
     <div class="flex justify-center">
       <button
-        class="px-4 py-2 m-6 font-bold text-white rounded bg-azure hover:bg-deeplagune dark:bg-magentashine"
+        class="px-4 py-2 m-6 font-bold text-white rounded bg-azure hover:bg-deeplagune dark:bg-magentashine dark-hover:bg-green-800"
         type="submit"
         @click="saveUserSocial()">
         Save
