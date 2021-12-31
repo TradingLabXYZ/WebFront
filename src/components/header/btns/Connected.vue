@@ -15,6 +15,7 @@
 </template>
 
 <script lang="ts">
+  import axios from "axios";
   import { Component, Vue, Emit } from 'vue-property-decorator';
   import { getModule } from 'vuex-module-decorators'
   import Metamask from '@/store/metamaskModule';
@@ -27,6 +28,9 @@
   })
   export default class Connected extends Vue {
     showUserMenu = false;
+    async mounted() {
+      await this.getCryptoPairs();
+    }
     get userWallet() {
       return metamaskStore.getWallet;
     }
@@ -35,6 +39,32 @@
         this.showUserMenu = false;
       } else {
         this.showUserMenu = true;
+      }
+    }
+    async getCryptoPairs() {
+      if (localStorage.getItem('cryptoPairs') === null) {
+        let request_url = [
+          process.env.VUE_APP_HTTP_URL,
+          'get_pairs'
+        ].join('/');
+        axios({
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + document.cookie,
+            "Access-Control-Allow-Origin": "*",
+          },
+          url: request_url
+        }).then(response => {
+          console.log(response.data);
+          if (response.status === 200) {
+            localStorage.setItem(
+              'cryptoPairs',
+              JSON.stringify(response.data)
+            );
+          }
+        }).catch(function (error) {
+          console.log(error);
+        })
       }
     }
     @Emit('disconnectMetamask')
