@@ -29,7 +29,7 @@
         v-bind:trades="trades"
         v-bind:isUserProfile="isUserProfile"/>
     </div>
-    <div v-else class="flex flex-col justify-around text-xl text-center sm:text-4xl h-80">
+    <div v-else class="flex flex-col justify-around text-xl text-center sm:text-4xl h-80 dark:text-gray-200">
       {{ privacyMessage }}
     </div>
   </div>

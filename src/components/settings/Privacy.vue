@@ -23,7 +23,7 @@
     </div>
     <div
       id="displayedMessage"
-      class="mt-5">
+      class="mt-5 dark:text-gray-200">
       <div
         v-if="selectedUserPrivacy == 'all'"
         class="flex justify-around">

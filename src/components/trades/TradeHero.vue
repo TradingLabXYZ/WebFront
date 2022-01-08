@@ -203,6 +203,14 @@
           Followed
         </button>
       </div>
+      <div>
+        <button
+          v-if="!isSubscriber"
+          class="inline-block px-2 py-1 font-bold bg-green-400 rounded"
+          v-on:click="subscribe">
+          Follow
+        </button>
+      </div>
     </div>
   </div>
 </template>

@@ -1,14 +1,14 @@
 <template>
   <div>
     <div class="mb-10">
-      <div v-if="usdcMonthlyPrice > 0" class="p2">
+      <div v-if="usdcMonthlyPrice > 0" class="p2 dark:text-gray-200">
         Your actual USDC monthly price: {{ usdcMonthlyPrice }}
       </div>
-      <div v-else>
+      <div v-else class="dark:text-gray-200">
         You do not have set yet your USDC monthly price.
       </div>
       <div class="p2">
-      <div class="mt-6 p2">
+      <div class="mt-6 p2 dark:text-gray-200">
         Change your USDC monthly price
         <input
           type="text"
@@ -25,10 +25,10 @@
       </button>
     </div>
     <div class="mb-10">
-      <div>
+      <div class="dark:text-gray-200">
         Your actual ETH ADDRESS: {{ receivedEthAddress }}
       </div>
-      <div class="mt-6 p2">
+      <div class="mt-6 p2 dark:text-gray-200">
         Your random ETH addres
         <input
           type="text"
