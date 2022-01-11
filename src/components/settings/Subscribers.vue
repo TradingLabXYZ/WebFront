@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <div v-if="monthlyFee == ''">
+      <div v-if="monthlyFee != ''">
         Your current monthly fee:
         {{ monthlyFee }}
       </div>
@@ -13,10 +13,9 @@
       <div class="mt-6 p2 dark:text-gray-200">
         Change your USDC monthly price
         <input
-          type="text"
+          type="number"
           class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500"
-          v-model="newMonthlyFee"
-          placeholder="Plan Type">
+          v-model="newMonthlyFee">
       </div>
       <div v-if="newMonthlyFee">
         <button
@@ -51,13 +50,39 @@
       contractStore.getContractSubscription.on("ChangePlan", (from, amount, {}) => {
         if (from.toLowerCase() == metamaskStore.getWallet.toLowerCase()) {
           this.monthlyFee = amount.toString();
+          console.log(this.monthlyFee);
           userStore.userDetails['MonthlyFee'] = this.monthlyFee;
           this.updateMonthlyFeeInIndexedDb();
         }
       });
     }
     async changePlan() {
-      await contractStore.getContractSubscriptionSigned.changePlan(this.newMonthlyFee);
+      try {
+        await contractStore.getContractSubscriptionSigned.changePlan(this.newMonthlyFee);
+      } catch(err: any) {
+        try {
+          let revertMessage = err['argument'];
+          if (revertMessage == 'usdc_monthly_price') {
+            alert('Your monthly fee has to be bigger than 0.');
+          } else {
+            try {
+              revertMessage = err['data']['message'].split('revert')[1].trim();
+              if (revertMessage == 'Balance is not enough.') {
+                alert('Your current balance is not enough for this transaction');
+              } else if (revertMessage == 'USDC price must be different than current one.') {
+                alert('Your new monthly fee needs to be different than your current one.');
+              } else {
+                console.log("Unknown error: ", err);
+              }
+            } catch(err: any) {
+              console.log("Unknown error: ", err);
+            }
+          }
+        } catch(err: any) {
+          console.log("Unknown error: ", err);
+        }
+      }
+      this.newMonthlyFee = '';
     }
     async updateMonthlyFeeInIndexedDb() {
       await get(userStore.userDetails['SessionId']).then((sessionData) => {
