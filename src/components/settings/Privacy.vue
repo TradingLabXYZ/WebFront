@@ -39,13 +39,10 @@
         class="flex justify-around">
         Your profile is visible only to your followers
       </div>
-      <div
-        v-if="selectedUserPrivacy == 'subscribers'"
-        class="flex justify-around">
-        Your profile is visible only to your subscribers
-      </div>
     </div>
-    <div class="flex justify-center">
+    <div
+      v-if="selectedUserPrivacy != userStorePrivacy"
+      class="flex justify-center">
       <button
         class="px-4 py-2 m-6 font-bold text-white rounded bg-azure hover:bg-deeplagune dark:bg-magentashine"
         type="submit"
@@ -65,6 +62,13 @@
         ERROR
       </button>
     </div>
+    <div
+      v-if="userStorePrivacy == 'subscribers'"
+      class="flex flex-col justify-around">
+      <div>
+        <Subscribers/>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -75,11 +79,19 @@
   import User from '@/store/userModule';
   const userStore = getModule(User)
   import { get, set } from 'idb-keyval';
-  @Component({})
+  import Subscribers from '@/components/settings/Subscribers.vue';
+  @Component({
+    components: {
+      Subscribers
+    }
+  })
   export default class Privacy extends Vue {
     selectedUserPrivacy: string = '';
     created() {
       this.selectedUserPrivacy = userStore.userDetails['Privacy'];
+    }
+    get userStorePrivacy() {
+      return userStore.userDetails['Privacy'];
     }
     async saveUserPrivacy() {
       let request_url = [
