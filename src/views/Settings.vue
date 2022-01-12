@@ -16,12 +16,6 @@
           @click="changeSettingsSection('privacy')">
           Privacy
         </div>
-        <div
-          class="px-6 py-2 mr-1 text-xl border-2 rounded-md"
-          :class="settingsSection=='plan' ? 'bg-blueshine text-white font-semibold dark:bg-magentashine' : 'bg-white dark:bg-deepgray dark:text-gray-200'"
-          @click="changeSettingsSection('plan')">
-          Plan
-        </div>
       </div>
       <div class="flex justify-center">
         <section v-if="settingsSection=='profile'">
@@ -30,9 +24,6 @@
         <section v-if="settingsSection=='privacy'">
           <Privacy/>
         </section> 
-        <section v-if="settingsSection=='plan'">
-          <Plan/>
-        </section>
       </div>
     </div>
   </div>
@@ -44,13 +35,11 @@
   import Header from '@/components/header/Header.vue';
   import Profile from '@/components/settings/Profile.vue';
   import Privacy from '@/components/settings/Privacy.vue';
-  import Plan from '@/components/settings/Plan.vue';
   @Component({
     components: {
       Header,
       Profile,
-      Privacy,
-      Plan
+      Privacy
     }
   })
   export default class Settings extends Vue {

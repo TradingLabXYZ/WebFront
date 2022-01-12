@@ -29,8 +29,15 @@
         v-bind:trades="trades"
         v-bind:isUserProfile="isUserProfile"/>
     </div>
-    <div v-else class="flex flex-col justify-around text-xl text-center sm:text-4xl h-80 dark:text-gray-200">
+    <div v-else class="flex flex-col justify-center text-xl text-center sm:text-4xl h-80 dark:text-gray-200">
       {{ privacyMessage }}
+      <div v-if="privacyReason == 'user is not subscriber'">
+        <button class="inline-block p-2 m-4 text-lg font-bold rounded hover:bg-deeplagune bg-dutchorange">
+          <router-link :to="`/subscribe/${$route.params.wallet}`">
+           Subscribe
+          </router-link>
+        </button>
+      </div>
     </div>
   </div>
 </template>
