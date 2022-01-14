@@ -30,18 +30,24 @@
         v-bind:isUserProfile="isUserProfile"/>
     </div>
     <div v-else class="flex flex-col justify-center text-xl text-center sm:text-4xl h-80 dark:text-gray-200">
-      {{ privacyMessage }}
-      <div v-if="privacyReason == 'user is not subscriber'">
-        <button class="inline-block p-2 m-4 text-lg font-bold rounded hover:bg-deeplagune bg-dutchorange">
-          <router-link :to="`/subscribe/${$route.params.wallet}`">
-           Subscribe
-          </router-link>
-        </button>
+      <div v-if="!isSubscribe"> 
+        {{ privacyMessage }}
+        <div v-if="privacyReason == 'user is not subscriber'">
+          <button
+            class="inline-block p-2 m-4 text-lg font-bold rounded hover:bg-deeplagune bg-dutchorange"
+            @click="startSubscriptionProcess()">
+            Subscribe
+          </button>
+        </div>
+      </div>
+      <div v-else>
+        <Subscribe
+          v-bind:wallet="$route.params.wallet"
+          @stopSubscriptionProcess="stopSubscriptionProcess"/>
       </div>
     </div>
   </div>
 </template>
-
 <script lang="ts">
   import axios from "axios";
   import { Component, Vue, Watch } from 'vue-property-decorator';
@@ -53,11 +59,13 @@
   import Header from '@/components/header/Header.vue';
   import TradeHero from '@/components/trades/TradeHero.vue';
   import TradeConsole from '@/components/trades/TradeConsole.vue';
+  import Subscribe from '@/components/subscription/Subscribe.vue';
   @Component({
     components: {
       Header,
       TradeHero,
-      TradeConsole
+      TradeConsole,
+      Subscribe
     },
   })
   export default class User extends Vue {
@@ -82,6 +90,7 @@
     totalTrades: number = 0;
     trades: object[] = [];
     isMobile = false;
+    isSubscribe = false;
     get isUserConnected() {
       return metamaskStore.getIsConnected;
     }
@@ -191,6 +200,12 @@
       }).catch(function (error) {
         console.log(error);
       })
+    }
+    startSubscriptionProcess() {
+      this.isSubscribe = true;
+    }
+    stopSubscriptionProcess() {
+      this.isSubscribe = false;
     }
   }
 </script>

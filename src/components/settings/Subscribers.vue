@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <div v-if="monthlyFee != ''">
+      <div v-if="parseInt(monthlyFee) > 0 ">
         Your current monthly fee:
         {{ monthlyFee }}
       </div>
@@ -50,7 +50,6 @@
       contractStore.getContractSubscription.on("ChangePlan", (from, amount, {}) => {
         if (from.toLowerCase() == metamaskStore.getWallet.toLowerCase()) {
           this.monthlyFee = amount.toString();
-          console.log(this.monthlyFee);
           userStore.userDetails['MonthlyFee'] = this.monthlyFee;
           this.updateMonthlyFeeInIndexedDb();
         }

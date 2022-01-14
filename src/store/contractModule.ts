@@ -26,12 +26,12 @@ export default class Contract extends VuexModule {
   };
   @Action
   async signContractSubscription() {
-    let provider = new ethers.providers.Web3Provider(window.ethereum)
-    let signer = provider.getSigner()
+    let provider = new ethers.providers.Web3Provider(window.ethereum);
+    let signer = provider.getSigner();
     this.context.commit(
       'setContractSubscriptionSigned',
       this.contractSubscription.connect(signer)
-    )
+    );
   };
   get getContractSubscription(): ethers.Contract { 
     return this.contractSubscription;
