@@ -15,7 +15,7 @@
           Current MOVR price: {{ movrPrice.toFixed(2) }}
         </div>
         <div class="text-xl font-bold">
-          MOVR to pay: {{ (subscriptionMonthlyPrice / movrPrice).toFixed(2) }}
+          MOVR to pay: {{ (subscriptionMonthlyPriceMovr).toFixed(8) }}
         </div>
       </div>
       <div>
@@ -36,6 +36,7 @@
 
 <script lang="ts">
   import axios from "axios";
+  import { ethers } from "ethers";
   import { getModule } from 'vuex-module-decorators'
   import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
   import Contract from '@/store/contractModule';
@@ -48,9 +49,14 @@
     @Prop() wallet!: string;
     subscriptionMonthlyPrice: number = 0;
     movrPrice: number = 0;
-    created() {
+    async created() {
+      await contractStore.updateContractSubscription();
+      await contractStore.signContractSubscription();
       this.getSubscriptionMonthlyPrice();
       this.getCurrentMoonriverPrice();
+    }
+    get subscriptionMonthlyPriceMovr() {
+      return this.subscriptionMonthlyPrice / this.movrPrice;
     }
     getSubscriptionMonthlyPrice() {
       let request_url = [
@@ -96,7 +102,9 @@
       })
     }
     async subscribe() {
-      await contractStore.getContractSubscriptionSigned.subscribe(this.wallet);
+      let subPriceString = this.subscriptionMonthlyPriceMovr.toString();
+      const options = {value: ethers.utils.parseEther(subPriceString)};
+      await contractStore.getContractSubscriptionSigned.subscribe(this.wallet, options);
     }
     @Emit('stopSubscriptionProcess')
     stopSubscriptionProcess(){}
