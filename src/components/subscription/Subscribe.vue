@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex flex-col justify-around mt-4">
+    <div class="flex flex-col justify-around">
       <div class="text-3xl">
         Subscription process
       </div>
@@ -9,13 +9,24 @@
           {{ wallet }}
         </div>
         <div class="text-xl">
-          Monthly fee USD: {{ subscriptionMonthlyPrice }}
+          Weekly fee USD: {{ subscriptionWeeklyPrice }}
         </div>
         <div class="text-xl">
           Current MOVR price: {{ movrPrice.toFixed(2) }}
         </div>
+        <div class="text-xl">
+          Weekly MOVR: {{ (subscriptionWeeklyPriceMovr).toFixed(8) }}
+        </div>
+        <div class="text-xl border-2 border-gray-800">
+          <input
+            placeholder="Number of weeks"
+            min="1"
+            type="number"
+            class="text-center"
+            v-model="selectedWeeks">
+        </div>
         <div class="text-xl font-bold">
-          MOVR to pay: {{ (subscriptionMonthlyPriceMovr).toFixed(8) }}
+          Total MOVR to pay: {{ (totalPriceMovr).toFixed(8) }}
         </div>
       </div>
       <div>
@@ -47,18 +58,22 @@
   })
   export default class Connections extends Vue {
     @Prop() wallet!: string;
-    subscriptionMonthlyPrice: number = 0;
+    subscriptionWeeklyPrice: number = 0;
     movrPrice: number = 0;
+    selectedWeeks: number = 1;
     async created() {
       await contractStore.updateContractSubscription();
       await contractStore.signContractSubscription();
-      this.getSubscriptionMonthlyPrice();
+      this.getSubscriptionWeeklyPrice();
       this.getCurrentMoonriverPrice();
     }
-    get subscriptionMonthlyPriceMovr() {
-      return this.subscriptionMonthlyPrice / this.movrPrice;
+    get subscriptionWeeklyPriceMovr() {
+      return this.subscriptionWeeklyPrice / this.movrPrice;
     }
-    getSubscriptionMonthlyPrice() {
+    get totalPriceMovr() {
+      return this.subscriptionWeeklyPriceMovr * this.selectedWeeks;
+    }
+    getSubscriptionWeeklyPrice() {
       let request_url = [
         process.env.VUE_APP_HTTP_URL,
         'subscription',
@@ -73,7 +88,7 @@
         url: request_url,
       }).then(response => {
         if (response.status === 200) {
-          this.subscriptionMonthlyPrice = response.data;
+          this.subscriptionWeeklyPrice = response.data;
         }
       }).catch(function (error) {
         console.log(error);
@@ -102,9 +117,13 @@
       })
     }
     async subscribe() {
-      let subPriceString = this.subscriptionMonthlyPriceMovr.toString();
+      let subPriceString = this.subscriptionWeeklyPriceMovr.toString();
       const options = {value: ethers.utils.parseEther(subPriceString)};
-      await contractStore.getContractSubscriptionSigned.subscribe(this.wallet, options);
+      await contractStore.getContractSubscriptionSigned.subscribe(
+        this.wallet,
+        this.selectedWeeks,
+        options
+      );
     }
     @Emit('stopSubscriptionProcess')
     stopSubscriptionProcess(){}

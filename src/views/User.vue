@@ -29,7 +29,7 @@
         v-bind:trades="trades"
         v-bind:isUserProfile="isUserProfile"/>
     </div>
-    <div v-else class="flex flex-col justify-center text-xl text-center sm:text-4xl h-80 dark:text-gray-200">
+    <div v-else class="flex flex-col justify-center mt-12 text-xl text-center sm:text-4xl h-80 dark:text-gray-200">
       <div v-if="!isSubscribe"> 
         {{ privacyMessage }}
         <div v-if="privacyReason == 'user is not subscriber'">
