@@ -461,8 +461,11 @@
     managePairCoinId(userInputPair: string) {
       let selectedPairId = 0;
       var symbolUserInput = userInputPair.split(' - ')[0];
+      var nameUserInput = userInputPair.split(' - ')[1];
       for (var key in this.cryptoPairs) {
-        if (this.cryptoPairs[key]['Symbol'] == symbolUserInput) {
+        if (
+          this.cryptoPairs[key]['Symbol'] == symbolUserInput &&
+          this.cryptoPairs[key]['Name'] == nameUserInput) {
           selectedPairId = parseInt(key);
         }
       }
