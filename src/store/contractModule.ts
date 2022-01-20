@@ -6,6 +6,7 @@ import ContractSubscription from "@/functions/subscriptionContract";
 
 @Module({ dynamic: true, store, name: 'contractModule'  })
 export default class Contract extends VuexModule {
+
   contractSubscription = {} as ethers.Contract;
   contractSubscriptionSigned = {} as ethers.Contract;
   @Mutation
