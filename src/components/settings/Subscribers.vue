@@ -66,9 +66,7 @@
           } else {
             try {
               revertMessage = err['data']['message'].split('revert')[1].trim();
-              if (revertMessage == 'Balance is not enough.') {
-                alert('Your current balance is not enough for this transaction');
-              } else if (revertMessage == 'USDC price must be different than current one.') {
+              if (revertMessage == 'USDC price must be different than current one.') {
                 alert('Your new monthly fee needs to be different than your current one.');
               } else {
                 console.log("Unknown error: ", err);
