@@ -6,6 +6,7 @@ import ContractSubscription from "@/functions/subscriptionContract";
 
 @Module({ dynamic: true, store, name: 'contractModule'  })
 export default class Contract extends VuexModule {
+
   contractSubscription = {} as ethers.Contract;
   contractSubscriptionSigned = {} as ethers.Contract;
   @Mutation
@@ -26,12 +27,12 @@ export default class Contract extends VuexModule {
   };
   @Action
   async signContractSubscription() {
-    let provider = new ethers.providers.Web3Provider(window.ethereum)
-    let signer = provider.getSigner()
+    let provider = new ethers.providers.Web3Provider(window.ethereum);
+    let signer = provider.getSigner();
     this.context.commit(
       'setContractSubscriptionSigned',
       this.contractSubscription.connect(signer)
-    )
+    );
   };
   get getContractSubscription(): ethers.Contract { 
     return this.contractSubscription;

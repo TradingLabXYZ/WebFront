@@ -55,7 +55,6 @@
           },
           url: request_url
         }).then(response => {
-          console.log(response.data);
           if (response.status === 200) {
             localStorage.setItem(
               'cryptoPairs',

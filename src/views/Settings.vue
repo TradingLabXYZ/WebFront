@@ -35,13 +35,11 @@
   import Header from '@/components/header/Header.vue';
   import Profile from '@/components/settings/Profile.vue';
   import Privacy from '@/components/settings/Privacy.vue';
-  import Plan from '@/components/settings/Plan.vue';
   @Component({
     components: {
       Header,
       Profile,
-      Privacy,
-      Plan
+      Privacy
     }
   })
   export default class Settings extends Vue {
