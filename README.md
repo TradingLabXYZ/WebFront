@@ -52,3 +52,8 @@ or even more specifically to a single test:
 jest Connect.vue -t=loginMetamask
 ``` 
 
+### Upgrade node and solve vulnerabilities
+
+``` 
+npm i npm@latest
+```
