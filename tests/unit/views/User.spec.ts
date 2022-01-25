@@ -1,19 +1,19 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import VueRouter from 'vue-router';
-import UserTrades from '@/views/UserTrades.vue'
+import User from '@/views/User.vue'
 import WS from "jest-websocket-mock";
 
-describe('UserTrades.vue / initialiseTradeWs', () => {
+describe('User.vue / initialiseTradeWs', () => {
 
   it('instantiates a websocket and fill the data', async () => {
     process.env.VUE_APP_WS_URL = 'ws://localhost:1234';
-    const server = new WS('ws://localhost:1234/get_trades/0xabc/undefined');
+    const server = new WS('ws://localhost:1234/get_trades/0xabc/ABC');
     const mockGenerateRandomRequestId = jest.fn();
     mockGenerateRandomRequestId.mockReturnValue('ABC')
     let methods = {
-      generateRandomRequestId: mockGenerateRandomRequestId
+      generateRandomId: mockGenerateRandomRequestId
     }
-    const wrapper = shallowMount(UserTrades, {
+    const wrapper = shallowMount(User, {
       methods,
       mocks: {
         $route: {
@@ -23,7 +23,13 @@ describe('UserTrades.vue / initialiseTradeWs', () => {
         }
       }
     });
+
     server.send(JSON.stringify({
+      IsFollower: false,
+      IsSubscriber: false,
+      UserDetails: {
+        Username: "TEST"
+      },
       PrivacyStatus: {
         Status: "OK",
         Reason: "RandomReason",
@@ -33,29 +39,22 @@ describe('UserTrades.vue / initialiseTradeWs', () => {
       CountTrades: 3,
       Trades: [
         {
-          IsOpen: 'true',
-          ciao: 1234
+          IsOpen: 'true'
         },
         {
-          IsOpen: 'true',
-          ciao: 3333
+          IsOpen: 'true'
         },
         {
-          IsOpen: 'false',
-          ciao: 3738
+          IsOpen: 'false'
         }
       ]
     }))
     var totalReturn = await (wrapper as any).vm.$data.totalReturn;
     var roi = await (wrapper as any).vm.$data.roi;
     var totalTrades = await (wrapper as any).vm.$data.totalTrades;
-    var openedTrades = await (wrapper as any).vm.$data.openedTrades;
-    var closedTrades = await (wrapper as any).vm.$data.closedTrades;
     expect(totalReturn).toBe(100);
     expect(roi).toBe(20);
     expect(totalTrades).toBe(3);
-    expect(openedTrades.length).toBe(2);
-    expect(closedTrades.length).toBe(1);
   })
 
   it('reinstantiates websocket when url changes', async () => {
@@ -66,9 +65,9 @@ describe('UserTrades.vue / initialiseTradeWs', () => {
     const mockGenerateRandomRequestId = jest.fn();
     mockGenerateRandomRequestId.mockReturnValue('ABC')
     let methods = {
-      generateRandomRequestId: mockGenerateRandomRequestId
+      generateRandomId: mockGenerateRandomRequestId
     }
-    let wrapper = shallowMount(UserTrades, {
+    let wrapper = shallowMount(User, {
       methods,
       localVue,
       router,
