@@ -69,6 +69,7 @@
     },
   })
   export default class User extends Vue {
+    ws_url: string = '';
     privacyStatus: string = '';
     privacyReason: string = '';
     privacyMessage: string = '';
@@ -110,24 +111,29 @@
       this.trades = [];
       this.initialiseTradesWs();
     }
+    generateRandomId() {
+      return "noLogIn_" + (Math.random() + 1).toString(36).substring(2);
+    }
     initialiseTradesWs() {
       var sessionId: string;
       if (userStore.userDetails['SessionId']) {
         sessionId = userStore.userDetails['SessionId'];
       } else {
-        sessionId = "noLogIn_" + (Math.random() + 1).toString(36).substring(2);
+        sessionId = this.generateRandomId();
       }
       let wallet = this.$route.params.wallet;
-      let ws_url = [
+      this.ws_url = [
         process.env.VUE_APP_WS_URL,
         'get_trades',
         wallet,
         sessionId
       ].join('/');
-      let ws = new WebSocket(ws_url);
+      let ws = new WebSocket(this.ws_url);
       this.heartbeat(ws);
       ws.onmessage = (event: any) => {
         let ws_data = JSON.parse(event.data);
+        console.log("WS DATA");
+        console.log(ws_data);
         this.privacyStatus = ws_data.PrivacyStatus.Status;
         this.privacyReason = ws_data.PrivacyStatus.Reason;
         this.privacyMessage = ws_data.PrivacyStatus.Message;

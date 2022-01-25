@@ -14,13 +14,17 @@ describe('Profile.vue / saveUserSocial', () => {
 
   it('sets selectedUserPrivacy on creation', async () => {
     userStore.updateUserDetails({
+      Username: 'testUsername',
       Twitter: 'testTwitter',
-      Website: 'testWebsite',
+      Discord: 'testDiscord',
+      Github: 'testGithub',
       ProfilePicture: 'testProfilePicture'
     });
     const wrapper = shallowMount(Profile);
+    expect(wrapper.vm.$data.username).toBe('testUsername');
     expect(wrapper.vm.$data.twitter).toBe('testTwitter');
-    expect(wrapper.vm.$data.website).toBe('testWebsite');
+    expect(wrapper.vm.$data.discord).toBe('testDiscord');
+    expect(wrapper.vm.$data.github).toBe('testGithub');
     expect(wrapper.vm.$data.profilePicture).toBe('testProfilePicture');
   })
   it('updates user social after post request', async () => {
@@ -35,10 +39,10 @@ describe('Profile.vue / saveUserSocial', () => {
       methods
     });
     wrapper.vm.$data.twitter = 'thisNewTwitter';
-    wrapper.vm.$data.website = 'thisNewWebsite';
+    wrapper.vm.$data.discord = 'thisNewDiscord';
     await (wrapper as any).vm.saveUserSocial();
     expect(userStore.getUserDetails['Twitter']).toBe('thisNewTwitter');
-    expect(userStore.getUserDetails['Website']).toBe('thisNewWebsite');
+    expect(userStore.getUserDetails['Discord']).toBe('thisNewDiscord');
   })
   it('shows the green button when request returns 200', async () => {
     mockedAxios.post.mockImplementation(() => Promise.resolve({
