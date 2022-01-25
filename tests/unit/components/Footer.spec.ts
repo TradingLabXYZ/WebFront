@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import Footer from '@/components/Footer.vue'
+import Footer from '@/components/landing/Footer.vue'
 
 describe('Footer.vue', () => {
   test('text is visible', () => {

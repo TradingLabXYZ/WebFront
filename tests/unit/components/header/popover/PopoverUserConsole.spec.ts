@@ -1,10 +1,10 @@
 import { mount, shallowMount } from '@vue/test-utils'
 import metamaskStore from '@/store/metamaskModule.ts'
 import Connect from '@/components/header/btns/Connect.vue'
-import Connected from '@/components/header/btns/Connected.vue'
 import PopoverUserConsole from '@/components/header/popover/PopoverUserConsole.vue'
 import Settings from '@/components/header/btns/Settings.vue'
 import CopyToClipboard from '@/components/svg/CopyToClipboard.vue'
+require("fake-indexeddb/auto");
 
 describe('PopoverUserConsole.vue', () => {
   metamaskStore.state.chainId = 111;
@@ -27,9 +27,9 @@ describe('PopoverUserConsole.vue', () => {
   it('shows the CopyToClipboard child component', () => {
     expect(wrapper.findComponent(CopyToClipboard).exists()).toBe(true)
   });
-  it('displaies as text only a section of the wallet', () => {
+  it('displays as text only a section of the wallet', () => {
     const span = wrapper.find('#walletText').text()
-    expect(span).toBe('Wallet: ABC12...21CBA');
+    expect(span).toMatch(/ABC12...21CBA/i)
   });
 
   it('delete metamaskStore data when disconnected', async () => {
@@ -37,11 +37,8 @@ describe('PopoverUserConsole.vue', () => {
       on: jest.fn()
     }
     const connectWrapper = mount(Connect, {})
-    connectWrapper.findComponent(
-      Connected
-    ).findComponent(
-      PopoverUserConsole
-    ).find('#disconnectButton').trigger('click');
+    await connectWrapper.find("#disconnectButton").trigger("click");
+
     expect((wrapper.vm as any).userChainId).toBe(0);
   })
 
