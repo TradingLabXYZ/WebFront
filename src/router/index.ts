@@ -13,6 +13,7 @@ const userStore = getModule(User)
 const metamaskStore = getModule(Metamask)
 
 import Home from '../views/Home.vue'
+import Test from '../views/Test.vue'
 import Explore from '../views/Explore.vue'
 import UserView from '../views/User.vue'
 import Settings from '../views/Settings.vue'
@@ -33,6 +34,11 @@ const routes: Array<RouteConfig> = [
         next()
       }
     }
+  },
+  {
+    path: '/test',
+    name: 'Test',
+    component: Test
   },
   {
     path: '/explore',
