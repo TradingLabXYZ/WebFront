@@ -132,8 +132,6 @@
       this.heartbeat(ws);
       ws.onmessage = (event: any) => {
         let ws_data = JSON.parse(event.data);
-        console.log("WS DATA");
-        console.log(ws_data);
         this.privacyStatus = ws_data.PrivacyStatus.Status;
         this.privacyReason = ws_data.PrivacyStatus.Reason;
         this.privacyMessage = ws_data.PrivacyStatus.Message;
