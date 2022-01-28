@@ -10,6 +10,8 @@
   "dependencies": {
     "@truffle/hdwallet-provider": "^1.6.0",
     "@walletconnect/web3-provider": "^1.7.1",
+    "@web3-react/core": "^6.1.9",
+    "@web3-react/walletconnect": "^8.0.1-beta.0",
     "@web3-react/walletconnect-connector": "^6.2.10",
     "autoprefixer": "^9.8.8",
     "axios": "^0.22.0",
