@@ -21,12 +21,44 @@
   import { Component, Vue } from 'vue-property-decorator';
   import { ethers } from "ethers";
   import WalletConnectProvider from '@walletconnect/ethereum-provider'
+  import Web3Modal from "web3modal";
   @Component({
     components: {},
   })
   export default class Test extends Vue {
     async created() {
-      const provider = new WalletConnectProvider({
+
+
+      const providerOptions = {
+        walletconnect: {
+          package: WalletConnectProvider,
+          options: {
+            rpc: {
+                1287: "https://rpc.api.moonbase.moonbeam.network",
+            }
+          }
+        }
+      };
+
+      const web3Modal = new Web3Modal({
+        providerOptions
+      });
+
+      const provider = await web3Modal.connect();
+      const web3Provider = new ethers.providers.Web3Provider(provider);
+     
+
+      var network = await web3Provider.getNetwork().then(function(newtwork) {return newtwork.chainId});
+      
+      var address = await web3Provider.listAccounts().then(function(addresses) {return addresses[0]});
+
+      var balance = await web3Provider.getBalance(address).then(function(balance) {return balance.toString()});
+      
+      console.log("NETWORK", network, "\nADDRESS", address, "\nBALANCE", balance);
+      
+
+
+      /* const provider = new WalletConnectProvider({
         rpc: {
             1287: "https://rpc.api.moonbase.moonbeam.network",
         },
@@ -34,11 +66,13 @@
       });
       await provider.enable();
       const web3Provider = new ethers.providers.Web3Provider(provider);
+      var network = await web3Provider.getNetwork().then(function(newtwork) {return newtwork.chainId});
       var address = await web3Provider.listAccounts().then(function(addresses) {return addresses[0]});
-      console.log("HERE THE ADDRESS", address);
+      var balance = await web3Provider.getBalance(address).then(function(balance) {return balance.toString()});
+      console.log("NETWORK", network, "\nADDRESS", address, "\nBALANCE", balance);
       provider.on("accountsChanged", (accounts: string[]) => {
         console.log(accounts);
-      });
+      }); */
     }
     async handleWalletConnect() {
     };
