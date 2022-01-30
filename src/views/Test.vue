@@ -1,31 +1,41 @@
 <template>
   <div>
-    <div>
+    <div v-if="network > 0 && network != 1287" class="flex justify-center w-full h-10 bg-red-200">
+      <button
+        @click="switchNetwork"
+        class="p-1 m-1 bg-red-300 hover:bg-red-400">
+        Please switch network on {{ providerName }}
+      </button>
     </div>
     <div class="divide-x-8">
       <button
         @click="connect"
-        class="bg-red-300">
-        WalletConnect
+        class="bg-blue-300">
+        Connect
       </button>
       <button
-        @click="switchNetwork"
+        @click="disconnect"
         class="bg-blue-300">
-        Switch Network
+        Disconnect
       </button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
+  import axios from "axios";
   import { ethers } from "ethers";
-  import WalletConnectProvider from '@walletconnect/ethereum-provider'
   import Web3Modal from "web3modal";
   import { getProviderInfo } from "web3modal";
-  import Metamask from '@/store/metamaskModule';
+  import { set, clear } from 'idb-keyval';
   import { getModule } from 'vuex-module-decorators'
+  import { Component, Vue } from 'vue-property-decorator';
+  import WalletConnectProvider from '@walletconnect/ethereum-provider'
+  import User from '@/store/userModule';
+  const userStore = getModule(User)
+  import Metamask from '@/store/metamaskModule';
   const metamaskStore = getModule(Metamask)
+  import Connected from '@/components/header/btns/Connected.vue';
   @Component({
     components: {},
   })
@@ -35,7 +45,13 @@
     providerName: string = '';
     network = 0;
     address: string = '';
+    get isUserConnected() {
+      return metamaskStore.getIsConnected;
+    }
     async created() {
+      await this.defineMetamaskStoreVariables();
+    }
+    async defineMetamaskStoreVariables() {
       const web3Provider = new ethers.providers.Web3Provider(window.ethereum)
       this.network = await web3Provider.getNetwork().then(function(newtwork) {return newtwork.chainId});
       var metamaskAddress = await web3Provider.listAccounts().then(function(addresses) {return addresses[0]});
@@ -54,6 +70,7 @@
         if (isConnectedToWalletConnect) {
           await provider.enable();
           const web3Provider = new ethers.providers.Web3Provider(provider);
+          this.network = await web3Provider.getNetwork().then(function(newtwork) {return newtwork.chainId});
           this.address = await web3Provider.listAccounts().then(function(addresses) {return addresses[0]});
           this.instantiateWatchers(provider);
           console.log("WALLETCONNECT -->", "NETWORK", this.network, "\nADDRESS", this.address);
@@ -87,17 +104,19 @@
       console.log("PROVIDER NAME", this.providerName, "\nNETWORK", this.network, "\nADDRESS", this.address);
     }
     instantiateWatchers(provider: any) {
-      provider.on('accountsChanged', function(account: any) {
-        console.log("ACCOUNT CHANGED");
+      var self = this;
+      provider.on('accountsChanged', function(accounts: string[]) {
+        console.log("ACCOUNT CHANGED", accounts);
+        self.cleanSession();
       });
-      provider.on('chainChanged', function() {
-        console.log("CHAIN CHANGED");
+      provider.on('chainChanged', function(chainId: number) {
+        console.log("CHAIN CHANGED", chainId);
+        self.cleanSession();
       });
     }
     async switchNetwork() {
       let chainIdHex = await window.ethereum.request({ method: 'eth_chainId' });
       let chainId = parseInt(chainIdHex, 16);
-      console.log(chainId);
       if (chainId != this.vue_app_moonbeam_chainid) {
         try {
           await window.ethereum.request({
@@ -132,6 +151,45 @@
           }
         }
       }
+    }
+    async generateSession(account: string) {
+      this.cleanSession();
+      let api_url = this.vue_app_http_url + '/login/' + account;
+      const response = await axios.get(api_url);
+      if (response.status != 200) {
+        return
+      }
+      let sessionId: string = response.data['SessionId'];
+      // Set cookie
+      let d = new Date();
+      d.setTime(d.getTime() + 1000 * 24 * 60 * 60 * 1000);
+      let expires = "expires=" + d.toUTCString();
+      document.cookie = "sessionId=" + sessionId + ";" + expires + "; path=/";
+      // Save user's info in store
+      userStore.updateUserDetails(response.data);
+      // Save user's data in indexeddb
+      set(response.data['SessionId'], response.data);
+      return;
+    }
+    async cleanSession() {
+      // Reset indexeddb
+      clear()
+      // Reset cookie
+      const date = new Date();
+      date.setTime(date.getTime() + (-1 * 24 * 60 * 60 * 1000));
+      document.cookie = "sessionId=; expires="+date.toUTCString()+"; path=/";
+      // Reset user store
+      userStore.updateUserDetails({});
+      // Reset metamask store
+      metamaskStore.updateIsConnected(false);
+      metamaskStore.updateBalance(0);
+      metamaskStore.updateChainId(0);
+      metamaskStore.updateWallet('');
+    }
+    async disconnect() {
+      localStorage.removeItem('walletconnect');
+      await this.cleanSession();
+      localStorage.clear();
     }
   }
 </script>

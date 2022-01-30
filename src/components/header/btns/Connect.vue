@@ -4,138 +4,118 @@
       <button
         id="connectButton"
         class="inline-block p-2 mr-2 font-bold rounded hover:bg-deeplagune bg-magentashine"
-        @click="loginMetamask">
+        @click="connect">
         Connect
       </button>
     </div>
     <div v-else>
-      <Connected @disconnectMetamask="disconnectMetamask"/>
+      <Connected @disconnectMetamask="disconnect"/>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-  declare let window: any;
   import axios from "axios";
   import { ethers } from "ethers";
-  import { Component, Vue } from 'vue-property-decorator';
-  import { getModule } from 'vuex-module-decorators'
+  import Web3Modal from "web3modal";
+  import { getProviderInfo } from "web3modal";
   import { set, clear } from 'idb-keyval';
+  import { getModule } from 'vuex-module-decorators'
+  import { Component, Vue } from 'vue-property-decorator';
+  import WalletConnectProvider from '@walletconnect/ethereum-provider'
   import User from '@/store/userModule';
-  import Metamask from '@/store/metamaskModule';
-  import Connected from '@/components/header/btns/Connected.vue';
   const userStore = getModule(User)
+  import Metamask from '@/store/metamaskModule';
   const metamaskStore = getModule(Metamask)
+  import Connected from '@/components/header/btns/Connected.vue';
   @Component({
     components: {
       Connected
-    }
+    },
   })
-  export default class Connect extends Vue {
-    vue_app_moonbeam_chainid = parseInt(process.env.VUE_APP_MOONBEAM_CHAINID || '');
+  export default class Test extends Vue {
     vue_app_http_url = process.env.VUE_APP_HTTP_URL;
+    providerName: string = '';
+    network = 0;
+    address: string = '';
     get isUserConnected() {
       return metamaskStore.getIsConnected;
     }
     async created() {
       await this.defineMetamaskStoreVariables();
-      this.instantiateMetamaskWatchers();
     }
     async defineMetamaskStoreVariables() {
-      if(document.cookie.indexOf("sessionId") == -1) {
-        return;
+      const web3Provider = new ethers.providers.Web3Provider(window.ethereum)
+      this.network = await web3Provider.getNetwork().then(function(newtwork) {return newtwork.chainId});
+      var metamaskAddress = await web3Provider.listAccounts().then(function(addresses) {return addresses[0]});
+      if (metamaskAddress) {
+        this.address = metamaskAddress;
+        this.instantiateWatchers(window.ethereum);
+      } else {
+        const provider = new WalletConnectProvider({
+          rpc: {
+            1287: "https://rpc.api.moonbase.moonbeam.network",
+          },
+          qrcode: true
+        });
+        var isConnectedToWalletConnect = provider.connected;
+        if (isConnectedToWalletConnect) {
+          await provider.enable();
+          const web3Provider = new ethers.providers.Web3Provider(provider);
+          this.network = await web3Provider.getNetwork().then(function(newtwork) {return newtwork.chainId});
+          this.address = await web3Provider.listAccounts().then(function(addresses) {return addresses[0]});
+          this.instantiateWatchers(provider);
+        }
       }
-      var accounts = await window.ethereum.request({ method: 'eth_accounts' })
-      if (accounts.length == 0) {
-        return;
+      if (this.address) {
+        metamaskStore.updateWallet(this.address);
+        metamaskStore.updateChainId(this.network);
+        metamaskStore.updateIsConnected(true); 
+      } else {
+        console.log("USER NOT CONNECTED");
       }
-      let chainIdHex = await window.ethereum.request({ method: 'eth_chainId' });
-      let chainId = parseInt(chainIdHex, 16);
-      if (chainId != this.vue_app_moonbeam_chainid) {
-        return;
-      }
-      let balance = await window.ethereum.request({ method: 'eth_getBalance', params: [accounts[0], 'latest']});
-      let balanceEth = parseFloat(ethers.utils.formatEther(balance));
-      metamaskStore.updateWallet(accounts[0]);
-      metamaskStore.updateChainId(chainId);
-      metamaskStore.updateBalance(balanceEth);
-      metamaskStore.updateIsConnected(true);
     }
-    instantiateMetamaskWatchers() {
-      var self = this;
-      window.ethereum.on('accountsChanged', function() {
-        self.cleanSession();
-        self.loginMetamask();
-      });
-      window.ethereum.on('chainChanged', function() {
-        self.cleanSession();
-        window.location.reload();
-      });
-    }
-    async loginMetamask() {
-      if (typeof window.ethereum === "undefined") {
-        alert("MetaMask not Detected");
-        this.cleanSession();
-        return;
-      }
-      let chainIdHex = await window.ethereum.request({ method: 'eth_chainId' });
-      let chainId = parseInt(chainIdHex, 16);
-      if (chainId != this.vue_app_moonbeam_chainid) {
-        try {
-          await window.ethereum.request({
-            method: 'wallet_switchEthereumChain',
-            params: [{ chainId: process.env.VUE_APP_MOONBEAM_CHAINHEX }],
-          });
-        } catch (switchError: any) {
-          if (switchError.code === 4902) {
-            try {
-              const params = [{
-                chainId: '0x507',
-                chainName: 'Moonbase Alpha',
-                nativeCurrency: {
-                  name: 'DEV',
-                  symbol: 'DEV',
-                  decimals: 18
-                },
-                rpcUrls: ['https://rpc.testnet.moonbeam.network'],
-                blockExplorerUrls: ['https://moonbase-blockscout.testnet.moonbeam.network/']
-              }]
-              await window.ethereum.request({
-                method: 'wallet_addEthereumChain',
-                params
-              });
-            } catch (addError) {
-              alert(`Onyl Moonbase ${process.env.VUE_APP_MOONBEAM_CHAINNAME} supported!`);
-              this.cleanSession();
-              return;
+    async connect() {
+      var providerOptions = {
+        walletconnect: {
+          package: WalletConnectProvider,
+          options: {
+            rpc: {
+                1287: "https://rpc.api.moonbase.moonbeam.network",
             }
-          } else {
-            alert(`Onyl Moonbase ${process.env.VUE_APP_MOONBEAM_CHAINNAME} supported!`);
-            this.cleanSession();
-            return;
           }
         }
       }
-      await window.ethereum.request({ method: 'eth_requestAccounts' });
-      let accounts = await window.ethereum.request({ method: 'eth_accounts' });
-      if (accounts.length == 0) {
-        alert(`No accounts have been connected!`);
-        this.cleanSession();
-        return;
-      }
-      await this.generateSession(accounts[0])
-      this.defineMetamaskStoreVariables();
-      if (this.$route.params['wallet'] == accounts[0]) {
+      const web3Modal = new Web3Modal({providerOptions})
+      const provider = await web3Modal.connect();
+      const web3Provider = new ethers.providers.Web3Provider(provider);
+      this.network = await web3Provider.getNetwork().then(function(newtwork) {return newtwork.chainId});
+      this.address = await web3Provider.listAccounts().then(function(addresses) {return addresses[0]});
+      this.providerName = getProviderInfo(provider)['name'];
+      await this.generateSession(this.address)
+      await this.defineMetamaskStoreVariables();
+      if (this.$route.params['wallet'] == this.address) {
         window.location.reload();
         return;
       }
       this.$router.push({
         name: 'User',
         params: {
-          wallet: accounts[0]
+          wallet: this.address
         }
       })
       return;
+    }
+    instantiateWatchers(provider: any) {
+      var self = this;
+      provider.on('accountsChanged', function(accounts: string[]) {
+        console.log("ACCOUNT CHANGED", accounts);
+        self.cleanSession();
+      });
+      provider.on('chainChanged', function(chainId: number) {
+        console.log("CHAIN CHANGED", chainId);
+        self.cleanSession();
+      });
     }
     async generateSession(account: string) {
       this.cleanSession();
@@ -171,7 +151,8 @@
       metamaskStore.updateChainId(0);
       metamaskStore.updateWallet('');
     }
-    async disconnectMetamask() {
+    async disconnect() {
+      localStorage.removeItem('walletconnect');
       await this.cleanSession();
       localStorage.clear();
     }

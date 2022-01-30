@@ -100,7 +100,7 @@ const routes: Array<RouteConfig> = [
 
 async function isAllowedToGoNext() {
   if(document.cookie.indexOf("sessionId") > -1) {
-    let accounts = await loadAccounts();
+    let accounts = metamaskStore.getWallet;
     if (accounts.length > 0) {
       return true
     } else {
@@ -110,11 +110,6 @@ async function isAllowedToGoNext() {
   } else {
     return false
   }
-}
-
-async function loadAccounts() {
-  let accounts = await window.ethereum.request({ method: 'eth_accounts' });
-  return accounts;
 }
 
 function cleanSession() {
