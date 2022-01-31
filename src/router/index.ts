@@ -2,8 +2,6 @@ import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 Vue.use(VueRouter)
 
-declare let window: any;
-
 import { get, clear } from 'idb-keyval';
 
 import User from '@/store/userModule';
@@ -13,7 +11,6 @@ const userStore = getModule(User)
 const metamaskStore = getModule(Metamask)
 
 import Home from '../views/Home.vue'
-import Test from '../views/Test.vue'
 import Explore from '../views/Explore.vue'
 import UserView from '../views/User.vue'
 import Settings from '../views/Settings.vue'
@@ -34,11 +31,6 @@ const routes: Array<RouteConfig> = [
         next()
       }
     }
-  },
-  {
-    path: '/test',
-    name: 'Test',
-    component: Test
   },
   {
     path: '/explore',
