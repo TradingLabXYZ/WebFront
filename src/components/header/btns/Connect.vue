@@ -33,7 +33,7 @@
       Connected
     },
   })
-  export default class Test extends Vue {
+  export default class Connect extends Vue {
     vue_app_http_url = process.env.VUE_APP_HTTP_URL;
     providerName: string = '';
     network = 0;
@@ -45,21 +45,27 @@
       await this.defineMetamaskStoreVariables();
     }
     async defineMetamaskStoreVariables() {
-      const web3Provider = new ethers.providers.Web3Provider(window.ethereum)
-      this.network = await web3Provider.getNetwork().then(function(newtwork) {return newtwork.chainId});
-      var metamaskAddress = await web3Provider.listAccounts().then(function(addresses) {return addresses[0]});
-      if (metamaskAddress) {
-        this.address = metamaskAddress;
-        this.instantiateWatchers(window.ethereum);
-      } else {
+
+      // IS CONNECTED TO METAMASK?
+      if (typeof window.ethereum !== 'undefined') {
+        const web3Provider = new ethers.providers.Web3Provider(window.ethereum)
+        this.network = await web3Provider.getNetwork().then(function(newtwork) {return newtwork.chainId});
+        var metamaskAddress = await web3Provider.listAccounts().then(function(addresses) {return addresses[0]});
+        if (metamaskAddress) {
+          console.log("Metamask connection detected!");
+          this.address = metamaskAddress;
+          this.instantiateWatchers(window.ethereum);
+        }
+      }
+
+      // IS CONNECTED TO WALLETCONNECT?
+      if (this.address == '') {
         const provider = new WalletConnectProvider({
-          rpc: {
-            1287: "https://rpc.api.moonbase.moonbeam.network",
-          },
-          qrcode: true
-        });
+          rpc: {1287: "https://rpc.api.moonbase.moonbeam.network"},
+          qrcode: true});
         var isConnectedToWalletConnect = provider.connected;
         if (isConnectedToWalletConnect) {
+          console.log("WalletConnect connection detected!");
           await provider.enable();
           const web3Provider = new ethers.providers.Web3Provider(provider);
           this.network = await web3Provider.getNetwork().then(function(newtwork) {return newtwork.chainId});
@@ -67,6 +73,7 @@
           this.instantiateWatchers(provider);
         }
       }
+
       if (this.address) {
         metamaskStore.updateWallet(this.address);
         metamaskStore.updateChainId(this.network);

@@ -80,7 +80,7 @@
       return this.$route.path;
     }
     async switchNetwork() {
-      let chainIdHex = await window.ethereum.request({ method: 'eth_chainId' });
+      /* let chainIdHex = await window.ethereum.request({ method: 'eth_chainId' });
       let chainId = parseInt(chainIdHex, 16);
       if (chainId != this.vue_app_moonbeam_chainid) {
         try {
@@ -115,7 +115,7 @@
             return;
           }
         }
-      }
+      } */
     }
   }
 </script>
