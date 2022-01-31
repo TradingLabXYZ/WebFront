@@ -16,6 +16,11 @@ import UserView from '../views/User.vue'
 import Settings from '../views/Settings.vue'
 import Connections from '../views/Connections.vue'
 
+import { ethers } from "ethers";
+import WalletConnectProvider from '@walletconnect/ethereum-provider'
+
+declare let window: any;
+
 const routes: Array<RouteConfig> = [
   {
     path: '/',
@@ -93,9 +98,9 @@ const routes: Array<RouteConfig> = [
 async function isAllowedToGoNext() {
   console.log("PRINTINT COOKIE FROM ROUTER", document.cookie.indexOf("sessionId"));
   if(document.cookie.indexOf("sessionId") > -1) {
-    let accounts = metamaskStore.getWallet;
-    console.log("PRINTINT ACCOUNTS FROM ROUTER", accounts);
-    if (accounts.length > 0) {
+    let account = await loadAccount();
+    console.log("PRINTINT ACCOUNT FROM ROUTER", account);
+    if (account) {
       return true
     } else {
       cleanSession();
@@ -103,6 +108,27 @@ async function isAllowedToGoNext() {
     }
   } else {
     return false
+  }
+}
+
+async function loadAccount() {
+  if (typeof window.ethereum !== 'undefined') {
+    const web3Provider = new ethers.providers.Web3Provider(window.ethereum)
+    var metamaskAddress = await web3Provider.listAccounts().then(function(addresses) {return addresses[0]});
+    if (metamaskAddress) {
+      return metamaskAddress;
+    }
+  }
+  const provider = new WalletConnectProvider({
+    rpc: {1287: "https://rpc.api.moonbase.moonbeam.network"},
+    qrcode: true});
+  var isConnectedToWalletConnect = provider.connected;
+  if (isConnectedToWalletConnect) {
+    const web3Provider = new ethers.providers.Web3Provider(provider);
+    var walletConnectAddress = await web3Provider.listAccounts().then(function(addresses) {return addresses[0]});
+    if (walletConnectAddress) {
+      return walletConnectAddress;
+    }
   }
 }
 
