@@ -1,15 +1,23 @@
 <template>
   <div>
-    <div v-if="!isUserConnected">
+    <div v-if="network > 0 && network != 1287" class="flex justify-center w-full h-10 bg-red-200">
       <button
-        id="connectButton"
-        class="inline-block p-2 mr-2 font-bold rounded hover:bg-deeplagune bg-magentashine"
-        @click="connect">
-        Connect
+        @click="switchNetwork"
+        class="p-1 m-1 bg-red-300 hover:bg-red-400">
+        Please switch network on {{ providerName }}
       </button>
     </div>
-    <div v-else>
-      <Connected @disconnectMetamask="disconnect"/>
+    <div class="divide-x-8">
+      <button
+        @click="connect"
+        class="bg-blue-300">
+        Connect
+      </button>
+      <button
+        @click="disconnect"
+        class="bg-blue-300">
+        Disconnect
+      </button>
     </div>
   </div>
 </template>
@@ -29,11 +37,10 @@
   const metamaskStore = getModule(Metamask)
   import Connected from '@/components/header/btns/Connected.vue';
   @Component({
-    components: {
-      Connected
-    },
+    components: {},
   })
   export default class Test extends Vue {
+    vue_app_moonbeam_chainid = parseInt(process.env.VUE_APP_MOONBEAM_CHAINID || '');
     vue_app_http_url = process.env.VUE_APP_HTTP_URL;
     providerName: string = '';
     network = 0;
@@ -51,6 +58,7 @@
       if (metamaskAddress) {
         this.address = metamaskAddress;
         this.instantiateWatchers(window.ethereum);
+        console.log("METAMASK -->", "NETWORK", this.network, "\nADDRESS", metamaskAddress);
       } else {
         const provider = new WalletConnectProvider({
           rpc: {
@@ -65,6 +73,7 @@
           this.network = await web3Provider.getNetwork().then(function(newtwork) {return newtwork.chainId});
           this.address = await web3Provider.listAccounts().then(function(addresses) {return addresses[0]});
           this.instantiateWatchers(provider);
+          console.log("WALLETCONNECT -->", "NETWORK", this.network, "\nADDRESS", this.address);
         }
       }
       if (this.address) {
@@ -92,19 +101,7 @@
       this.network = await web3Provider.getNetwork().then(function(newtwork) {return newtwork.chainId});
       this.address = await web3Provider.listAccounts().then(function(addresses) {return addresses[0]});
       this.providerName = getProviderInfo(provider)['name'];
-      await this.generateSession(this.address)
-      await this.defineMetamaskStoreVariables();
-      if (this.$route.params['wallet'] == this.address) {
-        window.location.reload();
-        return;
-      }
-      this.$router.push({
-        name: 'User',
-        params: {
-          wallet: this.address
-        }
-      })
-      return;
+      console.log("PROVIDER NAME", this.providerName, "\nNETWORK", this.network, "\nADDRESS", this.address);
     }
     instantiateWatchers(provider: any) {
       var self = this;
@@ -116,6 +113,44 @@
         console.log("CHAIN CHANGED", chainId);
         self.cleanSession();
       });
+    }
+    async switchNetwork() {
+      let chainIdHex = await window.ethereum.request({ method: 'eth_chainId' });
+      let chainId = parseInt(chainIdHex, 16);
+      if (chainId != this.vue_app_moonbeam_chainid) {
+        try {
+          await window.ethereum.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: process.env.VUE_APP_MOONBEAM_CHAINHEX }],
+          });
+        } catch (switchError: any) {
+          if (switchError.code === 4902) {
+            try {
+              const params = [{
+                chainId: '0x507',
+                chainName: 'Moonbase Alpha',
+                nativeCurrency: {
+                  name: 'DEV',
+                  symbol: 'DEV',
+                  decimals: 18
+                },
+                rpcUrls: ['https://rpc.testnet.moonbeam.network'],
+                blockExplorerUrls: ['https://moonbase-blockscout.testnet.moonbeam.network/']
+              }]
+              await window.ethereum.request({
+                method: 'wallet_addEthereumChain',
+                params
+              });
+            } catch (addError) {
+              alert(`Onyl Moonbase ${process.env.VUE_APP_MOONBEAM_CHAINNAME} supported!`);
+              return;
+            }
+          } else {
+            alert(`Onyl Moonbase ${process.env.VUE_APP_MOONBEAM_CHAINNAME} supported!`);
+            return;
+          }
+        }
+      }
     }
     async generateSession(account: string) {
       this.cleanSession();

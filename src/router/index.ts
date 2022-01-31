@@ -13,6 +13,7 @@ const userStore = getModule(User)
 const metamaskStore = getModule(Metamask)
 
 import Home from '../views/Home.vue'
+import Test from '../views/Test.vue'
 import Explore from '../views/Explore.vue'
 import UserView from '../views/User.vue'
 import Settings from '../views/Settings.vue'
@@ -33,6 +34,11 @@ const routes: Array<RouteConfig> = [
         next()
       }
     }
+  },
+  {
+    path: '/test',
+    name: 'Test',
+    component: Test
   },
   {
     path: '/explore',
@@ -94,7 +100,7 @@ const routes: Array<RouteConfig> = [
 
 async function isAllowedToGoNext() {
   if(document.cookie.indexOf("sessionId") > -1) {
-    let accounts = await loadAccounts();
+    let accounts = metamaskStore.getWallet;
     if (accounts.length > 0) {
       return true
     } else {
@@ -104,11 +110,6 @@ async function isAllowedToGoNext() {
   } else {
     return false
   }
-}
-
-async function loadAccounts() {
-  let accounts = await window.ethereum.request({ method: 'eth_accounts' });
-  return accounts;
 }
 
 function cleanSession() {

@@ -1,49 +1,58 @@
 <template>
-  <div class="sticky top-0 z-10 flex flex-row items-center justify-around border-b-2 border-magentashine xs:p-0 sm:p-4 bg-deepviolet xs:h-16 sm:h-20 md:h-24">
-    <div class="flex flex-row items-center align-middle xs:space-x-1 sm:space-x-3">
-      <router-link to="/">
-        <img src="@/assets/logo.png" class="xs:h-10 md:h-16" alt="Logo">
-      </router-link>
-      <div class="text-2xl font-bold text-verysoftcyan xs:hidden sm:block">
-        TradingLab
-      </div>
-    </div>
-    <div v-if="!isUserConnected && currentRoute == '/'"
-      class="flex flex-row justify-around xs:text-sm sm:text-base xs:space-x-0 sm:space-x-4 text-verysoftcyan">
-      <button class="font-bold rounded xs:p-1 sm:p-2 hover:bg-deeplagune">
-        <a href="https://github.com/TradingLabXYZ/Docs/tree/main/Whitepaper" target="_blank">
-          Whitepaper
-        </a>
+  <div class="flex flex-col">
+    <div v-if="isCorrectNetwork > 0 && isCorrectNetwork != 1287" class="flex justify-center w-full h-10 bg-red-200">
+      <button
+        @click="switchNetwork"
+        class="p-1 m-1 bg-red-300 hover:bg-red-400">
+        Please switch network to Moonbase
       </button>
-      <button class="font-bold rounded xs:p-1 sm:p-2 hover:bg-deeplagune">
-        <a href="https://discord.gg/PEEUfrbQ9c" target="_blank">
-          Community
-        </a>
-      </button>
-      <Connect class="xs:p-1 sm:p-2"/>
     </div>
-    <div v-if="!isUserConnected && currentRoute != '/'"
-      class="flex flex-row justify-around xs:text-sm sm:text-base xs:space-x-0 sm:space-x-4 text-verysoftcyan">
-      <button class="font-bold rounded xs:p-1 sm:p-2 hover:bg-deeplagune">
-        <router-link to="/explore">
-          Explore
-        </router-link>
-      </button>
-      <Connect class="xs:p-1 sm:p-2"/>
-    </div>
-    <div v-if="isUserConnected"
-      class="flex flex-row justify-around xs:text-sm sm:text-base xs:space-x-0 sm:space-x-4 text-verysoftcyan">
-      <button class="inline-block font-bold rounded xs:p-1 sm:p-2 hover:bg-deeplagune">
+    <div class="sticky top-0 z-10 flex flex-row items-center justify-around border-b-2 border-magentashine xs:p-0 sm:p-4 bg-deepviolet xs:h-16 sm:h-20 md:h-24">
+      <div class="flex flex-row items-center align-middle xs:space-x-1 sm:space-x-3">
         <router-link to="/">
-          Profile
+          <img src="@/assets/logo.png" class="xs:h-10 md:h-16" alt="Logo">
         </router-link>
-      </button>
-      <button class="inline-block font-bold rounded xs:p-1 sm:p-2 hover:bg-deeplagune">
-        <router-link to="/explore">
-          Explore
-        </router-link>
-      </button>
-      <Connect class="xs:p-1 sm:p-2"/>
+        <div class="text-2xl font-bold text-verysoftcyan xs:hidden sm:block">
+          TradingLab
+        </div>
+      </div>
+      <div v-if="!isUserConnected && currentRoute == '/'"
+        class="flex flex-row justify-around xs:text-sm sm:text-base xs:space-x-0 sm:space-x-4 text-verysoftcyan">
+        <button class="font-bold rounded xs:p-1 sm:p-2 hover:bg-deeplagune">
+          <a href="https://github.com/TradingLabXYZ/Docs/tree/main/Whitepaper" target="_blank">
+            Whitepaper
+          </a>
+        </button>
+        <button class="font-bold rounded xs:p-1 sm:p-2 hover:bg-deeplagune">
+          <a href="https://discord.gg/PEEUfrbQ9c" target="_blank">
+            Community
+          </a>
+        </button>
+        <Connect class="xs:p-1 sm:p-2"/>
+      </div>
+      <div v-if="!isUserConnected && currentRoute != '/'"
+        class="flex flex-row justify-around xs:text-sm sm:text-base xs:space-x-0 sm:space-x-4 text-verysoftcyan">
+        <button class="font-bold rounded xs:p-1 sm:p-2 hover:bg-deeplagune">
+          <router-link to="/explore">
+            Explore
+          </router-link>
+        </button>
+        <Connect class="xs:p-1 sm:p-2"/>
+      </div>
+      <div v-if="isUserConnected"
+        class="flex flex-row justify-around xs:text-sm sm:text-base xs:space-x-0 sm:space-x-4 text-verysoftcyan">
+        <button class="inline-block font-bold rounded xs:p-1 sm:p-2 hover:bg-deeplagune">
+          <router-link to="/">
+            Profile
+          </router-link>
+        </button>
+        <button class="inline-block font-bold rounded xs:p-1 sm:p-2 hover:bg-deeplagune">
+          <router-link to="/explore">
+            Explore
+          </router-link>
+        </button>
+        <Connect class="xs:p-1 sm:p-2"/>
+      </div>
     </div>
   </div>
 </template>
@@ -60,11 +69,53 @@
     }
   })
   export default class Header extends Vue {
+    vue_app_moonbeam_chainid = parseInt(process.env.VUE_APP_MOONBEAM_CHAINID || '');
     get isUserConnected() {
       return metamaskStore.getIsConnected;
     }
+    get isCorrectNetwork() {
+      return metamaskStore.getChainId;
+    }
     get currentRoute() {
       return this.$route.path;
+    }
+    async switchNetwork() {
+      let chainIdHex = await window.ethereum.request({ method: 'eth_chainId' });
+      let chainId = parseInt(chainIdHex, 16);
+      if (chainId != this.vue_app_moonbeam_chainid) {
+        try {
+          await window.ethereum.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: process.env.VUE_APP_MOONBEAM_CHAINHEX }],
+          });
+        } catch (switchError: any) {
+          if (switchError.code === 4902) {
+            try {
+              const params = [{
+                chainId: '0x507',
+                chainName: 'Moonbase Alpha',
+                nativeCurrency: {
+                  name: 'DEV',
+                  symbol: 'DEV',
+                  decimals: 18
+                },
+                rpcUrls: ['https://rpc.testnet.moonbeam.network'],
+                blockExplorerUrls: ['https://moonbase-blockscout.testnet.moonbeam.network/']
+              }]
+              await window.ethereum.request({
+                method: 'wallet_addEthereumChain',
+                params
+              });
+            } catch (addError) {
+              alert(`Onyl Moonbase ${process.env.VUE_APP_MOONBEAM_CHAINNAME} supported!`);
+              return;
+            }
+          } else {
+            alert(`Onyl Moonbase ${process.env.VUE_APP_MOONBEAM_CHAINNAME} supported!`);
+            return;
+          }
+        }
+      }
     }
   }
 </script>
