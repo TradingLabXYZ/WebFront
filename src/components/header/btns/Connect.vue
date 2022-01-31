@@ -79,6 +79,7 @@
       }
 
       if (this.address) {
+        console.log("PRINTINT ACCOUNTS FROM CONNECT VUE", this.address);
         metamaskStore.updateWallet(this.address);
         metamaskStore.updateChainId(this.network);
         metamaskStore.updateIsConnected(true); 

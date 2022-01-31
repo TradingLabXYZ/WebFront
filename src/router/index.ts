@@ -93,6 +93,7 @@ const routes: Array<RouteConfig> = [
 async function isAllowedToGoNext() {
   if(document.cookie.indexOf("sessionId") > -1) {
     let accounts = metamaskStore.getWallet;
+    console.log("PRINTINT ACCOUNTS FROM ROUTER", accounts);
     if (accounts.length > 0) {
       return true
     } else {
