@@ -57,7 +57,7 @@
         if (metamaskAddress) {
           console.log("Metamask connection detected!");
           this.address = metamaskAddress;
-          this.instantiateWatchers(window.ethereum);
+          /* this.instantiateWatchers(window.ethereum); */
         }
       }
 
@@ -74,7 +74,7 @@
           const web3Provider = new ethers.providers.Web3Provider(provider);
           this.network = await web3Provider.getNetwork().then(function(newtwork) {return newtwork.chainId});
           this.address = await web3Provider.listAccounts().then(function(addresses) {return addresses[0]});
-          this.instantiateWatchers(provider);
+          /* this.instantiateWatchers(provider); */
         }
       }
 
@@ -118,7 +118,7 @@
       })
       return;
     }
-    instantiateWatchers(provider: any) {
+    /* instantiateWatchers(provider: any) {
       var self = this;
       provider.on('accountsChanged', function(accounts: string[]) {
         console.log("ACCOUNT CHANGED", accounts);
@@ -128,7 +128,7 @@
         console.log("CHAIN CHANGED", chainId);
         self.cleanSession();
       });
-    }
+    } */
     async generateSession(account: string) {
       this.cleanSession();
       let api_url = this.vue_app_http_url + '/login/' + account;
@@ -149,6 +149,7 @@
       return;
     }
     async cleanSession() {
+      console.log("CLEAN SESSION HAS BEEN CALLED!");
       // Reset indexeddb
       clear()
       // Reset cookie
