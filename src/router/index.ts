@@ -96,10 +96,8 @@ const routes: Array<RouteConfig> = [
 ]
 
 async function isAllowedToGoNext() {
-  console.log("PRINTINT COOKIE FROM ROUTER", document.cookie.indexOf("sessionId"));
   if(document.cookie.indexOf("sessionId") > -1) {
     let account = await loadAccount();
-    console.log("PRINTINT ACCOUNT FROM ROUTER", account);
     if (account) {
       return true
     } else {
@@ -121,7 +119,8 @@ async function loadAccount() {
   }
   const provider = new WalletConnectProvider({
     rpc: {1287: "https://rpc.api.moonbase.moonbeam.network"},
-    qrcode: true});
+    qrcode: true
+  });
   var isConnectedToWalletConnect = provider.connected;
   if (isConnectedToWalletConnect) {
     const web3Provider = new ethers.providers.Web3Provider(provider);
@@ -147,7 +146,6 @@ function cleanSession() {
   metamaskStore.updateChainId(0);
   metamaskStore.updateWallet('');
 }
-
 
 const router = new VueRouter({
   mode: 'history',

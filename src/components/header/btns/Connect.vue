@@ -45,23 +45,17 @@
       await this.loadWalletVariables();
     }
     async loadWalletVariables() {
-
-      console.log("STARTING loadWalletVariables");
-
-      console.log("Trying Metamask");
       // IS CONNECTED TO METAMASK?
       if (typeof window.ethereum !== 'undefined') {
         const web3Provider = new ethers.providers.Web3Provider(window.ethereum)
         this.network = await web3Provider.getNetwork().then(function(newtwork) {return newtwork.chainId});
         var metamaskAddress = await web3Provider.listAccounts().then(function(addresses) {return addresses[0]});
         if (metamaskAddress) {
-          console.log("Metamask connection detected!");
           this.address = metamaskAddress;
-          /* this.instantiateWatchers(window.ethereum); */
+          this.instantiateWatchers(window.ethereum);
         }
       }
 
-      console.log("Trying WalletConnect");
       // IS CONNECTED TO WALLETCONNECT?
       if (this.address == '') {
         const provider = new WalletConnectProvider({
@@ -69,17 +63,15 @@
           qrcode: true});
         var isConnectedToWalletConnect = provider.connected;
         if (isConnectedToWalletConnect) {
-          console.log("WalletConnect connection detected!");
           await provider.enable();
           const web3Provider = new ethers.providers.Web3Provider(provider);
           this.network = await web3Provider.getNetwork().then(function(newtwork) {return newtwork.chainId});
           this.address = await web3Provider.listAccounts().then(function(addresses) {return addresses[0]});
-          /* this.instantiateWatchers(provider); */
+          this.instantiateWatchers(provider);
         }
       }
 
       if (this.address) {
-        console.log("PRINTINT ACCOUNTS FROM CONNECT VUE", this.address);
         metamaskStore.updateWallet(this.address);
         metamaskStore.updateChainId(this.network);
         metamaskStore.updateIsConnected(true); 
@@ -118,7 +110,7 @@
       })
       return;
     }
-    /* instantiateWatchers(provider: any) {
+    instantiateWatchers(provider: any) {
       var self = this;
       provider.on('accountsChanged', function(accounts: string[]) {
         console.log("ACCOUNT CHANGED", accounts);
@@ -128,7 +120,7 @@
         console.log("CHAIN CHANGED", chainId);
         self.cleanSession();
       });
-    } */
+    }
     async generateSession(account: string) {
       this.cleanSession();
       let api_url = this.vue_app_http_url + '/login/' + account;
