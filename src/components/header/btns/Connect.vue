@@ -42,10 +42,13 @@
       return metamaskStore.getIsConnected;
     }
     async created() {
-      await this.defineMetamaskStoreVariables();
+      await this.loadWalletVariables();
     }
-    async defineMetamaskStoreVariables() {
+    async loadWalletVariables() {
 
+      console.log("STARTING loadWalletVariables");
+
+      console.log("Trying Metamask");
       // IS CONNECTED TO METAMASK?
       if (typeof window.ethereum !== 'undefined') {
         const web3Provider = new ethers.providers.Web3Provider(window.ethereum)
@@ -58,6 +61,7 @@
         }
       }
 
+      console.log("Trying WalletConnect");
       // IS CONNECTED TO WALLETCONNECT?
       if (this.address == '') {
         const provider = new WalletConnectProvider({
@@ -100,7 +104,7 @@
       this.address = await web3Provider.listAccounts().then(function(addresses) {return addresses[0]});
       this.providerName = getProviderInfo(provider)['name'];
       await this.generateSession(this.address)
-      await this.defineMetamaskStoreVariables();
+      await this.loadWalletVariables();
       if (this.$route.params['wallet'] == this.address) {
         window.location.reload();
         return;
