@@ -1,7 +1,7 @@
 import { VuexModule, Module, Mutation, Action } from 'vuex-module-decorators'
 import store from '../store'
 
-@Module({ dynamic: true, store, name: 'metamaskModule'  })
+@Module({ dynamic: true, store, name: 'walletModule'  })
 export default class Metamask extends VuexModule {
   isConnected = false;
   wallet: string = "";
