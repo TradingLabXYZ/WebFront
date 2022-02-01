@@ -35,8 +35,8 @@
   import { get, set } from 'idb-keyval';
   import User from '@/store/userModule';
   const userStore = getModule(User)
-  import Metamask from '@/store/metamaskModule';
-  const metamaskStore = getModule(Metamask)
+  import Wallet from '@/store/walletModule';
+  const walletStore = getModule(Wallet)
   import Contract from '@/store/contractModule';
   const contractStore = getModule(Contract)
   @Component({})
@@ -48,7 +48,7 @@
       await contractStore.updateContractSubscription();
       await contractStore.signContractSubscription();
       contractStore.getContractSubscription.on("ChangePlan", (from, amount, {}) => {
-        if (from.toLowerCase() == metamaskStore.getWallet.toLowerCase()) {
+        if (from.toLowerCase() == walletStore.getWallet.toLowerCase()) {
           this.monthlyFee = amount.toString();
           userStore.userDetails['MonthlyFee'] = this.monthlyFee;
           this.updateMonthlyFeeInIndexedDb();

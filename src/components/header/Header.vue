@@ -61,8 +61,8 @@
   import { Vue, Component } from 'vue-property-decorator';
   import Connect from '@/components/header/btns/Connect.vue';
   import { getModule } from 'vuex-module-decorators'
-  import Metamask from '@/store/metamaskModule';
-  const metamaskStore = getModule(Metamask)
+  import Wallet from '@/store/walletModule';
+  const walletStore = getModule(Wallet)
   @Component({
     components: {
       Connect
@@ -71,10 +71,10 @@
   export default class Header extends Vue {
     vue_app_moonbeam_chainid = parseInt(process.env.VUE_APP_MOONBEAM_CHAINID || '');
     get isUserConnected() {
-      return metamaskStore.getIsConnected;
+      return walletStore.getIsConnected;
     }
     get isCorrectNetwork() {
-      return metamaskStore.getChainId;
+      return walletStore.getChainId;
     }
     get currentRoute() {
       return this.$route.path;

@@ -62,8 +62,8 @@
   import { getModule } from 'vuex-module-decorators'
   import CopyToClipboard from '@/components/svg/CopyToClipboard.vue'
   import Settings from '@/components/header/btns/Settings.vue'
-  import Metamask from '@/store/metamaskModule';
-  const metamaskStore = getModule(Metamask)
+  import Wallet from '@/store/walletModule';
+  const walletStore = getModule(Wallet)
   @Component({
     components: {
       PopoverUserConsole,
@@ -78,16 +78,16 @@
       this.setTheme();
     }
     get userWallet() {
-      return metamaskStore.getWallet;
+      return walletStore.getWallet;
     }
     get userChainId() {
-      return metamaskStore.getChainId;
+      return walletStore.getChainId;
     }
     get userBalance() {
-      return metamaskStore.getBalance;
+      return walletStore.getBalance;
     }
     copyWalletToClipboard() {
-      navigator.clipboard.writeText(metamaskStore.getWallet);
+      navigator.clipboard.writeText(walletStore.getWallet);
     }
     setTheme() {
       let theme = localStorage.getItem('theme');
