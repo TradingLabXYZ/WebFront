@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="!isUserConnected">
+    <div v-if="!walletStore.getIsConnected">
       <button
         id="connectButton"
         class="inline-block p-2 mr-2 font-bold rounded hover:bg-deeplagune bg-magentashine"
@@ -15,8 +15,8 @@
 </template>
 
 <script lang="ts">
-  import { getModule } from 'vuex-module-decorators'
   import { Component, Vue } from 'vue-property-decorator';
+  import { getModule } from 'vuex-module-decorators'
   import Wallet from '@/store/walletModule';
   const walletStore = getModule(Wallet)
   import Connected from '@/components/header/btns/Connected.vue';
@@ -27,50 +27,48 @@
     },
   })
   export default class Connect extends Vue {
-    providerName: string = '';
-    network = 0;
-    address: string = '';
-    get isUserConnected() {
-      return walletStore.getIsConnected;
-    }
     async created() {
       if(document.cookie.indexOf("sessionId") > -1) {
         await walletStore.initializeWallet();
         if (walletStore.getWallet) {
-          this.instantiateWatchers(walletStore.providerObject);
+          this.instantiateWatchers();
         }
       }
     }
     async connect() {
       cleanSession();
       await walletStore.connect();
-      await generateSession(walletStore.getWallet);
-      this.instantiateWatchers(walletStore.providerObject);
+      await generateSession();
+      this.instantiateWatchers();
       if (this.$route.params['wallet'] == walletStore.getWallet) {
         window.location.reload();
-        return;
+      } else {
+        this.$router.push({
+          name: 'User',
+          params: {
+            wallet: walletStore.getWallet
+          }
+        })
       }
-      this.$router.push({
-        name: 'User',
-        params: {
-          wallet: walletStore.getWallet
+    }
+    instantiateWatchers() {
+      walletStore.getProviderObject.on(
+        'accountsChanged', 
+        function(accounts: string[]) {
+          console.log("ACCOUNT CHANGED", accounts);
+          cleanSession();
         }
-      })
-      return;
+      );
+      walletStore.getProviderObject.on(
+        'chainChanged',
+        function(chainId: number) {
+          console.log("CHAIN CHANGED", chainId);
+          cleanSession();
+        }
+      );
     }
-    instantiateWatchers(provider: any) {
-      provider.on('accountsChanged', function(accounts: string[]) {
-        console.log("ACCOUNT CHANGED", accounts);
-        cleanSession();
-      });
-      provider.on('chainChanged', function(chainId: number) {
-        console.log("CHAIN CHANGED", chainId);
-        cleanSession();
-      });
-    }
-    async disconnect() {
+    disconnect() {
       cleanSession();
-      localStorage.clear();
     }
   }
 </script>
