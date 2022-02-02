@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="!walletStore.getIsConnected">
+    <div v-if="!isUserConnected">
       <button
         id="connectButton"
         class="inline-block p-2 mr-2 font-bold rounded hover:bg-deeplagune bg-magentashine"
@@ -69,6 +69,9 @@
     }
     disconnect() {
       cleanSession();
+    }
+    get isUserConnected() {
+      return walletStore.getIsConnected;
     }
   }
 </script>
