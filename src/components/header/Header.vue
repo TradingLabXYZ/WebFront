@@ -1,11 +1,19 @@
 <template>
   <div class="flex flex-col">
-    <div v-if="isCorrectNetwork > 0 && isCorrectNetwork != 1287" class="flex justify-center w-full h-10 bg-red-200">
-      <button
-        @click="switchNetwork"
-        class="p-1 m-1 bg-red-300 hover:bg-red-400">
-        Please switch network to Moonbase
-      </button>
+    <div v-if="isUserConnected && !isCorrectNetwork" class="flex justify-center w-full bg-red-200 h-9">
+      <div v-if="currentNetworkProvider=='walletconnect'">
+        <button disabled
+          class="p-1 m-1 bg-red-300 hover:bg-red-400">
+          Please switch network to Moonbase and reconnect
+        </button>
+      </div>
+      <div v-else-if="currentNetworkProvider=='metamask'">
+        <button
+          @click="switchNetwork"
+          class="p-1 m-1 bg-red-300 hover:bg-red-400">
+          Switch network
+        </button>
+      </div>
     </div>
     <div class="sticky top-0 z-10 flex flex-row items-center justify-around border-b-2 border-magentashine xs:p-0 sm:p-4 bg-deepviolet xs:h-16 sm:h-20 md:h-24">
       <div class="flex flex-row items-center align-middle xs:space-x-1 sm:space-x-3">
@@ -73,49 +81,52 @@
     get isUserConnected() {
       return walletStore.getIsConnected;
     }
+    get currentNetworkProvider() {
+      return walletStore.getProviderName;
+    }
     get isCorrectNetwork() {
-      return walletStore.getChainId;
+      let currentNetwork = walletStore.getChainId.toString();
+      let desiredNetwork =  process.env.VUE_APP_MOONBEAM_CHAINID;
+      console.log(currentNetwork, desiredNetwork)
+      console.log(currentNetwork == desiredNetwork);
+      return currentNetwork == desiredNetwork;
     }
     get currentRoute() {
       return this.$route.path;
     }
     async switchNetwork() {
-      /* let chainIdHex = await window.ethereum.request({ method: 'eth_chainId' });
-      let chainId = parseInt(chainIdHex, 16);
-      if (chainId != this.vue_app_moonbeam_chainid) {
-        try {
-          await window.ethereum.request({
-            method: 'wallet_switchEthereumChain',
-            params: [{ chainId: process.env.VUE_APP_MOONBEAM_CHAINHEX }],
-          });
-        } catch (switchError: any) {
-          if (switchError.code === 4902) {
-            try {
-              const params = [{
-                chainId: '0x507',
-                chainName: 'Moonbase Alpha',
-                nativeCurrency: {
-                  name: 'DEV',
-                  symbol: 'DEV',
-                  decimals: 18
-                },
-                rpcUrls: ['https://rpc.testnet.moonbeam.network'],
-                blockExplorerUrls: ['https://moonbase-blockscout.testnet.moonbeam.network/']
-              }]
-              await window.ethereum.request({
-                method: 'wallet_addEthereumChain',
-                params
-              });
-            } catch (addError) {
-              alert(`Onyl Moonbase ${process.env.VUE_APP_MOONBEAM_CHAINNAME} supported!`);
-              return;
-            }
-          } else {
+      try {
+        await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: process.env.VUE_APP_MOONBEAM_CHAINHEX }],
+        });
+      } catch (switchError: any) {
+        if (switchError.code === 4902) {
+          try {
+            const params = [{
+              chainId: '0x507',
+              chainName: 'Moonbase Alpha',
+              nativeCurrency: {
+                name: 'DEV',
+                symbol: 'DEV',
+                decimals: 18
+              },
+              rpcUrls: ['https://rpc.testnet.moonbeam.network'],
+              blockExplorerUrls: ['https://moonbase-blockscout.testnet.moonbeam.network/']
+            }]
+            await window.ethereum.request({
+              method: 'wallet_addEthereumChain',
+              params
+            });
+          } catch (addError) {
             alert(`Onyl Moonbase ${process.env.VUE_APP_MOONBEAM_CHAINNAME} supported!`);
             return;
           }
+        } else {
+          alert(`Onyl Moonbase ${process.env.VUE_APP_MOONBEAM_CHAINNAME} supported!`);
+          return;
         }
-      } */
+      }
     }
   }
 </script>
