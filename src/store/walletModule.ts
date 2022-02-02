@@ -5,17 +5,6 @@ import { ethers } from "ethers";
 import { VuexModule, Module, Mutation, Action } from 'vuex-module-decorators'
 import WalletConnectProvider from '@walletconnect/ethereum-provider'
 
-const vueAppChainId = process.env.VUE_APP_MOONBEAM_CHAINID || '';
-const vueAppRpcUrl =process.env.VUE_APP_MOONBEAM_RPC_URL;
-const rpcOptions = {}
-rpcOptions[vueAppChainId] = vueAppRpcUrl;
-
-var providerOptions = {
-  walletconnect: {
-    package: WalletConnectProvider,
-    options: rpcOptions
-  }
-}
 
 async function getProvider(provider: object) {
   return new ethers.providers.Web3Provider(provider)
@@ -37,7 +26,7 @@ async function listChainId(provider: any) {
   );
 }
 
-@Module({ dynamic: true, store, name: 'walletModule' })
+@Module({ dynamic: true, store, name: 'walletModule'  })
 export default class Wallet extends VuexModule {
   isConnected = false;
   providerObject: any = null;
@@ -112,12 +101,6 @@ export default class Wallet extends VuexModule {
     return this.balance;
   }
   @Action
-  public async connect() {
-    const web3Modal = new Web3Modal({providerOptions})
-    await web3Modal.connect();
-    await this.initializeWallet();
-  }
-  @Action
   public async initializeWallet() {
     // IS CONNECTED TO METAMASK?
     if (typeof window.ethereum !== 'undefined') {
@@ -134,6 +117,10 @@ export default class Wallet extends VuexModule {
     }
     // IS CONNECTED TO WALLETCONNECT?
     if (this.getWallet == '') {
+      const vueAppChainId = process.env.VUE_APP_MOONBEAM_CHAINID || '';
+      const vueAppRpcUrl =process.env.VUE_APP_MOONBEAM_RPC_URL;
+      const rpcOptions = {}
+      rpcOptions[vueAppChainId] = vueAppRpcUrl;
       var walletConnectProvider = new WalletConnectProvider({
         rpc: rpcOptions,
         qrcode: true
@@ -146,9 +133,27 @@ export default class Wallet extends VuexModule {
         this.updateProviderObject(walletConnectProvider);
         this.updateProviderName('walletconnect');
         this.updateIsConnected(true);
-        this.updateWallet(address);
         this.updateChainId(chainId);
+        this.updateWallet(address);
       }
     }
+  }
+  @Action
+  public async connect() {
+    const vueAppChainId = process.env.VUE_APP_MOONBEAM_CHAINID || '';
+    const vueAppRpcUrl =process.env.VUE_APP_MOONBEAM_RPC_URL;
+    const rpcOptions = {}
+    rpcOptions[vueAppChainId] = vueAppRpcUrl;
+    var providerOptions = {
+      walletconnect: {
+        package: WalletConnectProvider,
+        options: {
+          rpc: rpcOptions
+        }
+      }
+    }
+    const web3Modal = new Web3Modal({providerOptions})
+    await web3Modal.connect();
+    await this.initializeWallet();
   }
 }
