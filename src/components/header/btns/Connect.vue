@@ -56,14 +56,14 @@
         'accountsChanged', 
         function(accounts: string[]) {
           console.log("ACCOUNT CHANGED", accounts);
-          cleanSession();
+          /* cleanSession(); */
         }
       );
       walletStore.getProviderObject.on(
         'chainChanged',
         function(chainId: number) {
           console.log("CHAIN CHANGED", chainId);
-          cleanSession();
+          /* cleanSession(); */
         }
       );
     }

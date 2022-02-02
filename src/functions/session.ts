@@ -41,13 +41,3 @@ export function cleanSession() {
   // Clean local sotrage
   localStorage.clear();
 }
-
-export function isAllowedToGoNext(): boolean {
-  if(document.cookie.indexOf("sessionId") > -1) {
-    return true
-  } else {
-    cleanSession();
-    return false
-  }
-}
-
