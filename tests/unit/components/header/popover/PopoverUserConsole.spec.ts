@@ -1,5 +1,5 @@
 import { mount, shallowMount } from '@vue/test-utils'
-import metamaskStore from '@/store/metamaskModule.ts'
+import walletStore from '@/store/walletModule'
 import Connect from '@/components/header/btns/Connect.vue'
 import PopoverUserConsole from '@/components/header/popover/PopoverUserConsole.vue'
 import Settings from '@/components/header/btns/Settings.vue'
@@ -7,10 +7,10 @@ import CopyToClipboard from '@/components/svg/CopyToClipboard.vue'
 require("fake-indexeddb/auto");
 
 describe('PopoverUserConsole.vue', () => {
-  metamaskStore.state.chainId = 111;
-  metamaskStore.state.balance = 999;
-  metamaskStore.state.wallet = 'ABC12XXXX21CBA';
-  metamaskStore.state.isConnected = true;
+  walletStore.state.chainId = 111;
+  walletStore.state.balance = 999;
+  walletStore.state.wallet = 'ABC12XXXX21CBA';
+  walletStore.state.isConnected = true;
   const wrapper = shallowMount(PopoverUserConsole, {});
   it('returns the correct userBalance', () => {
     expect((wrapper.vm as any).userBalance).toBeGreaterThanOrEqual(999);

@@ -5,7 +5,7 @@ import { get } from 'idb-keyval';
 import { getModule } from 'vuex-module-decorators'
 import User from '@/store/userModule';
 const userStore = getModule(User)
-import metamaskStore from '@/store/metamaskModule.ts'
+import walletStore from '@/store/walletModule'
 require("fake-indexeddb/auto");
 import { when } from 'jest-when'
 
@@ -55,10 +55,10 @@ describe('Connect.vue / generateSession', () => {
 })
 
 describe('Connect.vue / cleanSession', () => {
-  metamaskStore.state.wallet = 'TEST';
-  metamaskStore.state.chainId = 456;
-  metamaskStore.state.balance = 123;
-  metamaskStore.state.isConnected = true;
+  walletStore.state.wallet = 'TEST';
+  walletStore.state.chainId = 456;
+  walletStore.state.balance = 123;
+  walletStore.state.isConnected = true;
 
   beforeAll(async () => {
     mockedAxios.get.mockImplementation(() => Promise.resolve({
@@ -90,11 +90,11 @@ describe('Connect.vue / cleanSession', () => {
     let userStoreData = userStore.getUserDetails;
     expect(userStoreData).toEqual({});
   })
-  it('resets metamaskStore', async () => {
-    expect(metamaskStore.state.isConnected).toBe(false);
-    expect(metamaskStore.state.balance).toBe(0);
-    expect(metamaskStore.state.chainId).toBe(0);
-    expect(metamaskStore.state.wallet).toBe('');
+  it('resets walletStore', async () => {
+    expect(walletStore.state.isConnected).toBe(false);
+    expect(walletStore.state.balance).toBe(0);
+    expect(walletStore.state.chainId).toBe(0);
+    expect(walletStore.state.wallet).toBe('');
   })
 
   afterAll(() => {
