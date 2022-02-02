@@ -18,9 +18,9 @@
   import axios from "axios";
   import { Component, Vue, Emit } from 'vue-property-decorator';
   import { getModule } from 'vuex-module-decorators'
-  import Metamask from '@/store/metamaskModule';
+  import Wallet from '@/store/walletModule';
   import PopoverUserConsole from '@/components/header/popover/PopoverUserConsole.vue';
-  const metamaskStore = getModule(Metamask)
+  const walletStore = getModule(Wallet)
   @Component({
     components: {
       PopoverUserConsole
@@ -32,7 +32,7 @@
       await this.getCryptoPairs();
     }
     get userWallet() {
-      return metamaskStore.getWallet;
+      return walletStore.getWallet;
     }
     toggleMenu() {
       if (this.showUserMenu) {

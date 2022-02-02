@@ -52,8 +52,8 @@
   import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
   import Contract from '@/store/contractModule';
   const contractStore = getModule(Contract)
-  import Metamask from '@/store/metamaskModule';
-  const metamaskStore = getModule(Metamask)
+  import Wallet from '@/store/walletModule';
+  const walletStore = getModule(Wallet)
   @Component({
     components: {
     }
@@ -70,7 +70,7 @@
       this.getCurrentMoonriverPrice();
       contractStore.getContractSubscription.on("Subscribe", (from, to, weeks, amount, {}) => {
         console.log(from, to, weeks.toString(), amount.toString());
-        if (from.toLowerCase() == metamaskStore.getWallet.toLowerCase()) {
+        if (from.toLowerCase() == walletStore.getWallet.toLowerCase()) {
           let request_url = [
             process.env.VUE_APP_HTTP_URL,
             'subscribe',

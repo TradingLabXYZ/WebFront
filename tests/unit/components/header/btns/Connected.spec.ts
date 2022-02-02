@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import metamaskStore from '@/store/metamaskModule.ts'
+import walletStore from '@/store/walletModule'
 import Connected from '@/components/header/btns/Connected.vue'
 import PopoverUserConsole from '@/components/header/popover/PopoverUserConsole.vue'
 
@@ -25,7 +25,7 @@ describe('Connected.vue', () => {
   })
   it('returns the correct wallet', () => {
     const wrapper = mount(Connected, {});
-    metamaskStore.state.wallet = 'ABC12XXXX21CBA';
+    walletStore.state.wallet = 'ABC12XXXX21CBA';
     expect((wrapper.vm as any).userWallet).toBe('ABC12XXXX21CBA');
   });
 

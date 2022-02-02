@@ -54,8 +54,8 @@
   import { getModule } from 'vuex-module-decorators'
   import UserModule from '@/store/userModule';
   const userStore = getModule(UserModule)
-  import Metamask from '@/store/metamaskModule';
-  const metamaskStore = getModule(Metamask)
+  import Wallet from '@/store/walletModule';
+  const walletStore = getModule(Wallet)
   import Header from '@/components/header/Header.vue';
   import TradeHero from '@/components/trades/TradeHero.vue';
   import TradeConsole from '@/components/trades/TradeConsole.vue';
@@ -93,7 +93,7 @@
     isMobile = false;
     isSubscribe = false;
     get isUserConnected() {
-      return metamaskStore.getIsConnected;
+      return walletStore.getIsConnected;
     }
     created() {
       window.addEventListener('resize', this.checkIfMobile);
