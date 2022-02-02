@@ -54,16 +54,20 @@
     instantiateWatchers() {
       walletStore.getProviderObject.on(
         'accountsChanged', 
-        function(accounts: string[]) {
+        async function(accounts: string[]) {
           console.log("ACCOUNT CHANGED", accounts);
-          /* cleanSession(); */
+          cleanSession();
+          await walletStore.initializeWallet();
+          await generateSession();
         }
       );
       walletStore.getProviderObject.on(
         'chainChanged',
-        function(chainId: number) {
+        async function(chainId: number) {
           console.log("CHAIN CHANGED", chainId);
-          /* cleanSession(); */
+          cleanSession();
+          await walletStore.initializeWallet();
+          await generateSession();
         }
       );
     }
