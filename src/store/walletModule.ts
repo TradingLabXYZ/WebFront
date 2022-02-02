@@ -156,4 +156,39 @@ export default class Wallet extends VuexModule {
     await web3Modal.connect();
     await this.initializeWallet();
   }
+  @Action
+  public async switchNetwork() {
+    try {
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: process.env.VUE_APP_MOONBEAM_CHAINHEX }],
+      });
+    } catch (switchError: any) {
+      if (switchError.code === 4902) {
+        try {
+          const params = [{
+            chainId: '0x507',
+            chainName: 'Moonbase Alpha',
+            nativeCurrency: {
+              name: 'DEV',
+              symbol: 'DEV',
+              decimals: 18
+            },
+            rpcUrls: ['https://rpc.testnet.moonbeam.network'],
+            blockExplorerUrls: ['https://moonbase-blockscout.testnet.moonbeam.network/']
+          }]
+          await window.ethereum.request({
+            method: 'wallet_addEthereumChain',
+            params
+          });
+        } catch (addError) {
+          alert(`Onyl Moonbase ${process.env.VUE_APP_MOONBEAM_CHAINNAME} supported!`);
+          return;
+        }
+      } else {
+        alert(`Onyl Moonbase ${process.env.VUE_APP_MOONBEAM_CHAINNAME} supported!`);
+        return;
+      }
+    }
+  }
 }
