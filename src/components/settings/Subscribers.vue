@@ -57,7 +57,7 @@
     }
     async changePlan() {
       try {
-        var fees = await contractStore.getContractSubscriptionSigned.estimateGas.changePlan();
+        var fees = await contractStore.getContractSubscriptionSigned.estimateGas.changePlan(this.monthlyFee);
         await contractStore.getContractSubscriptionSigned.changePlan(this.newMonthlyFee, {
           gasPrice: fees
         });
