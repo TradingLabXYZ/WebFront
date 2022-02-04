@@ -145,12 +145,7 @@
     }
     async subscribe() {
       let subPriceString = this.subscriptionWeeklyPriceMovr.toString();
-      var fees = await contractStore.getContractSubscriptionSigned.estimateGas.subscribe(
-        this.wallet,
-        this.selectedWeeks,
-      );
       const options = {
-        gasPrice: fees,
         value: ethers.utils.parseEther(subPriceString)
       };
       await contractStore.getContractSubscriptionSigned.subscribe(

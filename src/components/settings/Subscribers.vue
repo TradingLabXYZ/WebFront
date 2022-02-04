@@ -57,10 +57,7 @@
     }
     async changePlan() {
       try {
-        var fees = await contractStore.getContractSubscriptionSigned.estimateGas.changePlan(this.monthlyFee);
-        await contractStore.getContractSubscriptionSigned.changePlan(this.newMonthlyFee, {
-          gasPrice: fees
-        });
+        await contractStore.getContractSubscriptionSigned.changePlan(this.newMonthlyFee);
       } catch(err: any) {
         try {
           let revertMessage = err['argument'];
