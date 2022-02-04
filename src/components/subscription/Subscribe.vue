@@ -12,7 +12,7 @@
           Weekly fee USD: {{ subscriptionWeeklyPrice }}
         </div>
         <div class="text-xl">
-          Current MOVR price: {{ movrPrice.toFixed(2) }}
+          Current DEV price: {{ movrPrice.toFixed(2) }}
         </div>
         <div class="text-xl">
           Weekly DEV: {{ (subscriptionWeeklyPriceMovr).toFixed(8) }}
