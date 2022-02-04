@@ -15,7 +15,7 @@
           Current MOVR price: {{ movrPrice.toFixed(2) }}
         </div>
         <div class="text-xl">
-          Weekly MOVR: {{ (subscriptionWeeklyPriceMovr).toFixed(8) }}
+          Weekly DEV: {{ (subscriptionWeeklyPriceMovr).toFixed(8) }}
         </div>
         <div class="text-xl border-2 border-gray-800">
           <input
@@ -26,7 +26,7 @@
             v-model="selectedWeeks">
         </div>
         <div class="text-xl font-bold">
-          Total MOVR to pay: {{ (totalPriceMovr).toFixed(8) }}
+          Total DEV to pay: {{ (totalPriceMovr).toFixed(8) }}
         </div>
       </div>
       <div>
@@ -145,7 +145,14 @@
     }
     async subscribe() {
       let subPriceString = this.subscriptionWeeklyPriceMovr.toString();
-      const options = {value: ethers.utils.parseEther(subPriceString)};
+      var fees = await contractStore.getContractSubscriptionSigned.estimateGas.subscribe(
+        this.wallet,
+        this.selectedWeeks,
+      );
+      const options = {
+        gasPrice: fees,
+        value: ethers.utils.parseEther(subPriceString)
+      };
       await contractStore.getContractSubscriptionSigned.subscribe(
         this.wallet,
         this.selectedWeeks,
