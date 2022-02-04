@@ -57,11 +57,9 @@
     }
     async changePlan() {
       try {
-        var fees = await contractStore.getContractSubscriptionSigned.estimateGas.changePlan(this.newMonthlyFee);
-        console.log(fees);
+        var fees = await contractStore.getContractSubscriptionSigned.estimateGas.changePlan();
         await contractStore.getContractSubscriptionSigned.changePlan(this.newMonthlyFee, {
-          gasLimit: fees,
-          gasPrice: 23000
+          gasPrice: fees
         });
       } catch(err: any) {
         try {
