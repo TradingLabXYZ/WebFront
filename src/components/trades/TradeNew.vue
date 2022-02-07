@@ -252,7 +252,7 @@
             <option value="BUY">
               BUY
             </option>
-            <option value="SELL">
+            <option value="SELL" v-if="i > 0">
               SELL
             </option>
           </select>
