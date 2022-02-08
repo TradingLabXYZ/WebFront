@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="flex flex-col justify-center text-center text-gray-300 xs:py-28 sm:py-52 bg-blueshine">
-      <div class="p-2 tracking-widest sm:text-4xl xs:text-3xl">
+    <div class="flex flex-col justify-center text-center text-gray-300 xs:py-28 sm:py-52 bg-blueshine diagonal-box">
+      <div class="text-4xl">
         <span class="font-medium">H</span>
         <span class="italic">y</span>
         <span class="font-serif font-semibold">p</span>
@@ -25,9 +25,6 @@
         <img src="@/assets/moonbeam_logo.png" alt="Moonbeam">
       </div>
     </div>
-    <div id="triangle-topleft">
-      OK
-    </div>
   </div>
 </template>
 
@@ -38,11 +35,7 @@
   export default class Hero extends Vue {}
 </script>
 <style>
-    #triangle-topleft {
-      background-color: blue;
-      width: 0;
-      height: 0;
-      border-top: 100px solid red;
-      border-right: 100px solid transparent;
-    }
+  svg {
+    width: 100%;
+  }
 </style>
