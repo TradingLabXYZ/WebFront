@@ -49,8 +49,3 @@
   @Component({})
   export default class Hero extends Vue {}
 </script>
-<style>
-  svg {
-    width: 100%;
-  }
-</style>

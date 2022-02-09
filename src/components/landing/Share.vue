@@ -22,8 +22,3 @@
   @Component({})
   export default class Share extends Vue {}
 </script>
-<style>
-  svg {
-    width: 100%;
-  }
-</style>

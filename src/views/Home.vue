@@ -14,6 +14,12 @@
       </svg>
     </div>
     <Features/>
+    <div class="">
+      <svg height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-magentashine">
+        <path d="M0,0 C150,30 350,30 500,0"/>
+      </svg>
+    </div>
+    <Privacy1/>
     <Footer/>
   </div>
 </template>
@@ -24,6 +30,7 @@
   import Hero from '@/components/landing/Hero.vue';
   import Share from '@/components/landing/Share.vue';
   import Features from '@/components/landing/Features.vue';
+  import Privacy1 from '@/components/landing/Privacy1.vue';
   import Footer from '@/components/landing/Footer.vue';
 
   @Component({
@@ -32,6 +39,7 @@
       Hero,
       Share,
       Features,
+      Privacy1,
       Footer
     },
   })
