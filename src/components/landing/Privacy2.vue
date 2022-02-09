@@ -1,26 +1,28 @@
 <template>
   <div class="flex flex-col items-center -mt-20 align-middle bg-lagune">
+    <div class="absolute">
+      <svg height="3000" width="6000" class="fill-current text-magentashine">
+        <ellipse cx="2000" cy="400" rx="200" ry="250"/>
+      </svg>
+    </div>
+    <div class="absolute">
+      <svg height="3000" width="6000" class="fill-current text-blueshine">
+        <ellipse cx="2000" cy="500" rx="180" ry="230"/>
+      </svg>
+    </div>
+    <div class="absolute">
+      <svg height="3000" width="6000" class="fill-current text-deepmagenta">
+        <ellipse cx="2000" cy="600" rx="160" ry="210"/>
+      </svg>
+    </div>
     <div class="pt-40 text-6xl font-medium">
       Even more <span id="blur">privacy</span>
     </div>
-    <div class="p-10 text-2xl">
+    <div class="p-10 text-2xl text-center">
+      Your profile, your choices<br>
       Granulary control external visibility of your portfolio
     </div>
-    <div class="flex flex-row text-4xl space-x-6">
-      <div class="flex flex-col justify-around space-y-4">
-        <div>
-          Number of trades
-        </div>
-        <div>
-          $ Portfolio
-        </div>
-        <div>
-          $ Return
-        </div>
-        <div>
-          Quantities
-        </div>
-      </div>
+    <div class="flex flex-row text-4xl space-x-20">
       <div class="flex flex-col justify-around space-y-4">
         <div>
           <input type="checkbox" v-model="numberTrades" class="w-8 h-8"> 
@@ -33,6 +35,20 @@
         </div>
         <div>
           <input type="checkbox" v-model="quantities" class="w-8 h-8"> 
+        </div>
+      </div>
+      <div class="flex flex-col justify-around space-y-4">
+        <div>
+          Number of trades
+        </div>
+        <div>
+          $ Portfolio
+        </div>
+        <div>
+          % Return
+        </div>
+        <div>
+          Quantities
         </div>
       </div>
       <div class="flex flex-col justify-around space-y-4">

@@ -26,6 +26,21 @@
         {{ modes[selectedMode] }}
       </div>
     </div>
+    <div class="absolute">
+      <svg height="1000" width="4000" class="fill-current text-deepmagenta">
+        <ellipse cx="0" cy="300" rx="100" ry="150"/>
+      </svg>
+    </div>
+    <div class="absolute transform skew-x-12 skew-y-6">
+      <svg height="1000" width="4000" class="fill-current text-blueshine">
+        <ellipse cx="0" cy="400" rx="120" ry="80"/>
+      </svg>
+    </div>
+    <div class="absolute transform skew-x-12 skew-y-12">
+      <svg height="1000" width="4000" class="fill-current text-magentashine">
+        <ellipse cx="0" cy="400" rx="200" ry="50"/>
+      </svg>
+    </div>
   </div>
 </template>
 
