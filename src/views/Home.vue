@@ -20,6 +20,7 @@
       </svg>
     </div>
     <Privacy1/>
+    <Privacy2/>
     <Footer/>
   </div>
 </template>
@@ -31,6 +32,7 @@
   import Share from '@/components/landing/Share.vue';
   import Features from '@/components/landing/Features.vue';
   import Privacy1 from '@/components/landing/Privacy1.vue';
+  import Privacy2 from '@/components/landing/Privacy2.vue';
   import Footer from '@/components/landing/Footer.vue';
 
   @Component({
@@ -40,6 +42,7 @@
       Share,
       Features,
       Privacy1,
+      Privacy2,
       Footer
     },
   })
