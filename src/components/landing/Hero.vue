@@ -2,7 +2,7 @@
   <div>
     <div class="absolute">
       <svg height="300" width="6000" class="fill-current text-magentashine">
-        <ellipse cx="1800" cy="10" rx="400" ry="250"/>
+        <ellipse cx="0" cy="10" rx="400" ry="250"/>
       </svg>
     </div>
     <div class="absolute">
@@ -16,7 +16,7 @@
       </svg>
     </div>
     <div class="flex flex-col justify-center text-center text-gray-300 xs:py-28 sm:py-52 bg-blueshine diagonal-box">
-      <div class="text-4xl">
+      <div class="xs:text-2xl sm:text-4xl">
         <span class="font-medium">H</span>
         <span class="italic">y</span>
         <span class="font-serif font-semibold">p</span>
@@ -45,7 +45,9 @@
 
 
 <script lang="ts">
-  import { Vue, Component } from 'vue-property-decorator';
+  import { Vue, Component, Prop } from 'vue-property-decorator';
   @Component({})
-  export default class Hero extends Vue {}
+  export default class Hero extends Vue {
+    @Prop() isMobile!: boolean;
+  }
 </script>

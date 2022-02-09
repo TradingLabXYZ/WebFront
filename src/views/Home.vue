@@ -1,12 +1,13 @@
 <template>
   <div>
     <Header/>
-    <Hero/>
+    <Hero v-bind:isMobile="isMobile"/>
     <div class="">
       <svg height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-blueshine">
         <path d="M0,0 L0,80 Q0,80 500,0 L500,0"/>
       </svg>
     </div>
+    <!--
     <Share/>
     <div class="">
       <svg height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-azure">
@@ -21,6 +22,7 @@
     </div>
     <Privacy1/>
     <Privacy2/>
+    -->
     <Footer/>
   </div>
 </template>
@@ -46,5 +48,14 @@
       Footer
     },
   })
-  export default class Home extends Vue {}
+  export default class Home extends Vue {
+    isMobile = false;
+    checkIfMobile() {
+      if( screen.width <= 800 ) {
+        this.isMobile = true;
+      } else {
+        this.isMobile = false;
+      }
+    }
+  }
 </script>
