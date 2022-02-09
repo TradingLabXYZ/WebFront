@@ -1,5 +1,20 @@
 <template>
   <div>
+    <div class="absolute">
+      <svg height="300" width="6000" class="fill-current text-magentashine">
+        <ellipse cx="1800" cy="10" rx="400" ry="250"/>
+      </svg>
+    </div>
+    <div class="absolute">
+      <svg height="300" width="5000" class="fill-current text-azure">
+        <ellipse cx="1900" cy="-40" rx="200" ry="250"/>
+      </svg>
+    </div>
+    <div class="absolute">
+      <svg height="300" width="4000" class="fill-current text-deepmagenta">
+        <ellipse cx="2000" cy="-60" rx="200" ry="250"/>
+      </svg>
+    </div>
     <div class="flex flex-col justify-center text-center text-gray-300 xs:py-28 sm:py-52 bg-blueshine diagonal-box">
       <div class="text-4xl">
         <span class="font-medium">H</span>
