@@ -1,19 +1,19 @@
 <template>
   <div>
-    <div class="absolute">
-      <svg height="300" width="6000" class="fill-current text-magentashine">
-        <ellipse cx="0" cy="10" rx="400" ry="250"/>
-      </svg>
-    </div>
-    <div class="absolute">
-      <svg height="300" width="5000" class="fill-current text-azure">
-        <ellipse cx="1900" cy="-40" rx="200" ry="250"/>
-      </svg>
-    </div>
-    <div class="absolute">
-      <svg height="300" width="4000" class="fill-current text-deepmagenta">
-        <ellipse cx="2000" cy="-60" rx="200" ry="250"/>
-      </svg>
+    <div class="absolute flex flex-row justify-between w-full">
+      <div>
+        <svg class="fill-current xs:h-20 sm:h-32 xs:w-20 sm:w-80 text-magentashine">
+          <ellipse cx="0%" cy="0%" rx="100%" ry="100%"/>
+        </svg>
+      </div>
+      <div>
+        <svg class="fill-current xs:h-20 sm:h-32 xs:w-20 sm:w-80 text-azure">
+          <ellipse cx="100%" cy="50%" rx="30%" ry="50%"/>
+        </svg>
+        <svg class="fill-current xs:h-20 sm:h-32 xs:w-20 sm:w-80 text-deepmagenta">
+          <ellipse cx="110%" cy="50%" rx="30%" ry="50%"/>
+        </svg>
+      </div>
     </div>
     <div class="flex flex-col justify-center text-center text-gray-300 xs:py-28 sm:py-52 bg-blueshine diagonal-box">
       <div class="xs:text-2xl sm:text-4xl">
@@ -48,6 +48,5 @@
   import { Vue, Component, Prop } from 'vue-property-decorator';
   @Component({})
   export default class Hero extends Vue {
-    @Prop() isMobile!: boolean;
   }
 </script>

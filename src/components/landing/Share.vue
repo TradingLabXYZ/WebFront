@@ -8,9 +8,9 @@
         Sharable to anybody instantly
       </div>
     </div>
-    <div class="flex flex-row justify-center mt-20 mb-20 space-x-32">
-      <img src="@/assets/share_laptop.png" alt="Laptop">
-      <img src="@/assets/share_mobile.png" alt="Laptop">
+    <div class="flex items-center justify-center mt-20 mb-20 align-middle sm:flex-row xs:flex-col space-x-32">
+      <img src="@/assets/share_laptop.png" alt="Laptop" class="">
+      <img src="@/assets/share_mobile.png" alt="Laptop" class="">
     </div>
     <div class="h-20 bg-azure"></div>
   </div>
