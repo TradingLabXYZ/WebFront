@@ -8,13 +8,13 @@
       </svg>
     </div>
     <Share/>
-    <!--
     <div class="">
       <svg height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-azure">
         <path d="M0,0 C0,80 500,80 500,0"/>
       </svg>
     </div>
     <Features/>
+    <!--
     <div class="">
       <svg height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-magentashine">
         <path d="M0,0 C150,30 350,30 500,0"/>

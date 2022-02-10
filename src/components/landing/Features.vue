@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-col -mt-20 bg-verysoftcyan justify-evenly space-y-12 pb-44">
-    <div class="flex flex-row justify-center mt-44 space-x-44">
+  <div class="flex flex-col -mt-20 bg-verysoftcyan justify-evenly space-y-12 pb-44 xs:space-y-28">
+    <div class="flex justify-center xs:flex-col sm:flex-row mt-44 sm:space-x-44 xs:space-y-28">
       <div class="flex flex-col items-center align-middle">
         <div>
           <img src="@/assets/feature_simple.png" alt="Simple">
@@ -24,7 +24,7 @@
         </div>
       </div>
     </div>
-    <div class="flex flex-row justify-center space-x-44">
+    <div class="flex justify-center xs:flex-col sm:flex-row mt-44 sm:space-x-44 xs:space-y-28">
       <div class="flex flex-col items-center align-middle">
         <div>
           <img src="@/assets/feature_secure.png" alt="Secure">

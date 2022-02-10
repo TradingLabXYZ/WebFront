@@ -1,14 +1,14 @@
 <template>
   <div class="-mt-20 bg-azure">
-    <div class="flex flex-col text-5xl text-center font-extralight">
+    <div class="flex flex-col text-center xs:text-2xl sm:text-4xl font-extralight">
       <div class="mt-40 mb-3">
-        Your porfolio accessible from any device
+        Your porfolio from any device
       </div>
       <div>
         Sharable to anybody instantly
       </div>
     </div>
-    <div class="flex items-center justify-center mt-20 mb-20 align-middle sm:flex-row xs:flex-col space-x-32">
+    <div class="flex items-center justify-center mt-20 mb-20 align-middle sm:flex-row xs:flex-col xs:space-y-16 sm:space-x-32">
       <img src="@/assets/share_laptop.png" alt="Laptop" class="">
       <img src="@/assets/share_mobile.png" alt="Laptop" class="">
     </div>
