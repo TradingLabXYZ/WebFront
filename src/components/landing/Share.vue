@@ -8,7 +8,7 @@
         Sharable to anybody instantly
       </div>
     </div>
-    <div class="flex items-center justify-center mt-20 mb-20 align-middle sm:flex-row xs:flex-col xs:space-y-16 sm:space-x-32">
+    <div class="flex justify-center mt-10 sm:flex-row xs:flex-col sm:space-x-10 xs:space-y-10 sm:space-y-0">
       <img src="@/assets/share_laptop.png" alt="Laptop" class="">
       <img src="@/assets/share_mobile.png" alt="Laptop" class="">
     </div>

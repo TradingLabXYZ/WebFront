@@ -1,9 +1,9 @@
 <template>
   <div class="flex flex-col items-center -mt-20 align-middle bg-softlagune">
-    <div class="pt-40 text-6xl font-medium">
+    <div class="pt-40 font-medium xs:text-4xl sm:text-4xl">
       Privacy, done right
     </div>
-    <div class="p-10 text-2xl">
+    <div class="p-10 text-2xl text-center">
       Choose a privacy mode that suits you the best
     </div>
     <div class="flex flex-row space-x-4">
@@ -22,24 +22,9 @@
       <div class="mt-4 text-3xl">
         {{ selectedMode }}
       </div>
-      <div class="text-xl">
+      <div class="text-center xs:text-md sm:text-xl">
         {{ modes[selectedMode] }}
       </div>
-    </div>
-    <div class="absolute">
-      <svg height="1000" width="4000" class="fill-current text-deepmagenta">
-        <ellipse cx="0" cy="300" rx="100" ry="150"/>
-      </svg>
-    </div>
-    <div class="absolute transform skew-x-12 skew-y-6">
-      <svg height="1000" width="4000" class="fill-current text-blueshine">
-        <ellipse cx="0" cy="400" rx="120" ry="80"/>
-      </svg>
-    </div>
-    <div class="absolute transform skew-x-12 skew-y-12">
-      <svg height="1000" width="4000" class="fill-current text-magentashine">
-        <ellipse cx="0" cy="400" rx="200" ry="50"/>
-      </svg>
     </div>
   </div>
 </template>

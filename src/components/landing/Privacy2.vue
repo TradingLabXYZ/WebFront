@@ -86,6 +86,21 @@
         </div>
       </div>
     </div>
+    <div class="absolute">
+      <svg height="1000" width="4000" class="fill-current text-deepmagenta">
+        <ellipse cx="2%" cy="5%" rx="10%" ry="5%"/>
+      </svg>
+    </div>
+    <div class="absolute transform skew-x-12 skew-y-6">
+      <svg height="1000" width="4000" class="fill-current text-blueshine">
+        <ellipse cx="2%" cy="15%" rx="10%" ry="15%"/>
+      </svg>
+    </div>
+    <div class="absolute">
+      <svg height="1000" width="4000" class="fill-current text-magentashine">
+        <ellipse cx="0%" cy="55%" rx="5%" ry="5%"/>
+      </svg>
+    </div>
   </div>
 </template>
 

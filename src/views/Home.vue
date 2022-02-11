@@ -14,7 +14,6 @@
       </svg>
     </div>
     <Features/>
-    <!--
     <div class="">
       <svg height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-magentashine">
         <path d="M0,0 C150,30 350,30 500,0"/>
@@ -22,7 +21,6 @@
     </div>
     <Privacy1/>
     <Privacy2/>
-    -->
     <Footer/>
   </div>
 </template>

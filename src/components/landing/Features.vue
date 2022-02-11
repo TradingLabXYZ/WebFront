@@ -1,7 +1,7 @@
 <template>
-  <div class="flex flex-col -mt-20 bg-verysoftcyan justify-evenly space-y-12 pb-44 xs:space-y-28">
-    <div class="flex justify-center xs:flex-col sm:flex-row mt-44 sm:space-x-44 xs:space-y-28">
-      <div class="flex flex-col items-center align-middle">
+  <div class="flex flex-col -mt-20 bg-verysoftcyan justify-evenly pb-44">
+    <div class="flex justify-center xs:flex-col sm:flex-row mt-44">
+      <div class="flex flex-col items-center p-12 align-middle">
         <div>
           <img src="@/assets/feature_simple.png" alt="Simple">
         </div>
@@ -12,7 +12,7 @@
           A comprenshive, <br>intuitive and<br>user friendly interface
         </div>
       </div>
-      <div class="flex flex-col items-center align-middle">
+      <div class="flex flex-col items-center p-12 align-middle">
         <div>
           <img src="@/assets/feature_decentralized.png" alt="Decentralized">
         </div>
@@ -24,8 +24,8 @@
         </div>
       </div>
     </div>
-    <div class="flex justify-center xs:flex-col sm:flex-row mt-44 sm:space-x-44 xs:space-y-28">
-      <div class="flex flex-col items-center align-middle">
+    <div class="flex justify-center xs:flex-col sm:flex-row mt-44">
+      <div class="flex flex-col items-center p-12 align-middle">
         <div>
           <img src="@/assets/feature_secure.png" alt="Secure">
         </div>
@@ -36,7 +36,7 @@
           Platform and smart contracts<br>are safe by design
         </div>
       </div>
-      <div class="flex flex-col items-center align-middle">
+      <div class="flex flex-col items-center p-12 align-middle">
         <div>
           <img src="@/assets/feature_profitable.png" alt="Profitable">
         </div>
