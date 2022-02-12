@@ -1,28 +1,12 @@
 <template>
-  <div class="flex flex-col items-center -mt-20 align-middle bg-lagune">
-    <div class="absolute">
-      <svg height="3000" width="6000" class="fill-current text-magentashine">
-        <ellipse cx="2000" cy="400" rx="200" ry="250"/>
-      </svg>
-    </div>
-    <div class="absolute">
-      <svg height="3000" width="6000" class="fill-current text-blueshine">
-        <ellipse cx="2000" cy="500" rx="180" ry="230"/>
-      </svg>
-    </div>
-    <div class="absolute">
-      <svg height="3000" width="6000" class="fill-current text-deepmagenta">
-        <ellipse cx="2000" cy="600" rx="160" ry="210"/>
-      </svg>
-    </div>
-    <div class="pt-40 text-6xl font-medium">
+  <div class="flex flex-col items-center -mt-20 align-middle bg-lagune pb-44">
+    <div class="pt-40 font-medium xs:text-4xl sm:text-6xl">
       Even more <span id="blur">privacy</span>
     </div>
-    <div class="p-10 text-2xl text-center">
-      Your profile, your choices<br>
+    <div class="p-10 text-2xl text-center space-y-8">
       Granulary control external visibility of your portfolio
     </div>
-    <div class="flex flex-row text-4xl space-x-20">
+    <div class="flex flex-row xs:text-xl sm:text-4xl xs:space-x-8 sm:space-x-20">
       <div class="flex flex-col justify-around space-y-4">
         <div>
           <input type="checkbox" v-model="numberTrades" class="w-8 h-8"> 
@@ -62,7 +46,7 @@
         </div>
         <div>
           <div v-if="sizePortfolio">
-            47'837
+            4'837
           </div>
           <div v-else>
             /
@@ -85,21 +69,6 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="absolute">
-      <svg height="1000" width="4000" class="fill-current text-deepmagenta">
-        <ellipse cx="2%" cy="5%" rx="10%" ry="5%"/>
-      </svg>
-    </div>
-    <div class="absolute transform skew-x-12 skew-y-6">
-      <svg height="1000" width="4000" class="fill-current text-blueshine">
-        <ellipse cx="2%" cy="15%" rx="10%" ry="15%"/>
-      </svg>
-    </div>
-    <div class="absolute">
-      <svg height="1000" width="4000" class="fill-current text-magentashine">
-        <ellipse cx="0%" cy="55%" rx="5%" ry="5%"/>
-      </svg>
     </div>
   </div>
 </template>

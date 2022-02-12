@@ -24,7 +24,7 @@
         </div>
       </div>
     </div>
-    <div class="flex justify-center xs:flex-col sm:flex-row mt-44">
+    <div class="flex justify-center xs:flex-col sm:flex-row mt-22">
       <div class="flex flex-col items-center p-12 align-middle">
         <div>
           <img src="@/assets/feature_secure.png" alt="Secure">
