@@ -27,14 +27,9 @@
       <div v-if="!isUserConnected && currentRoute == '/'"
         class="flex flex-row justify-around xs:text-sm sm:text-base xs:space-x-0 sm:space-x-4 text-verysoftcyan">
         <button class="font-bold rounded xs:p-1 sm:p-2 hover:bg-deeplagune">
-          <a href="https://github.com/TradingLabXYZ/Docs/tree/main/Whitepaper" target="_blank">
-            Whitepaper
-          </a>
-        </button>
-        <button class="font-bold rounded xs:p-1 sm:p-2 hover:bg-deeplagune">
-          <a href="https://discord.gg/PEEUfrbQ9c" target="_blank">
-            Community
-          </a>
+          <router-link to="/explore">
+            Explore
+          </router-link>
         </button>
         <Connect class="xs:p-1 sm:p-2"/>
       </div>
