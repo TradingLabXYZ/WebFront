@@ -19,31 +19,33 @@
         <img v-if="selectedMode=='learn'" src="@/assets/learn.png" alt="Learn" class="xs:w-44 sm:w-80">
         <img v-else src="@/assets/earn.png" alt="Earn" class="xs:w-44 sm:w-80">
       </div>
-      <ul v-if="selectedMode=='learn'" class="font-light list-disc xs:text-2xl sm:text-4xl xs:w-64 sm:w-8/12">
-        <li>
-          Seamlessy track your investments
-        </li>
-        <li>
-          Discover talented crypto influencers
-        </li>
-        <li>
-          Evaluate <i>what if</i> scenarios
-        </li>
-        <li>
-          Never lose control of your porfolio
-        </li>
-      </ul>
-      <ul v-else class="font-light list-disc xs:text-2xl sm:text-4xl xs:w-64 sm:w-8/12">
-        <li>
-          Monetize your skills
-        </li>
-        <li>
-          Autonomosly set your price 
-        </li>
-        <li>
-          Create a new revenue stream
-        </li>
-      </ul>
+      <div class="font-light xs:text-2xl sm:text-4xl xs:w-64 sm:w-8/12">
+        <ul v-if="selectedMode=='learn'" class="list-disc list-inside">
+          <li>
+            Seamlessy track your investments
+          </li>
+          <li>
+            Discover talented crypto influencers
+          </li>
+          <li>
+            Evaluate <i>what if</i> scenarios
+          </li>
+          <li>
+            Never lose control of your porfolio
+          </li>
+        </ul>
+        <ul v-else class="list-disc list-inside">
+          <li>
+            Monetize your skills
+          </li>
+          <li>
+            Autonomosly set your price 
+          </li>
+          <li>
+            Create a new revenue stream
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
