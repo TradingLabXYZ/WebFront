@@ -2,12 +2,16 @@ import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 Vue.use(VueRouter)
 
-import { get } from 'idb-keyval';
-import { cleanSession } from '@/functions/session';
+import { getModule } from 'vuex-module-decorators'
+
+import Wallet from '@/store/walletModule';
+const walletStore = getModule(Wallet)
 
 import User from '@/store/userModule';
-import { getModule } from 'vuex-module-decorators'
 const userStore = getModule(User)
+
+import { get } from 'idb-keyval';
+import { cleanSession } from '@/functions/session';
 
 import Home from '../views/Home.vue'
 import Explore from '../views/Explore.vue'
@@ -21,11 +25,16 @@ const routes: Array<RouteConfig> = [
     name: 'Home',
     component: Home,
     async beforeEnter ({}, {}, next) {
-      if (document.cookie.indexOf("sessionId") > -1) {
-        var sessionId = document.cookie.split("sessionId=")[1].split(";")[0];
-        await get(sessionId).then((val) => userStore.updateUserDetails(val));
-        let sessionData = userStore.getUserDetails;
-        next('/' + sessionData['Wallet']);
+      if (await walletStore.verifyConnection()) {
+        if (document.cookie.indexOf("sessionId") > -1) {
+          var sessionId = document.cookie.split("sessionId=")[1].split(";")[0];
+          await get(sessionId).then((val) => userStore.updateUserDetails(val));
+          let sessionData = userStore.getUserDetails;
+          next('/' + sessionData['Wallet']);
+        } else {
+          cleanSession();
+          next()
+        }
       } else {
         cleanSession();
         next()

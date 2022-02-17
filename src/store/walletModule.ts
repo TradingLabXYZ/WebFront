@@ -5,7 +5,6 @@ import { ethers } from "ethers";
 import { VuexModule, Module, Mutation, Action } from 'vuex-module-decorators'
 import WalletConnectProvider from '@walletconnect/ethereum-provider'
 
-
 async function getProvider(provider: object) {
   return new ethers.providers.Web3Provider(provider)
 }
@@ -118,7 +117,7 @@ export default class Wallet extends VuexModule {
     // IS CONNECTED TO WALLETCONNECT?
     if (this.getWallet == '') {
       const vueAppChainId = process.env.VUE_APP_MOONBEAM_CHAINID || '';
-      const vueAppRpcUrl =process.env.VUE_APP_MOONBEAM_RPC_URL;
+      const vueAppRpcUrl = process.env.VUE_APP_MOONBEAM_RPC_URL;
       const rpcOptions = {}
       rpcOptions[vueAppChainId] = vueAppRpcUrl;
       var walletConnectProvider = new WalletConnectProvider({
@@ -190,5 +189,27 @@ export default class Wallet extends VuexModule {
         return;
       }
     }
+  }
+  @Action
+  async verifyConnection() {
+    if (typeof window.ethereum !== 'undefined') {
+      const web3Provider = await getProvider(window.ethereum);
+      var metamaskAddress = await listAccounts(web3Provider);
+      if (metamaskAddress) {
+        return true;
+      }
+    }
+    const vueAppChainId = process.env.VUE_APP_MOONBEAM_CHAINID || '';
+    const vueAppRpcUrl = process.env.VUE_APP_MOONBEAM_RPC_URL;
+    const rpcOptions = {}
+    rpcOptions[vueAppChainId] = vueAppRpcUrl;
+    var walletConnectProvider = new WalletConnectProvider({
+      rpc: rpcOptions,
+      qrcode: true
+    });
+    if (walletConnectProvider.connected) {
+      return true;
+    }
+    return false;
   }
 }
