@@ -1,7 +1,7 @@
 <template>
   <div class="dark:bg-universe">
     <Header/>
-    <div class="mt-5 mb-5 text-center xs:text-xl sm:text-2xl">My Settings</div>
+    <div class="mt-5 mb-5 text-center dark:text-gray-200 xs:text-xl sm:text-2xl">My Settings</div>
     <div class="flex flex-col h-screen">
       <div class="flex flex-row justify-center mb-4">
         <div
