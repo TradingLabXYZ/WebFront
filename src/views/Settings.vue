@@ -16,6 +16,12 @@
           @click="changeSettingsSection('privacy')">
           Privacy
         </div>
+        <div
+          class="px-6 py-2 mr-1 text-xl border-2 rounded-md"
+          :class="settingsSection=='visibility' ? 'bg-blueshine text-white font-semibold dark:bg-magentashine' : 'bg-white dark:bg-deepgray dark:text-gray-200'"
+          @click="changeSettingsSection('visibility')">
+          Visiblity
+        </div>
       </div>
       <div class="flex justify-center">
         <section v-if="settingsSection=='profile'">
@@ -23,6 +29,9 @@
         </section> 
         <section v-if="settingsSection=='privacy'">
           <Privacy/>
+        </section> 
+        <section v-if="settingsSection=='visibility'">
+          <Visibility/>
         </section> 
       </div>
     </div>
@@ -35,11 +44,13 @@
   import Header from '@/components/header/Header.vue';
   import Profile from '@/components/settings/Profile.vue';
   import Privacy from '@/components/settings/Privacy.vue';
+  import Visibility from '@/components/settings/Visibility.vue';
   @Component({
     components: {
       Header,
       Profile,
-      Privacy
+      Privacy,
+      Visibility
     }
   })
   export default class Settings extends Vue {

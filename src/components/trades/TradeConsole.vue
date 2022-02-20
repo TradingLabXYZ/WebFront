@@ -1,27 +1,6 @@
 <template>
   <div>
     <div v-if="!isMobile">
-      <div class="h-20 bg-white dark:bg-universe grid grid-cols-5 dark:text-cream">
-        <div class="col-span-1"></div>
-        <div class="flex justify-start mt-8 md-8 col-span-2">
-          <div class="text-2xl font-bold">
-            <span v-if="isUserProfile">
-              My Trades
-            </span>
-            <span v-else>
-              Trades 
-            </span>
-          </div>  
-          <div v-if="isUserConnected && isUserProfile && !isNewTrade">
-            <button
-              @click="insertTrade()"
-              title="Insert a new trade"
-              class="p-1 ml-4 text-6xl text-gray-400 rounded hover:text-gray-800">
-              <InsertTrade class="text-gray-700 stroke-current dark:text-gray-200 stroke-2"/>
-            </button>
-          </div>
-        </div>
-      </div>
       <div
         v-if="isUserConnected && isUserProfile && isNewTrade"
         class="mb-5 grid grid-cols-8">
@@ -32,11 +11,12 @@
             @closeNewTradeSection="cancelInsertTrade"/>
         </div>
       </div>
-      <div class="flex justify-center mb-10">
+      <div class="flex justify-center my-10">
         <table>
           <thead class="bg-verysoftcyan dark:bg-oldpurple">
             <tr>
               <th 
+                v-if="isUserProfile || visibility.SubtradesAll"
                 class="px-1 text-xs font-medium tracking-wider text-gray-800 dark:text-gray-200"
                 scope="col">
               </th>
@@ -61,21 +41,25 @@
                 Current Price
               </th>
               <th
+                v-if="isUserProfile || visibility.TradeQtyAvailable"
                 class="py-3 text-xs font-medium tracking-wider text-gray-800 lg:px-8 md:px-4 sm:px-2 dark:text-gray-200"
                 scope="col">
                 Qty Available
               </th>
               <th
+                v-if="isUserProfile || visibility.TradeValue"
                 class="py-3 text-xs font-medium tracking-wider text-gray-800 lg:px-12 md:px-6 sm:px-3 dark:text-gray-200"
                 scope="col">
                 $ Value
               </th>
               <th
+                v-if="isUserProfile || visibility.TradeReturn"
                 class="py-3 text-xs font-medium tracking-wider text-gray-800 lg:px-12 md:px-6 sm:px-3 dark:text-gray-200"
                 scope="col">
                 Return
               </th>
               <th
+                v-if="isUserProfile || visibility.TradeRoi"
                 class="py-3 text-xs font-medium tracking-wider text-gray-800 lg:px-12 md:px-6 sm:px-3 dark:text-gray-200"
                 scope="col">
                 ROI
@@ -91,7 +75,9 @@
           <tbody class="">
             <template v-for="(trade, q) in trades">
               <tr :key="'A' + q">
-                <td class="py-4 text-center text-gray-700 text-md">
+                <td
+                  v-if="isUserProfile || visibility.SubtradesAll"
+                  class="py-4 text-center text-gray-700 text-md">
                   <button
                     @click="toggle(trade.Code)"
                     title="Expand/Collapse trade"
@@ -127,25 +113,32 @@
                     {{ trade.FirstPairSymbol }} / {{ trade.SecondPairSymbol }}
                   </span>
                 </td>
-                <td class="py-4 text-center tex-gray-700 text-md dark:text-gray-200">
+                <td
+                  v-if="isUserProfile || visibility.TradeQtyAvailable"
+                  class="py-4 text-center tex-gray-700 text-md dark:text-gray-200">
                   {{ trade.QtyAvailable }}
                   <span class="text-xs">
                     {{ trade.SecondPairSymbol }}
                   </span>
                 </td>
-                <td class="py-4 text-center text-gray-700 text-md dark:text-gray-200">
+                <td
+                  v-if="isUserProfile || visibility.TradeValue"
+                  class="py-4 text-center text-gray-700 text-md dark:text-gray-200">
                   {{ trade.TotalValueUsdS }}
                   <span class="text-xs">
                     USD
                   </span>
                 </td>
-                <td class="py-4 text-center text-gray-700 text-md dark:text-gray-200">
+                <td
+                  v-if="isUserProfile || visibility.TradeReturn"
+                  class="py-4 text-center text-gray-700 text-md dark:text-gray-200">
                   {{ trade.TotalReturnS }}
                   <span class="text-xs">
                     {{ trade.FirstPairSymbol }}
                   </span>
                 </td>
                 <td
+                  v-if="isUserProfile || visibility.TradeRoi"
                   class="py-4 text-center text-gray-700 text-md dark:text-gray-200"
                   :class="trade.Roi > 0 ? 'text-lagune' : 'text-dutchorange'">
                   {{ trade.Roi + "%" }}
@@ -168,6 +161,7 @@
                 v-if="opened.includes(trade.Code)"
                 class="bg-cream dark:bg-universe">
                 <td 
+                  v-if="isUserProfile || visibility.SubtradesAll"
                   colspan="10"
                   class="text-xs"> 
                   <div class="flex justify-around">
@@ -182,16 +176,24 @@
                         <th class="tracking-wide text-gray-500 dark:text-gray-200 font-extralight">
                           Type
                         </th>
-                        <th class="tracking-wide text-gray-500 dark:text-gray-200 font-extralight">
+                        <th
+                          v-if="isUserProfile || visibility.SubtradeReasons"
+                          class="tracking-wide text-gray-500 dark:text-gray-200 font-extralight">
                           Reason
                         </th>
-                        <th class="tracking-wide text-gray-500 dark:text-gray-200 font-extralight">
+                        <th
+                          v-if="isUserProfile || visibility.SubtradeQuantity"
+                          class="tracking-wide text-gray-500 dark:text-gray-200 font-extralight">
                           Quantity
                         </th>
-                        <th class="tracking-wide text-gray-500 dark:text-gray-200 font-extralight">
+                        <th
+                          v-if="isUserProfile || visibility.SubtradeAvgPrice"
+                          class="tracking-wide text-gray-500 dark:text-gray-200 font-extralight">
                           Avg Price
                         </th>
-                        <th class="tracking-wide text-gray-500 dark:text-gray-200 font-extralight">
+                        <th
+                          v-if="isUserProfile || visibility.SubtradeTotal"
+                          class="tracking-wide text-gray-500 dark:text-gray-200 font-extralight">
                           Total
                         </th>
                       </thead>
@@ -229,7 +231,7 @@
                               </select>
                             </div>
                           </td>
-                          <td>
+                          <td v-if="isUserProfile || visibility.SubtradeReasons">
                             <div class="border-b border-softlagune dark:border-magentashine">
                               <input
                                 :disabled="!isUserConnected || !isUserProfile"
@@ -241,7 +243,7 @@
                                 @change="updateSubtrade(subtrade)">
                             </div>
                           </td>
-                          <td>
+                          <td v-if="isUserProfile || visibility.SubtradeQuantity">
                             <div class="w-24 border-b border-softlagune dark:border-magentashine">
                               <input 
                                 :disabled="!isUserConnected || !isUserProfile"
@@ -255,7 +257,7 @@
                                 @change="updateSubtrade(subtrade)">
                             </div>
                           </td>
-                          <td>
+                          <td v-if="isUserProfile || visibility.SubtradeAvgPrice">
                             <div class="w-24 border-b border-softlagune dark:border-magentashine">
                               <input
                                 :disabled="!isUserConnected || !isUserProfile"
@@ -269,7 +271,7 @@
                                 @change="updateSubtrade(subtrade)">
                             </div>
                           </td>
-                          <td>
+                          <td v-if="isUserProfile || visibility.SubtradeTotal">
                             <div class="w-24 border-b border-softlagune dark:border-magentashine">
                               <input
                                 :disabled="!isUserConnected || !isUserProfile"
@@ -323,21 +325,18 @@
           </tbody>
         </table>
       </div>
+      <div 
+        v-if="isUserConnected && isUserProfile || isNewTrade"
+        class="flex justify-center bg-white dark:bg-universe dark:text-cream">
+        <button
+          @click="insertTrade()"
+          title="Insert a new trade"
+          class="p-1 ml-4 text-6xl text-gray-400 rounded hover:text-gray-800">
+          <InsertTrade class="text-gray-700 stroke-current dark:text-gray-200 stroke-2"/>
+        </button>
+      </div>
     </div>
     <div v-else>
-      <div class="flex justify-center mt-4 mb-2 dark:text-cream">
-        <div class="text-xl font-bold">
-          My Trades
-        </div>  
-        <div v-if="isUserConnected && isUserProfile && !isNewTrade">
-          <button
-            @click="insertTrade()"
-            title="Insert a new trade"
-            class="p-1 ml-1 text-6xl text-gray-400 rounded hover:text-gray-800">
-            <InsertTrade class="text-gray-700 stroke-current transform scale-75 dark:text-gray-200 stroke-2"/>
-          </button>
-        </div>
-      </div>
       <div
         v-if="isUserConnected && isUserProfile && isNewTrade"
         class="grid grid-cols-8">
@@ -351,7 +350,7 @@
       <div
         v-for="(trade, q) in trades"
         v-bind:key="q">
-        <div class="flex flex-row justify-around mx-1 mb-1 bg-cream dark:bg-universe">
+        <div class="flex flex-row justify-around mx-1 mt-5 mb-1 bg-cream dark:bg-universe">
           <div
             class="flex flex-col justify-center"
             @click="toggle(trade.Code)">
@@ -382,6 +381,7 @@
             </div>
           </div>
           <div
+            v-if="isUserProfile || visibility.TradeQtyAvailable"
             class="flex flex-col justify-center p-1 text-center"
             @click="toggle(trade.Code)">
             <div class="text-gray-500 text-xxs dark:text-gray-400">
@@ -395,6 +395,7 @@
             </div>
           </div>
           <div
+            v-if="isUserProfile || visibility.TradeReturn"
             class="flex flex-col justify-center p-1 text-center"
             @click="toggle(trade.Code)">
             <div class="text-gray-500 text-xxs dark:text-gray-400">
@@ -408,6 +409,7 @@
             </div>
           </div>
           <div
+            v-if="isUserProfile || visibility.TradeRoi"
             class="flex flex-col justify-center p-1 text-center"
             @click="toggle(trade.Code)">
             <span
@@ -433,112 +435,132 @@
         <div
           :key="'B' + q"
           v-if="opened.includes(trade.Code)">
-          <div
-            class="mx-10 mb-3 bg-red-100 text-xxs bg-cream dark:bg-sandpurple"
-            v-for="(subtrade, i) in trade.Subtrades"
-            :key="i">
-            <div class="flex justify-center">
-              <div class="flex flex-col">
-                <label class="text-center text-gray-400 text-xxs dark:text-gray-200">CreatedAt</label>
-                <input
-                  :disabled="!isUserConnected || !isUserProfile"
-                  name="formTimestamp" 
-                  placeholder="Timestamp"
-                  type="datetime-local"
-                  class="h-4 mr-1 text-center border-b w-30 bg-verysoftcyan border-softlagune dark:bg-deepmagenta dark:text-gray-200 dark:border-magentashine"
-                  v-model="subtrade.CreatedAt"
-                  @change="updateSubtrade(subtrade)">
-                </div>
-              <div class="flex flex-col">
-                <label class="text-center text-gray-400 text-xxs dark:text-gray-200">Reason / Description</label>
-                <input
-                  :disabled="!isUserConnected || !isUserProfile"
-                  name="formReason" 
-                  placeholder="Insert a reason" 
-                  type="text"
-                  class="h-4 text-center border-b bg-verysoftcyan border-softlagune dark:bg-deepmagenta dark:text-gray-200 dark:border-magentashine"
-                  v-model="subtrade.Reason"
-                  @change="updateSubtrade(subtrade)">
-              </div>
-            </div>
-            <div class="flex justify-center">
-              <div class="flex flex-col">
-                <label class="text-center text-gray-400 text-xxs dark:text-gray-200">Type</label>
-                <select
-                  :disabled="!isUserConnected || !isUserProfile"
-                  name="formType" 
-                  class="h-4 mr-1 text-center border-b bg-verysoftcyan border-softlagune dark:bg-deepmagenta dark:text-gray-200 dark:border-magentashine"
-                  v-model="subtrade.Type"
-                  @change="updateSubtrade(subtrade)">
-                  <option value="BUY">BUY</option>
-                  <option value="SELL">SELL</option>
-                </select>
-              </div>
-              <div class="flex flex-col">
-                <label class="text-center text-gray-400 text-xxs dark:text-gray-200">Quantity</label>
-                <input 
-                  :disabled="!isUserConnected || !isUserProfile"
-                  min="0.00000000001"
-                  name="formQuantity" 
-                  placeholder="Quantity"
-                  type="number"
-                  step="any"
-                  class="w-10 h-4 mr-1 text-center border-b bg-verysoftcyan border-softlagune dark:bg-deepmagenta dark:text-gray-200 dark:border-magentashine"
-                  v-model.number="subtrade.Quantity"
-                  @change="updateSubtrade(subtrade)">
-              </div>
-              <div class="flex flex-col">
-                <label class="text-center text-gray-400 text-xxs dark:text-gray-200">Avg Price</label>
-                <input 
-                  :disabled="!isUserConnected || !isUserProfile"
-                  min="0.00000000001"
-                  name="formAvgPrice" 
-                  placeholder="Avg Price"
-                  type="number"
-                  step="any"
-                  class="w-20 h-4 mr-1 text-center border-b bg-verysoftcyan col-span-1 border-softlagune dark:bg-deepmagenta dark:text-gray-200 dark:border-magentashine"
-                  v-model.number="subtrade.AvgPrice"
-                  @change="updateSubtrade(subtrade)">
-              </div>
-              <div class="flex flex-col">
-                <label class="text-center text-gray-400 text-xxs dark:text-gray-200">Total</label>
-                <input 
-                  :disabled="!isUserConnected || !isUserProfile"
-                  min="0.00000000001"
-                  name="formTotal" 
-                  placeholder="Total"
-                  type="number"
-                  step="any"
-                  class="w-20 h-4 mr-1 text-center border-b bg-verysoftcyan col-span-1 border-softlagune dark:bg-deepmagenta dark:text-gray-200 dark:border-magentashine"
-                  v-model.number="subtrade.Total"
-                  @change="updateSubtrade(subtrade)">
-              </div>
-            </div>
+          <div v-if="isUserProfile || visibility.SubtradesAll">
             <div
-              class="flex flex-row items-center justify-center mt-1"
-              v-if="isUserConnected && isUserProfile">
-              <div
-                class="flex flex-row items-center justify-center"
-                v-if="trade.Subtrades.length > 1">
-                <button
-                  @click="removeSubtrade(subtrade)"
-                  title="Remove subtrade"
-                  type="button">
-                  <RemoveSubtradeOpen class="transform scale-75"/>
-                </button>
+              class="mx-10 mb-3 bg-red-100 text-xxs bg-cream dark:bg-sandpurple"
+              v-for="(subtrade, i) in trade.Subtrades"
+              :key="i">
+              <div class="flex justify-center">
+                <div class="flex flex-col">
+                  <label class="text-center text-gray-400 text-xxs dark:text-gray-200">CreatedAt</label>
+                  <input
+                    :disabled="!isUserConnected || !isUserProfile"
+                    name="formTimestamp" 
+                    placeholder="Timestamp"
+                    type="datetime-local"
+                    class="h-4 mr-1 text-center border-b w-30 bg-verysoftcyan border-softlagune dark:bg-deepmagenta dark:text-gray-200 dark:border-magentashine"
+                    v-model="subtrade.CreatedAt"
+                    @change="updateSubtrade(subtrade)">
+                  </div>
+                <div
+                  v-if="isUserProfile || visibility.SubtradeReasons"
+                  class="flex flex-col">
+                  <label class="text-center text-gray-400 text-xxs dark:text-gray-200">Reason / Description</label>
+                  <input
+                    :disabled="!isUserConnected || !isUserProfile"
+                    name="formReason" 
+                    placeholder="Insert a reason" 
+                    type="text"
+                    class="h-4 text-center border-b bg-verysoftcyan border-softlagune dark:bg-deepmagenta dark:text-gray-200 dark:border-magentashine"
+                    v-model="subtrade.Reason"
+                    @change="updateSubtrade(subtrade)">
+                </div>
+              </div>
+              <div class="flex justify-center">
+                <div class="flex flex-col">
+                  <label class="text-center text-gray-400 text-xxs dark:text-gray-200">Type</label>
+                  <select
+                    :disabled="!isUserConnected || !isUserProfile"
+                    name="formType" 
+                    class="h-4 mr-1 text-center border-b bg-verysoftcyan border-softlagune dark:bg-deepmagenta dark:text-gray-200 dark:border-magentashine"
+                    v-model="subtrade.Type"
+                    @change="updateSubtrade(subtrade)">
+                    <option value="BUY">BUY</option>
+                    <option value="SELL">SELL</option>
+                  </select>
+                </div>
+                <div
+                  v-if="isUserProfile || visibility.SubtradeQuantity"
+                  class="flex flex-col">
+                  <label class="text-center text-gray-400 text-xxs dark:text-gray-200">Quantity</label>
+                  <input 
+                    :disabled="!isUserConnected || !isUserProfile"
+                    min="0.00000000001"
+                    name="formQuantity" 
+                    placeholder="Quantity"
+                    type="number"
+                    step="any"
+                    class="w-10 h-4 mr-1 text-center border-b bg-verysoftcyan border-softlagune dark:bg-deepmagenta dark:text-gray-200 dark:border-magentashine"
+                    v-model.number="subtrade.Quantity"
+                    @change="updateSubtrade(subtrade)">
+                </div>
+                <div
+                  v-if="isUserProfile || visibility.SubtradeAvgPrice"
+                  class="flex flex-col">
+                  <label class="text-center text-gray-400 text-xxs dark:text-gray-200">Avg Price</label>
+                  <input 
+                    :disabled="!isUserConnected || !isUserProfile"
+                    min="0.00000000001"
+                    name="formAvgPrice" 
+                    placeholder="Avg Price"
+                    type="number"
+                    step="any"
+                    class="w-20 h-4 mr-1 text-center border-b bg-verysoftcyan col-span-1 border-softlagune dark:bg-deepmagenta dark:text-gray-200 dark:border-magentashine"
+                    v-model.number="subtrade.AvgPrice"
+                    @change="updateSubtrade(subtrade)">
+                </div>
+                <div 
+                  class="flex flex-col"
+                  v-if="isUserProfile || visibility.SubtradeTotal">
+                  <label class="text-center text-gray-400 text-xxs dark:text-gray-200">Total</label>
+                  <input 
+                    :disabled="!isUserConnected || !isUserProfile"
+                    min="0.00000000001"
+                    name="formTotal" 
+                    placeholder="Total"
+                    type="number"
+                    step="any"
+                    class="w-20 h-4 mr-1 text-center border-b bg-verysoftcyan col-span-1 border-softlagune dark:bg-deepmagenta dark:text-gray-200 dark:border-magentashine"
+                    v-model.number="subtrade.Total"
+                    @change="updateSubtrade(subtrade)">
+                </div>
               </div>
               <div
-                class="flex flex-row items-center justify-center"
-                v-if="i == (trade.Subtrades.length - 1)">
-                <button
-                  @click="insertSubtrade(trade)"
-                  title="Insert subtrade"
-                  type="button">
-                  <AddSubtradeOpen class="transform scale-75"/>
-                </button>
+                class="flex flex-row items-center justify-center mt-1"
+                v-if="isUserConnected && isUserProfile">
+                <div
+                  class="flex flex-row items-center justify-center"
+                  v-if="trade.Subtrades.length > 1">
+                  <button
+                    @click="removeSubtrade(subtrade)"
+                    title="Remove subtrade"
+                    type="button">
+                    <RemoveSubtradeOpen class="transform scale-75"/>
+                  </button>
+                </div>
+                <div
+                  class="flex flex-row items-center justify-center"
+                  v-if="i == (trade.Subtrades.length - 1)">
+                  <button
+                    @click="insertSubtrade(trade)"
+                    title="Insert subtrade"
+                    type="button">
+                    <AddSubtradeOpen class="transform scale-75"/>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
+        </div>
+      </div>
+      <div class="flex justify-center mt-4 mb-2 dark:text-cream">
+        <div v-if="isUserConnected && isUserProfile || isNewTrade">
+          <button
+            @click="insertTrade()"
+            title="Insert a new trade"
+            class="p-1 ml-1 text-6xl text-gray-400 rounded hover:text-gray-800">
+            <InsertTrade class="text-gray-700 stroke-current transform scale-75 dark:text-gray-200 stroke-2"/>
+          </button>
         </div>
       </div>
     </div>
@@ -577,6 +599,7 @@
     @Prop() isUserConnected!: boolean;
     @Prop() trades!: object[];
     @Prop() isUserProfile!: boolean;
+    @Prop() visibility!: object;
     validateSubtrade(subtrade: object) {
       var m = '';
       if (!subtrade['Quantity'] || subtrade['Quantity'] <= 0) m = "Wrong Quantity";

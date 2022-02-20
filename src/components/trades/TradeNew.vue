@@ -175,22 +175,22 @@
       Add a new trade
     </div>
     <div class="mb-2">
-      <div class="flex flex-col space-y-1">
+      <div class="flex flex-col px-4 space-y-1 bg-cream">
         <div class="flex flex-col justify-center text-center rounded-xl">
-          <label class="text-gray-500 text-xxs text-subtradelabel dark:text-gray-200">
+          <label class="text-xs text-gray-500 text-subtradelabel dark:text-gray-200">
             Exchange
           </label>
           <input
-            class="h-5 text-xs text-gray-800 border border-gray-200 dark:bg-deepmagenta dark:text-gray-200"
+            class="h-5 text-xs text-gray-800 border border-gray-200 bg-cream dark:bg-deepmagenta dark:text-gray-200"
             v-model="exchange">
         </div>
         <div class="flex flex-col items-center justify-center rounded-xl">
-          <label class="text-gray-500 text-xxs text-subtradelabel dark:text-gray-200">
+          <label class="text-xs text-gray-500 text-subtradelabel dark:text-gray-200">
             Selling
           </label>
           <input
             type="text"
-            class="w-full h-5 text-xs text-center text-gray-800 bg-white border border-gray-200 dark:bg-deepmagenta dark:text-gray-200"
+            class="w-full h-5 text-xs text-center text-gray-800 border border-gray-200 bg-cream dark:bg-deepmagenta dark:text-gray-200"
             @focus="onFocusFirstPair()"
             v-model="userInputFirstPair"
             @keydown="monitorKeysFirstPair"
@@ -209,12 +209,12 @@
           </div>
         </div>
         <div class="flex flex-col items-center justify-center rounded-xl">
-          <label class="text-gray-500 text-xxs text-subtradelabel dark:text-gray-200">
+          <label class="text-xs text-gray-500 text-subtradelabel dark:text-gray-200">
             Buying
           </label>
           <input
             type="text"
-            class="w-full h-5 text-xs text-center text-gray-800 bg-white border border-gray-200 dark:bg-deepmagenta dark:text-gray-200"
+            class="w-full h-5 text-xs text-center text-gray-800 border border-gray-200 bg-cream dark:bg-deepmagenta dark:text-gray-200"
             @focus="onFocusSecondPair()"
             v-model="userInputSecondPair"
             @keydown="monitorKeysSecondPair"

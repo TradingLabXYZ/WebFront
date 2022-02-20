@@ -21,13 +21,15 @@
       v-bind:totalReturn="totalReturn"
       v-bind:totalValueUsd="totalValueUsd"
       v-bind:roi="roi"
-      v-bind:totalTrades="totalTrades"/>
+      v-bind:totalTrades="totalTrades"
+      v-bind:visibility="visibility"/>
     <div v-if="privacyStatus == 'OK'">
       <TradeConsole
         v-bind:isMobile="isMobile"
         v-bind:isUserConnected="isUserConnected"
         v-bind:trades="trades"
-        v-bind:isUserProfile="isUserProfile"/>
+        v-bind:isUserProfile="isUserProfile"
+        v-bind:visibility="visibility"/>
     </div>
     <div v-else class="flex flex-col justify-center mt-12 text-xl text-center sm:text-4xl h-80 dark:text-gray-200">
       <div v-if="!isSubscribe"> 
@@ -92,6 +94,7 @@
     trades: object[] = [];
     isMobile = false;
     isSubscribe = false;
+    visibility: object = {};
     get isUserConnected() {
       return walletStore.getIsConnected;
     }
@@ -150,6 +153,7 @@
         this.followings = ws_data.UserDetails.Followings;
         this.subscribers = ws_data.UserDetails.Subscribers;
         this.joinTime = ws_data.UserDetails.JoinTime;
+        this.visibility = ws_data.VisibilityStatus;
         this.trades = [];
         for (var i in ws_data.Trades) {
           let trade = ws_data.Trades[i];
