@@ -56,25 +56,25 @@
       </div>
     </div>
     <div class="flex flex-col justify-center text-2xl text-white">
-      <div class="">
+      <div class="" v-if="isUserProfile || visibility.TotalCountTrades">
         {{ totalTrades }}
         <span class="text-sm">
           Trades
         </span>
       </div>
-      <div class="">
+      <div class="" v-if="isUserProfile || visibility.TotalPortfolio">
         {{ totalValueUsd }}
         <span class="text-sm">
           $ Portfolio
         </span>
       </div>
-      <div class="">
+      <div class="" v-if="isUserProfile || visibility.TotalReturn">
         {{ totalReturn }}
         <span class="text-sm">
           $ Return
         </span>
       </div>
-      <div class="">
+      <div class="" v-if="isUserProfile || visibility.TotalRoi">
         {{ roi + "%" }}
         <span class="text-sm">
           ROI
@@ -155,7 +155,7 @@
       </div>
     </div>
     <div class="flex flex-row text-center justify-evenly">
-      <div class="flex flex-col">
+      <div class="flex flex-col" v-if="isUserProfile || visibility.TotalCountTrades">
         <div>
           {{ totalTrades }}
         </div>
@@ -163,7 +163,7 @@
           Trades
         </div>
       </div>
-      <div class="flex flex-col">
+      <div class="flex flex-col" v-if="isUserProfile || visibility.TotalPortfolio">
         <div>
           {{ totalValueUsd }}
         </div>
@@ -171,7 +171,7 @@
           $ Portfolio
         </div>
       </div>
-      <div class="flex flex-col">
+      <div class="flex flex-col" v-if="isUserProfile || visibility.TotalReturn">
         <div>
           {{ totalReturn }}
         </div>
@@ -179,7 +179,7 @@
           $ Return
         </div>
       </div>
-      <div class="flex flex-col">
+      <div class="flex flex-col" v-if="isUserProfile || visibility.TotalRoi">
         <div>
         {{ roi + "%" }}
         </div>
@@ -239,6 +239,7 @@
     @Prop() totalReturn!: number;
     @Prop() totalValueUsd!: number;
     @Prop() roi!: number;
+    @Prop() visibility!: object;
     @Emit('follow')
     follow(){}
   }

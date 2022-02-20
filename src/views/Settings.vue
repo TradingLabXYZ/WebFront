@@ -31,7 +31,7 @@
           <Privacy/>
         </section> 
         <section v-if="settingsSection=='visibility'">
-          <Visiblity/>
+          <Visibility/>
         </section> 
       </div>
     </div>
@@ -44,13 +44,13 @@
   import Header from '@/components/header/Header.vue';
   import Profile from '@/components/settings/Profile.vue';
   import Privacy from '@/components/settings/Privacy.vue';
-  import Visiblity from '@/components/settings/Visiblity.vue';
+  import Visibility from '@/components/settings/Visibility.vue';
   @Component({
     components: {
       Header,
       Profile,
       Privacy,
-      Visiblity
+      Visibility
     }
   })
   export default class Settings extends Vue {

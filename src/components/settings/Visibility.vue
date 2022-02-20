@@ -49,7 +49,6 @@
   export default class Visibility extends Vue {
     visibility: object = {}
     created() {
-      console.log(userStore.userDetails['Visibility']);
       this.visibility = userStore.userDetails['Visibility'];
     }
     async saveUserVisibility() {
