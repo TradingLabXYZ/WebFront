@@ -1,27 +1,6 @@
 <template>
   <div>
     <div v-if="!isMobile">
-      <div class="h-20 bg-white dark:bg-universe grid grid-cols-5 dark:text-cream">
-        <div class="col-span-1"></div>
-        <div class="flex justify-start mt-8 md-8 col-span-2">
-          <div class="text-2xl font-bold">
-            <span v-if="isUserProfile">
-              My Trades
-            </span>
-            <span v-else>
-              Trades 
-            </span>
-          </div>  
-          <div v-if="isUserConnected && isUserProfile || isNewTrade">
-            <button
-              @click="insertTrade()"
-              title="Insert a new trade"
-              class="p-1 ml-4 text-6xl text-gray-400 rounded hover:text-gray-800">
-              <InsertTrade class="text-gray-700 stroke-current dark:text-gray-200 stroke-2"/>
-            </button>
-          </div>
-        </div>
-      </div>
       <div
         v-if="isUserConnected && isUserProfile && isNewTrade"
         class="mb-5 grid grid-cols-8">
@@ -32,7 +11,7 @@
             @closeNewTradeSection="cancelInsertTrade"/>
         </div>
       </div>
-      <div class="flex justify-center mb-10">
+      <div class="flex justify-center my-10">
         <table>
           <thead class="bg-verysoftcyan dark:bg-oldpurple">
             <tr>
@@ -346,21 +325,18 @@
           </tbody>
         </table>
       </div>
+      <div 
+        v-if="isUserConnected && isUserProfile || isNewTrade"
+        class="flex justify-center bg-white dark:bg-universe dark:text-cream">
+        <button
+          @click="insertTrade()"
+          title="Insert a new trade"
+          class="p-1 ml-4 text-6xl text-gray-400 rounded hover:text-gray-800">
+          <InsertTrade class="text-gray-700 stroke-current dark:text-gray-200 stroke-2"/>
+        </button>
+      </div>
     </div>
     <div v-else>
-      <div class="flex justify-center mt-4 mb-2 dark:text-cream">
-        <div class="text-xl font-bold">
-          My Trades
-        </div>  
-        <div v-if="isUserConnected && isUserProfile || isNewTrade">
-          <button
-            @click="insertTrade()"
-            title="Insert a new trade"
-            class="p-1 ml-1 text-6xl text-gray-400 rounded hover:text-gray-800">
-            <InsertTrade class="text-gray-700 stroke-current transform scale-75 dark:text-gray-200 stroke-2"/>
-          </button>
-        </div>
-      </div>
       <div
         v-if="isUserConnected && isUserProfile && isNewTrade"
         class="grid grid-cols-8">
@@ -374,7 +350,7 @@
       <div
         v-for="(trade, q) in trades"
         v-bind:key="q">
-        <div class="flex flex-row justify-around mx-1 mb-1 bg-cream dark:bg-universe">
+        <div class="flex flex-row justify-around mx-1 mt-5 mb-1 bg-cream dark:bg-universe">
           <div
             class="flex flex-col justify-center"
             @click="toggle(trade.Code)">
@@ -575,6 +551,16 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+      <div class="flex justify-center mt-4 mb-2 dark:text-cream">
+        <div v-if="isUserConnected && isUserProfile || isNewTrade">
+          <button
+            @click="insertTrade()"
+            title="Insert a new trade"
+            class="p-1 ml-1 text-6xl text-gray-400 rounded hover:text-gray-800">
+            <InsertTrade class="text-gray-700 stroke-current transform scale-75 dark:text-gray-200 stroke-2"/>
+          </button>
         </div>
       </div>
     </div>
