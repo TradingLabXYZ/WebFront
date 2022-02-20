@@ -21,7 +21,7 @@
       TradingLab
     </div>
     <div class="font-normal text-verysoftcyan text-md">
-      Copyright © tradinglab.xyz 2021
+      Copyright © tradinglab.xyz 2022
     </div>
   </div>
 </template>
