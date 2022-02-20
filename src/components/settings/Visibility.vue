@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div class="p-2 text-2xl">
+    <div class="p-2 text-2xl dark:text-gray-300">
       <div class="flex flex-col">
         <div
           v-for="(data,index) in visibility"
           :key="index"
-          class="flex flex-row space-x-4">
+          class="flex flex-row items-center align-middle space-x-4 space-y-2">
           <div>
             <input type="checkbox" v-model="visibility[index]" class="text-2xl">
           </div>
