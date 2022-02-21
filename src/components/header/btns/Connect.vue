@@ -15,6 +15,7 @@
 </template>
 
 <script lang="ts">
+  declare const window: any;
   import { Component, Vue } from 'vue-property-decorator';
   import { getModule } from 'vuex-module-decorators'
   import Wallet from '@/store/walletModule';
@@ -40,6 +41,7 @@
       await walletStore.connect();
       await generateSession();
       this.instantiateWatchers();
+      window._paq.push(['setUserId', walletStore.getWallet]);
       if (this.$route.params['wallet'] == walletStore.getWallet) {
         window.location.reload();
       } else {
