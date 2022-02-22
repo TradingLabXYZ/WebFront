@@ -23,6 +23,9 @@
         <div class="text-2xl font-bold text-verysoftcyan xs:hidden sm:block">
           TradingLab
         </div>
+        <div class="font-bold text-red-200 xs:text-xxs sm:text-xs sm:block transform -skew-y-6 -skew-x-6 -translate-y-3 -translate-x-3 animate-pulse">
+          Beta
+        </div>
       </div>
       <div v-if="!isUserConnected && currentRoute == '/'"
         class="flex flex-row justify-around xs:text-sm sm:text-base xs:space-x-0 sm:space-x-4 text-verysoftcyan">
