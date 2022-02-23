@@ -45,12 +45,14 @@
           following
         </span>
       </router-link>
+      <!-- temporaly disabled
       <div>
         {{ subscribers }}
         <span class="text-sm">
           subscribers
         </span>
       </div>
+      -->
       <div class="text-sm">
         Joined {{ joinTime }}
       </div>
