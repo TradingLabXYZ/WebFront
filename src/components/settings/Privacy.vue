@@ -16,9 +16,11 @@
         <option value="followers">
           Followers
         </option>
+        <!-- temporaly disabled
         <option value="subscribers">
           Subscribers
         </option>
+        -->
       </select>
     </div>
     <div
@@ -62,6 +64,7 @@
         ERROR
       </button>
     </div>
+    <!-- temporaly disabled
     <div
       v-if="userStorePrivacy == 'subscribers'"
       class="flex flex-col justify-around">
@@ -69,6 +72,7 @@
         <Subscribers/>
       </div>
     </div>
+    -->
   </div>
 </template>
 
