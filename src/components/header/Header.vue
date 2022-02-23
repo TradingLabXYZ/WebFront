@@ -28,7 +28,7 @@
         </div>
       </div>
       <div v-if="!isUserConnected && currentRoute == '/'"
-        class="flex flex-row justify-around xs:text-sm sm:text-base xs:space-x-0 sm:space-x-4 text-verysoftcyan">
+        class="flex flex-row items-center justify-around align-middle xs:text-sm sm:text-base xs:space-x-0 sm:space-x-4 text-verysoftcyan">
         <button class="font-bold rounded xs:p-1 sm:p-2 hover:bg-deeplagune">
           <router-link to="/explore">
             Explore
