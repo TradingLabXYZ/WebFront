@@ -25,6 +25,14 @@ async function listChainId(provider: any) {
   );
 }
 
+async function listBalance(provider: any) {
+  return await provider.getSigner().getBalance().then(
+    function(balance: any) {
+      return parseFloat(ethers.utils.formatEther(balance))
+    }
+  )
+}
+
 @Module({ dynamic: true, store, name: 'walletModule'  })
 export default class Wallet extends VuexModule {
   isConnected = false;
@@ -107,11 +115,13 @@ export default class Wallet extends VuexModule {
       var metamaskAddress = await listAccounts(web3Provider);
       if (metamaskAddress) {
         var chainId = await listChainId(web3Provider);
+        var balance = await listBalance(web3Provider);
         this.updateProviderObject(window.ethereum);
         this.updateProviderName('metamask');
         this.updateIsConnected(true);
         this.updateWallet(metamaskAddress);
         this.updateChainId(chainId);
+        this.updateBalance(balance);
       }
     }
     // IS CONNECTED TO WALLETCONNECT?
@@ -129,11 +139,13 @@ export default class Wallet extends VuexModule {
         const web3Provider = await getProvider(walletConnectProvider);
         var chainId = await listChainId(web3Provider);
         var address = await listAccounts(web3Provider);
+        var balance = await listBalance(web3Provider);
         this.updateProviderObject(walletConnectProvider);
         this.updateProviderName('walletconnect');
         this.updateIsConnected(true);
         this.updateChainId(chainId);
         this.updateWallet(address);
+        this.updateBalance(balance);
       }
     }
   }
