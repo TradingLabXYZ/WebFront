@@ -1,9 +1,9 @@
 <template>
-  <div class="flex flex-col -mt-20 bg-verysoftcyan justify-evenly pb-44">
+  <div class="flex flex-col -mt-20 bg-universe justify-evenly pb-44 text-cream">
     <div class="flex justify-center xs:flex-col sm:flex-row mt-44">
       <div class="flex flex-col items-center p-12 align-middle">
-        <div>
-          <img src="@/assets/feature_simple.png" alt="Simple">
+        <div class="p-4">
+          <img src="@/assets/feature_simple2.png" alt="Simple">
         </div>
         <div class="text-3xl font-bold">
           Simple
@@ -13,8 +13,8 @@
         </div>
       </div>
       <div class="flex flex-col items-center p-12 align-middle">
-        <div>
-          <img src="@/assets/feature_decentralized.png" alt="Decentralized">
+        <div class="p-4">
+          <img src="@/assets/feature_decentralized2.png" alt="Decentralized">
         </div>
         <div class="text-3xl font-bold">
           Decentralized
@@ -26,8 +26,8 @@
     </div>
     <div class="flex justify-center xs:flex-col sm:flex-row mt-22">
       <div class="flex flex-col items-center p-12 align-middle">
-        <div>
-          <img src="@/assets/feature_secure.png" alt="Secure">
+        <div class="p-4">
+          <img src="@/assets/feature_secure2.png" alt="Secure">
         </div>
         <div class="text-3xl font-bold">
           Secure
@@ -37,8 +37,8 @@
         </div>
       </div>
       <div class="flex flex-col items-center p-12 align-middle">
-        <div>
-          <img src="@/assets/feature_profitable.png" alt="Profitable">
+        <div class="p-4">
+          <img src="@/assets/feature_profitable2.png" alt="Profitable">
         </div>
         <div class="text-3xl font-bold">
           Profitable
