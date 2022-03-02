@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center -mt-20 align-middle bg-universe pb-44 text-cream">
+  <div class="flex flex-col items-center -mt-20 align-middle bg-gradient-to-br from-universelight via-universe to-universe pb-44 text-cream">
     <div class="pt-40 font-medium xs:text-4xl sm:text-6xl">
       Even more <span id="blur">privacy</span>
     </div>

@@ -19,15 +19,18 @@
       <path d="M0,0 L0,3 500,3 500,0"/>
     </svg>
     <Privacy2/>
-    <svg height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-lagune">
-      <path d="M0,0 L0,80 500,0"/>
-      <path d="M0,0 L500,0 500,80"/>
+    <svg height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-blueshine">
+      <path d="M0,0 L0,20 500,0"/>
+      <path d="M0,0 L500,0 500,20"/>
     </svg>
     <LearnEarn/>
-    <svg height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-deeplagune">
+    <svg height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-magentashine">
       <path d="M0,0 L0,80 500,0"/>
     </svg>
     <More/>
+    <svg height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-blueshine">
+      <path d="M0,0 L0,3 500,3 500,0"/>
+    </svg>
     <Footer/>
   </div>
 </template>

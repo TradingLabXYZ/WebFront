@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col -mt-20 bg-universe justify-evenly pb-44 text-cream">
+  <div class="flex flex-col -mt-20 bg-gradient-to-bl from-universelight via-universe to-universe justify-evenly pb-44 text-cream">
     <div class="flex justify-center xs:flex-col sm:flex-row mt-44">
       <div class="flex flex-col items-center p-12 align-middle">
         <div class="p-4">

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col justify-center pb-20 -mt-20 text-center pt-44 bg-blueshine space-y-2">
+  <div class="flex flex-col justify-center pb-20 -mt-20 text-center pt-44 bg-gradient-to-br from-universelight via-universe to-universe space-y-2">
     <div class="flex flex-row justify-center">
       <button>
         <a href="https://discord.gg/PEEUfrbQ9c" target="_blank">
@@ -17,10 +17,10 @@
         </a>
       </button>
     </div>
-    <div class="text-2xl font-semibold text-verysoftcyan">
+    <div class="text-2xl font-semibold text-magentashine">
       TradingLab
     </div>
-    <div class="font-normal text-verysoftcyan text-md">
+    <div class="font-normal text-cream text-md">
       Copyright © tradinglab.xyz 2022
     </div>
   </div>
