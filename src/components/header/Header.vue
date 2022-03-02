@@ -18,11 +18,11 @@
     </div>
     -->
     <div class="sticky top-0 z-10 flex flex-row items-center justify-around border-b-2 border-magentashine xs:p-0 sm:p-4 bg-universe xs:h-16 sm:h-20 md:h-24">
-      <div class="flex flex-row items-center align-middle xs:space-x-1 sm:space-x-3">
+      <div class="flex flex-row items-center align-middle space-x-2">
         <router-link to="/">
-          <img src="@/assets/logo.png" class="xs:h-10 md:h-16" alt="Logo">
+          <img src="@/assets/logo2.png" class="xs:h-14 md:h-18" alt="Logo">
         </router-link>
-        <div class="text-2xl font-bold text-verysoftcyan xs:hidden sm:block">
+        <div class="text-4xl font-bold text-magentashine xs:hidden sm:block">
           TradingLab
         </div>
         <div class="font-bold text-red-200 xs:text-xxs sm:text-xs sm:block transform -skew-y-6 -skew-x-6 -translate-y-3 -translate-x-3 animate-pulse">

@@ -9,9 +9,7 @@
       </div>
     </div>
     <div class="flex items-center justify-center mt-10 sm:flex-row xs:flex-col sm:space-x-10 xs:space-y-10 sm:space-y-0 place-items-center">
-      <div class="">
-        <img src="@/assets/share_laptop2.png" alt="Laptop" class="h-3/6">
-      </div>
+      <img src="@/assets/share_laptop2.png" alt="Laptop" class="h-4/5">
     </div>
     <div class="h-20 bg-universe"></div>
   </div>

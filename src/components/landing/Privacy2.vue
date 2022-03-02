@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center -mt-20 align-middle bg-lagune pb-44">
+  <div class="flex flex-col items-center -mt-20 align-middle bg-universe pb-44 text-cream">
     <div class="pt-40 font-medium xs:text-4xl sm:text-6xl">
       Even more <span id="blur">privacy</span>
     </div>
@@ -8,17 +8,37 @@
     </div>
     <div class="flex flex-row xs:text-xl sm:text-4xl xs:space-x-8 sm:space-x-20">
       <div class="flex flex-col justify-around space-y-4">
-        <div>
-          <input type="checkbox" v-model="numberTrades" class="w-8 h-8"> 
+        <div @click="switchNumberTrades()">
+          <div v-if="numberTrades">
+            <BlueDot/>
+          </div>
+          <div v-else>
+            <MagentaDot/>
+          </div>
         </div>
-        <div>
-          <input type="checkbox" v-model="sizePortfolio" class="w-8 h-8"> 
+        <div @click="switchSizePortfolio()">
+          <div v-if="sizePortfolio">
+            <BlueDot/>
+          </div>
+          <div v-else>
+            <MagentaDot/>
+          </div>
         </div>
-        <div>
-          <input type="checkbox" v-model="sizeReturn" class="w-8 h-8"> 
+        <div @click="switchSizeReturn()">
+          <div v-if="sizeReturn">
+            <BlueDot/>
+          </div>
+          <div v-else>
+            <MagentaDot/>
+          </div>
         </div>
-        <div>
-          <input type="checkbox" v-model="quantities" class="w-8 h-8"> 
+        <div @click="switchQuantities()">
+          <div v-if="quantities">
+            <BlueDot/>
+          </div>
+          <div v-else>
+            <MagentaDot/>
+          </div>
         </div>
       </div>
       <div class="flex flex-col justify-around space-y-4">
@@ -62,7 +82,7 @@
         </div>
         <div>
           <div v-if="quantities">
-            0.98 BTC
+            0.9 ₿
           </div>
           <div v-else>
             /
@@ -76,17 +96,36 @@
 
 <script lang="ts">
   import { Vue, Component } from 'vue-property-decorator';
-  @Component({})
+  import BlueDot from '@/components/svg/BlueDot.vue';
+  import MagentaDot from '@/components/svg/MagentaDot.vue';
+  @Component({
+    components: {
+      BlueDot,
+      MagentaDot
+    }
+  })
   export default class Privacy1 extends Vue {
     numberTrades= true;
     sizePortfolio= false;
     sizeReturn= true;
     quantities= false;
+    switchNumberTrades() {
+      this.numberTrades = this.numberTrades ? false : true;
+    }
+    switchSizePortfolio() {
+      this.sizePortfolio = this.sizePortfolio ? false : true;
+    }
+    switchSizeReturn() {
+      this.sizeReturn = this.sizeReturn ? false : true;
+    }
+    switchQuantities() {
+      this.quantities = this.quantities ? false : true;
+    }
   }
 </script>
 <style>
   #blur {
     color: transparent;
-    text-shadow: 0 0 15px #000;
+    text-shadow: 0 0 15px white;
   }
 </style>
