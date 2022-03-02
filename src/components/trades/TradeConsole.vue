@@ -13,60 +13,60 @@
       </div>
       <div class="flex justify-center my-10">
         <table>
-          <thead class="bg-verysoftcyan dark:bg-oldpurple">
+          <thead class="bg-oldpurple">
             <tr>
               <th 
                 v-if="isUserProfile || visibility.SubtradesAll"
-                class="px-1 text-xs font-medium tracking-wider text-gray-800 dark:text-gray-200"
+                class="px-1 text-xs font-medium tracking-wider text-gray-200"
                 scope="col">
               </th>
               <th
-                class="py-3 text-xs font-medium tracking-wider text-gray-800 lg:px-12 md:px-6 sm:px-3 dark:text-gray-200"
+                class="py-3 text-xs font-medium tracking-wider text-gray-200 lg:px-12 md:px-6 sm:px-3"
                 scope="col">
                 Exchange
               </th>
               <th
-                class="py-3 text-xs font-medium tracking-wider text-gray-800 lg:px-6 md:px-3 sm:px-1 dark:text-gray-200"
+                class="py-3 text-xs font-medium tracking-wider text-gray-200 lg:px-6 md:px-3 sm:px-1"
                 scope="col">
                 First Pair
               </th>
               <th
-                class="py-3 text-xs font-medium tracking-wider text-gray-800 lg:px-6 md:px-3 sm:px-1 dark:text-gray-200"
+                class="py-3 text-xs font-medium tracking-wider text-gray-200 lg:px-6 md:px-3 sm:px-1"
                 scope="col">
                 Second Pair
               </th>
               <th
-                class="py-3 text-xs font-medium tracking-wider text-gray-800 lg:px-12 md:px-6 sm:px-3 dark:text-gray-200"
+                class="py-3 text-xs font-medium tracking-wider text-gray-200 lg:px-12 md:px-6 sm:px-3"
                 scope="col">
                 Current Price
               </th>
               <th
                 v-if="isUserProfile || visibility.TradeQtyAvailable"
-                class="py-3 text-xs font-medium tracking-wider text-gray-800 lg:px-8 md:px-4 sm:px-2 dark:text-gray-200"
+                class="py-3 text-xs font-medium tracking-wider text-gray-200 lg:px-8 md:px-4 sm:px-2"
                 scope="col">
                 Qty Available
               </th>
               <th
                 v-if="isUserProfile || visibility.TradeValue"
-                class="py-3 text-xs font-medium tracking-wider text-gray-800 lg:px-12 md:px-6 sm:px-3 dark:text-gray-200"
+                class="py-3 text-xs font-medium tracking-wider text-gray-200 lg:px-12 md:px-6 sm:px-3"
                 scope="col">
                 $ Value
               </th>
               <th
                 v-if="isUserProfile || visibility.TradeReturn"
-                class="py-3 text-xs font-medium tracking-wider text-gray-800 lg:px-12 md:px-6 sm:px-3 dark:text-gray-200"
+                class="py-3 text-xs font-medium tracking-wider text-gray-200 lg:px-12 md:px-6 sm:px-3"
                 scope="col">
                 Return
               </th>
               <th
                 v-if="isUserProfile || visibility.TradeRoi"
-                class="py-3 text-xs font-medium tracking-wider text-gray-800 lg:px-12 md:px-6 sm:px-3 dark:text-gray-200"
+                class="py-3 text-xs font-medium tracking-wider text-gray-200 lg:px-12 md:px-6 sm:px-3"
                 scope="col">
                 ROI
               </th>
               <th
                 v-if="isUserConnected && isUserProfile"
-                class="py-3 text-xs font-medium tracking-wider text-gray-800 lg:px-12 md:px-6 sm:px-3 dark:text-gray-200"
+                class="py-3 text-xs font-medium tracking-wider text-gray-200 lg:px-12 md:px-6 sm:px-3"
                 scope="col">
                 Actions
               </th>
@@ -86,10 +86,10 @@
                     <CollapseTrade v-else/>
                   </button>
                 </td>
-                <td class="py-4 text-center text-gray-700 text-md dark:text-gray-200">
+                <td class="py-4 text-center text-gray-200 text-md">
                   {{ trade.Exchange }}
                 </td>
-                <td class="py-4 text-center text-gray-700 text-md dark:text-gray-200">
+                <td class="py-4 text-center text-gray-200 text-md">
                   <img
                     :src="trade.FirstPairUrlIcon"
                     height="30"
@@ -97,7 +97,7 @@
                     class="inline-block align-middle"/>
                   {{ trade.FirstPairSymbol }}
                 </td>
-                <td class="py-4 text-center text-gray-700 text-md dark:text-gray-200">
+                <td class="py-4 text-center text-gray-200 text-md">
                   <img
                     :src="trade.SecondPairUrlIcon"
                     height="30"
@@ -106,7 +106,7 @@
                   {{ trade.SecondPairSymbol }}
                 </td>
                 <td
-                  class="py-4 text-center text-gray-700 text-md text-fade-effect dark:text-gray-200"
+                  class="py-4 text-center text-gray-200 text-md text-fade-effect"
                   v-bind:id="trade.Code">
                   {{ trade.CurrentPrice }}
                   <span class="text-xs">
@@ -115,7 +115,7 @@
                 </td>
                 <td
                   v-if="isUserProfile || visibility.TradeQtyAvailable"
-                  class="py-4 text-center tex-gray-700 text-md dark:text-gray-200">
+                  class="py-4 text-center text-gray-200 text-md">
                   {{ trade.QtyAvailable }}
                   <span class="text-xs">
                     {{ trade.SecondPairSymbol }}
@@ -123,7 +123,7 @@
                 </td>
                 <td
                   v-if="isUserProfile || visibility.TradeValue"
-                  class="py-4 text-center text-gray-700 text-md dark:text-gray-200">
+                  class="py-4 text-center text-gray-200 text-md">
                   {{ trade.TotalValueUsdS }}
                   <span class="text-xs">
                     USD
@@ -131,7 +131,7 @@
                 </td>
                 <td
                   v-if="isUserProfile || visibility.TradeReturn"
-                  class="py-4 text-center text-gray-700 text-md dark:text-gray-200">
+                  class="py-4 text-center text-gray-200 text-md">
                   {{ trade.TotalReturnS }}
                   <span class="text-xs">
                     {{ trade.FirstPairSymbol }}
@@ -139,13 +139,13 @@
                 </td>
                 <td
                   v-if="isUserProfile || visibility.TradeRoi"
-                  class="py-4 text-center text-gray-700 text-md dark:text-gray-200"
+                  class="py-4 text-center text-gray-200 text-md"
                   :class="trade.Roi > 0 ? 'text-lagune' : 'text-dutchorange'">
                   {{ trade.Roi + "%" }}
                 </td>
                 <td
                   v-if="isUserConnected && isUserProfile"
-                  class="py-4 text-center text-gray-700 text-md dark:text-gray-200">
+                  class="py-4 text-center text-gray-200 text-md">
                   <button
                     v-if="isUserConnected && isUserProfile"
                     @click="deleteTrade(trade)"

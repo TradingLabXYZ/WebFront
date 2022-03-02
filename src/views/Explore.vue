@@ -12,7 +12,7 @@
         <div class="xs:hidden sm:block sm:col-span-1 md:col-span-2 lg:col-span-3"></div>
         <div class="flex flex-col text-center border-t border-b border-gray-200 xs:mx-3 sm:col-span-6 md:col-span-6 lg:col-span-5">
           <router-link :to="'/' + event.userwallet">
-            <div class="flex flex-row justify-between font-light text-gray-700 dark:text-gray-200 xs:text-sm md:text-xl">
+            <div class="flex flex-row justify-between font-light text-gray-200 xs:text-sm md:text-xl">
               <div class="flex flex-row items-center justify-start mt-1 align-middle space-x-1">
                 <img
                   :src="event.profilepicture"
@@ -43,7 +43,7 @@
             </div>
             <div class="flex flex-row items-center justify-around mt-2 mb-4 align-middle">
               <div class="flex flex-col text-center">
-                <div class="relative text-gray-300 dark:text-gray-400 xs:text-xxs xs:text-sm top-1">
+                <div class="relative text-gray-400 xs:text-xxs xs:text-sm top-1">
                   Avg Price
                 </div>
                 <div class="text-gray-200 xs:text-md sm:text-xl lg:text-2xl">

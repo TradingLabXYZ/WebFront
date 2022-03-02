@@ -67,10 +67,10 @@
         v-for="(subtrade, i) in subtrades"
         :key="subtrade.Timestamp"
         class="mb-8 ml-8 rounded-xl grid grid-cols-12">
-        <div class="bg-verysoftcyan rounded-3xl col-span-11 dark:bg-sandpurple">
+        <div class="rounded-3xl col-span-11 bg-sandpurple">
           <div class="pt-4 pl-4 pr-4 mt-3 grid grid-cols-6">
             <div class="ml-4 mr-4 rounded-xl col-span-2">
-              <label class="text-xs text-subtradelabel dark:text-gray-200">
+              <label class="text-xs text-gray-200">
                 Date/Time
               </label>
               <input
@@ -78,15 +78,15 @@
                 type="text"
                 onfocus="(this.type='datetime-local')"
                 onfocusout="(this.type='text')"
-                class="w-full p-2 border border-gray-200 border-gray-500 dark:bg-deepmagenta dark:text-gray-200"
+                class="w-full p-2 text-gray-200 border border-gray-200 bg-deepmagenta"
                 v-model="subtrade.CreatedAt">
             </div>
             <div class="ml-4 mr-4 rounded-xl col-span-1">
-              <label class="text-xs text-subtradelabel dark:text-gray-200">
+              <label class="text-xs text-gray-200">
                 Buy/Sell
               </label>
               <select
-                class="w-full p-2 text-gray-800 bg-white border border-gray-200 border-gray-500 dark:bg-deepmagenta dark:text-gray-200"
+                class="w-full p-2 text-gray-200 border border-gray-200 bg-deepmagenta"
                 v-model="subtrade.Type">
                 <option value="BUY">
                   BUY
@@ -97,43 +97,43 @@
               </select>
             </div>
             <div class="ml-4 mr-4 rounded-xl col-span-3">
-              <label class="text-xs text-subtradelabel dark:text-gray-200">
+              <label class="text-xs text-gray-200">
                 Trade reason / Description
               </label>
               <input
-                class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500 dark:bg-deepmagenta dark:text-gray-200"
+                class="w-full p-2 text-gray-200 border border-gray-200 bg-deepmagenta"
                 v-model="subtrade.Reason">
             </div>
           </div>
           <div class="p-4 grid grid-cols-3">
             <div class="m-4 rounded-xl col-span-1">
-              <label class="text-xs text-subtradelabel dark:text-gray-200">
+              <label class="text-xs text-gray-200">
                 Quantity
               </label>
               <input
                 min="0.00000000001"
                 type="number"
-                class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500 dark:bg-deepmagenta dark:text-gray-200"
+                class="w-full p-2 text-gray-200 border border-gray-200 bg-deepmagenta"
                 v-model="subtrade.Quantity">
             </div>
             <div class="m-4 rounded-xl col-span-1">
-              <label class="text-xs text-subtradelabel dark:text-gray-200">
+              <label class="text-xs text-gray-200">
                 Average price
               </label>
               <input
                 min="0.00000000001"
                 type="number"
-                class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500 dark:bg-deepmagenta dark:text-gray-200"
+                class="w-full p-2 text-gray-200 border border-gray-200 bg-deepmagenta"
                 v-model="subtrade.AvgPrice">
             </div>
             <div class="m-4 rounded-xl col-span-1">
-              <label class="text-xs text-subtradelabel dark:text-gray-200">
+              <label class="text-xs text-gray-200">
                 Total
               </label>
               <input
                 min="0.00000000001"
                 type="number"
-                class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500 dark:bg-deepmagenta dark:text-gray-200"
+                class="w-full p-2 text-gray-200 border border-gray-500 bg-deepmagenta"
                 v-model="subtrade.Total">
             </div>
           </div>
