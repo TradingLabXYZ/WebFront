@@ -1,11 +1,11 @@
 <template>
   <div>
     <div class="p-2">
-      <label class="text-xs text-subtradelabel dark:text-gray-200">
+      <label class="text-xs text-gray-200 text-subtradelabel">
         Select Privacy Settings
       </label>
       <select
-        class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500 dark:bg-deepmagenta dark:text-gray-200"
+        class="w-full p-2 text-gray-200 border border-gray-200 border-gray-500 bg-deepmagenta"
         v-model="selectedUserPrivacy">
         <option value="all">
           All
@@ -25,7 +25,7 @@
     </div>
     <div
       id="displayedMessage"
-      class="mt-5 dark:text-gray-200">
+      class="mt-5 text-gray-200">
       <div
         v-if="selectedUserPrivacy == 'all'"
         class="flex justify-around">
@@ -46,7 +46,7 @@
       v-if="selectedUserPrivacy != userStorePrivacy"
       class="flex justify-center">
       <button
-        class="px-4 py-2 m-6 font-bold text-white rounded bg-azure hover:bg-deeplagune dark:bg-magentashine"
+        class="px-4 py-2 m-6 font-bold text-white rounded hover:bg-deeplagune bg-magentashine"
         type="submit"
         @click="saveUserPrivacy()">
         Save

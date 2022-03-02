@@ -10,7 +10,7 @@
       </div>
     </div>
     <div>
-      <div class="mt-6 p2 dark:text-gray-200">
+      <div class="mt-6 text-gray-200 p2">
         Change your USDC monthly price
         <input
           type="number"

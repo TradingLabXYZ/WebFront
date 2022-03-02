@@ -28,7 +28,7 @@
         </div>
       </div>
       <div class="">
-        <img src="@/assets/rank.gif" alt="Racks" class="pb-32 pl-20">
+        <img src="@/assets/rack.gif" alt="Rack" class="pb-32 pl-20">
       </div>
     </div>
   </div>

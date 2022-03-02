@@ -33,15 +33,6 @@
           : {{ userChainId }}
         </div>
       </section>
-      <section class="flex flex-row items-center justify-center p-3 px-4 py-1 space-x-2">
-        <span class="p-2 font-bold">
-          DarkMode
-        </span>
-        <input
-          type="checkbox"
-          v-model="toggledTheme"
-          @change="toggleTheme">
-      </section>
       <section class="flex justify-around p-3 px-4 py-1">
         <Settings class="inline-block p-2 mr-2 font-bold rounded hover:bg-azure hover:text-header-dark"/>
       </section>
@@ -73,10 +64,6 @@
   })
   export default class PopoverUserConsole extends Vue {
     showUserMenu = false;
-    toggledTheme = false; 
-    created() {
-      this.setTheme();
-    }
     get userWallet() {
       return walletStore.getWallet;
     }
@@ -88,26 +75,6 @@
     }
     copyWalletToClipboard() {
       navigator.clipboard.writeText(walletStore.getWallet);
-    }
-    setTheme() {
-      let theme = localStorage.getItem('theme');
-      if (theme === null || theme == 'light') {
-        document.getElementById('html')?.classList.remove('dark');
-        this.toggledTheme = false;
-      } else {
-        document.getElementById('html')?.classList.add('dark')
-        this.toggledTheme = true;
-      }
-    }
-    toggleTheme() {
-      let theme = localStorage.getItem('theme');
-      if (theme === null || theme == 'light') {
-        document.getElementById('html')?.classList.add('dark');
-        localStorage.setItem('theme', 'dark');
-      } else {
-        localStorage.setItem('theme', 'light');
-        document.getElementById('html')?.classList.remove('dark')
-      }
     }
     @Emit('disconnectMetamask')
     disconnectMetamask(){}

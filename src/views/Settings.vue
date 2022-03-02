@@ -1,24 +1,24 @@
 <template>
-  <div class="dark:bg-universe">
+  <div class="bg-universe">
     <Header/>
-    <div class="mt-5 mb-5 text-center dark:text-gray-200 xs:text-xl sm:text-2xl">My Settings</div>
+    <div class="mt-5 mb-5 text-center text-gray-200 xs:text-xl sm:text-2xl">My Settings</div>
     <div class="flex flex-col h-screen">
       <div class="flex flex-row justify-center mb-4">
         <div
           class="px-6 py-2 mr-1 text-xl border-2 rounded-md"
-          :class="settingsSection=='profile' ? 'bg-blueshine text-white font-semibold dark:bg-magentashine' : 'bg-white dark:bg-deepgray dark:text-gray-200'"
+          :class="settingsSection=='profile' ? 'text-white font-semibold bg-magentashine' : 'bg-deepgray text-gray-200'"
           @click="changeSettingsSection('profile')">
           Profile
         </div>
         <div
           class="px-6 py-2 mr-1 text-xl border-2 rounded-md"
-          :class="settingsSection=='privacy' ? 'bg-blueshine text-white font-semibold dark:bg-magentashine' : 'bg-white dark:bg-deepgray dark:text-gray-200'"
+          :class="settingsSection=='privacy' ? 'text-white font-semibold bg-magentashine' : 'bg-deepgray text-gray-200'"
           @click="changeSettingsSection('privacy')">
           Privacy
         </div>
         <div
           class="px-6 py-2 mr-1 text-xl border-2 rounded-md"
-          :class="settingsSection=='visibility' ? 'bg-blueshine text-white font-semibold dark:bg-magentashine' : 'bg-white dark:bg-deepgray dark:text-gray-200'"
+          :class="settingsSection=='visibility' ? 'text-white font-semibold bg-magentashine' : 'bg-deepgray text-gray-200'"
           @click="changeSettingsSection('visibility')">
           Visiblity
         </div>

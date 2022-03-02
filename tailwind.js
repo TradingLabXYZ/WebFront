@@ -1,8 +1,10 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 module.exports = {
   purge: [],
-  darkMode: 'class',
   theme: {
+    fontFamily: {
+      sans: ['Montserrat'],
+    },
     fontSize: {
       xxs: '.5rem',
       ...defaultTheme.fontSize
@@ -27,6 +29,7 @@ module.exports = {
         deepmagenta: "#710B79",
         deeppurple: "#4200FF",
         universe: "#121634",
+        universelight: "#1e2666",
         oldpurple: "#252083",
         sandpurple: "#26327F"
       }

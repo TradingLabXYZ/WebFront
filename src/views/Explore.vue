@@ -1,7 +1,7 @@
 <template>
-  <div class="dark:bg-universe">
+  <div class="bg-universe">
     <Header/>
-    <div class="mt-5 mb-3 text-center xs:text-xl sm:text-2xl dark:text-gray-200">
+    <div class="mt-5 mb-3 text-center text-gray-200 xs:text-xl sm:text-2xl">
       Explore
     </div>
     <div class="flex flex-col">
@@ -38,7 +38,7 @@
                   width="20">
               </div>
             </div>
-            <div class="mt-1 italic font-light text-center text-gray-700 dark:text-gray-200 xs:text-sm sm:text-xl">
+            <div class="mt-1 italic font-light text-center text-gray-200 xs:text-sm sm:text-xl">
               "{{ event.reason }}"
             </div>
             <div class="flex flex-row items-center justify-around mt-2 mb-4 align-middle">
@@ -46,30 +46,30 @@
                 <div class="relative text-gray-300 dark:text-gray-400 xs:text-xxs xs:text-sm top-1">
                   Avg Price
                 </div>
-                <div class="xs:text-md sm:text-xl lg:text-2xl dark:text-gray-200">
+                <div class="text-gray-200 xs:text-md sm:text-xl lg:text-2xl">
                   {{ event.avgprice }}
                 </div>
-                <div class="relative text-gray-300 dark:text-gray-400 xs:text-xxs xs:text-sm bottom-1">
+                <div class="relative text-gray-400 xs:text-xxs xs:text-sm bottom-1">
                   {{ event.firstpairsymbol }}/{{ event.secondpairsymbol }}
                 </div>
               </div>
               <div class="flex flex-col text-center">
-                <div class="relative text-gray-300 dark:text-gray-400 xs:text-xxs xs:text-sm top-1">
+                <div class="relative text-gray-400 xs:text-xxs xs:text-sm top-1">
                   Total
                 </div>
-                <div class="xs:text-md sm:text-xl lg:text-2xl dark:text-gray-200">
+                <div class="text-gray-200 xs:text-md sm:text-xl lg:text-2xl">
                   {{ event.total }}
                 </div>
-                <div class="relative text-gray-300 dark:text-gray-400 xs:text-xxs xs:text-sm bottom-1">
+                <div class="relative text-gray-400 xs:text-xxs xs:text-sm bottom-1">
                   {{ event.firstpairsymbol }}
                 </div>
               </div>
               <div class="flex flex-col text-center">
-                <div class="relative text-gray-300 dark:text-gray-400 xs:text-xxs xs:text-sm top-1">
+                <div class="relative text-gray-400 xs:text-xxs xs:text-sm top-1">
                   Current Price
                 </div>
                 <div class="flex flex-row justify-center space-x-1">
-                  <div class="xs:text-md sm:text-xl lg:text-2xl dark:text-gray-200">
+                  <div class="text-gray-200 xs:text-md sm:text-xl lg:text-2xl">
                     {{ event.currentprice }}
                   </div>
                   <div
@@ -85,7 +85,7 @@
                     {{ event.deltapriceperc + "%" }}
                   </div>
                 </div>
-                <div class="relative text-gray-300 xs:text-xxs xs:text-sm bottom-1 dark:text-gray-400">
+                <div class="relative text-gray-400 xs:text-xxs xs:text-sm bottom-1">
                   {{ event.firstpairsymbol }}/{{ event.secondpairsymbol }}
                 </div>
               </div>
