@@ -3,12 +3,18 @@
     <Header/>
     <Survey/>
     <Hero/>
-    <svg height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-blueshine">
+    <svg v-if="isMobile" height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-blueshine">
       <path d="M0,0 L0,80 500,0"/>
     </svg>
+    <svg v-else height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-blueshine">
+      <path d="M0,0 L0,20 500,0"/>
+    </svg>
     <Share/>
-    <svg height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-magentashine">
+    <svg v-if="isMobile" height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-magentashine">
       <path d="M0,0 L500,0 500,80"/>
+    </svg>
+    <svg v-else height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-magentashine">
+      <path d="M0,0 L500,0 500,20"/>
     </svg>
     <Features/>
     <svg height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-blueshine">
@@ -24,8 +30,11 @@
       <path d="M0,0 L500,0 500,20"/>
     </svg>
     <LearnEarn/>
-    <svg height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-magentashine">
+    <svg v-if="isMobile" height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-magentashine">
       <path d="M0,0 L0,80 500,0"/>
+    </svg>
+    <svg v-else height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-magentashine">
+      <path d="M0,0 L0,20 500,0"/>
     </svg>
     <More/>
     <svg height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-blueshine">
@@ -62,5 +71,14 @@
       Footer
     },
   })
-  export default class Home extends Vue {}
+  export default class Home extends Vue {
+    isMobile = false;
+    checkIfMobile() {
+      if( screen.width <= 800 ) {
+        this.isMobile = true;
+      } else {
+        this.isMobile = false;
+      }
+    }
+  }
 </script>
