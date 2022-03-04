@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!isMobile" class="flex flex-row justify-center py-2 space-x-12 bg-blueshine dark:bg-oldpurple">
+  <div v-if="!isMobile" class="flex flex-row justify-center py-2 space-x-12 bg-oldpurple">
     <div class="flex flex-row justify-center mt-1 space-x-3">
       <div class="flex items-center align-middle rounded-full">
         <img  

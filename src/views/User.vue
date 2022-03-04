@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen dark:bg-universe">
+  <div class="min-h-screen pb-20 bg-universe">
     <Header/>
     <TradeHero
       @follow="manageFollow"
@@ -31,12 +31,12 @@
         v-bind:isUserProfile="isUserProfile"
         v-bind:visibility="visibility"/>
     </div>
-    <div v-else class="flex flex-col justify-center mt-12 text-xl text-center sm:text-4xl h-80 dark:text-gray-200">
+    <div v-else class="flex flex-col justify-center mt-12 text-xl text-center text-gray-200 sm:text-4xl h-80">
       <div v-if="!isSubscribe"> 
         {{ privacyMessage }}
         <div v-if="privacyReason == 'user is not subscriber'">
           <button
-            class="inline-block p-2 m-4 text-lg font-bold rounded hover:bg-deeplagune bg-dutchorange"
+            class="inline-block p-2 m-4 text-lg font-bold rounded hover:bg-blueshine bg-magentashine"
             @click="startSubscriptionProcess()">
             Subscribe
           </button>

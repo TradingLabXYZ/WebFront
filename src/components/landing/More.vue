@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center -mt-20 align-middle bg-azure py-44 xs:space-y-2 sm:space-y-12">
+  <div class="flex flex-col items-center -mt-20 align-middle bg-gradient-to-t from-universelight via-universe to-universe text-cream py-44 xs:space-y-2 sm:space-y-12">
     <div class="xs:text-4xl sm:text-6xl">
       There is more!
     </div>
@@ -12,7 +12,7 @@
           <button>
             <a href="https://github.com/TradingLabXYZ/Docs/tree/main/Whitepaper" target="_blank">
               <svg class="h-12" viewBox="0 0 24 24" fill="none">
-                <path d="M12 4L10.59 5.41L16.17 11H4V13H16.17L10.59 18.59L12 20L20 12L12 4Z" fill="black"/>
+                <path d="M12 4L10.59 5.41L16.17 11H4V13H16.17L10.59 18.59L12 20L20 12L12 4Z" fill="#ECFDFF"/>
               </svg>
             </a>
           </button>
