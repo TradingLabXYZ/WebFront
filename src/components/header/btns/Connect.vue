@@ -3,7 +3,7 @@
     <div v-if="!isUserConnected">
       <button
         id="connectButton"
-        class="inline-block p-2 mr-2 font-bold rounded hover:bg-deeplagune bg-magentashine"
+        class="p-2 mr-2 font-bold rounded hover:bg-blueshine bg-magentashine"
         @click="connect">
         Connect
       </button>

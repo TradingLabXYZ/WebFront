@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col">
+  <div class="flex flex-col text-cream">
     <!-- temporaly disabled
     <div v-if="isUserConnected && !isCorrectNetwork" class="flex justify-center w-full bg-red-200 h-9">
       <div v-if="currentNetworkProvider=='walletconnect'">
@@ -30,8 +30,8 @@
         </div>
       </div>
       <div v-if="!isUserConnected && currentRoute == '/'"
-        class="flex flex-row items-center justify-around align-middle xs:text-sm sm:text-base xs:space-x-0 sm:space-x-4 text-verysoftcyan">
-        <button class="font-bold rounded xs:p-1 sm:p-2 hover:bg-deeplagune">
+        class="flex flex-row items-center justify-around align-middle xs:text-sm sm:text-base xs:space-x-0 sm:space-x-4">
+        <button class="font-bold rounded xs:p-1 sm:p-2 hover:bg-blueshine">
           <router-link to="/explore">
             Explore
           </router-link>
@@ -39,8 +39,8 @@
         <Connect class="xs:p-1 sm:p-2"/>
       </div>
       <div v-if="!isUserConnected && currentRoute != '/'"
-        class="flex flex-row justify-around xs:text-sm sm:text-base xs:space-x-0 sm:space-x-4 text-verysoftcyan">
-        <button class="font-bold rounded xs:p-1 sm:p-2 hover:bg-deeplagune">
+        class="flex flex-row justify-around xs:text-sm sm:text-base xs:space-x-0 sm:space-x-4">
+        <button class="font-bold rounded xs:p-1 sm:p-2 hover:bg-blueshine">
           <router-link to="/explore">
             Explore
           </router-link>
@@ -48,13 +48,13 @@
         <Connect class="xs:p-1 sm:p-2"/>
       </div>
       <div v-if="isUserConnected"
-        class="flex flex-row justify-around xs:text-sm sm:text-base xs:space-x-0 sm:space-x-4 text-verysoftcyan">
-        <button class="inline-block font-bold rounded xs:p-1 sm:p-2 hover:bg-deeplagune">
+        class="flex flex-row justify-around xs:text-sm sm:text-base xs:space-x-0 sm:space-x-4">
+        <button class="inline-block font-bold rounded xs:p-1 sm:p-2 hover:bg-blueshine">
           <router-link to="/">
             Profile
           </router-link>
         </button>
-        <button class="inline-block font-bold rounded xs:p-1 sm:p-2 hover:bg-deeplagune">
+        <button class="inline-block font-bold rounded xs:p-1 sm:p-2 hover:bg-blueshine">
           <router-link to="/explore">
             Explore
           </router-link>

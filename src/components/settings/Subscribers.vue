@@ -19,7 +19,7 @@
       </div>
       <div v-if="newMonthlyFee">
         <button
-          class="px-4 py-2 m-6 font-bold text-white rounded bg-azure hover:bg-deeplagune"
+          class="px-4 py-2 m-6 font-bold text-white rounded bg-azure hover:bg-blueshine"
           type="submit"
           @click="changePlan()">
           Save

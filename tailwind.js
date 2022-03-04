@@ -16,18 +16,12 @@ module.exports = {
     extend: {
       colors: {
         blueshine: "#3400FA",
-        deepgray: "#104248",
         azure: "#00e7ff",
         lagune: "#00BED5",
-        deeplagune: "#018291",
-        softlagune: "#6ADFED",
-        verysoftcyan: "#AEEBF3",
         cream: "#ECFDFF",
         dutchorange: "#FA6060",
         magentashine: "#C901A1",
-        deepviolet: "#1B064C",
         deepmagenta: "#710B79",
-        deeppurple: "#4200FF",
         universe: "#121634",
         universelight: "#1e2666",
         oldpurple: "#252083",

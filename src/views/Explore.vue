@@ -1,7 +1,7 @@
 <template>
-  <div class="bg-universe">
+  <div class="bg-universe text-cream">
     <Header/>
-    <div class="mt-5 mb-3 text-center text-gray-200 xs:text-xl sm:text-2xl">
+    <div class="mt-5 mb-3 font-bold tracking-wider text-center xs:text-xl sm:text-2xl">
       Explore
     </div>
     <div class="flex flex-col">
@@ -12,7 +12,7 @@
         <div class="xs:hidden sm:block sm:col-span-1 md:col-span-2 lg:col-span-3"></div>
         <div class="flex flex-col text-center border-t border-b border-gray-200 xs:mx-3 sm:col-span-6 md:col-span-6 lg:col-span-5">
           <router-link :to="'/' + event.userwallet">
-            <div class="flex flex-row justify-between font-light text-gray-200 xs:text-sm md:text-xl">
+            <div class="flex flex-row justify-between font-light xs:text-sm md:text-xl">
               <div class="flex flex-row items-center justify-start mt-1 align-middle space-x-1">
                 <img
                   :src="event.profilepicture"
@@ -38,38 +38,38 @@
                   width="20">
               </div>
             </div>
-            <div class="mt-1 italic font-light text-center text-gray-200 xs:text-sm sm:text-xl">
+            <div class="mt-1 italic font-light text-center xs:text-sm sm:text-xl">
               "{{ event.reason }}"
             </div>
             <div class="flex flex-row items-center justify-around mt-2 mb-4 align-middle">
               <div class="flex flex-col text-center">
-                <div class="relative text-gray-400 xs:text-xxs xs:text-sm top-1">
+                <div class="relative font-light xs:text-xxs xs:text-sm top-1">
                   Avg Price
                 </div>
-                <div class="text-gray-200 xs:text-md sm:text-xl lg:text-2xl">
+                <div class="xs:text-md sm:text-xl lg:text-2xl">
                   {{ event.avgprice }}
                 </div>
-                <div class="relative text-gray-400 xs:text-xxs xs:text-sm bottom-1">
+                <div class="relative font-light xs:text-xxs xs:text-sm bottom-1">
                   {{ event.firstpairsymbol }}/{{ event.secondpairsymbol }}
                 </div>
               </div>
               <div class="flex flex-col text-center">
-                <div class="relative text-gray-400 xs:text-xxs xs:text-sm top-1">
+                <div class="relative font-light xs:text-xxs xs:text-sm top-1">
                   Total
                 </div>
-                <div class="text-gray-200 xs:text-md sm:text-xl lg:text-2xl">
+                <div class="xs:text-md sm:text-xl lg:text-2xl">
                   {{ event.total }}
                 </div>
-                <div class="relative text-gray-400 xs:text-xxs xs:text-sm bottom-1">
+                <div class="relative font-light xs:text-xxs xs:text-sm bottom-1">
                   {{ event.firstpairsymbol }}
                 </div>
               </div>
               <div class="flex flex-col text-center">
-                <div class="relative text-gray-400 xs:text-xxs xs:text-sm top-1">
+                <div class="relative font-light xs:text-xxs xs:text-sm top-1">
                   Current Price
                 </div>
                 <div class="flex flex-row justify-center space-x-1">
-                  <div class="text-gray-200 xs:text-md sm:text-xl lg:text-2xl">
+                  <div class="xs:text-md sm:text-xl lg:text-2xl">
                     {{ event.currentprice }}
                   </div>
                   <div
@@ -85,12 +85,12 @@
                     {{ event.deltapriceperc + "%" }}
                   </div>
                 </div>
-                <div class="relative text-gray-400 xs:text-xxs xs:text-sm bottom-1">
+                <div class="relative font-light xs:text-xxs xs:text-sm bottom-1">
                   {{ event.firstpairsymbol }}/{{ event.secondpairsymbol }}
                 </div>
               </div>
             </div>
-            <div class="flex flex-row justify-between text-gray-400 xs:text-xxs sm:text-xs">
+            <div class="flex flex-row justify-between font-light xs:text-xxs sm:text-xs">
               <div>
                 {{ event.userwallet }}
               </div>

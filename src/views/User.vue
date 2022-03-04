@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen bg-universe">
+  <div class="min-h-screen pb-20 bg-universe">
     <Header/>
     <TradeHero
       @follow="manageFollow"
@@ -36,7 +36,7 @@
         {{ privacyMessage }}
         <div v-if="privacyReason == 'user is not subscriber'">
           <button
-            class="inline-block p-2 m-4 text-lg font-bold rounded hover:bg-deeplagune bg-dutchorange"
+            class="inline-block p-2 m-4 text-lg font-bold rounded hover:bg-blueshine bg-magentashine"
             @click="startSubscriptionProcess()">
             Subscribe
           </button>

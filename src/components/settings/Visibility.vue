@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="p-2 text-2xl text-gray-300">
+  <div class="text-cream">
+    <div class="p-2 text-2xl">
       <div class="flex flex-col">
         <div
           v-for="(data,index) in visibility"
@@ -17,19 +17,19 @@
     </div>
     <div class="flex justify-center">
       <button
-        class="px-4 py-2 m-6 font-bold text-white rounded bg-magentashine hover:bg-green-800"
+        class="px-4 py-2 m-6 font-bold rounded bg-magentashine hover:bg-blueshine"
         type="submit"
         @click="saveUserVisibility()">
         Save
       </button>
       <button
-        class="px-4 py-2 m-6 font-bold text-white bg-green-500 rounded"
+        class="px-4 py-2 m-6 font-bold bg-green-500 rounded"
         id="userVisibilityOk"
         style="display:none;">
         DONE
       </button>
       <button
-        class="px-4 py-2 m-6 font-bold text-white bg-red-500 rounded"
+        class="px-4 py-2 m-6 font-bold bg-red-500 rounded"
         id="userVisibilityKo"
         style="display:none;">
         ERROR
