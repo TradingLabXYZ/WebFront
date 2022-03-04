@@ -1,0 +1,95 @@
+Arguments: 
+  /usr/bin/node /usr/bin/yarn
+
+PATH: 
+  /home/dolphin/.cargo/bin:/home/dolphin/.local/bin:/home/dolphin/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/var/lib/snapd/snap/bin:/home/dolphin/go/bin:/usr/lib/go/bin
+
+Yarn version: 
+  1.22.17
+
+Node version: 
+  17.6.0
+
+Platform: 
+  linux x64
+
+Trace: 
+  Error: EACCES: permission denied, unlink '/home/dolphin/Code/TradingLab/WebFront/node_modules/@babel/core/node_modules/.bin/semver'
+
+npm manifest: 
+  {
+    "name": "webfront",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+      "serve": "vue-cli-service serve",
+      "build": "vue-cli-service build",
+      "test:unit": "vue-cli-service test:unit"
+    },
+    "dependencies": {
+      "@truffle/hdwallet-provider": "^1.6.0",
+      "@walletconnect/web3-provider": "^1.7.1",
+      "@web3-react/core": "^6.1.9",
+      "@web3-react/walletconnect": "^8.0.1-beta.0",
+      "@web3-react/walletconnect-connector": "^6.2.10",
+      "autoprefixer": "^9.8.8",
+      "axios": "^0.22.0",
+      "cache-loader": "^4.1.0",
+      "convert-source-map": "^1.8.0",
+      "dotenv": "^14.3.0",
+      "ethers": "^5.5.1",
+      "glob-parent": "^6.0.2",
+      "idb": "^6.1.4",
+      "idb-keyval": "^6.0.2",
+      "luxon": "^1.28.0",
+      "npm": "^8.3.2",
+      "postcss": "^7.0.39",
+      "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.16",
+      "tslib": "^2.3.1",
+      "vee-validate": "^2.2.15",
+      "vue": "^2.6.11",
+      "vue-class-component": "^7.2.3",
+      "vue-datetime": "^1.0.0-beta.14",
+      "vue-matomo": "^4.1.0",
+      "vue-property-decorator": "^9.1.2",
+      "vue-router": "^3.2.0",
+      "vuex": "^3.4.0",
+      "web3": "^1.7.0",
+      "web3modal": "^1.9.5",
+      "weekstart": "^1.1.0"
+    },
+    "devDependencies": {
+      "@types/jest": "^27.0.3",
+      "@types/vue-datetime": "^1.0.1",
+      "@typescript-eslint/eslint-plugin": "^5.0.0",
+      "@typescript-eslint/parser": "^5.0.0",
+      "@vue/cli-plugin-router": "~4.5.0",
+      "@vue/cli-plugin-typescript": "~4.5.0",
+      "@vue/cli-plugin-unit-jest": "~4.5.0",
+      "@vue/cli-plugin-vuex": "~4.5.0",
+      "@vue/cli-service": "~4.5.0",
+      "@vue/test-utils": "^1.0.3",
+      "eslint": "^8.0.0",
+      "eslint-config-google": "^0.14.0",
+      "eslint-plugin-vue": "^7.19.1",
+      "fake-indexeddb": "^3.1.7",
+      "jest": "^26.4.2",
+      "jest-websocket-mock": "^2.2.1",
+      "jest-when": "^3.4.2",
+      "mock-socket": "^9.0.8",
+      "source-map-loader": "^3.0.0",
+      "ts-jest": "^26.4.2",
+      "ts-loader": "^9.2.6",
+      "typescript": "~4.1.5",
+      "vue-template-compiler": "^2.6.11",
+      "vuex-class": "^0.3.2",
+      "vuex-module-decorators": "^1.0.1",
+      "webpack": "^4.0.0"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
