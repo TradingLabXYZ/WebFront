@@ -1,43 +1,34 @@
 <template>
-  <div>
-    <div class="absolute flex flex-row justify-between w-full">
-      <div>
-        <svg class="fill-current xs:h-20 sm:h-32 xs:w-20 sm:w-80 text-magentashine">
-          <ellipse cx="0%" cy="0%" rx="100%" ry="100%"/>
-        </svg>
-      </div>
-      <div>
-        <svg class="fill-current xs:h-20 sm:h-32 xs:w-20 sm:w-80 text-azure">
-          <ellipse cx="100%" cy="50%" rx="30%" ry="50%"/>
-        </svg>
-        <svg class="fill-current xs:h-20 sm:h-32 xs:w-20 sm:w-80 text-deepmagenta">
-          <ellipse cx="110%" cy="50%" rx="30%" ry="50%"/>
-        </svg>
-      </div>
-    </div>
-    <div class="flex flex-col justify-center text-center text-gray-300 xs:py-28 sm:py-52 bg-blueshine diagonal-box">
-      <div class="xs:text-2xl sm:text-4xl">
-        <span class="font-medium">H</span>
-        <span class="italic">y</span>
-        <span class="font-serif font-semibold">p</span>
-        <span class="italic font-light">e</span>
-        <span class="font-bold">r</span>
-        <span> </span>
-        <span class="font-light text-md">H</span>
-        <span class="font-serif">y</span>
-        <span class="font-black">b</span>
-        <span class="italic font-light">r</span>
-        <span class="font-mono">i</span>
-        <span class="">d</span>
-      </div>
-      <div class="p-2 tracking-widest xs:text-3xl sm:text-6xl">
-        Crypto Trading Community
-      </div>
-      <div class="flex flex-col items-center justify-center p-2 mt-6">
-        <div class="text-xl font-light">
-          Powered by
+  <div class="bg-gradient-to-r from-universelight via-universe to-universe xs:pb-12">
+    <div class="flex items-center justify-center align-middle xs:flex-col lg:flex-row">
+      <div class="flex flex-col justify-center text-left text-gray-300 xs:py-14 sm:py-52 xs:space-y-3">
+        <div class="xs:text-2xl sm:text-4xl">
+          <span class="">an </span>
+          <span class="font-medium">H</span>
+          <span class="italic">y</span>
+          <span class="font-serif font-semibold">p</span>
+          <span class="italic font-light">e</span>
+          <span class="font-bold">r</span>
+          <span> </span>
+          <span class="font-light text-md">H</span>
+          <span class="font-serif">y</span>
+          <span class="font-black">b</span>
+          <span class="italic font-light">r</span>
+          <span class="font-mono">i</span>
+          <span class="">d</span>
         </div>
-        <img src="@/assets/moonbeam_logo.png" alt="Moonbeam">
+        <div class="p-2 font-extrabold tracking-widest text-transparent bg-transparent xs:text-4xl sm:text-8xl bg-clip-text bg-gradient-to-b to-magentashine via-blueshine from-magentashine">
+          Crypto<br>Trading<br>Laboratory
+        </div>
+        <div class="flex flex-row items-center justify-start p-2 xs:mt-2 sm:mt-6">
+          <div class="font-light xs:text-sm sm:text-xl">
+            Powered by
+          </div>
+          <img src="@/assets/moonbeam_logo.png" alt="Moonbeam" class="xs:h-10 sm:h-20">
+        </div>
+      </div>
+      <div class="">
+        <img src="@/assets/rack.gif" alt="Rack" class="xs:pb-10 xs:pl-12 sm:pb-32 sm:pl-20">
       </div>
     </div>
   </div>

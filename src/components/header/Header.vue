@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col">
+  <div class="flex flex-col text-cream">
     <!-- temporaly disabled
     <div v-if="isUserConnected && !isCorrectNetwork" class="flex justify-center w-full bg-red-200 h-9">
       <div v-if="currentNetworkProvider=='walletconnect'">
@@ -17,12 +17,12 @@
       </div>
     </div>
     -->
-    <div class="sticky top-0 z-10 flex flex-row items-center justify-around border-b-2 border-magentashine xs:p-0 sm:p-4 bg-deepviolet xs:h-16 sm:h-20 md:h-24">
-      <div class="flex flex-row items-center align-middle xs:space-x-1 sm:space-x-3">
+    <div class="sticky top-0 z-10 flex flex-row items-center justify-around border-b-2 border-magentashine xs:p-0 sm:p-4 bg-universe xs:h-16 sm:h-20 md:h-24">
+      <div class="flex flex-row items-center align-middle space-x-2">
         <router-link to="/">
-          <img src="@/assets/logo.png" class="xs:h-10 md:h-16" alt="Logo">
+          <img src="@/assets/logo.png" class="xs:h-14 md:h-18" alt="Logo">
         </router-link>
-        <div class="text-2xl font-bold text-verysoftcyan xs:hidden sm:block">
+        <div class="text-4xl font-bold text-magentashine xs:hidden sm:block">
           TradingLab
         </div>
         <div class="font-bold text-red-200 xs:text-xxs sm:text-xs sm:block transform -skew-y-6 -skew-x-6 -translate-y-3 -translate-x-3 animate-pulse">
@@ -30,8 +30,8 @@
         </div>
       </div>
       <div v-if="!isUserConnected && currentRoute == '/'"
-        class="flex flex-row items-center justify-around align-middle xs:text-sm sm:text-base xs:space-x-0 sm:space-x-4 text-verysoftcyan">
-        <button class="font-bold rounded xs:p-1 sm:p-2 hover:bg-deeplagune">
+        class="flex flex-row items-center justify-around align-middle xs:text-sm sm:text-base xs:space-x-0 sm:space-x-4">
+        <button class="font-bold rounded xs:p-1 sm:p-2 hover:bg-blueshine">
           <router-link to="/explore">
             Explore
           </router-link>
@@ -39,8 +39,8 @@
         <Connect class="xs:p-1 sm:p-2"/>
       </div>
       <div v-if="!isUserConnected && currentRoute != '/'"
-        class="flex flex-row justify-around xs:text-sm sm:text-base xs:space-x-0 sm:space-x-4 text-verysoftcyan">
-        <button class="font-bold rounded xs:p-1 sm:p-2 hover:bg-deeplagune">
+        class="flex flex-row justify-around xs:text-sm sm:text-base xs:space-x-0 sm:space-x-4">
+        <button class="font-bold rounded xs:p-1 sm:p-2 hover:bg-blueshine">
           <router-link to="/explore">
             Explore
           </router-link>
@@ -48,13 +48,13 @@
         <Connect class="xs:p-1 sm:p-2"/>
       </div>
       <div v-if="isUserConnected"
-        class="flex flex-row justify-around xs:text-sm sm:text-base xs:space-x-0 sm:space-x-4 text-verysoftcyan">
-        <button class="inline-block font-bold rounded xs:p-1 sm:p-2 hover:bg-deeplagune">
+        class="flex flex-row justify-around xs:text-sm sm:text-base xs:space-x-0 sm:space-x-4">
+        <button class="inline-block font-bold rounded xs:p-1 sm:p-2 hover:bg-blueshine">
           <router-link to="/">
             Profile
           </router-link>
         </button>
-        <button class="inline-block font-bold rounded xs:p-1 sm:p-2 hover:bg-deeplagune">
+        <button class="inline-block font-bold rounded xs:p-1 sm:p-2 hover:bg-blueshine">
           <router-link to="/explore">
             Explore
           </router-link>

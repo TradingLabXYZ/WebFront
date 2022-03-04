@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center -mt-20 align-middle bg-deeplagune pb-44">
+  <div class="flex flex-col items-center -mt-20 align-middle bg-universe text-cream pb-44">
     <div class="flex flex-row pt-40 font-medium xs:text-4xl sm:text-6xl xs:space-x-4 sm:space-x-8">
       <button
         @click="selectMode('learn')"

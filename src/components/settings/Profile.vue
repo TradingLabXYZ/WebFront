@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="text-cream">
     <div class="flex justify-around">
-      <label class="text-xs text-subtradelabel image">
+      <label class="text-xs image">
         <input
           type="file"
           accept="image/*"
@@ -17,48 +17,48 @@
       </label>
     </div>
     <div class="p-2">
-      <label class="text-xs text-subtradelabel dark:text-gray-200">
+      <label class="text-sm">
         Username
       </label>
       <input
         type="text"
         placeholder="Username"
-        class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500 dark:bg-deepmagenta dark:text-gray-200"
+        class="w-full p-2 border border-gray-200 border-gray-500 bg-deepmagenta"
         v-model="username">
     </div>
     <div class="p-2">
-      <label class="text-xs text-subtradelabel dark:text-gray-200">
+      <label class="text-sm">
         Twitter Username
       </label>
       <input
         type="text"
         placeholder="Twitter"
-        class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500 dark:bg-deepmagenta dark:text-gray-200"
+        class="w-full p-2 border border-gray-200 border-gray-500 bg-deepmagenta"
         v-model="twitter">
     </div>
     <div class="p-2">
-      <label class="text-xs text-subtradelabel dark:text-gray-200">
+      <label class="text-sm">
         Discord ID
       </label>
       <input
         type="text"
         placeholder="discord"
-        class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500 dark:bg-deepmagenta dark:text-gray-200"
+        class="w-full p-2 border border-gray-200 border-gray-500 bg-deepmagenta"
         v-model="discord">
     </div>
     <div class="p-2">
-      <label class="text-xs text-subtradelabel dark:text-gray-200">
+      <label class="text-sm">
         Github Username
       </label>
       <input
         type="text"
         placeholder="github"
-        class="w-full p-2 text-gray-800 border border-gray-200 border-gray-500 dark:bg-deepmagenta dark:text-gray-200"
+        class="w-full p-2 border border-gray-200 border-gray-500 bg-deepmagenta"
         v-model="github">
     </div>
     <div class="flex justify-center">
       <button
-        class="px-4 py-2 m-6 font-bold text-white rounded bg-azure hover:bg-deeplagune dark:bg-magentashine dark-hover:bg-green-800"
+        class="px-4 py-2 m-6 font-bold rounded bg-magentashine hover:bg-blueshine"
         type="submit"
         @click="saveUserSocial()">
         Save

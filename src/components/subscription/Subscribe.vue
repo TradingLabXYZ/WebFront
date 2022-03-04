@@ -31,12 +31,12 @@
       </div>
       <div>
         <button
-          class="inline-block p-2 m-4 text-lg font-bold rounded hover:bg-deeplagune bg-azure"
+          class="inline-block p-2 m-4 text-lg font-bold rounded hover:bg-blueshine bg-azure"
           @click="subscribe()">
           Subscribe
         </button>
         <button
-          class="inline-block p-2 m-4 text-lg font-bold rounded hover:bg-deeplagune bg-dutchorange"
+          class="inline-block p-2 m-4 text-lg font-bold rounded hover:bg-blueshine bg-dutchorange"
           @click="stopSubscriptionProcess()">
           Close
         </button>
