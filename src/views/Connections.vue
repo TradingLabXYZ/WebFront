@@ -1,18 +1,18 @@
 <template>
   <div>
     <Header/>
-    <div class="mt-5 mb-5 text-center xs:text-xl sm:text-2xl">Connections</div>
-    <div class="flex flex-col h-screen">
+    <div class="flex flex-col h-screen bg-universe text-cream">
+      <div class="mt-5 mb-5 text-center xs:text-xl sm:text-2xl">Connections</div>
       <div class="flex flex-row justify-center mb-4">
         <div
           class="px-6 py-2 mr-1 text-xl border-2 rounded-md"
-          :class="connectionSection=='followers' ? 'bg-blueshine text-white font-semibold' : 'bg-white'"
+          :class="connectionSection=='followers' ? 'bg-magentashine text-white font-semibold' : 'bg-blueshine'"
           @click="changeConnectionsSection('followers')">
           Followers
         </div>
         <div
           class="px-6 py-2 mr-1 text-xl border-2 rounded-md"
-          :class="connectionSection=='following' ? 'bg-blueshine text-white font-semibold' : 'bg-white'"
+          :class="connectionSection=='following' ? 'bg-magentashine text-white font-semibold' : 'bg-blueshine'"
           @click="changeConnectionsSection('following')">
           Following
         </div>
@@ -33,7 +33,7 @@
               <div class="text-base text-right">
                 {{ follower.CountTrades }} Trades
               </div>
-              <div class="text-xs text-gray-400">
+              <div class="text-xs">
                 {{ follower.Wallet }} 
               </div>
             </div>
@@ -57,7 +57,7 @@
                 <div class="text-base text-right">
                   {{ following.CountTrades }} Trades
                 </div>
-                <div class="text-xs text-gray-400">
+                <div class="text-xs">
                   {{ following.Wallet }} 
                 </div>
               </div>
