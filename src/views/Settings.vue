@@ -22,6 +22,12 @@
           @click="changeSettingsSection('visibility')">
           Visiblity
         </div>
+        <div
+          class="px-6 py-2 text-xl border-2 rounded-md"
+          :class="settingsSection=='api' ? 'font-semibold bg-magentashine' : 'bg-universelight'"
+          @click="changeSettingsSection('api')">
+          Api
+        </div>
       </div>
       <div class="flex justify-center">
         <section v-if="settingsSection=='profile'">
@@ -32,6 +38,9 @@
         </section> 
         <section v-if="settingsSection=='visibility'">
           <Visibility/>
+        </section> 
+        <section v-if="settingsSection=='api'">
+          <Api/>
         </section> 
       </div>
     </div>
@@ -45,12 +54,14 @@
   import Profile from '@/components/settings/Profile.vue';
   import Privacy from '@/components/settings/Privacy.vue';
   import Visibility from '@/components/settings/Visibility.vue';
+  import Api from '@/components/settings/Api.vue';
   @Component({
     components: {
       Header,
       Profile,
       Privacy,
-      Visibility
+      Visibility,
+      Api
     }
   })
   export default class Settings extends Vue {
