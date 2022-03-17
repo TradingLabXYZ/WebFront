@@ -1,9 +1,9 @@
 <template>
-  <div class="">
+  <div class="h-full min-h-screen bg-universe text-cream">
     <Header/>
-    <div class="max-h-screen grid grid-cols-3">
-      <div class="col-span-1"></div>
-      <div class="flex flex-col h-screen col-span-1">
+    <div class="max-h-screen grid grid-cols-9">
+      <div class="col-span-2"></div>
+      <div class="flex flex-col h-screen col-span-5">
         <div class="my-5 font-bold text-center xs:text-xl sm:text-2xl">
           API Docs
         </div>
@@ -38,330 +38,51 @@
           <div class="mt-5 mb-2 font-medium text-left xs:text-xl sm:text-2xl space-y-5">
             API Endpoints
           </div>
-          <div class="p-5 m-5 bg-gray-300">
+          <div
+            v-for="endpoint in endpoints"
+            :key="endpoint.name"
+            class="p-5 m-5 bg-sandpurple">
             <div
-              @click="toggle_show_get_pairs"
+              @click="toggle(endpoint)"
               class="flex flex-row my-1 font-medium font-semibold text-left xs:text-xl sm:text-2xl space-x-4">
-              <div v-if="!show_get_pairs" class="w-8 h-8 font-bold text-center text-white bg-gray-700 rounded rounded-full">
+              <div v-if="!endpoint.toggle" class="w-8 h-8 font-bold text-center text-white bg-gray-700 rounded rounded-full">
                 +
               </div>
               <div v-else class="w-8 h-8 font-bold text-center text-white bg-gray-700 rounded rounded-full">
                 -
               </div>
               <div>
-                Get Pairs
+                {{ endpoint.name }}
               </div>
             </div>
-            <div v-if="show_get_pairs" class="mt-4">
-              Extract all the crypto codes available in TradingLab.
+            <div v-if="endpoint.toggle" class="mt-4">
+              {{ endpoint.description }}
               <div
                 class="mt-3 mb-1 font-normal text-left xs:text-base sm:text-lg">
-                <p><b>Endpoint</b>: get_pairs</p>
-                <p><b>Type</b>: get</p>
-                <p><b>Response</b>: dict</p>
+                <p><b>Endpoint</b>: {{ endpoint.endpoint }} </p>
+                <p><b>Type</b>: {{ endpoint.type }} </p>
+                <p><b>Response</b>: {{ endpoint.response }} </p>
               </div>
               <div class="space-y-4">
-                <div class="mt-3 mb-1 font-normal text-left xs:text-base sm:text-lg">
-                  Example response:
+                <div v-if="endpoint.example_payload != ''">
+                  <div class="mt-3 mb-1 font-normal text-left xs:text-base sm:text-lg">
+                    Example payload:
+                  </div>
+                  <div>
+                    <pre><code class="language-javascript">
+                      {{ endpoint.example_payload }}
+                    </code></pre>
+                  </div>
                 </div>
-                <div>
-                  <pre><code class="language-javascript">
-                    {
-                      "1": {
-                        "Symbol": "BTC",
-                        "Name": "Bitcoin",
-                        "Slug": "bitcoin"
-                      },
-                      "1027": {
-                        "Symbol": "ETH",
-                        "Name": "Ethereum",
-                        "Slug":"ethereum"
-                      },
-                      ...
-                    }
-                  </code></pre>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="p-5 m-5 bg-gray-300">
-            <div
-              @click="toggle_show_get_pair_ratio"
-              class="flex flex-row my-1 font-medium font-semibold text-left xs:text-xl sm:text-2xl space-x-4">
-              <div v-if="!show_get_pair_ratio" class="w-8 h-8 font-bold text-center text-white bg-gray-700 rounded rounded-full">
-                +
-              </div>
-              <div v-else class="w-8 h-8 font-bold text-center text-white bg-gray-700 rounded rounded-full">
-                -
-              </div>
-              <div>
-                Get Pair Ratio
-              </div>
-            </div>
-            <div v-if="show_get_pair_ratio" class="mt-4">
-              Given two crypto id, retrive the latest price between them.
-              <div
-                class="mt-3 mb-1 font-normal text-left xs:text-base sm:text-lg">
-                <p><b>Endpoint</b>: get_pair_ratio/{firstPairId}/{secondPairId}</p>
-                <p><b>Type</b>: get</p>
-                <p><b>Response</b>: float</p>
-              </div>
-              <div class="space-y-4">
-                <div class="mt-3 mb-1 font-normal text-left xs:text-base sm:text-lg">
-                  Example response:
-                </div>
-                <div>
-                  <pre><code class="language-bash">
-                    12.112
-                  </code></pre>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="p-5 m-5 bg-gray-300">
-            <div
-              @click="toggle_show_insert_trade"
-              class="flex flex-row my-1 font-medium font-semibold text-left xs:text-xl sm:text-2xl space-x-4">
-              <div v-if="!show_insert_trade" class="w-8 h-8 font-bold text-center text-white bg-gray-700 rounded rounded-full">
-                +
-              </div>
-              <div v-else class="w-8 h-8 font-bold text-center text-white bg-gray-700 rounded rounded-full">
-                -
-              </div>
-              <div>
-                Insert Trade
-              </div>
-            </div>
-            <div v-if="show_insert_trade" class="mt-4">
-              Insert a new trade into TradingLab, returning the trade code.
-              <div
-                class="mt-3 mb-1 font-normal text-left xs:text-base sm:text-lg">
-                <p><b>Endpoint</b>: insert_trade</p>
-                <p><b>Type</b>: post</p>
-                <p><b>Payload</b>: dict</p>
-                <p><b>Response</b>: string</p>
-              </div>
-              <div class="space-y-4">
-                <div class="mt-3 mb-1 font-normal text-left xs:text-base sm:text-lg">
-                  Example payload:
-                </div>
-                <div>
-                  <pre><code class="language-javascript">
-                    {
-                      "Exchange": "Binance", //Optional
-                      "FirstPair": 1, // Mandatory
-                      "SecondPair": 1027, // Mandatory
-                      "Subtrades": [
-                        {
-                          "CreatedAt": "2022-03-16T11:21", // Optional
-                          "Type": "BUY", // Mandatory
-                          "Reason": "Test", // Optional
-                          "AvgPrice": 0.06610740416574978, // Mandatory
-                          "Quantity": "10", // Mandatory
-                          "Total": 0.6610740416574978 // Mandatory
-                        }
-                      ]
-                    }
-                  </code></pre>
-                </div>
-              </div>
-              <div>
-                <div class="mt-3 mb-1 font-normal text-left xs:text-base sm:text-lg">
-                  Example response:
-                </div>
-                <div>
-                  <pre><code class="language-bash">
-                    XChsg268
-                  </code></pre>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="p-5 m-5 bg-gray-300">
-            <div
-              @click="toggle_show_delete_trade"
-              class="flex flex-row my-1 font-medium font-semibold text-left xs:text-xl sm:text-2xl space-x-4">
-              <div v-if="!show_delete_trade" class="w-8 h-8 font-bold text-center text-white bg-gray-700 rounded rounded-full">
-                +
-              </div>
-              <div v-else class="w-8 h-8 font-bold text-center text-white bg-gray-700 rounded rounded-full">
-                -
-              </div>
-              <div>
-                Delete Trade
-              </div>
-            </div>
-            <div v-if="show_delete_trade" class="mt-4">
-              Delete a trade passing its code.
-              <div
-                class="mt-3 mb-1 font-normal text-left xs:text-base sm:text-lg">
-                <p><b>Endpoint</b>: delete_trade/{tradeCode}</p>
-                <p><b>Type</b>: get</p>
-                <p><b>Response</b>: int</p>
-              </div>
-              <div>
-                <div class="mt-3 mb-1 font-normal text-left xs:text-base sm:text-lg">
-                  Example response:
-                </div>
-                <div>
-                  <pre><code class="language-bash">
-                    200
-                  </code></pre>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="p-5 m-5 bg-gray-300">
-            <div
-              @click="toggle_show_insert_subtrade"
-              class="flex flex-row my-1 font-medium font-semibold text-left xs:text-xl sm:text-2xl space-x-4">
-              <div v-if="!show_insert_subtrade" class="w-8 h-8 font-bold text-center text-white bg-gray-700 rounded rounded-full">
-                +
-              </div>
-              <div v-else class="w-8 h-8 font-bold text-center text-white bg-gray-700 rounded rounded-full">
-                -
-              </div>
-              <div>
-                Insert Subtrade
-              </div>
-            </div>
-            <div v-if="show_insert_subtrade" class="mt-4">
-              Add an empty subtrade into an existing trade.
-              <div
-                class="mt-3 mb-1 font-normal text-left xs:text-base sm:text-lg">
-                <p><b>Endpoint</b>: insert_subtrade/{tradeCode}</p>
-                <p><b>Type</b>: get</p>
-                <p><b>Response</b>: string</p>
-              </div>
-              <div class="space-y-4">
-                <div class="mt-3 mb-1 font-normal text-left xs:text-base sm:text-lg">
-                  Example response:
-                </div>
-                <div>
-                  <pre><code class="language-bash">
-                    VXfag564
-                  </code></pre>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="p-5 m-5 bg-gray-300">
-            <div
-              @click="toggle_show_update_subtrade"
-              class="flex flex-row my-1 font-medium font-semibold text-left xs:text-xl sm:text-2xl space-x-4">
-              <div v-if="!show_update_subtrade" class="w-8 h-8 font-bold text-center text-white bg-gray-700 rounded rounded-full">
-                +
-              </div>
-              <div v-else class="w-8 h-8 font-bold text-center text-white bg-gray-700 rounded rounded-full">
-                -
-              </div>
-              <div>
-                Update Subtrade
-              </div>
-            </div>
-            <div v-if="show_update_subtrade" class="mt-4">
-              Update a subtrade passing its code.
-              <div
-                class="mt-3 mb-1 font-normal text-left xs:text-base sm:text-lg">
-                <p><b>Endpoint</b>: update_subtrade</p>
-                <p><b>Type</b>: post</p>
-                <p><b>Payload</b>: dict</p>
-                <p><b>Response</b>: int</p>
-              </div>
-              <div class="space-y-4">
-                <div class="mt-3 mb-1 font-normal text-left xs:text-base sm:text-lg">
-                  Example payload:
-                </div>
-                <div>
-                  <pre><code class="language-javascript">
-                    {
-                      "Code": "HDG2732", // Mandatory
-                      "CreatedAt": "2022-03-16T11:21", // Optional
-                      "Type": "BUY", // Mandatory
-                      "Reason": "Test", // Optional
-                      "AvgPrice": 0.06610740416574978, // Mandatory
-                      "Quantity": "10", // Mandatory
-                      "Total": 0.6610740416574978 // Mandatory
-                    }
-                  </code></pre>
-                </div>
-              </div>
-              <div>
-                <div class="mt-3 mb-1 font-normal text-left xs:text-base sm:text-lg">
-                  Example response:
-                </div>
-                <div>
-                  <pre><code class="language-bash">
-                    200
-                  </code></pre>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="p-5 m-5 bg-gray-300">
-            <div
-              @click="toggle_show_delete_subtrade"
-              class="flex flex-row my-1 font-medium font-semibold text-left xs:text-xl sm:text-2xl space-x-4">
-              <div v-if="!show_delete_subtrade" class="w-8 h-8 font-bold text-center text-white bg-gray-700 rounded rounded-full">
-                +
-              </div>
-              <div v-else class="w-8 h-8 font-bold text-center text-white bg-gray-700 rounded rounded-full">
-                -
-              </div>
-              <div>
-                Delete Subtrade
-              </div>
-            </div>
-            <div v-if="show_delete_subtrade" class="mt-4">
-              Delete a subtrade passing its code.
-              <div
-                class="mt-3 mb-1 font-normal text-left xs:text-base sm:text-lg">
-                <p><b>Endpoint</b>: delete_subtrade/{subtradeCode}</p>
-                <p><b>Type</b>: get</p>
-                <p><b>Response</b>: int</p>
-              </div>
-              <div>
-                <div class="mt-3 mb-1 font-normal text-left xs:text-base sm:text-lg">
-                  Example response:
-                </div>
-                <div>
-                  <pre><code class="language-bash">
-                    200
-                  </code></pre>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="p-5 m-5 bg-gray-300">
-            <div
-              @click="toggle_show_list_trades"
-              class="flex flex-row my-1 font-medium font-semibold text-left xs:text-xl sm:text-2xl space-x-4">
-              <div v-if="!show_list_trades" class="w-8 h-8 font-bold text-center text-white bg-gray-700 rounded rounded-full">
-                +
-              </div>
-              <div v-else class="w-8 h-8 font-bold text-center text-white bg-gray-700 rounded rounded-full">
-                -
-              </div>
-              <div>
-                List Trades
-              </div>
-            </div>
-            <div v-if="show_list_trades" class="mt-4">
-              Return all the trade codes.
-              <div
-                class="mt-3 mb-1 font-normal text-left xs:text-base sm:text-lg">
-                <p><b>Endpoint</b>: list_trades</p>
-                <p><b>Type</b>: get</p>
-                <p><b>Response</b>: []string</p>
-              </div>
-              <div class="space-y-4">
-                <div class="mt-3 mb-1 font-normal text-left xs:text-base sm:text-lg">
-                  Example response:
-                </div>
-                <div>
-                  <pre><code class="language-javascript">
-                    ["XChs7272", "JDssCJ273", "jd827tdz"]
-                  </code></pre>
+                <div v-if="endpoint.example_response != ''">
+                  <div class="mt-3 mb-1 font-normal text-left xs:text-base sm:text-lg">
+                    Example response:
+                  </div>
+                  <div>
+                    <pre><code class="language-javascript">
+                      {{ endpoint.example_response }}
+                    </code></pre>
+                  </div>
                 </div>
               </div>
             </div>
@@ -384,76 +105,234 @@
     }
   })
   export default class Docs extends Vue {
-    show_get_pairs = false;
-    show_get_pair_ratio = false;
-    show_insert_trade = false;
-    show_delete_trade = false;
-    show_insert_subtrade = false;
-    show_update_subtrade = false;
-    show_delete_subtrade = false;
-    show_list_trades = false;
-    mounted() {
+    example_response_get_snapshot = `
+      {
+       "UserDetails": {
+          "Username": "TestUsername",
+          "Twitter": "TestTwitter",
+          "Github":"TestGithub",
+          "Discord": "TestDiscord",
+          "Followers": 12,
+          "Followings": 24,
+          "ProfilePicture": "default_picture.png",
+          "JoinTime": "March2022"
+       },
+       "Trades": [
+          {
+             "Code": "dd034a10362",
+             "Username": "TestUsername",
+             "Userwallet": "0x7c299b2cf7A918BD6Ca3A0f6036F5466e18dA425",
+             "Exchange": "Binance",
+             "FirstPairId": 1,
+             "SecondPairId": 1027,
+             "FirstPairName": "Bitcoin",
+             "SecondPairName": "Ethereum",
+             "FirstPairSymbol": "BTC",
+             "SecondPairSymbol": "ETH",
+             "FirstPairPrice": 38895.68344802844,
+             "SecondPairPrice": 2571.2926656195496,
+             "FirstPairUrlIcon": "https://s2.coinmarketcap.com/static/img/coins/32x32/1.png",
+             "SecondPairUrlIcon": "https://s2.coinmarketcap.com/static/img/coins/32x32/1027.png",
+             "CurrentPrice": ".06611",
+             "QtyBuys": 10,
+             "QtySells": 0,
+             "QtyAvailable": "10",
+             "TotalBuys": 0.6610740416574978,
+             "TotalBuysBtc": 0.6610740416574978,
+             "TotalBuysUsd": 25712.926660018802,
+             "TotalSells": 0,
+             "TotalSellsBtc": 0,
+             "TotalSellsUsd": 0,
+             "ActualReturn": -0.6610740416574978,
+             "FutureReturn": 0.6610740415592015,
+             "FutureReturnBtc": 0.6610740415592015,
+             "FutureReturnUsd": 25712.926656195497,
+             "TotalReturn": 0,
+             "TotalReturnS": "0",
+             "TotalReturnBtc": -9.82963731e-11,
+             "TotalReturnUsd": -0.000003823304612186898,
+             "TotalValueUsd": 25712.93,
+             "TotalValueUsdS": "25,712.93",
+             "Roi": 0,
+             "BtcPrice": 38895.68344802844,
+             "Subtrades": [
+                {
+                   "Code": "w4y6FqZCP5Oi",
+                   "TradeCode": "dd034a10362",
+                   "CreatedAt": "2022-03-16T11:21",
+                   "Type": "BUY",
+                   "Reason": "Test",
+                   "Quantity": 10,
+                   "AvgPrice": 0.066107,
+                   "Total": 0.6610740416574978
+                }
+             ]
+          }
+       ],
+       "CountTrades": 1,
+       "TotalReturnUsd": "-0",
+       "TotalReturnBtc": "-0",
+       "Roi": -0,
+       "TotalPortfolioUsd": "51,425.86"
+    }`
+    example_response_get_pairs = `
+      {
+        "1": {
+          "Symbol": "BTC",
+          "Name": "Bitcoin",
+          "Slug": "bitcoin"
+        },
+        "1027": {
+          "Symbol": "ETH",
+          "Name": "Ethereum",
+          "Slug":"ethereum"
+        },
+        ...
+      }`
+    example_payload_insert_trade = `
+      {
+        "Exchange": "Binance", //Optional
+        "FirstPair": 1, // Mandatory
+        "SecondPair": 1027, // Mandatory
+        "Subtrades": [
+          {
+            "CreatedAt": "2022-03-16T11:21", // Optional
+            "Type": "BUY", // Mandatory
+            "Reason": "Test", // Optional
+            "AvgPrice": 0.06610740416574978, // Mandatory
+            "Quantity": "10", // Mandatory
+            "Total": 0.6610740416574978 // Mandatory
+          }
+        ]
+      }`
+    example_payload_update_subtrade = `
+      {
+        "Code": "HDG2732", // Mandatory
+        "CreatedAt": "2022-03-16T11:21", // Optional
+        "Type": "BUY", // Mandatory
+        "Reason": "Test", // Optional
+        "AvgPrice": 0.06610740416574978, // Mandatory
+        "Quantity": "10", // Mandatory
+        "Total": 0.6610740416574978 // Mandatory
+      }`
+    endpoints = {
+      get_pairs: {
+        toggle: false,
+        name: "Get Pairs",
+        description: "Extract all the crypto codes available in TradingLab.",
+        endpoint: "get_pairs",
+        type: "get",
+        response: "dict",
+        example_payload: "",
+        example_response: this.example_response_get_pairs
+      },
+      get_pair_ratio: {
+        toggle: false,
+        name: "Get Pair Ratio",
+        description: "Given two crypto id, retrieve the latest price between them.",
+        endpoint: "get_pair_ratio/{firstPairId}/{secondPairId}",
+        type: "get",
+        response: "float",
+        example_payload: "",
+        example_response: "12.112"
+      },
+      insert_trade: {
+        toggle: false,
+        name: "Insert Trade",
+        description: "Insert a new trade into TradingLab, returning the trade code.",
+        endpoint: "insert_trade",
+        type: "post",
+        response: "string",
+        example_payload: this.example_payload_insert_trade,
+        example_response: "GDHJChsj32"
+      },
+      delete_trade: {
+        toggle: false,
+        name: "Delete Trade",
+        description: "Delete a trade passing its code.",
+        endpoint: "delete_trade/{tradeCode}",
+        type: "get",
+        response: "int",
+        example_payload: "",
+        example_response: 200
+      },
+      insert_subtrade: {
+        toggle: false,
+        name: "Insert Subtrade",
+        description: "Add an empty subtrade into an existing trade.",
+        endpoint: "insert_subtrade/{tradeCode}",
+        type: "get",
+        response: "string",
+        example_payload: "",
+        example_response: "GDHJChsj32"
+      },
+      list_trades: {
+        toggle: false,
+        name: "List Trades",
+        description: "List all trades codes.",
+        endpoint: "list_trades",
+        type: "get",
+        response: "[]string",
+        example_payload: "",
+        example_response: "['XChs7272', 'JDssCJ273', 'jd827tdz']"
+      },
+      update_subtrade: {
+        toggle: false,
+        name: "Update Subtrade",
+        description: "Update a subtrade passing its code.",
+        endpoint: "update_subtrade",
+        type: "post",
+        response: "int",
+        example_payload: this.example_payload_update_subtrade,
+        example_response: 200
+      },
+      delete_subtrade: {
+        toggle: false,
+        name: "Delete Subtrade",
+        description: "Delete a subtrade passing its code.",
+        endpoint: "delete_subtrade",
+        type: "get",
+        response: "int",
+        example_payload: "",
+        example_response: 200
+      },
+      list_subtrades: {
+        toggle: false,
+        name: "List Subtrades",
+        description: "Given a trade code, list all its subtrades codes.",
+        endpoint: "list_subtrades/{tradeCode}",
+        type: "get",
+        response: "[]string",
+        example_payload: "",
+        example_response: "['LS9128gdg', 'HGFjs8267']"
+      },
+      get_snapshot: {
+        toggle: false,
+        name: "Get Snapshot",
+        description: "Return the current snapshot of your crypto portfolio.",
+        endpoint: "get_snapshot",
+        type: "get",
+        response: "dict",
+        example_payload: "",
+        example_response: this.example_response_get_snapshot
+      }
+    }
+    created() {
       (window as any).Prism = (window as any).Prism || {};
       (window as any).Prism.manual = true;
+      Prism.highlightAll();
+    }
+    mounted() {
       Prism.highlightAll();
     }
     updated() {
       Prism.highlightAll();
     }
-    toggle_show_get_pairs() {
-      if (this.show_get_pairs) {
-        this.show_get_pairs = false;
+    toggle(endpoint: object) {
+      if (endpoint["toggle"]) {
+        endpoint["toggle"] = false;
       } else {
-        this.show_get_pairs = true;
-      }
-    }
-    toggle_show_get_pair_ratio() {
-      if (this.show_get_pair_ratio) {
-        this.show_get_pair_ratio = false;
-      } else {
-        this.show_get_pair_ratio = true;
-      }
-    }
-    toggle_show_insert_trade() {
-      if (this.show_insert_trade) {
-        this.show_insert_trade = false;
-      } else {
-        this.show_insert_trade = true;
-      }
-    }
-    toggle_show_delete_trade() {
-      if (this.show_delete_trade) {
-        this.show_delete_trade = false;
-      } else {
-        this.show_delete_trade = true;
-      }
-    }
-    toggle_show_insert_subtrade() {
-      if (this.show_insert_subtrade) {
-        this.show_insert_subtrade = false;
-      } else {
-        this.show_insert_subtrade = true;
-      }
-    }
-    toggle_show_update_subtrade() {
-      if (this.show_update_subtrade) {
-        this.show_update_subtrade = false;
-      } else {
-        this.show_update_subtrade = true;
-      }
-    }
-    toggle_show_delete_subtrade() {
-      if (this.show_delete_subtrade) {
-        this.show_delete_subtrade = false;
-      } else {
-        this.show_delete_subtrade = true;
-      }
-    }
-    toggle_show_list_trades() {
-      if (this.show_list_trades) {
-        this.show_list_trades = false;
-      } else {
-        this.show_list_trades = true;
+        endpoint["toggle"] = true;
       }
     }
   }
