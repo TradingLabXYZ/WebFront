@@ -29,17 +29,13 @@
           Beta
         </div>
       </div>
-      <div v-if="!isUserConnected && currentRoute == '/'"
+      <div v-if="!isUserConnected"
         class="flex flex-row items-center justify-around align-middle xs:text-sm sm:text-base xs:space-x-0 sm:space-x-4">
         <button class="font-bold rounded xs:p-1 sm:p-2 hover:bg-blueshine">
-          <router-link to="/explore">
-            Explore
+          <router-link to="/docs">
+            Docs
           </router-link>
         </button>
-        <Connect class="xs:p-1 sm:p-2"/>
-      </div>
-      <div v-if="!isUserConnected && currentRoute != '/'"
-        class="flex flex-row justify-around xs:text-sm sm:text-base xs:space-x-0 sm:space-x-4">
         <button class="font-bold rounded xs:p-1 sm:p-2 hover:bg-blueshine">
           <router-link to="/explore">
             Explore
@@ -47,7 +43,7 @@
         </button>
         <Connect class="xs:p-1 sm:p-2"/>
       </div>
-      <div v-if="isUserConnected"
+      <div v-else
         class="flex flex-row justify-around xs:text-sm sm:text-base xs:space-x-0 sm:space-x-4">
         <button class="inline-block font-bold rounded xs:p-1 sm:p-2 hover:bg-blueshine">
           <router-link to="/">
