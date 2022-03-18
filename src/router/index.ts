@@ -14,6 +14,7 @@ import { get } from 'idb-keyval';
 import { cleanSession } from '@/functions/session';
 
 import Home from '../views/Home.vue'
+import Docs from '../views/Docs.vue'
 import Explore from '../views/Explore.vue'
 import UserView from '../views/User.vue'
 import Settings from '../views/Settings.vue'
@@ -39,6 +40,14 @@ const routes: Array<RouteConfig> = [
         cleanSession();
         next()
       }
+    }
+  },
+  {
+    path: '/docs',
+    name: 'Docs',
+    component: Docs,
+    async beforeEnter ({}, {}, next) {
+      next();
     }
   },
   {

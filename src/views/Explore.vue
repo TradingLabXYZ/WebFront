@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-universe text-cream">
+  <div class="min-h-screen bg-universe text-cream">
     <Header/>
     <div class="mt-5 mb-3 font-bold tracking-wider text-center xs:text-xl sm:text-2xl">
       Explore
