@@ -16,6 +16,11 @@
           <Github class="transform scale-75"/>
         </a>
       </button>
+      <button>
+        <a href="https://www.youtube.com/channel/UC0MysGuteFUSLrTpzSHdoIg" target="_blank">
+          <Youtube class="transform scale-75"/>
+        </a>
+      </button>
     </div>
     <div class="text-2xl font-semibold text-magentashine">
       TradingLab
@@ -31,11 +36,13 @@
   import Discord from '@/components/svg/Discord.vue';
   import Twitter from '@/components/svg/Twitter.vue';
   import Github from '@/components/svg/Github.vue';
+  import Youtube from '@/components/svg/Youtube.vue';
   @Component({
     components: {
       Discord,
       Twitter,
-      Github
+      Github,
+      Youtube
     }
   })
   export default class Footer extends Vue {}
