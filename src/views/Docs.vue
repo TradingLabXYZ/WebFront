@@ -28,7 +28,7 @@
           <pre><code class="language-bash">
             curl 'API_ENDPOINT' \
               -H 'Access-Control-Allow-Origin: *'
-              -H 'Authorization: Bearer sessionId=API_TOKEN'
+              -H 'Authorization: Bearer sessionId={API_TOKEN}'
           </code></pre>
         </div>
       </div>
@@ -92,7 +92,7 @@
 
 <script lang="ts">
   import { Component, Vue } from 'vue-property-decorator';
-  import Header from '@/components/header/Header.vue';
+    import Header from '@/components/header/Header.vue';
   import Prism from "prismjs";
   import "prismjs/themes/prism-okaidia.css";
   require('prismjs/plugins/normalize-whitespace/prism-normalize-whitespace');
@@ -193,7 +193,7 @@
         "SecondPair": 1027, // Mandatory
         "Subtrades": [
           {
-            "CreatedAt": "2022-03-16T11:21", // Optional
+            "CreatedAt": "2022-03-16T11:21", // Mandatory
             "Type": "BUY", // Mandatory
             "Reason": "Test", // Optional
             "AvgPrice": 0.06610740416574978, // Mandatory
@@ -253,16 +253,6 @@
         example_payload: "",
         example_response: 200
       },
-      insert_subtrade: {
-        toggle: false,
-        name: "Insert Subtrade",
-        description: "Add an empty subtrade into an existing trade.",
-        endpoint: "insert_subtrade/{tradeCode}",
-        type: "get",
-        response: "string",
-        example_payload: "",
-        example_response: "GDHJChsj32"
-      },
       list_trades: {
         toggle: false,
         name: "List Trades",
@@ -272,6 +262,16 @@
         response: "[]string",
         example_payload: "",
         example_response: "['XChs7272', 'JDssCJ273', 'jd827tdz']"
+      },
+      insert_subtrade: {
+        toggle: false,
+        name: "Insert Subtrade",
+        description: "Add an empty subtrade into an existing trade.",
+        endpoint: "insert_subtrade/{tradeCode}",
+        type: "get",
+        response: "string",
+        example_payload: "",
+        example_response: "GDHJChsj32"
       },
       update_subtrade: {
         toggle: false,
