@@ -205,7 +205,7 @@
     example_payload_update_subtrade = `
       {
         "Code": "HDG2732", // Mandatory
-        "CreatedAt": "2022-03-16T11:21", // Optional
+        "CreatedAt": "2022-03-16T11:21", // Mandatory
         "Type": "BUY", // Mandatory
         "Reason": "Test", // Optional
         "AvgPrice": 0.06610740416574978, // Mandatory
