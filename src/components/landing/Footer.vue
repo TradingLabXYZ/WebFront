@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col justify-center pb-20 -mt-20 text-center pt-44 bg-gradient-to-br from-universelight via-universe to-universe space-y-4">
-    <div class="flex flex-row justify-center">
+    <div class="flex flex-row justify-center xs:space-x-2 sm:space-x-6">
       <button>
         <a href="https://discord.gg/PEEUfrbQ9c" target="_blank">
           <Discord class="transform scale-75"/>
@@ -17,13 +17,13 @@
         </a>
       </button>
       <button>
-        <a href="https://www.youtube.com/channel/UC0MysGuteFUSLrTpzSHdoIg" target="_blank">
-          <Youtube class="transform scale-75"/>
+        <a href="https://www.metafora.app/tradinglab" target="_blank">
+          <Metafora class="transform scale-75"/>
         </a>
       </button>
       <button>
-        <a href="https://www.metafora.app/tradinglab" target="_blank">
-          <Metafora class="transform scale-75"/>
+        <a href="https://www.youtube.com/channel/UC0MysGuteFUSLrTpzSHdoIg" target="_blank">
+          <Youtube class="transform scale-75"/>
         </a>
       </button>
     </div>
@@ -52,8 +52,8 @@ import Metafora from '@/components/svg/Metafora.vue';
     Twitter,
     Github,
     Youtube,
-    Metafora
-  }
+    Metafora,
+  },
 })
 export default class Footer extends Vue {}
 </script>
