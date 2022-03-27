@@ -32,7 +32,7 @@
         v-bind:visibility="visibility"/>
     </div>
     <div v-else class="flex flex-col justify-center mt-12 text-xl text-center text-gray-200 sm:text-4xl h-80">
-      <div v-if="!isSubscribe"> 
+      <div v-if="!isSubscribe">
         {{ privacyMessage }}
         <div v-if="privacyReason == 'user is not subscriber'">
           <button
@@ -51,169 +51,168 @@
   </div>
 </template>
 <script lang="ts">
-  import axios from "axios";
-  import { Component, Vue, Watch } from 'vue-property-decorator';
-  import { getModule } from 'vuex-module-decorators'
-  import UserModule from '@/store/userModule';
-  const userStore = getModule(UserModule)
-  import Wallet from '@/store/walletModule';
-  const walletStore = getModule(Wallet)
-  import Header from '@/components/header/Header.vue';
-  import TradeHero from '@/components/trades/TradeHero.vue';
-  import TradeConsole from '@/components/trades/TradeConsole.vue';
-  import Subscribe from '@/components/subscription/Subscribe.vue';
+import axios from 'axios';
+import {Component, Vue, Watch} from 'vue-property-decorator';
+import {getModule} from 'vuex-module-decorators'
+import UserModule from '@/store/userModule';
+const userStore = getModule(UserModule)
+import Wallet from '@/store/walletModule';
+import Header from '@/components/header/Header.vue';
+import TradeHero from '@/components/trades/TradeHero.vue';
+import TradeConsole from '@/components/trades/TradeConsole.vue';
+import Subscribe from '@/components/subscription/Subscribe.vue';
+const walletStore = getModule(Wallet)
   @Component({
     components: {
       Header,
       TradeHero,
       TradeConsole,
-      Subscribe
+      Subscribe,
     },
   })
-  export default class User extends Vue {
-    ws_url: string = '';
-    privacyStatus: string = '';
-    privacyReason: string = '';
-    privacyMessage: string = '';
-    isUserProfile: boolean = false;
-    totalReturn: number = 0;
-    totalValueUsd: number = 0;
-    roi: number = 0;
-    isFollower: boolean = false;
-    isSubscriber: boolean = false;
-    username: string = '';
-    twitter: string = '';
-    discord: string = '';
-    github: string = '';
-    profilePicture: string = '';
-    followers: number = 0;
-    followings: number = 0;
-    subscribers: number = 0;
-    joinTime: string = "";
-    totalTrades: number = 0;
-    trades: object[] = [];
-    isMobile = false;
-    isSubscribe = false;
-    visibility: object = {};
-    get isUserConnected() {
-      return walletStore.getIsConnected;
+export default class User extends Vue {
+  ws_url: string = '';
+  privacyStatus: string = '';
+  privacyReason: string = '';
+  privacyMessage: string = '';
+  isUserProfile: boolean = false;
+  totalReturn: number = 0;
+  totalValueUsd: number = 0;
+  roi: number = 0;
+  isFollower: boolean = false;
+  isSubscriber: boolean = false;
+  username: string = '';
+  twitter: string = '';
+  discord: string = '';
+  github: string = '';
+  profilePicture: string = '';
+  followers: number = 0;
+  followings: number = 0;
+  subscribers: number = 0;
+  joinTime: string = '';
+  totalTrades: number = 0;
+  trades: object[] = [];
+  isMobile = false;
+  isSubscribe = false;
+  visibility: object = {};
+  get isUserConnected() {
+    return walletStore.getIsConnected;
+  }
+  created() {
+    window.addEventListener('resize', this.checkIfMobile);
+    this.checkIfMobile();
+  }
+  @Watch('$route', {immediate: true, deep: true})
+  onUrlChange() {
+    const storeWallet = userStore.userDetails['Wallet'];
+    const routeWallet = this.$route.params.wallet;
+    if (storeWallet == routeWallet) {
+      this.isUserProfile = true;
     }
-    created() {
-      window.addEventListener('resize', this.checkIfMobile);
-      this.checkIfMobile();
+    this.totalReturn = 0;
+    this.roi = 0;
+    this.trades = [];
+    this.initialiseTradesWs();
+  }
+  generateRandomId() {
+    return 'noLogIn_' + (Math.random() + 1).toString(36).substring(2);
+  }
+  initialiseTradesWs() {
+    let sessionId: string;
+    if (userStore.userDetails['SessionId']) {
+      sessionId = userStore.userDetails['SessionId'];
+    } else {
+      sessionId = this.generateRandomId();
     }
-    @Watch('$route', { immediate: true, deep: true })
-    onUrlChange() {
-      let storeWallet = userStore.userDetails['Wallet'];
-      let routeWallet = this.$route.params.wallet;
-      if (storeWallet == routeWallet) {
-        this.isUserProfile = true; 
-      }
-      this.totalReturn = 0;
-      this.roi = 0;
+    const wallet = this.$route.params.wallet;
+    this.ws_url = [
+      process.env.VUE_APP_WS_URL,
+      'get_trades',
+      wallet,
+      sessionId,
+    ].join('/');
+    const ws = new WebSocket(this.ws_url);
+    this.heartbeat(ws);
+    ws.onmessage = (event: any) => {
+      const wsData = JSON.parse(event.data);
+      this.privacyStatus = wsData.PrivacyStatus.Status;
+      this.privacyReason = wsData.PrivacyStatus.Reason;
+      this.privacyMessage = wsData.PrivacyStatus.Message;
+      this.totalReturn = wsData.TotalReturnUsd;
+      this.totalValueUsd = wsData.TotalPortfolioUsd;
+      this.totalTrades = wsData.CountTrades;
+      this.roi = wsData.Roi;
+      this.isFollower = wsData.IsFollower;
+      this.isSubscriber = wsData.IsSubscriber;
+      this.username = wsData.UserDetails.Username;
+      this.twitter = wsData.UserDetails.Twitter;
+      this.discord = wsData.UserDetails.Discord;
+      this.github = wsData.UserDetails.Github;
+      this.profilePicture = wsData.UserDetails.ProfilePicture;
+      this.followers = wsData.UserDetails.Followers;
+      this.followings = wsData.UserDetails.Followings;
+      this.subscribers = wsData.UserDetails.Subscribers;
+      this.joinTime = wsData.UserDetails.JoinTime;
+      this.visibility = wsData.VisibilityStatus;
       this.trades = [];
-      this.initialiseTradesWs();
-    }
-    generateRandomId() {
-      return "noLogIn_" + (Math.random() + 1).toString(36).substring(2);
-    }
-    initialiseTradesWs() {
-      var sessionId: string;
-      if (userStore.userDetails['SessionId']) {
-        sessionId = userStore.userDetails['SessionId'];
-      } else {
-        sessionId = this.generateRandomId();
+      for (const i in wsData.Trades) {
+        this.trades.push(wsData.Trades[i]);
       }
-      let wallet = this.$route.params.wallet;
-      this.ws_url = [
-        process.env.VUE_APP_WS_URL,
-        'get_trades',
-        wallet,
-        sessionId
-      ].join('/');
-      let ws = new WebSocket(this.ws_url);
-      this.heartbeat(ws);
-      ws.onmessage = (event: any) => {
-        let ws_data = JSON.parse(event.data);
-        this.privacyStatus = ws_data.PrivacyStatus.Status;
-        this.privacyReason = ws_data.PrivacyStatus.Reason;
-        this.privacyMessage = ws_data.PrivacyStatus.Message;
-        this.totalReturn = ws_data.TotalReturnUsd;
-        this.totalValueUsd = ws_data.TotalPortfolioUsd;
-        this.totalTrades = ws_data.CountTrades;
-        this.roi = ws_data.Roi;
-        this.isFollower = ws_data.IsFollower;
-        this.isSubscriber = ws_data.IsSubscriber;
-        this.username = ws_data.UserDetails.Username;
-        this.twitter = ws_data.UserDetails.Twitter;
-        this.discord = ws_data.UserDetails.Discord;
-        this.github = ws_data.UserDetails.Github;
-        this.profilePicture = ws_data.UserDetails.ProfilePicture;
-        this.followers = ws_data.UserDetails.Followers;
-        this.followings = ws_data.UserDetails.Followings;
-        this.subscribers = ws_data.UserDetails.Subscribers;
-        this.joinTime = ws_data.UserDetails.JoinTime;
-        this.visibility = ws_data.VisibilityStatus;
-        this.trades = [];
-        for (var i in ws_data.Trades) {
-          let trade = ws_data.Trades[i];
-          this.trades.push(trade);
-        }
-      }
-    }
-    heartbeat(ws: any) {
-      setTimeout(()=>{
-        if (!ws) return;
-        if (ws.readyState !== 1) return;
-        ws.send('ping');
-        this.heartbeat(ws);
-      }, 5000)
-    }
-    checkIfMobile() {
-      if( screen.width <= 800 ) {
-        this.isMobile = true;
-      } else {
-        this.isMobile = false;
-      }
-    }
-    manageFollow() {
-      if (!this.isUserConnected) {
-        alert("Please connect your wallet!");
-        return;
-      }
-      let request_url = [
-        process.env.VUE_APP_HTTP_URL,
-        'follow',
-        this.$route.params.wallet,
-        this.isFollower
-      ].join('/');
-      axios({
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + document.cookie,
-          "Access-Control-Allow-Origin": "*",
-        },
-        url: request_url,
-      }).then(response => {
-        if (response.status === 200) {
-          if (this.isFollower) {
-            this.isFollower = false;
-            this.followers = this.followers - 1;
-          } else {
-            this.isFollower = true;
-            this.followers = this.followers + 1;
-          }
-          this.initialiseTradesWs();
-        }
-      }).catch(function (error) {
-        console.log(error);
-      })
-    }
-    startSubscriptionProcess() {
-      this.isSubscribe = true;
-    }
-    stopSubscriptionProcess() {
-      this.isSubscribe = false;
     }
   }
+  heartbeat(ws: any) {
+    setTimeout(()=>{
+      if (!ws) return;
+      if (ws.readyState !== 1) return;
+      ws.send('ping');
+      this.heartbeat(ws);
+    }, 5000)
+  }
+  checkIfMobile() {
+    if (screen.width <= 800) {
+      this.isMobile = true;
+    } else {
+      this.isMobile = false;
+    }
+  }
+  manageFollow() {
+    if (!this.isUserConnected) {
+      alert('Please connect your wallet!');
+      return;
+    }
+    const requestUrl = [
+      process.env.VUE_APP_HTTP_URL,
+      'follow',
+      this.$route.params.wallet,
+      this.isFollower,
+    ].join('/');
+    axios({
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + document.cookie,
+        'Access-Control-Allow-Origin': '*',
+      },
+      url: requestUrl,
+    }).then((response) => {
+      if (response.status === 200) {
+        if (this.isFollower) {
+          this.isFollower = false;
+          this.followers = this.followers - 1;
+        } else {
+          this.isFollower = true;
+          this.followers = this.followers + 1;
+        }
+        this.initialiseTradesWs();
+      }
+    }).catch(function(error) {
+      console.log(error);
+    })
+  }
+  startSubscriptionProcess() {
+    this.isSubscribe = true;
+  }
+  stopSubscriptionProcess() {
+    this.isSubscribe = false;
+  }
+}
 </script>
