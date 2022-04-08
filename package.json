@@ -8,6 +8,7 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "@nuxt/content": "^1.15.1",
     "@truffle/hdwallet-provider": "^1.6.0",
     "@walletconnect/web3-provider": "^1.7.1",
     "@web3-react/core": "^6.1.9",
