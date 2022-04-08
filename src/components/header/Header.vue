@@ -32,6 +32,11 @@
       <div v-if="!isUserConnected"
         class="flex flex-row items-center justify-around align-middle xs:text-sm sm:text-base xs:space-x-0 sm:space-x-4">
         <button class="font-bold rounded xs:p-1 sm:p-2 hover:bg-blueshine">
+          <a href="https://blog.tradinglab.xyz">
+            Blog
+          </a>
+        </button>
+        <button class="font-bold rounded xs:p-1 sm:p-2 hover:bg-blueshine">
           <router-link to="/docs">
             Docs
           </router-link>
