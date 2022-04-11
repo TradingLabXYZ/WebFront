@@ -12,7 +12,7 @@
       </div>
       <div>
         <button
-          class="inline-block p-2 mt-2 text-3xl font-bold rounded hover:bg-blueshine bg-blueshine">
+          class="inline-block p-2 mt-2 text-3xl font-bold rounded hover:bg-magentashine bg-blueshine">
           REAL TIME RANK
         </button>
       </div>

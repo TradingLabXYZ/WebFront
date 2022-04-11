@@ -3,7 +3,8 @@
   <div class="min-h-screen bg-universe text-cream">
     <Header/>
     <Hero/>
-    <Countdown class="mb-44"/>
+    <Countdown/>
+    <Submit class="mb-44"/>
     <Footer/>
   </div>
 </template>
@@ -14,6 +15,7 @@ import Header from '@/components/header/Header.vue';
 import Footer from '@/components/landing/Footer.vue';
 import Hero from '@/components/competitions/first_competition/Hero.vue'
 import Countdown from '@/components/competitions/first_competition/Countdown.vue'
+import Submit from '@/components/competitions/first_competition/Submit.vue'
 
 @Component({
   components: {
@@ -21,6 +23,7 @@ import Countdown from '@/components/competitions/first_competition/Countdown.vue
     Footer,
     Hero,
     Countdown,
+    Submit,
   },
 })
 export default class FirstCompetition extends Vue {
