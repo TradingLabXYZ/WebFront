@@ -8,7 +8,7 @@
         <input
           type="number"
           placeholder="Prediction"
-          class="p-2 text-5xl text-center text-black border border-gray-200 border-gray-500 w-96 bg-cream"
+          class="p-2 text-5xl text-center text-black border border-gray-200 w-96 bg-cream"
           v-model="prediction">
       </div>
       <div>
@@ -18,5 +18,8 @@
         </button>
       </div>
     </div>
+    <svg height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-magentashine">
+      <path d="M0,0 L500,0 500,80 0,80"/>
+    </svg>
   </div>
 </template>

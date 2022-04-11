@@ -11,9 +11,6 @@
         {{ countDownValue }}
       </div>
     </div>
-    <svg height="80" viewBox="0 0 500 120" preserveAspectRatio="none" class="fill-current text-blueshine">
-      <path d="M0,0 L0,80 500,0"/>
-    </svg>
   </div>
 </template>
 
