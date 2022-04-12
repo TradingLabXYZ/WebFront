@@ -5,7 +5,9 @@
     <Hero/>
     <Countdown/>
     <Submit/>
-    <Prizes class="mb-44"/>
+    <Prizes/>
+    <Rules/>
+    <Faq class="mb-44"/>
     <Footer/>
   </div>
 </template>
@@ -18,6 +20,8 @@ import Hero from '@/components/competitions/first_competition/Hero.vue'
 import Countdown from '@/components/competitions/first_competition/Countdown.vue'
 import Submit from '@/components/competitions/first_competition/Submit.vue'
 import Prizes from '@/components/competitions/first_competition/Prizes.vue'
+import Rules from '@/components/competitions/first_competition/Rules.vue'
+import Faq from '@/components/competitions/first_competition/Faq.vue'
 
 @Component({
   components: {
@@ -27,6 +31,8 @@ import Prizes from '@/components/competitions/first_competition/Prizes.vue'
     Countdown,
     Submit,
     Prizes,
+    Rules,
+    Faq,
   },
 })
 export default class FirstCompetition extends Vue {

@@ -34,10 +34,26 @@
       </div>
       <div class="text-5xl space-y-8">
         <div><b>+5 LAB</b> Add a trade on TradingLab</div>
-        <div><b>+2 LAB</b> Follow TradingLab on Twitter</div>
-        <div><b>+2 LAB</b> Follow TradingLab on Youtube</div>
-        <div><b>+2 LAB</b> Follow TradingLab on Metafora</div>
-        <div><b>+2 LAB</b> Follow TradingLab on Github</div>
+        <div><b>+2 LAB</b> Follow TradingLab on 
+          <a href="https://twitter.com/TradingLabXYZ" class="text-indigo-300">
+            Twitter
+          </a>
+        </div>
+        <div><b>+2 LAB</b> Follow TradingLab on
+          <a href="https://www.youtube.com/channel/UC0MysGuteFUSLrTpzSHdoIg" class="text-indigo-300">
+            Youtube
+          </a>
+        </div>
+        <div><b>+2 LAB</b> Follow TradingLab on
+          <a href="https://www.metafora.app/tradinglab" class="text-indigo-300">
+            Metafora
+          </a>
+        </div>
+        <div><b>+2 LAB</b> Follow TradingLab on
+          <a href="https://github.com/TradingLabXYZ/" class="text-indigo-300">
+            Github
+          </a>
+        </div>
         <div><b>+1 LAB</b> Add username</div>
         <div><b>+1 LAB</b> Add profile picture</div>
         <div><b>+1 LAB</b> Add one social network</div>
