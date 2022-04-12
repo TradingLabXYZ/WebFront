@@ -4,10 +4,10 @@
       <path d="M0,0 L500,120 0,120"/>
     </svg>
     <div class="py-20 text-center bg-blueshine space-y-6">
-      <div class="text-6xl font-bold">
+      <div class="xs:text-5xl sm:text-6xl font-bold">
         Wait, there are a few rules!
       </div>
-      <div class="text-4xl space-y-2">
+      <div class="xs:text-3xl sm:text-4xl space-y-2 xs:mx-6">
         <li>Connect using a Polygon Matic wallet</li>
         <li>Wallets not related to Polygon Matic will not receive any prize</li>
         <li>One wallet can sumbit one prediction</li>

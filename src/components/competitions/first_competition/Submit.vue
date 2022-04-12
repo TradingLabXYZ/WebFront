@@ -6,7 +6,7 @@
       </div>
       <div class="flex flex-col items-center align-middle">
         <input
-          type="number"
+          type="string"
           placeholder="Prediction"
           class="p-2 text-5xl text-center text-black border border-gray-200 w-96 bg-cream"
           v-model="prediction">
@@ -23,3 +23,68 @@
     </svg>
   </div>
 </template>
+
+<script lang="ts">
+import axios from 'axios';
+import {Component, Vue} from 'vue-property-decorator';
+import {getModule} from 'vuex-module-decorators'
+import Wallet from '@/store/walletModule';
+const walletStore = getModule(Wallet)
+
+@Component({})
+export default class Submit extends Vue {
+  prediction: string = "";
+  partecipants: number = 0;
+  get isUserConnected() {
+    return walletStore.getIsConnected;
+  }
+  async created() {
+    this.getPartecipants();
+  }
+  getPartecipants() {
+    const requestUrl = [
+      process.env.VUE_APP_HTTP_URL,
+      'getPartecipants'
+    ].join('/');
+    axios({
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + document.cookie,
+        'Access-Control-Allow-Origin': '*',
+      },
+      url: requestUrl,
+    }).then((response) => {
+      if (response.status === 200) {
+        this.partecipants = response.data;
+      }
+    }).catch(function(error) {
+      console.log(error);
+    })
+  }
+  submitPrediction() {
+    if (!this.isUserConnected) {
+      alert('Please connect your wallet!');
+      return;
+    }
+    const requestUrl = [
+      process.env.VUE_APP_HTTP_URL,
+      'predict',
+      this.prediction,
+    ].join('/');
+    axios({
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + document.cookie,
+        'Access-Control-Allow-Origin': '*',
+      },
+      url: requestUrl,
+    }).then((response) => {
+      if (response.status === 200) {
+        console.log("OK");
+      }
+    }).catch(function(error) {
+      console.log(error);
+    })
+  }
+}
+</script>
