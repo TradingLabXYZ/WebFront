@@ -8,7 +8,7 @@
         What will be BTC price at the end of May 2022?
       </div>
       <div class="text-4xl font-bold">
-        32 partecipants registered
+        {{ countPartecipants }} partecipants registered
       </div>
       <div>
         <button
@@ -22,3 +22,37 @@
     </div>
   </div>
 </template>
+
+<script lang="ts">
+import axios from 'axios';
+import {Component, Vue} from 'vue-property-decorator';
+
+@Component({})
+export default class Hero extends Vue {
+  countPartecipants: number = 0;
+  async created() {
+    this.fetchCountPartecipants();
+  }
+  fetchCountPartecipants() {
+    console.log("OJKOK");
+    const requestUrl = [
+      process.env.VUE_APP_HTTP_URL,
+      'get_count_partecipants'
+    ].join('/');
+    axios({
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + document.cookie,
+        'Access-Control-Allow-Origin': '*',
+      },
+      url: requestUrl,
+    }).then((response) => {
+      if (response.status === 200) {
+        this.countPartecipants = response.data;
+      }
+    }).catch(function(error) {
+      console.log(error);
+    })
+  }
+}
+</script>

@@ -34,32 +34,8 @@ const walletStore = getModule(Wallet)
 @Component({})
 export default class Submit extends Vue {
   prediction: string = "";
-  partecipants: number = 0;
   get isUserConnected() {
     return walletStore.getIsConnected;
-  }
-  async created() {
-    this.getPartecipants();
-  }
-  getPartecipants() {
-    const requestUrl = [
-      process.env.VUE_APP_HTTP_URL,
-      'getPartecipants'
-    ].join('/');
-    axios({
-      method: 'GET',
-      headers: {
-        'Authorization': 'Bearer ' + document.cookie,
-        'Access-Control-Allow-Origin': '*',
-      },
-      url: requestUrl,
-    }).then((response) => {
-      if (response.status === 200) {
-        this.partecipants = response.data;
-      }
-    }).catch(function(error) {
-      console.log(error);
-    })
   }
   submitPrediction() {
     if (!this.isUserConnected) {
@@ -68,7 +44,7 @@ export default class Submit extends Vue {
     }
     const requestUrl = [
       process.env.VUE_APP_HTTP_URL,
-      'predict',
+      'insert_prediction',
       this.prediction,
     ].join('/');
     axios({
