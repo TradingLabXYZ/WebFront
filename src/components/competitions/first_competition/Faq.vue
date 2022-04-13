@@ -61,12 +61,17 @@
       profilePicture : {
         toggle: false,
         question: "How can I add a profile picure?",
-        answer: "Once you connect to TradingLab with your wallet, on the top right under the section Settings you will easily be able to add a profile picture.",
+        answer: "Connect to TradingLab with your wallet and visit the Settings section..",
+      },
+      smartContract : {
+        toggle: false,
+        question: "Do you use smart contracts?",
+        answer: "No, competition's data are stored in a regular database.",
       },
       millionToken : {
         toggle: false,
         question: "What is Million Token?",
-        answer: "Million Token is an innovative cryptocurrency with solid tokenomics, read more on milliontoken.org",
+        answer: "Million Token is an cryptocurrency with solid tokenomics, read more on milliontoken.org",
       },
       labToken : {
         toggle: false,
