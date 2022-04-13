@@ -26,6 +26,11 @@
           <Youtube class="transform scale-75"/>
         </a>
       </button>
+      <button>
+        <a href="https://polygonscan.com/token/0x01962c00c783ce44c5b031c07435f2dc4a627394" target="_blank">
+          <Polyscan class="transform scale-75"/>
+        </a>
+      </button>
     </div>
     <div class="flex flex-row justify-center space-x-2">
       <img src="@/assets/logo.png" class="h-8" alt="Logo">
@@ -46,6 +51,7 @@ import Twitter from '@/components/svg/Twitter.vue';
 import Github from '@/components/svg/Github.vue';
 import Youtube from '@/components/svg/Youtube.vue';
 import Metafora from '@/components/svg/Metafora.vue';
+import Polyscan from '@/components/svg/Polyscan.vue';
 @Component({
   components: {
     Discord,
@@ -53,6 +59,7 @@ import Metafora from '@/components/svg/Metafora.vue';
     Github,
     Youtube,
     Metafora,
+    Polyscan,
   },
 })
 export default class Footer extends Vue {}
