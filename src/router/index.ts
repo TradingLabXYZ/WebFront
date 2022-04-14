@@ -56,7 +56,14 @@ const routes: Array<RouteConfig> = [
     name: 'GuessBtcPrice',
     component: GuessBtcPrice,
     async beforeEnter({}, {}, next) {
-      next();
+      if (document.cookie.indexOf('sessionId') > -1) {
+        const sessionId = document.cookie.split('sessionId=')[1].split(';')[0];
+        await get(sessionId).then((val) => userStore.updateUserDetails(val));
+        next()
+      } else {
+        cleanSession();
+        next();
+      }
     },
   },
   {

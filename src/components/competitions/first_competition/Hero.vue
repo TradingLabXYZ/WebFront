@@ -34,7 +34,6 @@ export default class Hero extends Vue {
     this.fetchCountPartecipants();
   }
   fetchCountPartecipants() {
-    console.log("OJKOK");
     const requestUrl = [
       process.env.VUE_APP_HTTP_URL,
       'get_count_partecipants'

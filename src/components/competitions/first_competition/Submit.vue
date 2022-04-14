@@ -6,13 +6,15 @@
       </div>
       <div class="flex flex-col items-center align-middle">
         <input
-          type="string"
+          type="number"
+          step="0.01"
           placeholder="Prediction"
           class="p-2 text-5xl text-center text-black border border-gray-200 w-96 bg-cream"
           v-model="prediction">
       </div>
       <div>
         <button
+          @click="submitPrediction()"
           class="inline-block p-4 mt-2 text-3xl font-bold rounded hover:bg-blueshine bg-magentashine">
           SUBMIT YOUR PREDICTION
         </button>
@@ -33,7 +35,10 @@ const walletStore = getModule(Wallet)
 
 @Component({})
 export default class Submit extends Vue {
-  prediction: string = "";
+  prediction: number = 0;
+  created() {
+    this.getPrediction()
+  }
   get isUserConnected() {
     return walletStore.getIsConnected;
   }
@@ -45,6 +50,7 @@ export default class Submit extends Vue {
     const requestUrl = [
       process.env.VUE_APP_HTTP_URL,
       'insert_prediction',
+      'first_competition',
       this.prediction,
     ].join('/');
     axios({
@@ -61,6 +67,31 @@ export default class Submit extends Vue {
     }).catch(function(error) {
       console.log(error);
     })
+  }
+  getPrediction() {
+    if (!this.isUserConnected) {
+      return;
+    }
+    const requestUrl = [
+      process.env.VUE_APP_HTTP_URL,
+      'get_prediction',
+      'first_competition',
+    ].join('/');
+    axios({
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + document.cookie,
+        'Access-Control-Allow-Origin': '*',
+      },
+      url: requestUrl,
+    }).then((response) => {
+      if (response.status === 200) {
+        this.prediction = response.data;
+      }
+    }).catch(function(error) {
+      console.log(error);
+    })
+
   }
 }
 </script>
