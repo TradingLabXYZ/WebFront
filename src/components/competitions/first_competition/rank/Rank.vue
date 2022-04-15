@@ -26,38 +26,38 @@
     </div>
     <div class="flex justify-center mt-12">
       <table>
-        <thead class="tracking-wider xs:text-lg sm:text-2xl bg-oldpurple">
+        <thead class="tracking-wider xs:text-md sm:text-2xl bg-oldpurple">
           <tr>
             <th 
-              class="px-6 py-4"
+              class="sm:px-6 sm:py-4 xs:px-2 xs:py-2"
               scope="col">
               Rank
             </th>
             <th 
-              class="px-6 py-4"
+              class="sm:px-6 sm:py-4 xs:px-2 xs:py-2"
               scope="col">
               Username
             </th>
             <th 
-              class="px-6 py-4"
+              class="sm:px-6 sm:py-4 xs:px-2 xs:py-2"
               scope="col">
               Prediction ($)
             </th>
             <th 
-              class="px-6 py-4"
+              class="sm:px-6 sm:py-4 xs:px-2 xs:py-2"
               scope="col">
               Delta %
             </th>
           </tr>
         </thead>
-        <tbody class="tracking-wider xs:text-lg sm:text-2xl bg-sandpurple text-center">
+        <tbody class="tracking-wider xs:text-md sm:text-2xl bg-sandpurple text-center">
           <template v-for="(partecipant, i) in partecipants">
             <tr class="h-12">
               <td>
                 {{ i + 1}}
               </td>
               <td>
-                <div class="flex flex-row space-x-2 justify-center align-middle items-center">
+                <div class="flex flex-row xs:space-x-1 sm:space-x-2 justify-center align-middle items-center">
                   <img  
                     :src="partecipant['ProfilePicture']"
                     height="30" width="30"
