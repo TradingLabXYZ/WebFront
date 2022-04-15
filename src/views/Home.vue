@@ -1,7 +1,7 @@
 <template>
   <div>
     <Header/>
-    <Survey/>
+    <Competition/>
     <Hero/>
     <svg v-if="isMobile" height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-blueshine">
       <path d="M0,0 L0,80 500,0"/>
@@ -54,7 +54,7 @@
 <script lang="ts">
   import { Component, Vue } from 'vue-property-decorator';
   import Header from '@/components/header/Header.vue';
-  import Survey from '@/components/landing/Survey.vue';
+  import Competition from '@/components/banners/Competition.vue';
   import Hero from '@/components/landing/Hero.vue';
   import Share from '@/components/landing/Share.vue';
   import Features from '@/components/landing/Features.vue';
@@ -68,7 +68,7 @@
   @Component({
     components: {
       Header,
-      Survey,
+      Competition,
       Hero,
       Share,
       Features,
