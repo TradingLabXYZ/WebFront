@@ -42,7 +42,10 @@
       await generateSession();
       this.instantiateWatchers();
       window._paq.push(['setUserId', walletStore.getWallet]);
+
       if (this.$route.params['wallet'] == walletStore.getWallet) {
+        window.location.reload();
+      } else if (this.$route['path'].startsWith('/crypto_competition/')) {
         window.location.reload();
       } else {
         this.$router.push({
