@@ -3,7 +3,7 @@
     <svg height="80" viewBox="0 0 500 120" preserveAspectRatio="none" class="fill-current text-magentashine">
       <path d="M0,120 L500,0 500,120"/>
     </svg>
-    <div class="text-6xl font-bold text-center bg-magentashine py-4">
+    <div class="text-3xl font-bold text-center bg-magentashine py-4">
       FAQ
     </div>
     <div
@@ -12,7 +12,7 @@
       class="flex flex-col align-middle items-center p-5 rounded bg-magentashine">
       <div
         @click="toggle(faq)"
-        class="my-1 font-semibold xs:text-center sm:text-left xs:text-3xl sm:text-4xl space-x-4">
+        class="my-1 font-semibold xs:text-center sm:text-left xs:text-2xl sm:text-4xl space-x-4">
         <span v-if="!faq.toggle" class="w-8 h-8 font-bold text-center text-white">
           +
         </span>

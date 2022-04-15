@@ -1,7 +1,7 @@
 <template>
   <div class="mt-12 border-8 border-magentashine">
     <div class="flex flex-col text-center py-36 space-y-4">
-      <div class="text-4xl">
+      <div class="xs:text-2xl sm:text-4xl">
         insert your prediction in USD $
       </div>
       <div class="flex flex-col items-center align-middle">
@@ -9,13 +9,13 @@
           type="number"
           step="0.01"
           placeholder="Prediction"
-          class="p-2 text-5xl text-center text-black border border-gray-200 w-96 bg-cream"
+          class="p-2 xs:text-3xl sm:text-5xl text-center text-black border border-gray-200 xs:w-60 sm:w-96 bg-cream"
           v-model="tempPrediction">
       </div>
       <div class="space-x-4">
         <button
           @click="submitPrediction()"
-          class="inline-block p-4 mt-2 text-3xl font-bold rounded hover:bg-blueshine bg-magentashine">
+          class="inline-block p-4 mt-2 xs:text-2xl sm:text-3xl font-bold rounded hover:bg-blueshine bg-magentashine">
           <span v-if="tempPrediction == 0">
             SUBMIT YOUR PREDICTION
           </span>
