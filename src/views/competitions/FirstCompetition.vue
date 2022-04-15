@@ -35,14 +35,5 @@ import Faq from '@/components/competitions/first_competition/Faq.vue'
     Faq,
   },
 })
-export default class FirstCompetition extends Vue {
-  isMobile = false;
-  checkIfMobile() {
-    if ( screen.width <= 800 ) {
-      this.isMobile = true;
-    } else {
-      this.isMobile = false;
-    }
-  }
-}
+export default class FirstCompetition extends Vue {}
 </script>

@@ -13,7 +13,10 @@
       <div>
         <button
           class="p-2 mt-2 text-3xl font-bold rounded hover:bg-magentashine bg-blueshine">
-          REAL TIME RANK
+          <router-link
+            :to="{path: '/crypto_competition/guess_btc_price/rank'}">
+            REAL TIME RANK
+          </router-link>
         </button>
       </div>
     </div>
@@ -36,7 +39,8 @@ export default class Hero extends Vue {
   fetchCountPartecipants() {
     const requestUrl = [
       process.env.VUE_APP_HTTP_URL,
-      'get_count_partecipants'
+      'get_count_partecipants',
+      'first_competition'
     ].join('/');
     axios({
       method: 'GET',
