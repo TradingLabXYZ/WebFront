@@ -1,7 +1,7 @@
 <template>
   <div v-if="isSectionVisible" class="bg-green-200">
-    <div class="flex items-center justify-center text-center align-middle xs:text-md sm:text-md font-bold">
-      TradingLab First Crypto Competition
+    <div class="flex items-center justify-center text-center align-middle xs:text-sm sm:text-md font-bold">
+      TradingLab Crypto Competition
       <button class="font-bold text-blue-800 bg-blue-200 border border-blue-600 rounded xs:m-1 xs:p-1 sm:p-2 sm:m-2 hover:bg-blue-400 xs:text-xs sm:text-sm">
         <router-link
           :to="{path: '/crypto_competition/guess_btc_price'}">
@@ -10,7 +10,7 @@
       </button>
       <button
         v-on:click="toggleVisibility"
-        class="sm:ml-12 xs:ml-4">
+        class="sm:ml-12 xs:ml-2">
         <CloseX/>
       </button>
     </div>

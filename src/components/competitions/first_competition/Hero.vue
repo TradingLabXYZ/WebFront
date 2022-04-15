@@ -1,6 +1,6 @@
 <template>
   <div class="flex xs:flex-col sm:flex-row xs:mt-12 sm:mt-auto">
-    <div class="flex flex-col sm:my-40 xs:my-12 xs:ml-12 sm:ml-64 xs:max-w-lg sm:max-w-xl space-y-4">
+    <div class="flex flex-col sm:my-40 xs:my-12 xs:ml-12 sm:ml-64 xs:mr-12 sm:mr-0 xs:max-w-lg sm:max-w-xl space-y-4">
       <div class="xs:text-2xl sm:text-3xl font-bold">
         1st TradingLab Crypto Competition
       </div>

@@ -24,7 +24,7 @@
           <div>3 MM </div>
           <img src="@/assets/competitions/first_competition/milliontoken.png" class="xs:h-8 sm:h-14" alt="Logo">
           <div>+ 30 LAB</div>
-          <img src="@/assets/logo.png" class="h-14" alt="Logo">
+          <img src="@/assets/logo.png" class="xs:h-8 sm:h-14" alt="Logo">
         </div>
       </div>
     </div>
