@@ -1,10 +1,10 @@
 <template>
   <div class="flex xs:flex-col sm:flex-row xs:mt-12 sm:mt-auto">
     <div class="flex flex-col sm:my-40 xs:my-12 xs:ml-12 sm:ml-64 xs:max-w-lg sm:max-w-xl space-y-4">
-      <div class="text-3xl font-bold">
+      <div class="xs:text-2xl sm:text-3xl font-bold">
         1st TradingLab Crypto Competition
       </div>
-      <div class="text-7xl text-magentashine">
+      <div class="xs:text-4xl sm:text-7xl text-magentashine">
         What will be BTC price at the end of May 2022?
       </div>
       <div class="text-4xl font-bold">
@@ -12,10 +12,10 @@
       </div>
       <div>
         <button
-          class="p-2 mt-2 text-3xl font-bold rounded hover:bg-magentashine bg-blueshine">
+          class="p-2 mt-2 xs:text-xl sm:text-3xl font-bold rounded hover:bg-magentashine bg-blueshine">
           <router-link
             :to="{path: '/crypto_competition/guess_btc_price/rank'}">
-            REAL TIME RANK
+            CHECK REAL TIME RANK
           </router-link>
         </button>
       </div>

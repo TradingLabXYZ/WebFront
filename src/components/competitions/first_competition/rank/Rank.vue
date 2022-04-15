@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col">
-    <div class="flex flex-col sm:mt-4 xs:mt-4 xs:ml-12 sm:ml-64 text-2xl">
+    <div class="flex flex-col sm:mt-4 xs:mt-4 xs:ml-12 sm:ml-64 xs:text-xl sm:text-2xl">
       <div class="flex flex-row space-x-4">
         <div>
           Latest BTC price: 
@@ -10,14 +10,14 @@
         </div>
       </div>
     </div>
-    <div class="flex flex-row sm:mt-4 xs:mt-4 xs:ml-12 sm:ml-64 text-2xl">
+    <div class="flex flex-row sm:mt-4 xs:mt-4 xs:ml-12 sm:ml-64 xs:text-xl sm:text-2xl">
       <div class="">
         Submbission ends in {{ countDownValue }}
       </div>
     </div>
     <div class="text-center my-4">
       <button
-        class="p-2 mt-2 text-3xl font-bold rounded hover:bg-magentashine bg-blueshine">
+        class="p-2 mt-2 xs:text-xl sm:text-3xl font-bold rounded hover:bg-magentashine bg-blueshine">
         <router-link
           :to="{path: '/crypto_competition/guess_btc_price'}">
           Sumbit your prediction
@@ -26,7 +26,7 @@
     </div>
     <div class="flex justify-center mt-12">
       <table>
-        <thead class="tracking-wider xs:text-xl sm:text-2xl bg-oldpurple">
+        <thead class="tracking-wider xs:text-lg sm:text-2xl bg-oldpurple">
           <tr>
             <th 
               class="px-6 py-4"
@@ -50,7 +50,7 @@
             </th>
           </tr>
         </thead>
-        <tbody class="tracking-wider xs:text-xl sm:text-2xl bg-sandpurple text-center">
+        <tbody class="tracking-wider xs:text-lg sm:text-2xl bg-sandpurple text-center">
           <template v-for="(partecipant, i) in partecipants">
             <tr class="h-12">
               <td>
