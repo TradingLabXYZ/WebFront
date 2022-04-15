@@ -52,7 +52,7 @@ const routes: Array<RouteConfig> = [
     },
   },
   {
-    path: '/guess_btc_price',
+    path: '/crypto_competition/guess_btc_price',
     name: 'GuessBtcPrice',
     component: GuessBtcPrice,
     async beforeEnter({}, {}, next) {

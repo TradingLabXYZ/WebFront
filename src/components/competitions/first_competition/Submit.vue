@@ -10,14 +10,26 @@
           step="0.01"
           placeholder="Prediction"
           class="p-2 text-5xl text-center text-black border border-gray-200 w-96 bg-cream"
-          v-model="prediction">
+          v-model="tempPrediction">
       </div>
-      <div>
+      <div class="space-x-4">
         <button
           @click="submitPrediction()"
           class="inline-block p-4 mt-2 text-3xl font-bold rounded hover:bg-blueshine bg-magentashine">
-          SUBMIT YOUR PREDICTION
+          <span v-if="tempPrediction == 0">
+            SUBMIT YOUR PREDICTION
+          </span>
+          <span v-else>
+            UPDATE YOUR PREDICTION
+          </span>
         </button>
+        <button
+           v-if="tempPrediction > 0"
+          @click="deletePrediction()"
+          class="inline-block p-4 mt-2 text-3xl font-bold rounded hover:bg-blueshine">
+          <Delete/>
+        </button>
+          
       </div>
     </div>
     <svg height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-magentashine">
@@ -32,15 +44,44 @@ import {Component, Vue} from 'vue-property-decorator';
 import {getModule} from 'vuex-module-decorators'
 import Wallet from '@/store/walletModule';
 const walletStore = getModule(Wallet)
+import Delete from '@/components/svg/DeleteTrade.vue'
 
-@Component({})
-export default class Submit extends Vue {
-  prediction: number = 0;
-  created() {
-    this.getPrediction()
+@Component({
+  components: {
+    Delete,
   }
+})
+export default class Submit extends Vue {
+  tempPrediction: number = 0;
+  prediction: number = 0;
   get isUserConnected() {
     return walletStore.getIsConnected;
+  }
+  async created() {
+    await this.fetchPrediction();
+  }
+  async fetchPrediction() {
+    if (document.cookie.indexOf('sessionId') > -1) {
+      const requestUrl = [
+        process.env.VUE_APP_HTTP_URL,
+        'get_prediction',
+        'first_competition',
+      ].join('/');
+      axios({
+        method: 'GET',
+        headers: {
+          'Authorization': 'Bearer ' + document.cookie,
+          'Access-Control-Allow-Origin': '*',
+        },
+        url: requestUrl,
+      }).then((response) => {
+        if (response.status === 200) {
+          this.tempPrediction = parseFloat(response.data);
+        }
+      }).catch(function(error) {
+        console.log(error);
+      })
+    }
   }
   submitPrediction() {
     if (!this.isUserConnected) {
@@ -51,7 +92,7 @@ export default class Submit extends Vue {
       process.env.VUE_APP_HTTP_URL,
       'insert_prediction',
       'first_competition',
-      this.prediction,
+      this.tempPrediction,
     ].join('/');
     axios({
       method: 'GET',
@@ -62,19 +103,19 @@ export default class Submit extends Vue {
       url: requestUrl,
     }).then((response) => {
       if (response.status === 200) {
-        console.log("OK");
+        //
       }
     }).catch(function(error) {
       console.log(error);
     })
   }
-  getPrediction() {
+  deletePrediction() {
     if (!this.isUserConnected) {
       return;
     }
     const requestUrl = [
       process.env.VUE_APP_HTTP_URL,
-      'get_prediction',
+      'delete_prediction',
       'first_competition',
     ].join('/');
     axios({
@@ -86,12 +127,11 @@ export default class Submit extends Vue {
       url: requestUrl,
     }).then((response) => {
       if (response.status === 200) {
-        this.prediction = response.data;
+        this.tempPrediction = 0;
       }
     }).catch(function(error) {
       console.log(error);
     })
-
   }
 }
 </script>
