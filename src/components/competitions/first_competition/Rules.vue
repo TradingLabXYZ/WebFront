@@ -3,7 +3,7 @@
     <svg height="80" viewBox="0 0 500 120" preserveAspectRatio="none" class="fill-current text-blueshine">
       <path d="M0,0 L500,120 0,120"/>
     </svg>
-    <div class="py-20 text-center bg-blueshine space-y-6">
+    <div class="py-20 text-center bg-blueshine space-x-4 space-y-6">
       <div class="xs:text-3xl sm:text-6xl font-bold">
         Wait, there are a few rules!
       </div>

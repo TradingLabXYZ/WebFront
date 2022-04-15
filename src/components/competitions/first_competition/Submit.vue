@@ -15,8 +15,8 @@
       <div class="space-x-4">
         <button
           @click="submitPrediction()"
-          class="inline-block p-4 mt-2 xs:text-2xl sm:text-3xl font-bold rounded hover:bg-blueshine bg-magentashine">
-          <span v-if="tempPrediction == 0">
+          class="inline-block p-4 mt-2 xs:text-lg sm:text-3xl font-bold rounded hover:bg-blueshine bg-magentashine">
+          <span v-if="prediction == 0">
             SUBMIT YOUR PREDICTION
           </span>
           <span v-else>
@@ -24,7 +24,7 @@
           </span>
         </button>
         <button
-           v-if="tempPrediction > 0"
+           v-if="prediction > 0"
           @click="deletePrediction()"
           class="inline-block p-4 mt-2 text-3xl font-bold rounded hover:bg-blueshine">
           <Delete/>
@@ -76,6 +76,7 @@ export default class Submit extends Vue {
         url: requestUrl,
       }).then((response) => {
         if (response.status === 200) {
+          this.prediction = parseFloat(response.data);
           this.tempPrediction = parseFloat(response.data);
         }
       }).catch(function(error) {

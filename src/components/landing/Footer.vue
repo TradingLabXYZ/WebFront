@@ -3,32 +3,32 @@
     <div class="flex flex-row justify-center xs:space-x-2 sm:space-x-6">
       <button>
         <a href="https://discord.gg/PEEUfrbQ9c" target="_blank">
-          <Discord class="transform scale-75"/>
+          <Discord class="transform xs:scale-50 sm:scale-75"/>
         </a>
       </button>
       <button>
         <a href="https://twitter.com/TradingLabXYZ" target="_blank">
-          <Twitter class="transform scale-75"/>
+          <Twitter class="transform xs:scale-50 sm:scale-75"/>
         </a>
       </button>
       <button>
         <a href="https://github.com/TradingLabXYZ" target="_blank">
-          <Github class="transform scale-75"/>
+          <Github class="transform xs:scale-50 sm:scale-75"/>
         </a>
       </button>
       <button>
         <a href="https://www.metafora.app/tradinglab" target="_blank">
-          <Metafora class="transform scale-75"/>
+          <Metafora class="transform xs:scale-50 sm:scale-75"/>
         </a>
       </button>
       <button>
         <a href="https://www.youtube.com/channel/UC0MysGuteFUSLrTpzSHdoIg" target="_blank">
-          <Youtube class="transform scale-75"/>
+          <Youtube class="transform xs:scale-50 sm:scale-75"/>
         </a>
       </button>
       <button>
         <a href="https://polygonscan.com/token/0x01962c00c783ce44c5b031c07435f2dc4a627394" target="_blank">
-          <Polyscan class="transform scale-75"/>
+          <Polyscan class="transform xs:scale-50 sm:scale-75"/>
         </a>
       </button>
     </div>
