@@ -4,7 +4,7 @@
       <path d="M0,120 L500,0 500,120"/>
     </svg>
     <div class="py-20 text-center bg-blueshine space-y-6">
-      <div class="xs:text-3xl sm:text-5xl">
+      <div class="xs:text-3xl sm:text-5xl font-medium">
         submbission ends in
       </div>
       <div class="xs:text-4xl sm:text-8xl">

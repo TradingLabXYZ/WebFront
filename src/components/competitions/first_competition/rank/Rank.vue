@@ -24,9 +24,9 @@
         </router-link>
       </button>
     </div>
-    <div class="flex justify-center mt-12">
+    <div class="flex justify-center mt-12 mx-2">
       <table>
-        <thead class="tracking-wider xs:text-md sm:text-2xl bg-oldpurple">
+        <thead class="tracking-wider xs:text-sm sm:text-2xl bg-oldpurple">
           <tr>
             <th 
               class="sm:px-6 sm:py-4 xs:px-2 xs:py-2"
@@ -50,7 +50,7 @@
             </th>
           </tr>
         </thead>
-        <tbody class="tracking-wider xs:text-md sm:text-2xl bg-sandpurple text-center">
+        <tbody class="tracking-wider xs:text-sm sm:text-2xl bg-sandpurple text-center">
           <template v-for="(partecipant, i) in partecipants">
             <tr class="h-12">
               <td>
@@ -61,7 +61,8 @@
                   <img  
                     :src="partecipant['ProfilePicture']"
                     height="30" width="30"
-                    class="rounded-full">
+                    alt="UserLogo"
+                    class="rounded-full xs:h-6 sm:h-14">
                   <span v-if="partecipant['Username'] != ''">
                     {{ partecipant['Username'] }}
                   </span>
