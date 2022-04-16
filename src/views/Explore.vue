@@ -17,7 +17,8 @@
                 <img
                   :src="event.profilepicture"
                   height="30" width="30"
-                  class="rounded-full">
+                  class="rounded-full"
+                  alt="user profile picture">
                 <span class="font-normal">
                   {{ event.type }} {{ event.quantity }} {{ event.secondpairsymbol }}
                 </span>
@@ -30,12 +31,14 @@
                   :src="event.firstpairurlicon"
                   class="relative border rounded-full left-1"
                   height="20"
-                  width="20">
+                  width="20"
+                  alt="first crypto pair icon">
                 <img
                   :src="event.secondpairurlicon"
                   class="border rounded-full"
                   height="20"
-                  width="20">
+                  width="20"
+                  alt="second crypto pair icon">
               </div>
             </div>
             <div class="mt-1 italic font-light text-center xs:text-sm sm:text-xl">
@@ -108,7 +111,8 @@
 
 <script lang="ts">
   import axios from "axios";
-  import { Component, Vue, Watch } from 'vue-property-decorator';
+  import { Component, Vue } from 'vue-property-decorator';
+  import { MetaInfo } from 'vue-meta';
   import Header from '@/components/header/Header.vue';
   Component.registerHooks([
     'beforeRouteLeave'
@@ -116,9 +120,29 @@
   @Component({
     components: {
       Header
+    },
+    metaInfo(this: Explore): MetaInfo {
+      return {
+        title: "TradingLab - API Documentation",
+        meta: [
+          { charset: 'utf-8' },
+          { name: 'keyword', content: 'crypto, trading, community, portfolio, explore' },
+          { name: 'description', content: "Explore and discover the latests activity from TradingLab's community"},
+          {name: 'twitter:card', content: 'summary'},
+          {name: 'twitter:url', content: 'https://www.tradinglab.xyz/explore'},
+          {name: 'twitter:title', content: 'TradingLab - Explore and Discover'},
+          {name: 'twitter:description', content: "Explore and discover the latests activity from TradingLab's community"},
+          {name: 'twitter:image', content: 'https://tradinglab.xyz/img/logo.181ac5cb.png'},
+          {property: 'og:title', content: 'TradingLab - Explore and Discover'},
+          {property: 'og:type', content: 'website'},
+          {property: 'og:url', content: 'https://www.tradinglab.xyz/explore'},
+          {property: 'og:description', content: "Explore and discover the latests activity from TradingLab's community"},
+          {property: 'og:image', content: 'https://tradinglab.xyz/img/logo.181ac5cb.png'}
+        ]
+      };
     }
   })
-  export default class Settings extends Vue {
+  export default class Explore extends Vue {
     events: object[] = [];
     created() {
       this.getLatestEvents();

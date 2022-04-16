@@ -3,7 +3,9 @@
     <div class="flex justify-center xs:flex-col sm:flex-row mt-44">
       <div class="flex flex-col items-center p-12 align-middle">
         <div class="p-4">
-          <img src="@/assets/feature_simple.png" alt="Simple">
+          <img
+            src="@/assets/feature_simple.png"
+            alt="TradingLab is simple">
         </div>
         <div class="text-3xl font-bold">
           Simple
@@ -14,7 +16,9 @@
       </div>
       <div class="flex flex-col items-center p-12 align-middle">
         <div class="p-4">
-          <img src="@/assets/feature_decentralized.png" alt="Decentralized">
+          <img
+            src="@/assets/feature_decentralized.png"
+            alt="TradingLab is decentralized">
         </div>
         <div class="text-3xl font-bold">
           Decentralized
@@ -27,7 +31,9 @@
     <div class="flex justify-center xs:flex-col sm:flex-row mt-22">
       <div class="flex flex-col items-center p-12 align-middle">
         <div class="p-4">
-          <img src="@/assets/feature_secure.png" alt="Secure">
+          <img
+            src="@/assets/feature_secure.png"
+            alt="TradingLab is Secure">
         </div>
         <div class="text-3xl font-bold">
           Secure
@@ -38,7 +44,9 @@
       </div>
       <div class="flex flex-col items-center p-12 align-middle">
         <div class="p-4">
-          <img src="@/assets/feature_profitable.png" alt="Profitable">
+          <img 
+            src="@/assets/feature_profitable.png"
+            alt="TradingLab is profitable">
         </div>
         <div class="text-3xl font-bold">
           Profitable

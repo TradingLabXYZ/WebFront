@@ -2,51 +2,51 @@
   <div class="min-h-screen bg-universe text-cream">
     <Header/>
     <div class="flex flex-col mx-auto xs:w-5/6 sm:w-1/2">
-      <div class="my-5 font-bold text-center xs:text-xl sm:text-2xl">
+      <h1 class="my-5 font-bold text-center xs:text-xl sm:text-2xl">
         API Docs
-      </div>
-      <div class="">
+      </h1>
+      <p class="">
         It is possibile to interact with TradingLab programmatically using our API.<br>
         There are no limits to the use cases that can be built.<br>
         For example, automatically update a trade with realtime data from an exchange,
         or simply export all your data into a sheet.<br>
-      </div>
+      </p>
       <div>
-        <div class="mt-5 mb-2 font-medium text-left xs:text-xl sm:text-2xl">
+        <h2 class="mt-5 mb-2 font-medium text-left xs:text-xl sm:text-2xl">
           Generate API Token
-        </div>
-        <div class="">
+        </h2>
+        <p class="">
           To retrieve a new API token, visit the <i>Settings</i> sections.
-        </div>
+        </p>
       </div>
       <div>
-        <div class="mt-5 mb-2 font-medium text-left xs:text-xl sm:text-2xl">
+        <h2 class="mt-5 mb-2 font-medium text-left xs:text-xl sm:text-2xl">
           Request template
-        </div>
-        <div class="">
+        </h2>
+        <p class="">
           Add the API token in the header as Bearer Authentication as shown in the example below:
           <pre><code class="language-bash">
             curl 'API_ENDPOINT' \
               -H 'Access-Control-Allow-Origin: *'
               -H 'Authorization: Bearer sessionId={API_TOKEN}'
           </code></pre>
-        </div>
+        </p>
       </div>
       <div>
-        <div class="mt-5 mb-2 font-medium text-left xs:text-xl sm:text-2xl space-y-5">
+        <h2 class="mt-5 mb-2 font-medium text-left xs:text-xl sm:text-2xl space-y-5">
           API Endpoints
-        </div>
+        </h2>
         <div
           v-for="endpoint in endpoints"
           :key="endpoint.name"
-          class="p-5 m-5 rounded bg-sandpurple rounded-md">
+          class="p-5 m-5 bg-sandpurple rounded-md">
           <div
             @click="toggle(endpoint)"
-            class="flex flex-row my-1 font-medium font-semibold text-left xs:text-xl sm:text-2xl space-x-4">
-            <div v-if="!endpoint.toggle" class="w-8 h-8 font-bold text-center text-white bg-gray-700 rounded rounded-full">
+            class="flex flex-row my-1 font-semibold text-left xs:text-xl sm:text-2xl space-x-4">
+            <div v-if="!endpoint.toggle" class="w-8 h-8 font-bold text-center text-white bg-gray-700 rounded-full">
               +
             </div>
-            <div v-else class="w-8 h-8 font-bold text-center text-white bg-gray-700 rounded rounded-full">
+            <div v-else class="w-8 h-8 font-bold text-center text-white bg-gray-700 rounded-full">
               -
             </div>
             <div>
@@ -92,13 +92,34 @@
 
 <script lang="ts">
   import { Component, Vue } from 'vue-property-decorator';
-    import Header from '@/components/header/Header.vue';
+  import { MetaInfo } from 'vue-meta';
+  import Header from '@/components/header/Header.vue';
   import Prism from "prismjs";
   import "prismjs/themes/prism-okaidia.css";
   require('prismjs/plugins/normalize-whitespace/prism-normalize-whitespace');
   @Component({
     components: {
       Header
+    },
+    metaInfo(this: Docs): MetaInfo {
+      return {
+        title: "TradingLab - API Documentation",
+        meta: [
+          { charset: 'utf-8' },
+          { name: 'keyword', content: 'crypto, trading, community, portfolio, api, docs' },
+          { name: 'description', content: 'It is possibile to interact with TradingLab programmatically using API.'},
+          {name: 'twitter:card', content: 'summary'},
+          {name: 'twitter:url', content: 'https://www.tradinglab.xyz/docs'},
+          {name: 'twitter:title', content: 'TradingLab - Api Documentation'},
+          {name: 'twitter:description', content: 'It is possibile to interact with TradingLab programmatically using API.'},
+          {name: 'twitter:image', content: 'https://tradinglab.xyz/img/logo.181ac5cb.png'},
+          {property: 'og:title', content: 'TradingLab - API Documentation'},
+          {property: 'og:type', content: 'website'},
+          {property: 'og:url', content: 'https://www.tradinglab.xyz/docs'},
+          {property: 'og:description', content: 'It is possibile to interact with TradingLab programmatically using APIs.'},
+          {property: 'og:image', content: 'https://tradinglab.xyz/img/logo.181ac5cb.png'}
+        ]
+      };
     }
   })
   export default class Docs extends Vue {

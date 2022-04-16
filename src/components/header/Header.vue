@@ -20,7 +20,10 @@
     <div class="sticky top-0 z-10 flex flex-row items-center justify-around border-b-2 border-magentashine xs:p-0 sm:p-4 bg-universe xs:h-16 sm:h-20 md:h-24">
       <div class="flex flex-row items-center align-middle space-x-2">
         <router-link to="/">
-          <img src="@/assets/logo.png" class="xs:h-14 md:h-18" alt="Logo">
+          <img
+            src="@/assets/logo.png"
+            class="xs:h-14 md:h-18"
+            alt="TradingLab logo">
         </router-link>
         <div class="text-4xl font-bold text-magentashine xs:hidden sm:block">
           TradingLab

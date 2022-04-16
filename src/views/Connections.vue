@@ -28,7 +28,8 @@
             <img
               :src="follower.ProfilePicture"
               height="60" width="60"
-              class="rounded-full">
+              class="rounded-full"
+              alt="user profile picture">
             <div class="flex flex-col justify-center">
               <div class="text-base text-right">
                 {{ follower.CountTrades }} Trades
@@ -52,7 +53,8 @@
               <img
                 :src="following.ProfilePicture"
                 height="60" width="60"
-                class="rounded-full">
+                class="rounded-full"
+                alt="user profile picture">
               <div class="flex flex-col justify-center">
                 <div class="text-base text-right">
                   {{ following.CountTrades }} Trades

@@ -8,23 +8,41 @@
         <div class="flex flex-row xs:space-x-2 sm:space-x-4 justify-center align-middle items-center">
           <div class="font-bold mr-2">1st:</div>
           <div>10 MM </div>
-          <img src="@/assets/competitions/first_competition/milliontoken.png" class="xs:h-8 sm:h-14" alt="Logo">
+          <img
+            src="@/assets/competitions/first_competition/milliontoken.png"
+            class="xs:h-8 sm:h-14" 
+            alt="MillionToken logo">
           <div>+ 100 LAB</div>
-          <img src="@/assets/logo.png" class="xs:h-8 sm:h-14" alt="Logo">
+          <img 
+            src="@/assets/logo.png"
+            class="xs:h-8 sm:h-14"
+            alt="TradingLab logo">
         </div>
         <div class="flex flex-row xs:space-x-2 sm:space-x-4 justify-center align-middle items-center">
           <div class="font-bold mr-2">2st:</div>
           <div>5 MM </div>
-          <img src="@/assets/competitions/first_competition/milliontoken.png" class="xs:h-8 sm:h-14" alt="Logo">
+          <img 
+            src="@/assets/competitions/first_competition/milliontoken.png"
+            class="xs:h-8 sm:h-14"
+            alt="MillionToken logo">
           <div>+ 50 LAB</div>
-          <img src="@/assets/logo.png" class="xs:h-8 sm:h-14" alt="Logo">
+          <img 
+            src="@/assets/logo.png"
+            class="xs:h-8 sm:h-14"
+            alt="TradingLab logo">
         </div>
         <div class="flex flex-row xs:space-x-2 sm:space-x-4 justify-center align-middle items-center">
           <div class="font-bold mr-2">3rd:</div>
           <div>3 MM </div>
-          <img src="@/assets/competitions/first_competition/milliontoken.png" class="xs:h-8 sm:h-14" alt="Logo">
+          <img 
+            src="@/assets/competitions/first_competition/milliontoken.png"
+            class="xs:h-8 sm:h-14"
+            alt="MillionToken logo">
           <div>+ 30 LAB</div>
-          <img src="@/assets/logo.png" class="xs:h-8 sm:h-14" alt="Logo">
+          <img 
+            src="@/assets/logo.png"
+            class="xs:h-8 sm:h-14"
+            alt="TradingLab logo">
         </div>
       </div>
     </div>
