@@ -1,6 +1,7 @@
 <template>
   <div class="min-h-screen pb-20 bg-universe">
     <Header/>
+    <Competition/>
     <TradeHero
       @follow="manageFollow"
       v-bind:privacyStatus="privacyStatus"
@@ -58,6 +59,7 @@ import UserModule from '@/store/userModule';
 const userStore = getModule(UserModule)
 import Wallet from '@/store/walletModule';
 import Header from '@/components/header/Header.vue';
+import Competition from '@/components/banners/Competition.vue';
 import TradeHero from '@/components/trades/TradeHero.vue';
 import TradeConsole from '@/components/trades/TradeConsole.vue';
 import Subscribe from '@/components/subscription/Subscribe.vue';
@@ -65,6 +67,7 @@ const walletStore = getModule(Wallet)
   @Component({
     components: {
       Header,
+      Competition,
       TradeHero,
       TradeConsole,
       Subscribe,
