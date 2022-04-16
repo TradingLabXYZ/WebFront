@@ -16,11 +16,11 @@
         <button
           @click="submitPrediction()"
           class="inline-block p-4 mt-2 xs:text-lg sm:text-3xl font-bold rounded hover:bg-blueshine bg-magentashine">
-          <span v-if="prediction == 0">
-            SUBMIT YOUR PREDICTION
+          <span v-if="prediction > 0">
+            UPDATE YOUR PREDICTION
           </span>
           <span v-else>
-            UPDATE YOUR PREDICTION
+            SUBMIT YOUR PREDICTION
           </span>
         </button>
         <button
@@ -29,7 +29,11 @@
           class="inline-block p-4 mt-2 text-3xl font-bold rounded hover:bg-blueshine">
           <Delete/>
         </button>
-          
+      </div>
+      <div 
+        v-if="isSubmissionOk"
+        class="bg-green-200 flex justify-center m-auto w-32 text-black">
+        Done!
       </div>
     </div>
     <svg height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-magentashine">
@@ -54,6 +58,7 @@ import Delete from '@/components/svg/DeleteTrade.vue'
 export default class Submit extends Vue {
   tempPrediction: number = 0;
   prediction: number = 0;
+  isSubmissionOk: boolean = false;
   get isUserConnected() {
     return walletStore.getIsConnected;
   }
@@ -104,7 +109,8 @@ export default class Submit extends Vue {
       url: requestUrl,
     }).then((response) => {
       if (response.status === 200) {
-        //
+        this.prediction = this.tempPrediction;
+        this.setConfirmStatus();
       }
     }).catch(function(error) {
       console.log(error);
@@ -129,10 +135,23 @@ export default class Submit extends Vue {
     }).then((response) => {
       if (response.status === 200) {
         this.tempPrediction = 0;
+        this.prediction = 0;
+        this.setConfirmStatus();
       }
     }).catch(function(error) {
       console.log(error);
     })
+  }
+  async setConfirmStatus() {
+    this.isSubmissionOk = true;
+    var that = this;
+    setTimeout(function () {
+      if (that.isSubmissionOk) {
+        that.isSubmissionOk = false;
+      } else {
+        that.isSubmissionOk = true;
+      }
+    }, 2000);
   }
 }
 </script>

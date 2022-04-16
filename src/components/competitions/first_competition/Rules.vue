@@ -7,8 +7,8 @@
       <div class="xs:text-3xl sm:text-6xl font-bold">
         Wait, there are a few rules!
       </div>
-      <div class="xs:text-2xl sm:text-4xl space-y-2 xs:mx-6">
-        <li>One wallet can sumbit one prediction</li>
+      <div class="xs:text-2xl sm:text-4xl space-y-2 xs:mx-10">
+        <li>One wallet can submit one prediction</li>
         <li>The submission window ends on the 30 April 2022 at midnight</li>
         <li>Wallets not related to Polygon Matic will not receive any prize</li>
         <li>If multiple users win with the same price, the prize will be divided</li>
