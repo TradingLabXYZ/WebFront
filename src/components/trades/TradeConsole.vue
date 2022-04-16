@@ -125,7 +125,7 @@
         </div>
       </div>
       <div
-        v-if="opened.includes(trade['Code']) && isUserProfile || visibility['SubtradesAll']"
+        v-if="opened.includes(trade['Code']) && (isUserProfile || visibility['SubtradesAll'])"
         class="mt-2 text-cream bg-universelight 11/12 m-auto xs:p-1 lg:p-2 space-y-1">
         <div
           v-for="(subtrade, i) in trade['Subtrades']"
