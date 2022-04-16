@@ -82,12 +82,21 @@
     },
     metaInfo(this: Home): MetaInfo {
       return {
-        title: "TradingLab - Crypto Trading Community",
+        title: "TradingLab - Crypto Community",
         meta: [
           { charset: 'utf-8' },
           { name: 'keyword', content: 'crypto, trading, community' },
           { name: 'description', content: 'TradingLab aims to create a funny, entertaining, never ending user experience in which crypto passionate can converge, learning and earning from each others simply sharing their crypto portfolios.'},
-          { name: 'viewport', content: 'width=device-width, initial-scale=2' }
+          {property: 'og:title', content: 'TradingLab - Crypto Community'},
+          {property: 'og:type', content: 'website'},
+          {property: 'og:url', content: 'https://www.tradinglab.xyz'},
+          {property: 'og:description', content: 'TradingLab aims to create a funny, entertaining, never ending user experience in which crypto passionate can converge, learning and earning from each others simply sharing their crypto portfolios.'},
+          {property: 'og:image', content: 'https://tradinglab.xyz/img/logo.181ac5cb.png'},
+          {name: 'twitter:card', content: 'summary'},
+          {name: 'twitter:url', content: 'https://www.tradinglab.xyz'},
+          {name: 'twitter:title', content: 'TradingLab - Crypto Community'},
+          {name: 'twitter:description', content: 'TradingLab aims to create a funny, entertaining, never ending user experience in which crypto passionate can converge, learning and earning from each others simply sharing their crypto portfolios.'},
+          {name: 'twitter:image', content: 'https://tradinglab.xyz/img/logo.181ac5cb.png'}
         ]
       };
     },
