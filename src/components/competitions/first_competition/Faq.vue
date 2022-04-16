@@ -76,7 +76,7 @@
       labToken : {
         toggle: false,
         question: "What is LAB Token?",
-        answer: "LAB is the native token of TradingLab, find more on https://polygonscan.com/token/0x01962c00c783ce44c5b031c07435f2dc4a627394",
+        answer: "LAB is the native token of TradingLab, check the link at the bottom of this page",
       },
     }
     toggle(endpoint: object) {

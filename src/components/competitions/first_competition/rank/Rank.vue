@@ -20,7 +20,7 @@
         class="p-2 mt-2 xs:text-xl sm:text-3xl font-bold rounded hover:bg-magentashine bg-blueshine">
         <router-link
           :to="{path: '/crypto_competition/guess_btc_price'}">
-          Sumbit your prediction
+          Submit your prediction
         </router-link>
       </button>
     </div>
@@ -60,9 +60,8 @@
                 <div class="flex flex-row xs:space-x-1 sm:space-x-2 justify-center align-middle items-center">
                   <img  
                     :src="partecipant['ProfilePicture']"
-                    height="30" width="30"
                     alt="UserLogo"
-                    class="rounded-full xs:h-6 sm:h-14">
+                    class="rounded-full xs:h-6 sm:h-8">
                   <span v-if="partecipant['Username'] != ''">
                     {{ partecipant['Username'] }}
                   </span>
