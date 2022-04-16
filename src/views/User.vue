@@ -9,7 +9,6 @@
       v-bind:isUserProfile="isUserProfile"
       v-bind:isFollower="isFollower"
       v-bind:isSubscriber="isSubscriber"
-      v-bind:isMobile="isMobile"
       v-bind:username="username"
       v-bind:twitter="twitter"
       v-bind:discord="discord"
@@ -24,9 +23,9 @@
       v-bind:roi="roi"
       v-bind:totalTrades="totalTrades"
       v-bind:visibility="visibility"/>
+    <!--
     <div v-if="privacyStatus == 'OK'">
       <TradeConsole
-        v-bind:isMobile="isMobile"
         v-bind:isUserConnected="isUserConnected"
         v-bind:trades="trades"
         v-bind:isUserProfile="isUserProfile"
@@ -49,6 +48,7 @@
           @stopSubscriptionProcess="stopSubscriptionProcess"/>
       </div>
     </div>
+    -->
   </div>
 </template>
 <script lang="ts">
@@ -95,7 +95,6 @@ export default class User extends Vue {
   joinTime: string = '';
   totalTrades: number = 0;
   trades: object[] = [];
-  isMobile = false;
   isSubscribe = false;
   visibility: object = {};
   get isUserConnected() {
@@ -170,13 +169,6 @@ export default class User extends Vue {
       ws.send('ping');
       this.heartbeat(ws);
     }, 5000)
-  }
-  checkIfMobile() {
-    if (screen.width <= 800) {
-      this.isMobile = true;
-    } else {
-      this.isMobile = false;
-    }
   }
   manageFollow() {
     if (!this.isUserConnected) {
