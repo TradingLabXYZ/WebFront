@@ -38,6 +38,26 @@
   @Component({})
   export default class Faq extends Vue {
     faqs = {
+      legit: {
+        toggle: false,
+        question: "Is this a scam or is it legit",
+        answer: "Out users are the most important asset we have, we will never harm you.",
+      },
+      connect: {
+        toggle: false,
+        question: "Is connecting my wallet safe?",
+        answer: "Yes, you can safely connect your wallet, we will not ask you any further action.",
+      },
+      why: {
+        toggle: false,
+        question: "Why do I need to connect my wallet?",
+        answer: "Since we do not ask you an email, your wallet is the only way we have to store your vote.",
+      },
+      smartContract : {
+        toggle: false,
+        question: "Do you use smart contracts?",
+        answer: "No, competition's data are stored in a regular database.",
+      },
       contact: {
         toggle: false,
         question: "Where can I contact you?",
@@ -62,11 +82,6 @@
         toggle: false,
         question: "How can I add a profile picure?",
         answer: "Connect to TradingLab with your wallet and visit the Settings section..",
-      },
-      smartContract : {
-        toggle: false,
-        question: "Do you use smart contracts?",
-        answer: "No, competition's data are stored in a regular database.",
       },
       millionToken : {
         toggle: false,
