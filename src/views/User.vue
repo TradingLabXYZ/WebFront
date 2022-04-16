@@ -23,7 +23,6 @@
       v-bind:roi="roi"
       v-bind:totalTrades="totalTrades"
       v-bind:visibility="visibility"/>
-    <!--
     <div v-if="privacyStatus == 'OK'">
       <TradeConsole
         v-bind:isUserConnected="isUserConnected"
@@ -48,7 +47,6 @@
           @stopSubscriptionProcess="stopSubscriptionProcess"/>
       </div>
     </div>
-    -->
   </div>
 </template>
 <script lang="ts">

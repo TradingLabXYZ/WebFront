@@ -111,7 +111,6 @@ export default class TradeHero extends Vue {
   @Prop() isUserConnected!: boolean;
   @Prop() isFollower!: boolean;
   @Prop() isSubscriber!: boolean;
-  @Prop() isMobile!: boolean;
   @Prop() username!: string;
   @Prop() twitter!: string;
   @Prop() discord!: string;
