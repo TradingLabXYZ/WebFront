@@ -31,7 +31,6 @@
             <th 
               class="sm:px-6 sm:py-4 xs:px-2 xs:py-2"
               scope="col">
-              Scoreboard
             </th>
             <th 
               class="sm:px-6 sm:py-4 xs:px-2 xs:py-2"
@@ -53,7 +52,7 @@
         <tbody class="tracking-wider xs:text-sm sm:text-2xl bg-sandpurple text-center">
           <template v-for="(partecipant, i) in partecipants">
             <tr class="h-12">
-              <td>
+              <td class="font-bold">
                 {{ i + 1}}
               </td>
               <td>
