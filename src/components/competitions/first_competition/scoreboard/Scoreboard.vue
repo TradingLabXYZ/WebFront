@@ -31,7 +31,7 @@
             <th 
               class="sm:px-6 sm:py-4 xs:px-2 xs:py-2"
               scope="col">
-              Rank
+              Scoreboard
             </th>
             <th 
               class="sm:px-6 sm:py-4 xs:px-2 xs:py-2"
@@ -88,7 +88,7 @@
 import axios from 'axios';
 import {Component, Vue} from 'vue-property-decorator';
 @Component({})
-export default class Rank extends Vue {
+export default class Scoreboard extends Vue {
   partecipants: object = [];
   countDownValue = '';
   btcPrice = 0;

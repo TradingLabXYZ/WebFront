@@ -20,7 +20,7 @@ import UserView from '../views/User.vue'
 import Settings from '../views/Settings.vue'
 import Connections from '../views/Connections.vue'
 import GuessBtcPrice from '../views/competitions/FirstCompetition.vue'
-import GuessBtcPriceRank from '../views/competitions/FirstCompetitionRank.vue'
+import GuessBtcPriceScoreboard from '../views/competitions/FirstCompetitionScoreboard.vue'
 
 const routes: Array<RouteConfig> = [
   {
@@ -68,9 +68,9 @@ const routes: Array<RouteConfig> = [
     },
   },
   {
-    path: '/crypto_competition/guess_btc_price/rank',
-    name: 'GuessBtcPriceRank',
-    component: GuessBtcPriceRank,
+    path: '/crypto_competition/guess_btc_price/scoreboard',
+    name: 'GuessBtcPriceScoreboard',
+    component: GuessBtcPriceScoreboard,
     async beforeEnter({}, {}, next) {
       next()
     },

@@ -92,13 +92,34 @@
 
 <script lang="ts">
   import { Component, Vue } from 'vue-property-decorator';
-    import Header from '@/components/header/Header.vue';
+  import { MetaInfo } from 'vue-meta';
+  import Header from '@/components/header/Header.vue';
   import Prism from "prismjs";
   import "prismjs/themes/prism-okaidia.css";
   require('prismjs/plugins/normalize-whitespace/prism-normalize-whitespace');
   @Component({
     components: {
       Header
+    },
+    metaInfo(this: Docs): MetaInfo {
+      return {
+        title: "TradingLab - API Documentation",
+        meta: [
+          { charset: 'utf-8' },
+          { name: 'keyword', content: 'crypto, trading, community, portfolio, api, docs' },
+          { name: 'description', content: 'It is possibile to interact with TradingLab programmatically using API.'},
+          {name: 'twitter:card', content: 'summary'},
+          {name: 'twitter:url', content: 'https://www.tradinglab.xyz/docs'},
+          {name: 'twitter:title', content: 'TradingLab - Api Documentation'},
+          {name: 'twitter:description', content: 'It is possibile to interact with TradingLab programmatically using API.'},
+          {name: 'twitter:image', content: 'https://tradinglab.xyz/img/logo.181ac5cb.png'},
+          {property: 'og:title', content: 'TradingLab - API Documentation'},
+          {property: 'og:type', content: 'website'},
+          {property: 'og:url', content: 'https://www.tradinglab.xyz/docs'},
+          {property: 'og:description', content: 'It is possibile to interact with TradingLab programmatically using APIs.'},
+          {property: 'og:image', content: 'https://tradinglab.xyz/img/logo.181ac5cb.png'}
+        ]
+      };
     }
   })
   export default class Docs extends Vue {

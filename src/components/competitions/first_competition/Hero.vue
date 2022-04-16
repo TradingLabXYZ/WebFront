@@ -14,8 +14,8 @@
         <button
           class="p-2 mt-2 xs:text-xl sm:text-3xl font-bold rounded hover:bg-magentashine bg-blueshine">
           <router-link
-            :to="{path: '/crypto_competition/guess_btc_price/rank'}">
-            CHECK REAL TIME RANK
+            :to="{path: '/crypto_competition/guess_btc_price/scoreboard'}">
+            CHECK SCOREBOARD
           </router-link>
         </button>
       </div>
