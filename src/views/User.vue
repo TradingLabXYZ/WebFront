@@ -98,10 +98,6 @@ export default class User extends Vue {
   get isUserConnected() {
     return walletStore.getIsConnected;
   }
-  created() {
-    window.addEventListener('resize', this.checkIfMobile);
-    this.checkIfMobile();
-  }
   @Watch('$route', {immediate: true, deep: true})
   onUrlChange() {
     const storeWallet = userStore.userDetails['Wallet'];

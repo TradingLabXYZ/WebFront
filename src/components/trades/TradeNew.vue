@@ -4,7 +4,7 @@
     <div class="p-1 text-2xl font-bold text-center text-cream">
       Add a new trade
     </div>
-    <div class="flex xs:flex-col sm:flex-row mb-2">
+    <div class="flex xs:flex-col sm:flex-row mb-2 justify-center texr">
       <div class="p-2 rounded-xl">
         <label class="text-xs text-cream">
           Exchange

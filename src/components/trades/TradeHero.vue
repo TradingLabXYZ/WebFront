@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-oldpurple text-cream">
+  <div class="bg-oldpurple text-cream sx:py-2 sm:py-4">
     <div class="flex flex-row justify-center space-x-4 align-middle items-center xs:pt-2 sm:pt-4"> 
       <img 
         :src="profilePicture"
@@ -76,7 +76,7 @@
         </span>
       </div>
     </div>
-    <div v-if="!isUserProfile" class="flex flex-col justify-center space-y-2">
+    <div v-if="!isUserProfile" class="flex flex-col justify-center space-y-2 text-center">
       <div>
         <button v-if="!isFollower"
           class="inline-block px-2 py-1 text-sm font-bold text-white bg-green-400 rounded"
