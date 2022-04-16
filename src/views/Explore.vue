@@ -17,7 +17,8 @@
                 <img
                   :src="event.profilepicture"
                   height="30" width="30"
-                  class="rounded-full">
+                  class="rounded-full"
+                  alt="user profile picture">
                 <span class="font-normal">
                   {{ event.type }} {{ event.quantity }} {{ event.secondpairsymbol }}
                 </span>
@@ -30,12 +31,14 @@
                   :src="event.firstpairurlicon"
                   class="relative border rounded-full left-1"
                   height="20"
-                  width="20">
+                  width="20"
+                  alt="first crypto pair icon">
                 <img
                   :src="event.secondpairurlicon"
                   class="border rounded-full"
                   height="20"
-                  width="20">
+                  width="20"
+                  alt="second crypto pair icon">
               </div>
             </div>
             <div class="mt-1 italic font-light text-center xs:text-sm sm:text-xl">

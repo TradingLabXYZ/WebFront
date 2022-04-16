@@ -2,51 +2,51 @@
   <div class="min-h-screen bg-universe text-cream">
     <Header/>
     <div class="flex flex-col mx-auto xs:w-5/6 sm:w-1/2">
-      <div class="my-5 font-bold text-center xs:text-xl sm:text-2xl">
+      <h1 class="my-5 font-bold text-center xs:text-xl sm:text-2xl">
         API Docs
-      </div>
-      <div class="">
+      </h1>
+      <p class="">
         It is possibile to interact with TradingLab programmatically using our API.<br>
         There are no limits to the use cases that can be built.<br>
         For example, automatically update a trade with realtime data from an exchange,
         or simply export all your data into a sheet.<br>
-      </div>
+      </p>
       <div>
-        <div class="mt-5 mb-2 font-medium text-left xs:text-xl sm:text-2xl">
+        <h2 class="mt-5 mb-2 font-medium text-left xs:text-xl sm:text-2xl">
           Generate API Token
-        </div>
-        <div class="">
+        </h2>
+        <p class="">
           To retrieve a new API token, visit the <i>Settings</i> sections.
-        </div>
+        </p>
       </div>
       <div>
-        <div class="mt-5 mb-2 font-medium text-left xs:text-xl sm:text-2xl">
+        <h2 class="mt-5 mb-2 font-medium text-left xs:text-xl sm:text-2xl">
           Request template
-        </div>
-        <div class="">
+        </h2>
+        <p class="">
           Add the API token in the header as Bearer Authentication as shown in the example below:
           <pre><code class="language-bash">
             curl 'API_ENDPOINT' \
               -H 'Access-Control-Allow-Origin: *'
               -H 'Authorization: Bearer sessionId={API_TOKEN}'
           </code></pre>
-        </div>
+        </p>
       </div>
       <div>
-        <div class="mt-5 mb-2 font-medium text-left xs:text-xl sm:text-2xl space-y-5">
+        <h2 class="mt-5 mb-2 font-medium text-left xs:text-xl sm:text-2xl space-y-5">
           API Endpoints
-        </div>
+        </h2>
         <div
           v-for="endpoint in endpoints"
           :key="endpoint.name"
-          class="p-5 m-5 rounded bg-sandpurple rounded-md">
+          class="p-5 m-5 bg-sandpurple rounded-md">
           <div
             @click="toggle(endpoint)"
-            class="flex flex-row my-1 font-medium font-semibold text-left xs:text-xl sm:text-2xl space-x-4">
-            <div v-if="!endpoint.toggle" class="w-8 h-8 font-bold text-center text-white bg-gray-700 rounded rounded-full">
+            class="flex flex-row my-1 font-semibold text-left xs:text-xl sm:text-2xl space-x-4">
+            <div v-if="!endpoint.toggle" class="w-8 h-8 font-bold text-center text-white bg-gray-700 rounded-full">
               +
             </div>
-            <div v-else class="w-8 h-8 font-bold text-center text-white bg-gray-700 rounded rounded-full">
+            <div v-else class="w-8 h-8 font-bold text-center text-white bg-gray-700 rounded-full">
               -
             </div>
             <div>

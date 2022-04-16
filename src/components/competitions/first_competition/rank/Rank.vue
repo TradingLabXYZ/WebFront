@@ -60,7 +60,7 @@
                 <div class="flex flex-row xs:space-x-1 sm:space-x-2 justify-center align-middle items-center">
                   <img  
                     :src="partecipant['ProfilePicture']"
-                    alt="UserLogo"
+                    alt="user profile picture"
                     class="rounded-full xs:h-6 sm:h-8">
                   <span v-if="partecipant['Username'] != ''">
                     {{ partecipant['Username'] }}

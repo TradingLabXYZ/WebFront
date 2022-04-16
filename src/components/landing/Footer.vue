@@ -33,7 +33,10 @@
       </button>
     </div>
     <div class="flex flex-row justify-center space-x-2">
-      <img src="@/assets/logo.png" class="h-8" alt="Logo">
+      <img
+        src="@/assets/logo.png"
+        class="h-8"
+        alt="TradingLab logo">
       <div class="text-2xl font-semibold text-magentashine">
         TradingLab
       </div>

@@ -93,7 +93,8 @@
                     :src="trade.FirstPairUrlIcon"
                     height="30"
                     width="30"
-                    class="inline-block align-middle"/>
+                    class="inline-block align-middle"
+                    alt="first crypto icon">
                   {{ trade.FirstPairSymbol }}
                 </td>
                 <td class="">
@@ -101,7 +102,8 @@
                     :src="trade.SecondPairUrlIcon"
                     height="30"
                     width="30"
-                    class="inline-block align-middle"/>
+                    class="inline-block align-middle"
+                    alt="second crypto icon">
                   {{ trade.SecondPairSymbol }}
                 </td>
                 <td
@@ -352,13 +354,15 @@
               <img
                 :src="trade.FirstPairUrlIcon"
                 height="20"
-                width="20"/>
+                width="20"
+                alt="first crypto icon">
             </div>
             <div>
               <img
                 :src="trade.SecondPairUrlIcon"
                 height="20"
-                width="20"/>
+                width="20"
+                alt="second crypto icon">
             </div>
           </div>
           <div

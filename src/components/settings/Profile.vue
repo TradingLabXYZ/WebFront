@@ -10,7 +10,8 @@
           id="file-input">
         <img  
           :src="profilePicture"
-          class="w-32 h-32 border border-gray-900 rounded-full">
+          class="w-32 h-32 border border-gray-900 rounded-full"
+          alt="user profile picture">
         <div class="overlay">
           EDIT
         </div>

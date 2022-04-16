@@ -21,7 +21,10 @@
       </div>
     </div>
     <div class="my-12 mx-12">
-      <img src="@/assets/competitions/first_competition/btc_micro.png" class="m-auto" alt="BtcMicro">
+      <img 
+        src="@/assets/competitions/first_competition/btc_micro.png"
+        class="m-auto"
+        alt="bitcoin and microscope">
     </div>
   </div>
 </template>

@@ -64,6 +64,7 @@
   import Develop from '@/components/landing/Develop.vue';
   import More from '@/components/landing/More.vue';
   import Footer from '@/components/landing/Footer.vue';
+  import { MetaInfo } from 'vue-meta';
 
   @Component({
     components: {
@@ -78,6 +79,17 @@
       Develop,
       More,
       Footer
+    },
+    metaInfo(this: Home): MetaInfo {
+      return {
+        title: "TradingLab - Crypto Trading Community",
+        meta: [
+          { charset: 'utf-8' },
+          { name: 'keyword', content: 'crypto, trading, community' },
+          { name: 'description', content: 'TradingLab aims to create a funny, entertaining, never ending user experience in which crypto passionate can converge, learning and earning from each others simply sharing their crypto portfolios.'},
+          { name: 'viewport', content: 'width=device-width, initial-scale=2' }
+        ]
+      };
     },
   })
   export default class Home extends Vue {
