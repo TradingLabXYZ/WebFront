@@ -96,7 +96,6 @@
     discord: string = '';
     github: string = '';
     profilePicture: string = '';
-    @Prop() isMobile!: boolean;
     created() {
       this.username = userStore.userDetails['Username'];
       this.twitter = userStore.userDetails['Twitter'];

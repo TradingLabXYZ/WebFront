@@ -3,18 +3,12 @@
     <Header/>
     <Competition/>
     <Hero/>
-    <svg v-if="isMobile" height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-blueshine">
-      <path d="M0,0 L0,80 500,0"/>
-    </svg>
-    <svg v-else height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-blueshine">
-      <path d="M0,0 L0,20 500,0"/>
+    <svg height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-blueshine">
+      <path d="M0,0 L0,50 500,0"/>
     </svg>
     <Share/>
-    <svg v-if="isMobile" height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-magentashine">
-      <path d="M0,0 L500,0 500,80"/>
-    </svg>
-    <svg v-else height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-magentashine">
-      <path d="M0,0 L500,0 500,20"/>
+    <svg height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-magentashine">
+      <path d="M0,0 L500,0 500,50"/>
     </svg>
     <Features/>
     <svg height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-blueshine">
@@ -30,18 +24,12 @@
       <path d="M0,0 L500,0 500,20"/>
     </svg>
     <LearnEarn/>
-    <svg v-if="isMobile" height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-magentashine">
-      <path d="M0,0 L0,80 500,0"/>
-    </svg>
-    <svg v-else height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-magentashine">
-      <path d="M0,0 L0,20 500,0"/>
+    <svg height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-magentashine">
+      <path d="M0,0 L0,50 500,0"/>
     </svg>
     <Develop/>
-    <svg v-if="isMobile" height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-blueshine">
-      <path d="M0,0 L0,0 500,0 500,80"/>
-    </svg>
-    <svg v-else height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-blueshine">
-      <path d="M0,0 L0,0 500,0 500,20"/>
+    <svg height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-blueshine">
+      <path d="M0,0 L0,0 500,0 500,50"/>
     </svg>
     <More/>
     <svg height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-blueshine">
@@ -101,14 +89,5 @@
       };
     },
   })
-  export default class Home extends Vue {
-    isMobile = false;
-    checkIfMobile() {
-      if( screen.width <= 800 ) {
-        this.isMobile = true;
-      } else {
-        this.isMobile = false;
-      }
-    }
-  }
+  export default class Home extends Vue {}
 </script>
