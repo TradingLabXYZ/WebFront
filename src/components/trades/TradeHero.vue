@@ -5,7 +5,8 @@
         <img  
           :src="profilePicture"
           height="60" width="60"
-          class="rounded-full">
+          class="rounded-full"
+          alt="user profile picture">
       </div>
       <div class="flex flex-col justify-center space-y-2">
         <button v-if="twitter">
@@ -105,7 +106,8 @@
           <img  
             :src="profilePicture"
             height="60" width="60"
-            class="rounded-full">
+            class="rounded-full"
+            alt="user profile picture">
         </div>
         <div class="flex flex-row justify-center space-x-2">
           <button v-if="twitter">

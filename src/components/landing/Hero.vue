@@ -17,27 +17,25 @@
           <span class="font-mono">i</span>
           <span class="">d</span>
         </div>
-        <div class="p-2 font-extrabold tracking-widest text-transparent bg-transparent xs:text-4xl sm:text-8xl bg-clip-text bg-gradient-to-b to-magentashine via-blueshine from-magentashine">
+        <h1 class="p-2 font-extrabold tracking-widest text-transparent bg-transparent xs:text-4xl sm:text-8xl bg-clip-text bg-gradient-to-b to-magentashine via-blueshine from-magentashine">
           Crypto<br>Trading<br>Laboratory
-        </div>
+        </h1>
         <div class="flex flex-row items-center justify-start p-2 xs:mt-2 sm:mt-6">
           <div class="font-light xs:text-sm sm:text-xl">
             Powered by
           </div>
-          <img src="@/assets/moonbeam_logo.png" alt="Moonbeam" class="xs:h-10 sm:h-20">
+          <img 
+            src="@/assets/moonbeam_logo.png"
+            class="xs:h-10 sm:h-20"
+            alt="Moonbeam logo">
         </div>
       </div>
       <div class="">
-        <img src="@/assets/rack.gif" alt="Rack" class="xs:pb-10 xs:pl-12 sm:pb-32 sm:pl-20">
+        <img 
+          src="@/assets/rack.gif"
+          class="xs:pb-10 xs:pl-12 sm:pb-32 sm:pl-20"
+          alt="TradingLab doing experiments">
       </div>
     </div>
   </div>
 </template>
-
-
-<script lang="ts">
-  import { Vue, Component, Prop } from 'vue-property-decorator';
-  @Component({})
-  export default class Hero extends Vue {
-  }
-</script>

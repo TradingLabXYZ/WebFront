@@ -1,11 +1,11 @@
 <template>
   <div class="flex flex-col items-center -mt-20 align-middle bg-gradient-to-br from-universelight via-universe to-universe pb-44 text-cream">
-    <div class="pt-40 font-medium text-center xs:text-4xl sm:text-6xl">
+    <h2 class="pt-40 font-medium text-center xs:text-4xl sm:text-6xl">
       Even more <span id="blur">privacy</span>
-    </div>
-    <div class="p-10 text-2xl text-center space-y-8">
+    </h2>
+    <h3 class="p-10 text-2xl text-center space-y-8">
       Granulary control external visibility of your portfolio
-    </div>
+    </h3>
     <div class="flex flex-row xs:text-xl sm:text-4xl xs:space-x-5 sm:space-x-20">
       <div class="flex flex-col justify-around space-y-4">
         <div @click="switchNumberTrades()">

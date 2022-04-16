@@ -10,7 +10,8 @@
           id="file-input">
         <img  
           :src="profilePicture"
-          class="w-32 h-32 border border-gray-900 rounded-full">
+          class="w-32 h-32 border border-gray-900 rounded-full"
+          alt="user profile picture">
         <div class="overlay">
           EDIT
         </div>
@@ -23,7 +24,8 @@
       <input
         type="text"
         placeholder="Username"
-        class="w-full p-2 border border-gray-200 border-gray-500 bg-deepmagenta"
+        maxlength="10"
+        class="w-full p-2 border border-gray-500 bg-deepmagenta"
         v-model="username">
     </div>
     <div class="p-2">
@@ -33,7 +35,7 @@
       <input
         type="text"
         placeholder="Twitter"
-        class="w-full p-2 border border-gray-200 border-gray-500 bg-deepmagenta"
+        class="w-full p-2 border border-gray-500 bg-deepmagenta"
         v-model="twitter">
     </div>
     <div class="p-2">
@@ -43,7 +45,7 @@
       <input
         type="text"
         placeholder="discord"
-        class="w-full p-2 border border-gray-200 border-gray-500 bg-deepmagenta"
+        class="w-full p-2 border border-gray-500 bg-deepmagenta"
         v-model="discord">
     </div>
     <div class="p-2">
@@ -53,7 +55,7 @@
       <input
         type="text"
         placeholder="github"
-        class="w-full p-2 border border-gray-200 border-gray-500 bg-deepmagenta"
+        class="w-full p-2 border border-gray-500 bg-deepmagenta"
         v-model="github">
     </div>
     <div class="flex justify-center">

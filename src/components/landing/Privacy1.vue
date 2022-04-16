@@ -1,11 +1,11 @@
 <template>
   <div class="flex flex-col items-center -mt-20 align-middle bg-gradient-to-tr from-universelight via-universe to-universe text-cream">
-    <div class="pt-40 font-medium text-center xs:text-4xl sm:text-6xl">
+    <h2 class="pt-40 font-medium text-center xs:text-4xl sm:text-6xl">
       Privacy, done right
-    </div>
-    <div class="p-10 text-2xl text-center">
+    </h2>
+    <h3 class="p-10 text-2xl text-center">
       Choose a privacy mode that suits you the best
-    </div>
+    </h3>
     <div class="flex flex-row space-x-4">
       <div
         class=""

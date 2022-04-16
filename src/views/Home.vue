@@ -1,7 +1,7 @@
 <template>
   <div>
     <Header/>
-    <Survey/>
+    <Competition/>
     <Hero/>
     <svg v-if="isMobile" height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-blueshine">
       <path d="M0,0 L0,80 500,0"/>
@@ -53,8 +53,9 @@
 
 <script lang="ts">
   import { Component, Vue } from 'vue-property-decorator';
+  import { MetaInfo } from 'vue-meta';
   import Header from '@/components/header/Header.vue';
-  import Survey from '@/components/landing/Survey.vue';
+  import Competition from '@/components/banners/Competition.vue';
   import Hero from '@/components/landing/Hero.vue';
   import Share from '@/components/landing/Share.vue';
   import Features from '@/components/landing/Features.vue';
@@ -68,7 +69,7 @@
   @Component({
     components: {
       Header,
-      Survey,
+      Competition,
       Hero,
       Share,
       Features,
@@ -78,6 +79,26 @@
       Develop,
       More,
       Footer
+    },
+    metaInfo(this: Home): MetaInfo {
+      return {
+        title: "TradingLab - Crypto Community",
+        meta: [
+          { charset: 'utf-8' },
+          { name: 'keyword', content: 'crypto, trading, community, portfolio' },
+          { name: 'description', content: 'TradingLab aims to create a funny, entertaining, never ending user experience in which crypto passionate can converge, learning and earning from each others simply sharing their crypto portfolios.'},
+          {name: 'twitter:card', content: 'summary'},
+          {name: 'twitter:url', content: 'https://www.tradinglab.xyz'},
+          {name: 'twitter:title', content: 'TradingLab - Crypto Community'},
+          {name: 'twitter:description', content: 'TradingLab aims to create a funny, entertaining, never ending user experience in which crypto passionate can converge, learning and earning from each others simply sharing their crypto portfolios.'},
+          {name: 'twitter:image', content: 'https://tradinglab.xyz/img/logo.181ac5cb.png'},
+          {property: 'og:title', content: 'TradingLab - Crypto Community'},
+          {property: 'og:type', content: 'website'},
+          {property: 'og:url', content: 'https://www.tradinglab.xyz'},
+          {property: 'og:description', content: 'TradingLab aims to create a funny, entertaining, never ending user experience in which crypto passionate can converge, learning and earning from each others simply sharing their crypto portfolios.'},
+          {property: 'og:image', content: 'https://tradinglab.xyz/img/logo.181ac5cb.png'}
+        ]
+      };
     },
   })
   export default class Home extends Vue {
