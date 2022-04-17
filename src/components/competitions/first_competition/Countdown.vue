@@ -5,7 +5,7 @@
     </svg>
     <div class="py-20 text-center bg-blueshine space-y-6">
       <div class="xs:text-3xl sm:text-5xl font-medium">
-        submbission ends in
+        Submission ends in
       </div>
       <div class="xs:text-4xl sm:text-8xl">
         {{ countDownValue }}
