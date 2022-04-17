@@ -12,7 +12,7 @@
     </div>
     <div class="flex flex-row sm:mt-4 xs:mt-4 xs:ml-12 sm:ml-64 xs:text-xl sm:text-2xl">
       <div class="">
-        Submbission ends in {{ countDownValue }}
+        Submission ends in {{ countDownValue }}
       </div>
     </div>
     <div class="text-center my-4">

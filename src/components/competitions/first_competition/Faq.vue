@@ -41,7 +41,7 @@
       legit: {
         toggle: false,
         question: "Is this a scam or is it legit",
-        answer: "Out users are the most important asset we have, we will never harm you.",
+        answer: "Our users are the most important asset we have, we will never harm you.",
       },
       connect: {
         toggle: false,
@@ -70,8 +70,8 @@
       },
       distribution : {
         toggle: false,
-        question: "When will be the prizes distrubuted?",
-        answer: "All the prizes will be ditributed within a week since the end of the competition.",
+        question: "When will be the prizes distributed?",
+        answer: "All the prizes will be distributed within a week since the end of the competition.",
       },
       polygon : {
         toggle: false,
@@ -80,7 +80,7 @@
       },
       profilePicture : {
         toggle: false,
-        question: "How can I add a profile picure?",
+        question: "How can I add a profile picture?",
         answer: "Connect to TradingLab with your wallet and visit the Settings section..",
       },
       millionToken : {

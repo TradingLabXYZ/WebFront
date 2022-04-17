@@ -8,7 +8,7 @@
         What will be BTC price at the end of May 2022?
       </div>
       <div class="text-4xl font-bold">
-        {{ countPartecipants }} partecipants registered
+        {{ countPartecipants }} participants registered
       </div>
       <div>
         <button
