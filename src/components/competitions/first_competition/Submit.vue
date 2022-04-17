@@ -62,6 +62,7 @@ import Delete from '@/components/svg/DeleteTrade.vue'
   }
 })
 export default class Submit extends Vue {
+  source: string = "";
   tempPrediction: number = 0;
   prediction: number = 0;
   isSubmissionOk: boolean = false;
@@ -69,6 +70,7 @@ export default class Submit extends Vue {
     return walletStore.getIsConnected;
   }
   async created() {
+    this.source = this.getUrlSource();
     await this.fetchPrediction();
   }
   async fetchPrediction() {
@@ -82,7 +84,7 @@ export default class Submit extends Vue {
         method: 'GET',
         headers: {
           'Authorization': 'Bearer ' + document.cookie,
-          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Origin': '*'
         },
         url: requestUrl,
       }).then((response) => {
@@ -100,19 +102,27 @@ export default class Submit extends Vue {
       alert('Please connect your wallet!');
       return;
     }
+    if (!this.tempPrediction) {
+      alert('Please insert a prediction!');
+      return;
+    }
+    var postData = {
+      Competition: 'first_competition',
+      Prediction: this.tempPrediction,
+      Source: this.source
+    }
     const requestUrl = [
       process.env.VUE_APP_HTTP_URL,
-      'insert_prediction',
-      'first_competition',
-      this.tempPrediction,
+      'insert_prediction'
     ].join('/');
     axios({
-      method: 'GET',
+      method: 'POST',
       headers: {
         'Authorization': 'Bearer ' + document.cookie,
-        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Origin': '*'
       },
       url: requestUrl,
+      data: postData
     }).then((response) => {
       if (response.status === 200) {
         this.prediction = this.tempPrediction;
@@ -158,6 +168,14 @@ export default class Submit extends Vue {
         that.isSubmissionOk = true;
       }
     }, 2000);
+  }
+  getUrlSource() {
+    const source = this.$route.query['source'];
+    if (source == null) {
+      return "";
+    } else {
+      return source.toString();
+    }
   }
 }
 </script>
