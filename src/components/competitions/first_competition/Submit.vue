@@ -1,5 +1,11 @@
 <template>
   <div class="mt-12 border-8 border-magentashine">
+    <div class="xs:text-sm sm:text-xl text-center my-2">
+      We are aware of issues connecting the wallet from iOS.
+      Whenever possibile, please use you laptop.
+      In case of need reach out to us on 
+      <u><a href="https://discord.gg/PEEUfrbQ9c" rel="_blank">Discord</a></u>.
+    </div>
     <div class="flex flex-col text-center py-36 space-y-4">
       <div class="xs:text-2xl sm:text-4xl">
         insert your prediction in USD $
