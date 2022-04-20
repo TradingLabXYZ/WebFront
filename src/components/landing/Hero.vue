@@ -20,14 +20,14 @@
         <h1 class="p-2 font-extrabold tracking-widest text-transparent bg-transparent xs:text-4xl sm:text-8xl bg-clip-text bg-gradient-to-b to-magentashine via-blueshine from-magentashine">
           Crypto<br>Trading<br>Laboratory
         </h1>
-        <div class="flex flex-row items-center justify-start p-2 xs:mt-2 sm:mt-6">
+        <div class="flex flex-row items-center justify-start p-2 xs:mt-2 sm:mt-6 xs:space-x-2 sm:space-x-6">
           <div class="font-light xs:text-sm sm:text-xl">
             Powered by
           </div>
           <img 
-            src="@/assets/moonbeam_logo.png"
-            class="xs:h-10 sm:h-20"
-            alt="Moonbeam logo">
+            src="@/assets/polygon_logo.png"
+            class="xs:h-8 sm:h-14"
+            alt="Polygon logo">
         </div>
       </div>
       <div class="">
