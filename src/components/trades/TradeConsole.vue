@@ -301,7 +301,6 @@ export default class TradeOpen extends Vue {
     if (!subtrade['Quantity'] || subtrade['Quantity'] <= 0) m = "Wrong Quantity";
     if (!subtrade['AvgPrice'] || subtrade['AvgPrice'] <= 0) m = "Wrong AvgPrice";
     if (!subtrade['Total'] || subtrade['Total'] <= 0) m = "Wrong Total in subtrade";
-    if (!subtrade['Reason']) m = "Reason missing in subtrade";
     if (!subtrade['Type']) m = "Type missing in subtrade";
     if (!subtrade['CreatedAt']) m = "Wrong Timestamp in subtrade";
     return m;
