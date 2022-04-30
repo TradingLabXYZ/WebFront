@@ -24,7 +24,7 @@
           <div class="flex flex-row justify-center align-middle items-center">
             <img
               :src="trade['FirstPairUrlIcon']"
-              class="xs:w-6 lg:w-10 xs:h-6 lg:h-10"
+              class="xs:w-6 lg:w-10 xs:h-6 lg:h-10 rounded-full"
               alt="first crypto icon">
             <span class="hidden lg:block font-extralight">
               {{ trade['FirstPairSymbol'] }}
@@ -33,7 +33,7 @@
           <div class="flex flex-row justify-center align-middle items-center">
             <img
               :src="trade['SecondPairUrlIcon']"
-              class="xs:w-6 lg:w-10 xs:h-6 lg:h-10"
+              class="xs:w-6 lg:w-10 xs:h-6 lg:h-10 rounded-full"
               alt="first crypto icon">
             <span class="hidden lg:block font-extralight">
               {{ trade['SecondPairSymbol'] }}
