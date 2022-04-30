@@ -2,8 +2,7 @@
   <div class="min-h-screen bg-universe text-cream">
     <Header/>
     <Hero/>
-    <Countdown/>
-    <Submit/>
+    <CloseSubmit/>
     <Prizes/>
     <Rules/>
     <Faq class="mb-44"/>
@@ -18,7 +17,7 @@ import Header from '@/components/header/Header.vue';
 import Footer from '@/components/landing/Footer.vue';
 import Hero from '@/components/competitions/first_competition/Hero.vue'
 import Countdown from '@/components/competitions/first_competition/Countdown.vue'
-import Submit from '@/components/competitions/first_competition/Submit.vue'
+import CloseSubmit from '@/components/competitions/first_competition/CloseSubmit.vue'
 import Prizes from '@/components/competitions/first_competition/Prizes.vue'
 import Rules from '@/components/competitions/first_competition/Rules.vue'
 import Faq from '@/components/competitions/first_competition/Faq.vue'
@@ -29,7 +28,7 @@ import Faq from '@/components/competitions/first_competition/Faq.vue'
     Footer,
     Hero,
     Countdown,
-    Submit,
+    CloseSubmit,
     Prizes,
     Rules,
     Faq,
