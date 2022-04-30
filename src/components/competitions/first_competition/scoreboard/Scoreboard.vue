@@ -10,20 +10,6 @@
         </div>
       </div>
     </div>
-    <div class="flex flex-row sm:mt-4 xs:mt-4 xs:ml-12 sm:ml-64 xs:text-xl sm:text-2xl">
-      <div class="">
-        Submission ends in {{ countDownValue }}
-      </div>
-    </div>
-    <div class="text-center my-4">
-      <button
-        class="p-2 mt-2 xs:text-xl sm:text-3xl font-bold rounded hover:bg-magentashine bg-blueshine">
-        <router-link
-          :to="{path: '/crypto_competition/guess_btc_price'}">
-          Submit your prediction
-        </router-link>
-      </button>
-    </div>
     <div class="flex justify-center mt-12 mx-2">
       <table>
         <thead class="tracking-wider xs:text-sm sm:text-2xl bg-oldpurple">

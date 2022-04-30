@@ -5,7 +5,7 @@
       <button class="font-bold text-blue-800 bg-blue-200 border border-blue-600 rounded xs:m-1 xs:p-1 sm:p-2 sm:m-2 hover:bg-blue-400 xs:text-xs sm:text-sm">
         <router-link
           :to="{path: '/crypto_competition/guess_btc_price'}">
-          Join Now
+          Check the results
         </router-link>
       </button>
       <button
