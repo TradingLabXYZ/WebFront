@@ -43,7 +43,6 @@
       </div>
     </div>
     <div
-      v-if="selectedUserPrivacy != userStorePrivacy"
       class="flex justify-center">
       <button
         class="px-4 py-2 m-6 font-bold rounded hover:bg-blueshine bg-magentashine"

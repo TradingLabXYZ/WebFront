@@ -24,7 +24,7 @@
           <div class="flex flex-row justify-center align-middle items-center">
             <img
               :src="trade['FirstPairUrlIcon']"
-              class="xs:w-6 lg:w-10 xs:h-6 lg:h-10"
+              class="xs:w-6 lg:w-10 xs:h-6 lg:h-10 rounded-full"
               alt="first crypto icon">
             <span class="hidden lg:block font-extralight">
               {{ trade['FirstPairSymbol'] }}
@@ -33,7 +33,7 @@
           <div class="flex flex-row justify-center align-middle items-center">
             <img
               :src="trade['SecondPairUrlIcon']"
-              class="xs:w-6 lg:w-10 xs:h-6 lg:h-10"
+              class="xs:w-6 lg:w-10 xs:h-6 lg:h-10 rounded-full"
               alt="first crypto icon">
             <span class="hidden lg:block font-extralight">
               {{ trade['SecondPairSymbol'] }}
@@ -301,7 +301,6 @@ export default class TradeOpen extends Vue {
     if (!subtrade['Quantity'] || subtrade['Quantity'] <= 0) m = "Wrong Quantity";
     if (!subtrade['AvgPrice'] || subtrade['AvgPrice'] <= 0) m = "Wrong AvgPrice";
     if (!subtrade['Total'] || subtrade['Total'] <= 0) m = "Wrong Total in subtrade";
-    if (!subtrade['Reason']) m = "Reason missing in subtrade";
     if (!subtrade['Type']) m = "Type missing in subtrade";
     if (!subtrade['CreatedAt']) m = "Wrong Timestamp in subtrade";
     return m;
