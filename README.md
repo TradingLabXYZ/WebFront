@@ -55,5 +55,5 @@ jest Connect.vue -t=loginMetamask
 ### Upgrade node and solve vulnerabilities
 
 ``` 
-npm i npm@latest
+sudo yarn-audit-fix
 ```
