@@ -7,7 +7,13 @@ import Wallet from '@/store/walletModule';
 const walletStore = getModule(Wallet)
 
 export async function generateSession() {
-  let api_url = process.env.VUE_APP_HTTP_URL + '/login/' + walletStore.getWallet;
+  const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  let api_url = [
+    process.env.VUE_APP_HTTP_URL,
+    'login',
+    walletStore.getWallet,
+    timezone.replace('/', '_')
+  ].join('/');
   const response = await axios.get(api_url);
   if (response.status != 200) {
     return
