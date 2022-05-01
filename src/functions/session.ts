@@ -12,7 +12,7 @@ export async function generateSession() {
     process.env.VUE_APP_HTTP_URL,
     'login',
     walletStore.getWallet,
-    timezone.replace('/', '_')
+    timezone.replace('/', '|')
   ].join('/');
   const response = await axios.get(api_url);
   if (response.status != 200) {
