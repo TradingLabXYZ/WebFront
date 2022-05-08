@@ -59,3 +59,7 @@ yarn-audit-fix
 yarn audit
 yarn upgrade
 ```
+
+### Check dependencies
+
+depcheck
