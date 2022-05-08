@@ -1,6 +1,12 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 module.exports = {
-  purge: [],
+  purge: [
+    "./pages/**/*.vue", 
+    "./components/**/*.vue", 
+    "./plugins/**/*.vue",
+    "./static/**/*.vue",
+    "./store/**/*.vue"
+  ],
   theme: {
     fontFamily: {
       sans: ['Montserrat'],
