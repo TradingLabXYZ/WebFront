@@ -28,10 +28,14 @@
       <path d="M0,0 L0,50 500,0"/>
     </svg>
     <Develop/>
+    <svg height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-magentashine">
+      <path d="M0,0 L500,0 500,50"/>
+    </svg>
+    <More/>
     <svg height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-blueshine">
       <path d="M0,0 L0,0 500,0 500,50"/>
     </svg>
-    <More/>
+    <Links/>
     <svg height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-blueshine">
       <path d="M0,0 L0,3 500,3 500,0"/>
     </svg>
@@ -52,6 +56,7 @@
   import LearnEarn from '@/components/landing/LearnEarn.vue';
   import Develop from '@/components/landing/Develop.vue';
   import More from '@/components/landing/More.vue';
+  import Links from '@/components/landing/Links.vue';
   import Footer from '@/components/landing/Footer.vue';
 
   @Component({
@@ -66,6 +71,7 @@
       LearnEarn,
       Develop,
       More,
+      Links,
       Footer
     },
     metaInfo(this: Home): MetaInfo {
