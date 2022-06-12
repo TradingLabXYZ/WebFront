@@ -1,7 +1,6 @@
 <template>
   <div>
     <Header/>
-    <Competition/>
     <Hero/>
     <svg height="80" viewBox="0 0 500 80" preserveAspectRatio="none" class="fill-current text-blueshine">
       <path d="M0,0 L0,50 500,0"/>
