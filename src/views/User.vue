@@ -1,7 +1,6 @@
 <template>
   <div class="min-h-screen pb-20 bg-universe">
     <Header/>
-    <Competition/>
     <TradeHero
       @follow="manageFollow"
       v-bind:privacyStatus="privacyStatus"
